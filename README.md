@@ -7,7 +7,7 @@ An online E-store system built in Java 11=> and ___ _replace with other platform
 
 John West
 Alice Cauchi
-- MEMBER3
+Brian McNulty
 - MEMBER4
 
 
