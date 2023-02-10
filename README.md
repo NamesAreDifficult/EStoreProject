@@ -9,7 +9,7 @@ John West
 Alice Cauchi
 Brian McNulty
 Brendan Battisti
-
+Ryan Wagoner
 
 ## Prerequisites
 
