@@ -29,7 +29,7 @@ import com.estore.api.estoreapi.products.Beef;
  */
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("inventory")
 public class InventoryController {
   private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private InventoryDAO inventoryDao;
@@ -96,12 +96,11 @@ public class InventoryController {
   * @param beef - The {@link Beef beef} to create
   * 
   * @return ResponseEntity with created {@link Beef beef} object and HTTP status of CREATED<br>
-  * ResponseEntity with HTTP status of CONFLICT if {@link Beef beef} object already exists<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @PostMapping("")
+  @PostMapping("/products")
   public ResponseEntity<Beef> createBeef(@RequestBody Beef beef) {
-    LOG.info("POST /products " + beef);
+    LOG.info("POST /inventory/products" + beef);
 
     try{
         return new ResponseEntity<Beef>(inventoryDao.createBeef(beef), HttpStatus.OK);
