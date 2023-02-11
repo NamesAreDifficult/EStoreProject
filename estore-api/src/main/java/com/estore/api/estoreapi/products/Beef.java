@@ -15,6 +15,7 @@ public class Beef {
   @JsonProperty("weight") private final float weight;
   @JsonProperty("grade") private final String grade;
   @JsonProperty("SellBy") private final Date sellBy;
+  
   // Format strings
   static final String NAME_FORMAT = "%s %s";
   static final String STRING_FORMAT = "Beef [id=%s cut=%s grade=%s weight=%s]";
