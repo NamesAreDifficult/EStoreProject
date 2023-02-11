@@ -1,7 +1,7 @@
 package com.estore.api.estoreapi.products;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Represents a Beef entity
@@ -14,7 +14,6 @@ public class Beef {
   @JsonProperty("cut") private final String cut;
   @JsonProperty("weight") private final float weight;
   @JsonProperty("grade") private final String grade;
-  @JsonProperty("SellBy") private final Date sellBy;
 
   // Format strings
   static final String NAME_FORMAT = "%s %s";
@@ -33,12 +32,11 @@ public class Beef {
    * value, i.e. 0 for int
    */
   //TODO: break up constructor to less than 100 chars per line per google java styling
-  public Beef(@JsonProperty("id") int id, @JsonProperty("cut") String cut, @JsonProperty("weight") float weight, @JsonProperty("grade") String grade, @JsonProperty("sellBy") Date sellBy) {
+  public Beef(@JsonProperty("id") int id, @JsonProperty("cut") String cut, @JsonProperty("weight") float weight, @JsonProperty("grade") String grade) {
     this.id = id;
     this.cut = cut;
     this.weight = weight;
     this.grade = grade;
-    this.sellBy = sellBy;
   }
 
   /**
@@ -48,8 +46,8 @@ public class Beef {
   public int getId() {return id;}
 
   /**
-   * Retrieves the name of the beef
-   * @return The name of the beef "{Grade} {Cut}"
+   * Retrieves the name and grade of the beef
+   * @return The name and grade of the beef "{Grade} {Cut}"
    */
   public String getName() { return String.format("%s %s", grade, cut); }
 
@@ -64,7 +62,13 @@ public class Beef {
    * @return 2 character string representing grade of beef
    */
   public String getGrade() { return this.grade; }
-  
+
+  /**
+   * Retrieves the cut of the piece of beef
+   * @return String containing the name of the cut of beef
+   */
+  public String getCut() { return this.cut; }
+
   /**
   * {@inheritDoc}
   */
