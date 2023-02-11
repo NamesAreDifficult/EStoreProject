@@ -44,7 +44,7 @@ public class InventoryFileDAO implements InventoryDAO {
   public InventoryFileDAO(@Value("${inventory.file}") String filename, ObjectMapper objectMapper) throws IOException {
       this.filename = filename;
       this.objectMapper = objectMapper;
-      load();  // load the heroes from the file
+      load();  // load the beef from the file
   }
 
   /**
@@ -101,12 +101,12 @@ public class InventoryFileDAO implements InventoryDAO {
   * @throws IOException when file cannot be accessed or written to
   */
   private boolean save() throws IOException {
-    Beef[] heroArray = getBeefArray();
+    Beef[] beefArray = getBeefArray();
 
     // Serializes the Java Objects to JSON objects into the file
     // writeValue will thrown an IOException if there is an issue
     // with the file or reading from the file
-    objectMapper.writeValue(new File(filename),heroArray);
+    objectMapper.writeValue(new File(filename), beefArray);
     return true;
   }
 
@@ -128,7 +128,7 @@ public class InventoryFileDAO implements InventoryDAO {
     // or reading from the file
     Beef[] beefArray = objectMapper.readValue(new File(filename),Beef[].class);
 
-    // Add each hero to the tree map and keep track of the greatest id
+    // Add each beef to the tree map and keep track of the greatest id
     for (Beef beef : beefArray){
       inventory.put(beef.getId(), beef);
       if(beef.getId() > nextId) { 
@@ -180,7 +180,7 @@ public class InventoryFileDAO implements InventoryDAO {
   @Override
   public Beef createBeef(Beef beef) throws IOException {
     synchronized(inventory) {
-      // We create a new hero object because the id field is immutable
+      // We create a new beef object because the id field is immutable
       // and we need to assign the next unique id
       Beef newBeef = new Beef(nextId(),beef.getCut(), beef.getWeight(), beef.getGrade());
       inventory.put(newBeef.getId(), newBeef);

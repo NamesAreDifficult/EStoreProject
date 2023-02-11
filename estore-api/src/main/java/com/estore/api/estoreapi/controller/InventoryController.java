@@ -101,7 +101,13 @@ public class InventoryController {
   */
   @PostMapping("")
   public ResponseEntity<Beef> createBeef(@RequestBody Beef beef) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    LOG.info("POST /products " + beef);
+
+    try{
+        return new ResponseEntity<Beef>(inventoryDao.createBeef(beef), HttpStatus.OK);
+    }catch(IOException e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
