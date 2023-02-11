@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.products;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
 
 /**
  * Represents a Beef entity
@@ -13,7 +14,7 @@ public class Beef {
   @JsonProperty("cut") private final String cut;
   @JsonProperty("weight") private final float weight;
   @JsonProperty("grade") private final String grade;
-
+  @JsonProperty("SellBy") private final Date sellBy;
   // Format strings
   static final String NAME_FORMAT = "%s %s";
   static final String STRING_FORMAT = "Beef [id=%s cut=%s grade=%s weight=%s]";
@@ -31,11 +32,12 @@ public class Beef {
    * value, i.e. 0 for int
    */
   //TODO: break up constructor to less than 100 chars per line per google java styling
-  public Beef(@JsonProperty("id") int id, @JsonProperty("cut") String cut, @JsonProperty("weight") float weight, @JsonProperty("grade") String grade) {
+  public Beef(@JsonProperty("id") int id, @JsonProperty("cut") String cut, @JsonProperty("weight") float weight, @JsonProperty("grade") String grade, @JsonProperty("sellBy") Date sellBy) {
     this.id = id;
     this.cut = cut;
     this.weight = weight;
     this.grade = grade;
+    this.sellBy = sellBy;
   }
 
   /**
