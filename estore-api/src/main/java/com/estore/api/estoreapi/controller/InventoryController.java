@@ -56,8 +56,22 @@ public class InventoryController {
   */
   @GetMapping("/{id}")
   public ResponseEntity<Beef> getBeef(@PathVariable int id) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    try{
+
+      Beef retrievedBeef = inventoryDao.getBeef(id);
+
+      if (retrievedBeef != null) {
+        return new ResponseEntity<Beef>(inventoryDao.getBeef(id), HttpStatus.OK);
+      }
+      else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      
+    }catch(IOException e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
+    
 
   /**
   * Responds to the GET request for all {@linkplain Beef beef}

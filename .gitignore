@@ -2,3 +2,4 @@
 .vscode/settings.json
 estore-api/data/inventory.json
 estore-api/data/inventory.json
+*.json
