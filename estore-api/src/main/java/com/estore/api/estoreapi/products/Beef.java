@@ -31,8 +31,10 @@ public class Beef {
    * is not provided in the JSON object, the Java field gets the default Java
    * value, i.e. 0 for int
    */
-  //TODO: break up constructor to less than 100 chars per line per google java styling
-  public Beef(@JsonProperty("id") int id, @JsonProperty("cut") String cut, @JsonProperty("weight") float weight, @JsonProperty("grade") String grade) {
+  public Beef(@JsonProperty("id") int id,
+              @JsonProperty("cut") String cut,
+              @JsonProperty("weight") float weight,
+              @JsonProperty("grade") String grade) {
     this.id = id;
     this.cut = cut;
     this.weight = weight;
