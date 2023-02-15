@@ -1,7 +1,6 @@
 package com.estore.api.estoreapi.products;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Calendar;
 
 /**
  * Represents a Beef entity
@@ -12,8 +11,8 @@ public class Beef {
  // Map Json properties to class internal attributes
   @JsonProperty("id") private final int id;
   @JsonProperty("cut") private final String cut;
-  @JsonProperty("weight") private final float weight;
   @JsonProperty("grade") private final String grade;
+  @JsonProperty("weight") private float weight;
 
   // Format strings
   static final String NAME_FORMAT = "%s %s";
@@ -43,30 +42,53 @@ public class Beef {
 
   /**
    * Retrieves the id of the beef
+   * 
    * @return The id of the beef
    */
   public int getId() {return id;}
 
   /**
    * Retrieves the name and grade of the beef
+   * 
    * @return The name and grade of the beef "{Grade} {Cut}"
    */
   public String getName() { return String.format("%s %s", grade, cut); }
 
   /**
    * Retrieves the weight of the piece of beef
+   * 
    * @return Float representing the weight in pounds of the beef
    */
   public float getWeight() { return this.weight; }
   
   /**
+   * Sets the weight of the piece of beef
+   */
+  public void setWeight(float newWeight) { this.weight = newWeight; }
+
+  /**
+   * Adds the provided amount of weight to the current stored weight
+   * 
+   * @param extraWeight amount of weight to add to the object
+   * 
+   * @return the new total weight of the object
+   */
+  public float addWeight(float extraWeight){
+    this.weight += extraWeight;
+    return this.weight;
+  }
+
+  
+  /**
    * Retrieves the grade of the piece of beef
+   * 
    * @return 2 character string representing grade of beef
    */
   public String getGrade() { return this.grade; }
 
   /**
    * Retrieves the cut of the piece of beef
+   * 
    * @return String containing the name of the cut of beef
    */
   public String getCut() { return this.cut; }
