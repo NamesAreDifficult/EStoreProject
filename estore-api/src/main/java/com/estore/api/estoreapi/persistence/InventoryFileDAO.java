@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -182,6 +181,12 @@ public class InventoryFileDAO implements InventoryDAO {
     synchronized(inventory) {
       // We create a new beef object because the id field is immutable
       // and we need to assign the next unique id
+      for(Beef existingBeef : inventory.values()){
+
+        if(existingBeef.getName().equals(beef.getName()) && existingBeef.getGrade().equals(beef.getGrade())){
+          return null;
+        }
+      }
       Beef newBeef = new Beef(nextId(),beef.getCut(), beef.getWeight(), beef.getGrade());
       inventory.put(newBeef.getId(), newBeef);
       save(); // may throw an IOException

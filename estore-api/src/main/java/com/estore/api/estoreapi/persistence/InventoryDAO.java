@@ -51,7 +51,7 @@ public interface InventoryDAO {
      * <br>
      * The id of the beef object is ignored and a new uniqe id is assigned
      *
-     * @return new {@link Beef beef} if successful, false otherwise 
+     * @return new {@link Beef beef} if successful, null otherwise 
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -70,5 +70,4 @@ public interface InventoryDAO {
      */
     boolean deleteBeef(int id) throws IOException;
 
-    //TODO: Figure out how to handle the update method and which methods we are updating
 }

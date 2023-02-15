@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.persistence.InventoryDAO;
@@ -117,9 +116,19 @@ public class InventoryController {
     LOG.info("POST /inventory/products" + beef);
 
     try{
-        return new ResponseEntity<Beef>(inventoryDao.createBeef(beef), HttpStatus.OK);
+      Beef newBeef = inventoryDao.createBeef(beef);
+
+      // newBeef will be null if a beef with the same cut and grade already exist
+      // In this instance it should be updated with the weight of the newbeef
+      if(newBeef == null) { 
+        LOG.warning(String.format("Failed to create %s, already exists.", beef.toString()));
+        return new ResponseEntity<>(HttpStatus.CONFLICT); 
+      }
+
+      LOG.info(String.format("Created %s", newBeef.toString()));
+      return new ResponseEntity<Beef>(newBeef, HttpStatus.OK);
     }catch(IOException e){
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
