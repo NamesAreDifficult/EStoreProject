@@ -1,0 +1,35 @@
+commit a72ecaec01c5be2edeefcf7fc133a9eda60a1f5a
+Author: RJW5692 <89541959+RJW5692@users.noreply.github.com>
+Date:   Thu Feb 9 20:05:25 2023 -0500
+
+    Added my name
+
+commit c157f1e34adcb75bead8eac530b8e9648ddbca66
+Author: Brendan Battisti <brendan.battisti@gmail.com>
+Date:   Thu Feb 9 14:06:25 2023 -0500
+
+    Added my name to the readme
+
+commit fc610f6a4494c7e68bfc4b980f7e41fd0fb734df
+Author: Brian McNulty <brianmcnulty321@gmail.com>
+Date:   Wed Feb 8 18:00:51 2023 -0500
+
+    Updated Readme.md with Brian McNulty
+
+commit 4dfd7f9b096c841c70881843f729ca060f8e8d62
+Author: ajc2732 <ajc2732@rit.edu>
+Date:   Wed Feb 8 15:26:58 2023 -0500
+
+    Alice Cauchi was here :)
+
+commit 9255d7307220d391acc37f3feb1d54690344d87a
+Author: Groovymeister <jrw2936@rit.edu>
+Date:   Wed Feb 8 12:40:29 2023 -0500
+
+    John was here
+
+commit 51c0d020a684e2be6f2dec04c32487faa01c1d59
+Author: github-classroom[bot] <66690702+github-classroom[bot]@users.noreply.github.com>
+Date:   Mon Feb 6 23:39:12 2023 +0000
+
+    Initial commit

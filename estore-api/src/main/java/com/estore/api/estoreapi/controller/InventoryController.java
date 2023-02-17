@@ -148,6 +148,20 @@ public class InventoryController {
   */
   @DeleteMapping("/{id}")
   public ResponseEntity<Beef> deleteBeef(@PathVariable int id) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
+    //return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    LOG.info("DELETE /beef/" + id);
+        try {
+            Boolean deleteHero = inventoryDao.deleteBeef(id);
+            if (deleteHero)
+                return new ResponseEntity<Beef>(HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
+    }
+  
 }
