@@ -69,5 +69,18 @@ public interface InventoryDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteBeef(int id) throws IOException;
+    
+    /**
+     * Updates and saves a {@linkplain Beef beef}
+     *
+     * @param {@link Beef beef} object to be updated and saved
+     *
+     * @return updated {@link Beef beef} if successful, null if
+     * {@link Beef beef} could not be found
+     *
+     * @throws IOException if underlying storage cannot be accessed
+     */
+
+    Beef updateBeef(Beef beef) throws IOException;
 
 }

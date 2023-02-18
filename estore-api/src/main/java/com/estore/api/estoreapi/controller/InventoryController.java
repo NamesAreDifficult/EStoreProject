@@ -147,9 +147,23 @@ public class InventoryController {
   * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @PutMapping("")
+  @PutMapping("/products")
   public ResponseEntity<Beef> updateBeef(@RequestBody Beef beef) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    LOG.info("PUT /inventory/products" + beef);
+    try{
+      Beef updatedBeef = inventoryDao.updateBeef(beef);
+      if (updatedBeef == null){
+        LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      else{
+        LOG.info(String.format("Updated %s", updatedBeef.toString()));
+        return new ResponseEntity<Beef>(beef, HttpStatus.OK);
+      }
+    } catch(IOException e) {
+      LOG.log(Level.SEVERE, e.getLocalizedMessage());
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
