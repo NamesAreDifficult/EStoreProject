@@ -216,9 +216,11 @@ public class InventoryFileDAO implements InventoryDAO {
   public Beef updateBeef(Beef beef) throws IOException {
     synchronized(inventory) {
       if (inventory.containsKey(beef.getId())){
-        inventory.put(beef.getId(), beef);
+        Beef updatedBeef = inventory.get(beef.getId());
+        updatedBeef.setWeight(beef.getWeight());
+        inventory.put(beef.getId(), updatedBeef);
         save();
-        return beef;
+        return updatedBeef;
       }
       else{
         return null;

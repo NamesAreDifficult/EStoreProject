@@ -156,14 +156,10 @@ public class InventoryController {
         LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      if(!(beef.getCut().equals(currentBeef.getCut())) || !(beef.getGrade().equals(currentBeef.getGrade()))){
-        LOG.warning(String.format("Failed to update %s, invalid attributes", beef.toString()));
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-      }
       else{
         Beef updatedBeef = inventoryDao.updateBeef(beef);
-        LOG.info(String.format("Updated %s", updatedBeef.toString()));
-        return new ResponseEntity<Beef>(beef, HttpStatus.OK);
+        LOG.info(String.format("Updated weight of %s", updatedBeef.toString()));
+        return new ResponseEntity<Beef>(updatedBeef, HttpStatus.OK);
       }
     } catch(IOException e) {
       LOG.log(Level.SEVERE, e.getLocalizedMessage());
