@@ -160,8 +160,25 @@ public class InventoryController {
   * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/products/{id}")
   public ResponseEntity<Beef> deleteBeef(@PathVariable int id) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    try {
+      LOG.info("DELETE /inventory/products/" + id);
+
+      Beef beef = inventoryDao.getBeef(id);
+
+      if(beef == null){
+        LOG.warning(String.format("Failed to delete ID: %d, id does not exist.", id));
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+
+      inventoryDao.deleteBeef(id);
+      LOG.info("Deleted " + beef.toString());
+
+      return new ResponseEntity<Beef>(HttpStatus.OK);
+      }catch(IOException e) {
+        LOG.log(Level.SEVERE, e.getLocalizedMessage());
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
   }
 }
