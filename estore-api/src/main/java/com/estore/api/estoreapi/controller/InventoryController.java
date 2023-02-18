@@ -134,6 +134,7 @@ public class InventoryController {
       LOG.info(String.format("Created %s", newBeef.toString()));
       return new ResponseEntity<Beef>(newBeef, HttpStatus.OK);
     }catch(IOException e){
+      LOG.log(Level.SEVERE, e.getLocalizedMessage());
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
