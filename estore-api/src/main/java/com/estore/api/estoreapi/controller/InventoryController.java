@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.products.Beef;
