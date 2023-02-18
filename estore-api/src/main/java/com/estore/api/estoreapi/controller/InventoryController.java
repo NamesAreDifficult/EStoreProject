@@ -116,6 +116,11 @@ public class InventoryController {
     LOG.info("POST /inventory/products" + beef);
 
     try{
+      if(beef.getCut() == null || beef.getGrade() == null){
+        LOG.warning(String.format("Failed to create %s, invalid attributes", beef.toString()));
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+
       Beef newBeef = inventoryDao.createBeef(beef);
 
       // newBeef will be null if a beef with the same cut and grade already exist
