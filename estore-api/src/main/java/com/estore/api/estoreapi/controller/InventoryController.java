@@ -151,12 +151,17 @@ public class InventoryController {
   public ResponseEntity<Beef> updateBeef(@RequestBody Beef beef) {
     LOG.info("PUT /inventory/products" + beef);
     try{
-      Beef updatedBeef = inventoryDao.updateBeef(beef);
-      if (updatedBeef == null){
+      Beef currentBeef = inventoryDao.getBeef(beef.getId());
+      if (currentBeef == null){
         LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
+      if(!(beef.getCut().equals(currentBeef.getCut())) || !(beef.getGrade().equals(currentBeef.getGrade()))){
+        LOG.warning(String.format("Failed to update %s, invalid attributes", beef.toString()));
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
       else{
+        Beef updatedBeef = inventoryDao.updateBeef(beef);
         LOG.info(String.format("Updated %s", updatedBeef.toString()));
         return new ResponseEntity<Beef>(beef, HttpStatus.OK);
       }
