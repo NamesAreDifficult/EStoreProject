@@ -54,7 +54,7 @@ public class InventoryController {
   * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @GetMapping("/{id}")
+  @GetMapping("/products/{id}")
   public ResponseEntity<Beef> getBeef(@PathVariable int id) {
     try{
 
