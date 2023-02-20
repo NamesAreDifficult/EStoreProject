@@ -1,9 +1,10 @@
 package com.estore.api.estoreapi.persistence;
 
+import java.io.IOException;
+
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Customer;
 
-import java.io.IOException;
 
 public interface UserDAO {
     
