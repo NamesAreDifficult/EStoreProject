@@ -19,7 +19,7 @@ public interface InventoryDAO {
      */
     Beef[] getBeef() throws IOException;
 
-        /**
+    /**
      * Retrieves a {@linkplain Beef beef} with the given id
      * 
      * @param id The id of the {@link Beef beef} to get
