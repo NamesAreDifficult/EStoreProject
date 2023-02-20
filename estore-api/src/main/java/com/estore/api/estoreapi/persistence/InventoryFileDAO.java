@@ -46,16 +46,7 @@ public class InventoryFileDAO implements InventoryDAO {
       load();  // load the beef from the file
   }
 
-  /**
-  * Generates the next id for a new {@linkplain Beef beef}
-  * 
-  * @return The next id
-  */
-  private synchronized static int nextId() {
-    int id = nextId;
-    ++nextId;
-    return id;
-  }
+  
 
   /**
   * Generates an array of {@linkplain Beef beef} from the tree map
