@@ -156,8 +156,8 @@ public class InventoryController {
         LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      if(beef.getWeight() < 0){
-        LOG.warning(String.format("Failed to create %s, invalid attributes", beef.toString()));
+      if(currentBeef.getWeight() + beef.getWeight() < 0){
+        LOG.warning(String.format("Failed to create %s, weight less than zero", beef.toString()));
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       else{
