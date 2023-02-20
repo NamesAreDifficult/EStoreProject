@@ -80,7 +80,7 @@ public class InventoryController {
   * HTTP status of OK<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @GetMapping("")
+  @GetMapping("products/")
   public ResponseEntity<Beef[]> getBeef() {
 
     try{
