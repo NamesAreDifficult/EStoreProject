@@ -61,7 +61,7 @@ public class InventoryController {
       Beef retrievedBeef = inventoryDao.getBeef(id);
 
       if (retrievedBeef != null) {
-        return new ResponseEntity<Beef>(inventoryDao.getBeef(id), HttpStatus.OK);
+        return new ResponseEntity<Beef>(retrievedBeef, HttpStatus.OK);
       }
       else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -80,9 +80,23 @@ public class InventoryController {
   * HTTP status of OK<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @GetMapping("")
+  @GetMapping("/products")
   public ResponseEntity<Beef[]> getBeef() {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    try{
+
+      Beef[] retrievedBeef = inventoryDao.getBeef();
+
+      if (retrievedBeef != null) {
+        return new ResponseEntity<Beef[]>(retrievedBeef, HttpStatus.OK);
+      }
+      else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      
+    }catch(IOException e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
