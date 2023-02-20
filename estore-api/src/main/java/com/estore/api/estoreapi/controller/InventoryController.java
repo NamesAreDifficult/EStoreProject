@@ -157,7 +157,7 @@ public class InventoryController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
       if(currentBeef.getWeight() + beef.getWeight() < 0){
-        LOG.warning(String.format("Failed to create %s, weight less than zero", beef.toString()));
+        LOG.warning(String.format("Failed to update %s, weight less than zero", beef.toString()));
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       else{
