@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.users.User;
 
 /**
  * Handles the REST API requests for the Beef resource
@@ -44,6 +45,28 @@ public class UserController {
    */
   public UserController(UserDAO userDao) {
     this.userDao = userDao;
+  }
+
+  /**
+   * Responds to the GET request for all {@linkplain User user}
+   * 
+   * @return ResponseEntity with array of {@link User user} objects (may be empty)
+   *         and
+   *         HTTP status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   */
+  @GetMapping("")
+  public ResponseEntity<User[]> getUsers() {
+    try {
+      return new ResponseEntity<User[]>(this.userDao.GetUsers(), HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<User> getUser() {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
 }

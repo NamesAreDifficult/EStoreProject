@@ -105,10 +105,14 @@ public class UserFileDAO implements UserDAO {
     return null;
   }
 
+  /*
+   * Returns an array of all the users
+   * 
+   * @return an array of all users
+   */
   @Override
   public User[] GetUsers() throws IOException {
-    // TODO Auto-generated method stub
-    return null;
+    return getUserArray();
   }
 
   @Override
