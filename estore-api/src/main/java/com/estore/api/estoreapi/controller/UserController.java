@@ -21,10 +21,11 @@ import com.estore.api.estoreapi.persistence.UserDAO;
 /**
  * Handles the REST API requests for the Beef resource
  * <p>
- * {@literal @}RestController Spring annotation identifies this class as a REST API
+ * {@literal @}RestController Spring annotation identifies this class as a REST
+ * API
  * method handler to the Spring framework
  * 
- * @author NamesAreDifficult
+ * @author Brendan Battisti
  */
 
 @RestController
@@ -33,15 +34,16 @@ public class UserController {
   private static final Logger LOG = Logger.getLogger(UserController.class.getName());
   private UserDAO userDao;
 
-    /**
-     * Creates a REST API controller to reponds to requests
-     * 
-     * @param inventoryDao The {@link InventoryDAO Inventory Data Access Object} to perform CRUD operations
-     * <br>
-     * This dependency is injected by the Spring Framework
-     */
-    public UserController(UserDAO userDao) {
-        this.userDao = userDao;
-    }
+  /**
+   * Creates a REST API controller to reponds to requests
+   * 
+   * @param UserDAO The {@link UserDAO User Data Access Object} to perform CRUD
+   *                operations
+   *                <br>
+   *                This dependency is injected by the Spring Framework
+   */
+  public UserController(UserDAO userDao) {
+    this.userDao = userDao;
+  }
 
 }
