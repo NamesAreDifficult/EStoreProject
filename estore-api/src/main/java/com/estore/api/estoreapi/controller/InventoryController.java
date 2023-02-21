@@ -131,7 +131,7 @@ public class InventoryController {
     LOG.info("POST /inventory/products" + beef);
 
     try{
-      if(beef.getCut() == null || beef.getGrade() == null || beef.getWeight() < 0){
+      if(beef.getCut() == null || beef.getGrade() == null || beef.getWeight() < 0 || beef.getPrice() < 0){
         LOG.warning(String.format("Failed to create %s, invalid attributes", beef.toString()));
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
@@ -171,8 +171,8 @@ public class InventoryController {
         LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      if(currentBeef.getWeight() + beef.getWeight() < 0){
-        LOG.warning(String.format("Failed to update %s, weight less than zero", beef.toString()));
+      if(currentBeef.getWeight() + beef.getWeight() < 0 || beef.getPrice() < 0){
+        LOG.warning(String.format("Failed to update %s, invalid attributes", beef.toString()));
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       else{
