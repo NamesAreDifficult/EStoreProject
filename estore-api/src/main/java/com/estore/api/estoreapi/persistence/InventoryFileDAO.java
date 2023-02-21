@@ -218,7 +218,9 @@ public class InventoryFileDAO implements InventoryDAO {
       if (inventory.containsKey(beef.getId())){
         Beef updatedBeef = inventory.get(beef.getId());
         updatedBeef.addWeight(beef.getWeight());
-        updatedBeef.setPrice(beef.getPrice());
+        if(beef.getPrice() > 0){
+          updatedBeef.setPrice(beef.getPrice());
+        }
         inventory.put(beef.getId(), updatedBeef);
         save();
         return updatedBeef;
