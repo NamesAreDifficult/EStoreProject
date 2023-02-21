@@ -25,6 +25,7 @@ public class Beef {
    * @param cut The type of cut
    * @param weight the weight of the cut
    * @param grade the grade of beef as represented on the japanese beef grading scale
+   * @param price the price per lb of beef
    * 
    * {@literal @}JsonProperty is used in serialization and deserialization
    * of the JSON object to the Java object in mapping the fields.  If a field
