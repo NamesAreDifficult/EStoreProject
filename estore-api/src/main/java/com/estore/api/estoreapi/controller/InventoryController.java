@@ -113,9 +113,22 @@ public class InventoryController {
   * Example: Find all beef that are ribeyes
   * GET http://localhost:8080/products/?cut=ribeye
   */
-  @GetMapping("/")
-  public ResponseEntity<Beef[]> searchBeef(@RequestParam String grade, String cut) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  @GetMapping("/products/")
+  public ResponseEntity<Beef[]> searchBeef(@RequestParam String name) {
+    LOG.info(String.format("GET /products/?name=" + name));
+    
+    try{
+      Beef[] retrievedBeef = inventoryDao.findBeef(name);
+
+      if (retrievedBeef.length != 0) {
+        return new ResponseEntity<Beef[]>(retrievedBeef, HttpStatus.OK);
+      }      else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      
+    }catch(IOException e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
