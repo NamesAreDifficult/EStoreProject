@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.users.User;
 
 /**
@@ -64,9 +66,39 @@ public class UserController {
     }
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<User> getUser() {
+  @GetMapping("/{username}")
+  public ResponseEntity<User> getUser(@PathVariable String username) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
+  @GetMapping("/admin/{username}")
+  public ResponseEntity<Boolean> isAdmin(@PathVariable String username) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  @PostMapping("")
+  public ResponseEntity<User> createUser(@RequestBody User user) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  @DeleteMapping("/{username}")
+  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  @DeleteMapping("/shopping/{username}")
+  public ResponseEntity<Boolean> ClearShoppingCart(@PathVariable String username) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  @PutMapping("/shopping/{username}")
+  public ResponseEntity<Boolean> AddToShoppingCart(@PathVariable String username, @RequestBody Beef beef) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  // Not sure which CRUD operation to use here
+  @PutMapping("/checkout/{username}")
+  public ResponseEntity<Boolean> AddToShoppingCart(@PathVariable String username) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
 }

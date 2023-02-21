@@ -93,52 +93,71 @@ public class UserFileDAO implements UserDAO {
     return userArray;
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public User CreateUser(User user) throws IOException {
     // TODO Auto-generated method stub
     return null;
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public User GetUser(String username) throws IOException {
     // TODO Auto-generated method stub
     return null;
   }
 
-  /*
-   * Returns an array of all the users
-   * 
-   * @return an array of all users
+  /**
+   ** {@inheritDoc}
    */
   @Override
   public User[] GetUsers() throws IOException {
     return getUserArray();
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public boolean DeleteUser(String username) throws IOException {
     // TODO Auto-generated method stub
     return false;
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public boolean IsAdmin(String username) throws IOException {
     // TODO Auto-generated method stub
     return false;
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public boolean Checkout(String username) throws IOException {
     // TODO Auto-generated method stub
     return false;
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public Customer AddToCart(String username) throws IOException {
     // TODO Auto-generated method stub
     return null;
   }
 
+  /**
+   ** {@inheritDoc}
+   */
   @Override
   public Customer ClearCart(String username) throws IOException {
     // TODO Auto-generated method stub
