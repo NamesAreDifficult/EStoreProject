@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
 
@@ -110,8 +111,6 @@ public class UserFileDAO implements UserDAO {
     }
   }
 
-  }
-
   /**
    ** {@inheritDoc}
    */
@@ -166,17 +165,52 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public boolean Checkout(String username) throws IOException {
-    // TODO Auto-generated method stub
-    return false;
+    synchronized (users) {
+      return true; // Todo implement
+
+    }
   }
 
   /**
    ** {@inheritDoc}
    */
   @Override
-  public Customer AddToCart(String username) throws IOException {
-    // TODO Auto-generated method stub
-    return null;
+  public Customer AddToCart(String username, int beefId, float weight) throws IOException {
+    synchronized (users) {
+
+      User user = GetUser(username);
+
+      // Check if the user is an admin
+      if (user.isAdmin())
+        return null;
+
+      // Cast the user to a customer
+      Customer customer = (Customer) user;
+
+      customer.addToCart(new CartBeef(beefId, weight));
+      return customer;
+    }
+  }
+
+  /**
+   ** {@inheritDoc}
+   */
+  @Override
+  public Customer RemoveFromCart(String username, int beefId) throws IOException {
+    synchronized (users) {
+
+      User user = GetUser(username);
+
+      // Check if the user is an admin
+      if (user.isAdmin())
+        return null;
+
+      // Cast the user to a customer
+      Customer customer = (Customer) user;
+
+      customer.removeFromCart(beefId);
+      return customer;
+    }
   }
 
   /**

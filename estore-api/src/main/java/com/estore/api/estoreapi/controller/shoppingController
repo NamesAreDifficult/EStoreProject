@@ -1,0 +1,37 @@
+@RestController
+@RequestMapping("shopping")
+public class InventoryController {
+  private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private InventoryDAO inventoryDao;
+    private UserDAO userDAO;
+
+    public InventoryController(
+        InventoryDAO inventoryDao,
+        UserDAO userDAO
+    ) {
+        this.inventoryDao = inventoryDao;
+        this.userDAO = userDAO;
+    }
+
+    @PutMapping("/checkout/{username}")
+    public ResponseEntity<Boolean> CheckoutShoppingCart(@PathVariable String username) {
+      return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    
+    @PutMapping("/{username}")
+    public ResponseEntity<Boolean> AddToShoppingCart(@PathVariable String username, @PathVariable int beefId) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    
+    @DeleteMapping("/clear/{username}")
+    public ResponseEntity<Boolean> ClearShoppingCart(@PathVariable String username) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+}

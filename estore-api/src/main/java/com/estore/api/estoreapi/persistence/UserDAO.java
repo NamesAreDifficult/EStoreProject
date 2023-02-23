@@ -5,19 +5,18 @@ import java.io.IOException;
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Customer;
 
-
 public interface UserDAO {
-    
+
     /**
      * Creates and saves a {@linkplain User user}
      * 
      * @param user {@linkplain User user} object to be created and saved
      *
-     * @return new {@link User user} if successful, null otherwise 
+     * @return new {@link User user} if successful, null otherwise
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User CreateUser(User user) throws IOException; 
+    User CreateUser(User user) throws IOException;
 
     /**
      * Retrieves a {@linkplain User user} with the given username
@@ -25,8 +24,8 @@ public interface UserDAO {
      * @param username The username of the {@link User user} to get
      * 
      * @return a {@link User user} object with the matching username
-     * <br>
-     * null if no {@link User user} with a matching username is found
+     *         <br>
+     *         null if no {@link User user} with a matching username is found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -38,8 +37,8 @@ public interface UserDAO {
      * @param username The username of the {@link User user} to check
      * 
      * @return a {@link User user} object with the matching username
-     * <br>
-     * null if no {@link User user} with a matching username is found
+     *         <br>
+     *         null if no {@link User user} with a matching username is found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -51,8 +50,9 @@ public interface UserDAO {
      * @param username The username of the {@link Customer customer} to checkout
      * 
      * @return a {@link Customer customer} object with the matching username
-     * <br>
-     * null if no {@link Customer customer} with a matching username is found
+     *         <br>
+     *         null if no {@link Customer customer} with a matching username is
+     *         found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -61,24 +61,31 @@ public interface UserDAO {
     /**
      * Adds to a customer's shopping cart {@linkplain Customer customer}
      * 
-     * @param username The username of the {@link Customer customer} to checkout
+     * @param username The username of the {@link Customer customer to add to cart
+     * of
+     * 
+     * @param beefid   The id of the beef to remove
      * 
      * @return a {@link User user} object with the matching username
-     * <br>
-     * null if no {@link User user} with a matching username is found
+     *         <br>
+     *         null if no {@link User user} with a matching username is found
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Customer AddToCart(String username) throws IOException;
+    Customer AddToCart(String username, int beefId, float weight) throws IOException;
 
     /**
      * Clears a customer's shopping cart {@linkplain Customer customer}
      * 
-     * @param username The username of the {@link Customer customer} to clear the shopping cart of
+     * @param username The username of the {@link Customer customer} to clear the
+     *                 shopping cart of
+     * @param beefId   ID of the beef to add the the shopping cart
+     * 
+     * @param weight   Weight of the beef to add to the shopping cart
      * 
      * @return a {@link User user} object with the matching username
-     * <br>
-     * null if no {@link User user} with a matching username is found
+     *         <br>
+     *         null if no {@link User user} with a matching username is found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -91,7 +98,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User[] GetUsers()throws IOException;
+    User[] GetUsers() throws IOException;
 
     /**
      * Deletes a {@linkplain User user} with the given username
@@ -99,10 +106,26 @@ public interface UserDAO {
      * @param username The username of the {@link User user}
      * 
      * @return true if the {@link User user} was deleted
-     * <br>
-     * false if user with the given username does not exist
+     *         <br>
+     *         false if user with the given username does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean DeleteUser(String username) throws IOException;
+
+    /**
+     * Removes a {@linkplain Beef beef} from a shopping cart of a
+     * {@linkplain} User user}
+     * 
+     * @param username The username of the {@link User user}
+     * 
+     * @param beefid   The id of the beef to remove
+     * 
+     * @return a {@link User user} object with the matching username
+     *         <br>
+     *         null if no {@link User user} with a matching username is found
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Customer RemoveFromCart(String username, int beefId) throws IOException;
 }

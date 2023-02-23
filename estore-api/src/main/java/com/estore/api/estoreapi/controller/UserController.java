@@ -78,12 +78,12 @@ public class UserController {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  @PostMapping("")
+  @PostMapping("/customer")
   public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  @PostMapping("")
+  @PostMapping("/admin")
   public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
@@ -93,19 +93,4 @@ public class UserController {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  @DeleteMapping("/shopping/{username}")
-  public ResponseEntity<Boolean> ClearShoppingCart(@PathVariable String username) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
-
-  @PutMapping("/shopping/{username}")
-  public ResponseEntity<Boolean> AddToShoppingCart(@PathVariable String username, @RequestBody Beef beef) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
-
-  // Not sure which CRUD operation to use here
-  @PutMapping("/checkout/{username}")
-  public ResponseEntity<Boolean> AddToShoppingCart(@PathVariable String username) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
 }
