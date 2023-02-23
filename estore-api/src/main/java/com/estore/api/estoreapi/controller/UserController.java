@@ -18,7 +18,7 @@ import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
 
 /**
- * Handles the REST API requests for the Beef resource
+ * Handles the REST API requests for the users
  * <p>
  * {@literal @}RestController Spring annotation identifies this class as a REST
  * API

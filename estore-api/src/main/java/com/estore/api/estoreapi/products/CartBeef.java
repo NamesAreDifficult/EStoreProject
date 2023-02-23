@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*
  * Class for representing beef in a customer's shopping cart
+ * 
+ * @author Brendan Battisti
  */
 public class CartBeef {
     @JsonProperty("id")
