@@ -93,6 +93,21 @@ public class UserFileDAO implements UserDAO {
     return userArray;
   }
 
+  private Customer GetCustomer(String username) throws IOException {
+    synchronized (users) {
+      User user = GetUser(username);
+
+      // Check if the user is an admin
+      if (user.isAdmin())
+        return null;
+
+      // Cast the user to a customer
+      Customer customer = (Customer) user;
+
+      return customer;
+    }
+  }
+
   /**
    ** {@inheritDoc}
    */
@@ -178,14 +193,7 @@ public class UserFileDAO implements UserDAO {
   public Customer AddToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
-      User user = GetUser(username);
-
-      // Check if the user is an admin
-      if (user.isAdmin())
-        return null;
-
-      // Cast the user to a customer
-      Customer customer = (Customer) user;
+      Customer customer = GetCustomer(username);
 
       customer.addToCart(new CartBeef(beefId, weight));
       return customer;
@@ -199,14 +207,7 @@ public class UserFileDAO implements UserDAO {
   public Customer RemoveFromCart(String username, int beefId) throws IOException {
     synchronized (users) {
 
-      User user = GetUser(username);
-
-      // Check if the user is an admin
-      if (user.isAdmin())
-        return null;
-
-      // Cast the user to a customer
-      Customer customer = (Customer) user;
+      Customer customer = GetCustomer(username);
 
       customer.removeFromCart(beefId);
       return customer;
@@ -218,8 +219,13 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public Customer ClearCart(String username) throws IOException {
-    // TODO Auto-generated method stub
-    return null;
+    synchronized (users) {
+
+      Customer customer = GetCustomer(username);
+
+      customer.clearCart();
+      return customer;
+    }
   }
 
 }
