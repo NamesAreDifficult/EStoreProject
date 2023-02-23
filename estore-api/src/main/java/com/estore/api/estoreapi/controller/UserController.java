@@ -19,6 +19,8 @@ import java.util.logging.Level;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.products.Beef;
+import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
 
 /**
@@ -77,7 +79,12 @@ public class UserController {
   }
 
   @PostMapping("")
-  public ResponseEntity<User> createUser(@RequestBody User user) {
+  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  @PostMapping("")
+  public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

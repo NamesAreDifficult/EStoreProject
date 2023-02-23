@@ -85,7 +85,6 @@ public class UserFileDAO implements UserDAO {
 
     for (User user : users.values()) {
       userArrayList.add(user);
-
     }
 
     User[] userArray = new User[userArrayList.size()];
@@ -98,8 +97,19 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public User CreateUser(User user) throws IOException {
-    // TODO Auto-generated method stub
-    return null;
+    synchronized (users) {
+      // Checks duplicate username
+      if (users.containsKey(user.getUsername())) {
+        return null;
+      }
+
+      // Adds new user
+      users.put(user.getUsername(), user);
+      save();
+      return user;
+    }
+  }
+
   }
 
   /**
@@ -107,8 +117,9 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public User GetUser(String username) throws IOException {
-    // TODO Auto-generated method stub
-    return null;
+    synchronized (users) {
+      return users.get(username);
+    }
   }
 
   /**
@@ -116,7 +127,9 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public User[] GetUsers() throws IOException {
-    return getUserArray();
+    synchronized (users) {
+      return getUserArray();
+    }
   }
 
   /**
@@ -124,8 +137,11 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public boolean DeleteUser(String username) throws IOException {
-    // TODO Auto-generated method stub
-    return false;
+
+    synchronized (users) {
+      User removed_user = users.remove(username);
+      return (removed_user != null);
+    }
   }
 
   /**
@@ -133,8 +149,16 @@ public class UserFileDAO implements UserDAO {
    */
   @Override
   public boolean IsAdmin(String username) throws IOException {
-    // TODO Auto-generated method stub
-    return false;
+    synchronized (users) {
+      User user = GetUser(username);
+
+      if (user != null) {
+        return user.isAdmin();
+      }
+      // Returns false if user is not found
+      return false;
+
+    }
   }
 
   /**
