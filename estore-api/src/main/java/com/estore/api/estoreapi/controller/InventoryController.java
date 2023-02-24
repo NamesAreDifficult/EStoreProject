@@ -61,7 +61,7 @@ public class InventoryController {
       Beef retrievedBeef = inventoryDao.getBeef(id);
 
       if (retrievedBeef != null) {
-        return new ResponseEntity<Beef>(inventoryDao.getBeef(id), HttpStatus.OK);
+        return new ResponseEntity<Beef>(retrievedBeef, HttpStatus.OK);
       }
       else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -80,9 +80,23 @@ public class InventoryController {
   * HTTP status of OK<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @GetMapping("")
+  @GetMapping("/products")
   public ResponseEntity<Beef[]> getBeef() {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    try{
+
+      Beef[] retrievedBeef = inventoryDao.getBeef();
+
+      if (retrievedBeef != null) {
+        return new ResponseEntity<Beef[]>(retrievedBeef, HttpStatus.OK);
+      }
+      else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      
+    }catch(IOException e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
@@ -99,9 +113,22 @@ public class InventoryController {
   * Example: Find all beef that are ribeyes
   * GET http://localhost:8080/products/?cut=ribeye
   */
-  @GetMapping("/")
-  public ResponseEntity<Beef[]> searchBeef(@RequestParam String grade, String cut) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  @GetMapping("/products/")
+  public ResponseEntity<Beef[]> searchBeef(@RequestParam String name) {
+    LOG.info(String.format("GET /products/?name=" + name));
+    
+    try{
+      Beef[] retrievedBeef = inventoryDao.findBeef(name);
+
+      if (retrievedBeef.length != 0) {
+        return new ResponseEntity<Beef[]>(retrievedBeef, HttpStatus.OK);
+      }      else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      
+    }catch(IOException e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
@@ -117,7 +144,7 @@ public class InventoryController {
     LOG.info("POST /inventory/products" + beef);
 
     try{
-      if(beef.getCut() == null || beef.getGrade() == null){
+      if(beef.getCut() == null || beef.getGrade() == null || beef.getWeight() < 0 || beef.getPrice() < 0){
         LOG.warning(String.format("Failed to create %s, invalid attributes", beef.toString()));
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
@@ -148,9 +175,28 @@ public class InventoryController {
   * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
   */
-  @PutMapping("")
+  @PutMapping("/products")
   public ResponseEntity<Beef> updateBeef(@RequestBody Beef beef) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    LOG.info("PUT /inventory/products" + beef);
+    try{
+      Beef currentBeef = inventoryDao.getBeef(beef.getId());
+      if (currentBeef == null){
+        LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      if(currentBeef.getWeight() + beef.getWeight() < 0 || beef.getPrice() < 0){
+        LOG.warning(String.format("Failed to update %s, invalid attributes", beef.toString()));
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+      else{
+        Beef updatedBeef = inventoryDao.updateBeef(beef);
+        LOG.info(String.format("Updated weight of %s", updatedBeef.toString()));
+        return new ResponseEntity<Beef>(updatedBeef, HttpStatus.OK);
+      }
+    } catch(IOException e) {
+      LOG.log(Level.SEVERE, e.getLocalizedMessage());
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**

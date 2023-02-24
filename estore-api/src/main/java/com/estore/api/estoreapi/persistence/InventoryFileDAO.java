@@ -63,7 +63,25 @@ public class InventoryFileDAO implements InventoryDAO {
   * @return  The array of {@link Beef beef}, may be empty
   */
   private Beef[] getBeefArray() {
-    return getBeefArray(null, null);
+    return getBeefArray(null);
+  }
+
+  /**
+   * Generates an array of {@linkplain Beef beef} from the tree map
+   * @param name
+   * @return The array of {@link Beef beef}, may be empty
+   */
+  private Beef[] getBeefArray(String name){
+    ArrayList<Beef> beefArrayList = new ArrayList<>();
+    for (Beef beef : inventory.values()){
+      if(name == null || beef.getName().toLowerCase().contains(name.toLowerCase())){
+        beefArrayList.add(beef);
+      }
+    }
+
+    Beef[] beefArray = new Beef[beefArrayList.size()];
+    beefArrayList.toArray(beefArray);
+    return beefArray;
   }
 
   /**
@@ -75,15 +93,18 @@ public class InventoryFileDAO implements InventoryDAO {
   * 
   * @return  The array of {@link Beef beef}, may be empty
   */
-  private Beef[] getBeefArray(String grade, String cut) { // if containsText == null, no filter
+  private Beef[] getBeefArray(String grade, String cut, float lowPrice, float highPrice) { // if containsText == null, no filter
     ArrayList<Beef> beefArrayList = new ArrayList<>();
 
     for (Beef beef : inventory.values()){
-      if ((grade == null && cut == null) || 
-          (beef.getCut().contains(cut) && beef.getGrade().contains(grade)) ||
-          (beef.getCut().contains(cut) && grade == null) ||
-          (beef.getGrade().contains(grade) && cut == null) ) { 
-        beefArrayList.add(beef);
+      if(grade == null || grade == beef.getGrade()){
+        if(cut == null || cut == beef.getCut()){
+          if(lowPrice <= beef.getPrice()){
+            if(highPrice >= beef.getPrice()){
+              beefArrayList.add(beef);
+            }
+          }
+        }
       }
     }
 
@@ -153,9 +174,9 @@ public class InventoryFileDAO implements InventoryDAO {
   ** {@inheritDoc}
   */
   @Override
-  public Beef[] findBeef(String cut, String grade) {
+  public Beef[] findBeef(String name) {
     synchronized(inventory) {
-      return getBeefArray(cut, grade);
+      return getBeefArray(name);
     }
   }
 
@@ -187,7 +208,7 @@ public class InventoryFileDAO implements InventoryDAO {
           return null;
         }
       }
-      Beef newBeef = new Beef(nextId(),beef.getCut(), beef.getWeight(), beef.getGrade());
+      Beef newBeef = new Beef(nextId(),beef.getCut(), beef.getWeight(), beef.getGrade(), beef.getPrice());
       inventory.put(newBeef.getId(), newBeef);
       save(); // may throw an IOException
       return newBeef;
@@ -205,6 +226,28 @@ public class InventoryFileDAO implements InventoryDAO {
         return save();
       }else{
         return false;
+      }
+    }
+  }
+
+  /**
+  ** {@inheritDoc}
+  */
+  @Override
+  public Beef updateBeef(Beef beef) throws IOException {
+    synchronized(inventory) {
+      if (inventory.containsKey(beef.getId())){
+        Beef updatedBeef = inventory.get(beef.getId());
+        updatedBeef.addWeight(beef.getWeight());
+        if(beef.getPrice() > 0){
+          updatedBeef.setPrice(beef.getPrice());
+        }
+        inventory.put(beef.getId(), updatedBeef);
+        save();
+        return updatedBeef;
+      }
+      else{
+        return null;
       }
     }
   }
