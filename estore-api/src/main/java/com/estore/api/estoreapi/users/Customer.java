@@ -2,14 +2,11 @@ package com.estore.api.estoreapi.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-
-import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 
 /*
  * Represents a Customer User
- * 
+ *  
  * @author Brendan Battisti
  */
 public class Customer extends User {
@@ -50,7 +47,10 @@ public class Customer extends User {
     /*
      * Adds a product to the customer's cart
      * 
-     * @param beef beef to be added to the cart
+     * @param cartBeef beef to be added to the cart
+     * 
+     * @return boolean depending on whether or no the addition was
+     * successful
      */
     public boolean addToCart(CartBeef cartBeef) {
 
@@ -73,7 +73,10 @@ public class Customer extends User {
     /*
      * Removes a product from the customer's cart
      * 
-     * @param beef beef to be added to the cart
+     * @param id id of the beef to be removed from the cart
+     * 
+     * @return boolean depending on whether or no the removal was
+     * successful
      */
     public boolean removeFromCart(int id) {
 

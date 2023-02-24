@@ -62,28 +62,59 @@ public class UserController {
     }
   }
 
+  /**
+   * Responds to the GET request for a {@linkplain User user}
+   * 
+   * @param username - username of the user
+   * 
+   * @return ResponseEntity with a {@link User user} object (may be empty)
+   *         and
+   *         HTTP status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   */
   @GetMapping("/{username}")
   public ResponseEntity<User> getUser(@PathVariable String username) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  @GetMapping("/admin/{username}")
-  public ResponseEntity<Boolean> isAdmin(@PathVariable String username) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
-
+  /**
+   * Creates a {@linkplain Customer customer} with the provided customer object
+   * 
+   * @param customer - The {@link Customer customer} to create
+   * 
+   * @return ResponseEntity with created {@link Customer customer} object and HTTP
+   *         status of CREATED<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   */
   @PostMapping("/customer")
   public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
+  /**
+   * Creates a {@linkplain Admin admin} with the provided admin object
+   * 
+   * @param admin - The {@link Admin admin} to create
+   * 
+   * @return ResponseEntity with created {@link Admin admin} object and HTTP
+   *         status of CREATED<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   */
   @PostMapping("/admin")
   public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
+  /**
+   * Deletes a {@linkplain User user} with the provided username
+   * 
+   * @param username - The username of the {@linkplain User user} to delete
+   * 
+   * @return ResponseEntity with created {@link User user} object <br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   */
   @DeleteMapping("/{username}")
-  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
+  public ResponseEntity<User> DeleteUser(@PathVariable String username) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
