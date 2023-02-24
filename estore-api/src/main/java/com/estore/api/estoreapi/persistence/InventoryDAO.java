@@ -35,14 +35,13 @@ public interface InventoryDAO {
     /**
      * Finds all {@linkplain Beef beef} that match the supplied parameters
      * 
-     * @param cut the text to search cuts for
-     * @param grade the text to search grades for
+     * @param name String for the desired name to search for
      * 
      * @return An array of {@link Beef beef} who match the given search critera
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Beef[] findBeef(String cut, String grade) throws IOException;
+    Beef[] findBeef(String name) throws IOException;
 
     /**
      * Creates and saves a {@linkplain Beef beef}
@@ -69,5 +68,18 @@ public interface InventoryDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteBeef(int id) throws IOException;
+    
+    /**
+     * Updates and saves a {@linkplain Beef beef}
+     *
+     * @param {@link Beef beef} object to be updated and saved
+     *
+     * @return updated {@link Beef beef} if successful, null if
+     * {@link Beef beef} could not be found
+     *
+     * @throws IOException if underlying storage cannot be accessed
+     */
+
+    Beef updateBeef(Beef beef) throws IOException;
 
 }

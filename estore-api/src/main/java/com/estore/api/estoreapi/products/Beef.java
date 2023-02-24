@@ -13,6 +13,7 @@ public class Beef {
   @JsonProperty("cut") private final String cut;
   @JsonProperty("grade") private final String grade;
   @JsonProperty("weight") private float weight;
+  @JsonProperty("price") private double price;
 
   // Format strings
   static final String NAME_FORMAT = "%s %s";
@@ -24,6 +25,7 @@ public class Beef {
    * @param cut The type of cut
    * @param weight the weight of the cut
    * @param grade the grade of beef as represented on the japanese beef grading scale
+   * @param price the price per lb of beef
    * 
    * {@literal @}JsonProperty is used in serialization and deserialization
    * of the JSON object to the Java object in mapping the fields.  If a field
@@ -33,11 +35,13 @@ public class Beef {
   public Beef(@JsonProperty("id") int id,
               @JsonProperty("cut") String cut,
               @JsonProperty("weight") float weight,
-              @JsonProperty("grade") String grade) {
+              @JsonProperty("grade") String grade,
+              @JsonProperty("price") double price) {
     this.id = id;
     this.cut = cut;
     this.weight = weight;
     this.grade = grade;
+    this.price = Math.round(price * 100.0) / 100.0;
   }
 
   /**
@@ -94,10 +98,23 @@ public class Beef {
   public String getCut() { return this.cut; }
 
   /**
+   * Retrieves the price of the beef
+   * 
+   * @return The price of the beef
+   */
+  public double getPrice() {return this.price;}
+
+  /**
+   * Changes the price of the beef
+   */
+  public void setPrice(double newPrice) {this.price = newPrice;}
+
+
+  /**
   * {@inheritDoc}
   */
   @Override
   public String toString() {
-    return String.format(STRING_FORMAT, id, cut, grade, weight);
+    return String.format(STRING_FORMAT, id, cut, grade, weight, price);
   }
 }
