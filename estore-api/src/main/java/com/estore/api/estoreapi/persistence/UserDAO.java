@@ -3,20 +3,32 @@ package com.estore.api.estoreapi.persistence;
 import java.io.IOException;
 
 import com.estore.api.estoreapi.users.User;
+import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
 
 public interface UserDAO {
 
     /**
-     * Creates and saves a {@linkplain User user}
+     * Creates and saves a {@linkplain Customer customer}
      * 
-     * @param user {@linkplain User user} object to be created and saved
+     * @param user {@linkplain Customer customer} object to be created and saved
      *
-     * @return new {@link User user} if successful, null otherwise
+     * @return new {@link Customer customer} if successful, null otherwise
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User CreateUser(User user) throws IOException;
+    Customer createCustomer(Customer customer) throws IOException;
+
+    /**
+     * Creates and saves a {@linkplain Admin admin}
+     * 
+     * @param user {@linkplain Admin admin} object to be created and saved
+     *
+     * @return new {@link Admin admin} if successful, null otherwise
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    Admin createAdmin(Admin admin) throws IOException;
 
     /**
      * Retrieves a {@linkplain User user} with the given username

@@ -84,11 +84,22 @@ public class UserController {
    * 
    * @return ResponseEntity with created {@link Customer customer} object and HTTP
    *         status of CREATED<br>
-   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
+   *         error
+   *         ResponseEntity with HTTP status of CONFLICT username already exists
    */
   @PostMapping("/customer")
   public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    try {
+      Customer newCustomer = this.userDao.createCustomer(customer);
+      if (newCustomer == null) {
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
+      }
+      return new ResponseEntity<Customer>(newCustomer, HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
@@ -98,11 +109,20 @@ public class UserController {
    * 
    * @return ResponseEntity with created {@link Admin admin} object and HTTP
    *         status of CREATED<br>
-   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file error
+   *         ResponseEntity with HTTP status of CONFLICT username already exists
    */
   @PostMapping("/admin")
   public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    try {
+      Admin newAdmin = this.userDao.createAdmin(admin)
+      if (newAdmin == null) {
+        return new ResponseEntity<>(HttpStatus.CONFLICT); 
+      }
+      return new ResponseEntity<Admin>(newAdmin, HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**

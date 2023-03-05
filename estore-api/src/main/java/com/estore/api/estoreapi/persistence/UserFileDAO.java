@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.estore.api.estoreapi.products.CartBeef;
+import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
 
@@ -115,24 +116,6 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public User CreateUser(User user) throws IOException {
-    synchronized (users) {
-      // Checks duplicate username
-      if (users.containsKey(user.getUsername())) {
-        return null;
-      }
-
-      // Adds new user
-      users.put(user.getUsername(), user);
-      save();
-      return user;
-    }
-  }
-
-  /**
-   ** {@inheritDoc}
-   */
-  @Override
   public User GetUser(String username) throws IOException {
     synchronized (users) {
       return users.get(username);
@@ -228,6 +211,42 @@ public class UserFileDAO implements UserDAO {
 
       customer.clearCart();
       return customer;
+    }
+  }
+
+  /**
+   ** {@inheritDoc}
+   */
+  @Override
+  public Customer createCustomer(Customer customer) throws IOException {
+    synchronized (users) {
+      // Checks duplicate username
+      if (users.containsKey(customer.getUsername())) {
+        return null;
+      }
+
+      // Adds new user
+      users.put(customer.getUsername(), customer);
+      save();
+      return customer;
+    }
+  }
+
+  /**
+   ** {@inheritDoc}
+   */
+  @Override
+  public Admin createAdmin(Admin admin) throws IOException {
+    synchronized (users) {
+      // Checks duplicate username
+      if (users.containsKey(admin.getUsername())) {
+        return null;
+      }
+
+      // Adds new user
+      users.put(admin.getUsername(), admin);
+      save();
+      return admin;
     }
   }
 
