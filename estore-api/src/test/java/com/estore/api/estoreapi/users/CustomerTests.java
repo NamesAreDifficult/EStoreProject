@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.estore.api.estoreapi.products.CartBeef;
 
-@SpringBootTest
+@Tag("Model-tier")
 public class CustomerTests {
 
     @Test
@@ -38,21 +38,21 @@ public class CustomerTests {
 
     @Test
     public void testGetCart() {
+        // Dummy shopping cart
         CartBeef[] shoppingCart = new CartBeef[2];
-
         shoppingCart[0] = new CartBeef(1, 1);
         shoppingCart[1] = new CartBeef(2, 1);
 
         Customer testCustomer = new Customer("Test", shoppingCart);
 
-        assertEquals(shoppingCart, testCustomer.getCart());
+        assertArrayEquals(shoppingCart, testCustomer.getCart());
 
     }
 
     @Test
     public void testAddToCart() {
+        // Dummy shopping cart
         CartBeef[] shoppingCart = new CartBeef[2];
-
         shoppingCart[0] = new CartBeef(1, 1);
         shoppingCart[1] = new CartBeef(2, 2);
 
@@ -75,15 +75,19 @@ public class CustomerTests {
 
         // Asserts
         assertTrue(testCustomer.addToCart(new CartBeef(1, 1)), "Add to cart should be true");
+
+        // Checks that you cannot add a duplicate beef
         assertFalse(testCustomer.addToCart(new CartBeef(1, 2)), "Add to cart should be true");
+
         assertArrayEquals(shoppingCart, testCustomer.getCart());
 
     }
 
     @Test
     public void testClearCart() {
-        CartBeef[] shoppingCart = new CartBeef[1];
 
+        // Dummy shopping cart
+        CartBeef[] shoppingCart = new CartBeef[1];
         shoppingCart[0] = new CartBeef(1, 1);
 
         Customer testCustomer = new Customer("Test", shoppingCart);
@@ -107,9 +111,13 @@ public class CustomerTests {
 
         Customer testCustomer = new Customer("Test", shoppingCart);
 
+        // Asserts
         assertTrue(testCustomer.removeFromCart(1));
+
+        // Tests removing a CartBeef that cannot be found
         assertFalse(testCustomer.removeFromCart(1));
 
+        // Tests that the shopping cart looks as it should
         assertArrayEquals(removedShoppingCart, testCustomer.getCart());
 
     }
