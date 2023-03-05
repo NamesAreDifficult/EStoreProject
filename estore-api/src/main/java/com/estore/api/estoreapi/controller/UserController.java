@@ -109,15 +109,16 @@ public class UserController {
    * 
    * @return ResponseEntity with created {@link Admin admin} object and HTTP
    *         status of CREATED<br>
-   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file error
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
+   *         error
    *         ResponseEntity with HTTP status of CONFLICT username already exists
    */
   @PostMapping("/admin")
   public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
     try {
-      Admin newAdmin = this.userDao.createAdmin(admin)
+      Admin newAdmin = this.userDao.createAdmin(admin);
       if (newAdmin == null) {
-        return new ResponseEntity<>(HttpStatus.CONFLICT); 
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
       }
       return new ResponseEntity<Admin>(newAdmin, HttpStatus.OK);
     } catch (IOException e) {
