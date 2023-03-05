@@ -2,6 +2,8 @@ package com.estore.api.estoreapi.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+
 import com.estore.api.estoreapi.products.CartBeef;
 
 /*
@@ -57,7 +59,7 @@ public class Customer extends User {
         CartBeef[] newCart = new CartBeef[this.cart.length + 1];
         int newCartIndex = 0;
         for (CartBeef currentBeef : this.cart) {
-            if (currentBeef.getId() == cartBeef.getId()) {
+            if (currentBeef.equals(cartBeef)) {
                 return false;
             }
 
@@ -79,21 +81,27 @@ public class Customer extends User {
      * successful
      */
     public boolean removeFromCart(int id) {
+        ArrayList<CartBeef> newCart = new ArrayList<>();
 
-        CartBeef[] newCart = new CartBeef[this.cart.length - 1];
-        int newCartIndex = 0;
-        boolean removed = false;
-        for (CartBeef currentBeef : this.cart) {
-            if (currentBeef.getId() != id) {
-                newCart[newCartIndex] = currentBeef;
-                newCartIndex += 1;
-            } else {
-                removed = true;
+        for (CartBeef cartBeef : this.cart) {
+            if (cartBeef.getId() != id) {
+                newCart.add(cartBeef);
             }
-
         }
-        this.cart = newCart;
-        return removed;
+
+        boolean result = newCart.size() != this.cart.length;
+
+        // Copies the new array list to the final cart array
+        if (result) {
+            CartBeef[] finalCart = new CartBeef[this.cart.length - 1];
+            int index = 0;
+            for (CartBeef cartBeef : newCart) {
+                finalCart[index] = cartBeef;
+                index++;
+            }
+            this.cart = finalCart;
+        }
+        return result;
     }
 
     /*
