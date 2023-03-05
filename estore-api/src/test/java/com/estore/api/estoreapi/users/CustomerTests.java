@@ -107,9 +107,9 @@ public class CustomerTests {
 
         Customer testCustomer = new Customer("Test", shoppingCart);
 
+        // Asserts
         assertTrue(testCustomer.removeFromCart(1));
         assertFalse(testCustomer.removeFromCart(1));
-
         assertArrayEquals(removedShoppingCart, testCustomer.getCart());
 
     }
