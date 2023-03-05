@@ -17,7 +17,7 @@ public class Beef {
 
   // Format strings
   static final String NAME_FORMAT = "%s %s";
-  static final String STRING_FORMAT = "Beef [id=%s cut=%s grade=%s weight=%s]";
+  static final String STRING_FORMAT = "Beef [id=%s cut=%s grade=%s weight=%s price=%s]";
   
   /**
    * Create a cut of Beef with the supplied paramaters
