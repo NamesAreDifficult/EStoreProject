@@ -118,16 +118,4 @@ public class Customer extends User {
         return false;
     }
 
-    @Override
-    public boolean equals(Object other){
-        if (other instanceof Customer) {
-            Customer otherCustomer = (Customer) other;
-            if (otherCustomer.getUsername().equals(this.getUsername()) &&
-                this.getCart().equals(otherCustomer.getCart())){
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
