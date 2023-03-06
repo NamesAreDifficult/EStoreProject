@@ -54,7 +54,7 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @GetMapping("")
-  public ResponseEntity<User[]> getUsers() {
+  public ResponseEntity<User[]> GetUsers() {
     try {
       return new ResponseEntity<User[]>(this.userDao.GetUsers(), HttpStatus.OK);
     } catch (IOException e) {
