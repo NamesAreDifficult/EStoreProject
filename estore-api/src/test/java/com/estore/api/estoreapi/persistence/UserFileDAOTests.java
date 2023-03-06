@@ -53,38 +53,6 @@ public class UserFileDAOTests {
     }
 
     @Test
-    public void testSaveExceptionCustomer() throws IOException{
-        doThrow(new IOException())
-            .when(mockObjectMapper)
-                .writeValue(any(File.class),any(User[].class));
-        Customer newCustomer = new Customer("John", new CartBeef[1]);
-        assertThrows(IOException.class,
-                        () -> userFileDAO.createCustomer(newCustomer),
-                        "IOException not thrown");
-    }
-
-    @Test
-    public void testSaveExceptionAdmin() throws IOException{
-        doThrow(new IOException())
-            .when(mockObjectMapper)
-                .writeValue(any(File.class),any(User[].class));
-        Admin admin = new Admin("John");
-        assertThrows(IOException.class,
-                        () -> userFileDAO.createAdmin(admin),
-                        "IOException not thrown");
-    }
-
-    @Test
-    public void testConstructorException() throws IOException{
-        doThrow(new IOException())
-            .when(mockObjectMapper)
-                .readValue(new File("test.txt"),User[].class);
-        assertThrows(IOException.class,
-                        () -> new UserFileDAO("test.txt",mockObjectMapper),
-                        "IOException not thrown");
-    }
-
-    @Test
     public void testGetUsers(){
         User[] users = assertDoesNotThrow(() -> userFileDAO.GetUsers(),
                                 "Unexpected exception thrown");
@@ -187,6 +155,38 @@ public class UserFileDAOTests {
         User result = assertDoesNotThrow(() -> userFileDAO.GetUser("Zuckerberg"),
                         "Unexpected exception thrown");
         assertNull(result);
+    }
+
+    @Test
+    public void testSaveExceptionCustomer() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .writeValue(any(File.class),any(User[].class));
+        Customer newCustomer = new Customer("John", new CartBeef[1]);
+        assertThrows(IOException.class,
+                        () -> userFileDAO.createCustomer(newCustomer),
+                        "IOException not thrown");
+    }
+
+    @Test
+    public void testSaveExceptionAdmin() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .writeValue(any(File.class),any(User[].class));
+        Admin admin = new Admin("John");
+        assertThrows(IOException.class,
+                        () -> userFileDAO.createAdmin(admin),
+                        "IOException not thrown");
+    }
+
+    @Test
+    public void testConstructorException() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .readValue(new File("test.txt"),User[].class);
+        assertThrows(IOException.class,
+                        () -> new UserFileDAO("test.txt",mockObjectMapper),
+                        "IOException not thrown");
     }
 
     @Test public void testAddToCartAdmin(){}
