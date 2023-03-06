@@ -127,4 +127,17 @@ public class UserFileDAOTests {
 
     @Test
     public void clearCart(){}
+
+    // TODO: Implement defensive testing, might not use all of these
+    @Test public void testDeleteUserAbsent(){}
+    
+    @Test public void testCreateAdminPresent(){}
+
+    @Test public void testCreateCustomerPresent(){}
+
+    @Test public void testGetUserAbsent(){}
+
+    @Test public void testAddToCartPresent(){}
+
+    @Test public void testRemoveFromCartAbsent(){}
 }
