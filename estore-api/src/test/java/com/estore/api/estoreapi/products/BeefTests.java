@@ -3,11 +3,13 @@ package com.estore.api.estoreapi.products;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.estore.api.estoreapi.products.Beef;
 
+@Tag("Model-tier")
 @SpringBootTest
 public class BeefTests {
   @Test
