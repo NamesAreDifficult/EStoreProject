@@ -98,5 +98,13 @@ public class UserFileDAOTests {
     }
 
     @Test
-    public void testCreateAdmin(){}
+    public void testCreateAdmin(){
+        Admin newAdmin = new Admin("Giant Rat");
+        Admin result = assertDoesNotThrow(() -> userFileDAO.createAdmin(newAdmin),
+                            "Unexpected exception thrown");
+        assertNotNull(result);
+        Admin actual = (Admin) assertDoesNotThrow(() -> userFileDAO.GetUser("Giant Rat"),
+                            "Unexpected exception thrown");
+        assertEquals(newAdmin.getUsername(), actual.getUsername());
+    }
 }
