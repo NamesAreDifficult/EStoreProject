@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.any;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +50,38 @@ public class UserFileDAOTests {
         when(mockObjectMapper.readValue(new File("test.txt"),User[].class)).thenReturn(testUsers);
 
         userFileDAO = new UserFileDAO("test.txt", mockObjectMapper);
+    }
+
+    @Test
+    public void testSaveExceptionCustomer() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .writeValue(any(File.class),any(User[].class));
+        Customer newCustomer = new Customer("John", new CartBeef[1]);
+        assertThrows(IOException.class,
+                        () -> userFileDAO.createCustomer(newCustomer),
+                        "IOException not thrown");
+    }
+
+    @Test
+    public void testSaveExceptionAdmin() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .writeValue(any(File.class),any(User[].class));
+        Admin admin = new Admin("John");
+        assertThrows(IOException.class,
+                        () -> userFileDAO.createAdmin(admin),
+                        "IOException not thrown");
+    }
+
+    @Test
+    public void testConstructorException() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .readValue(new File("test.txt"),User[].class);
+        assertThrows(IOException.class,
+                        () -> new UserFileDAO("test.txt",mockObjectMapper),
+                        "IOException not thrown");
     }
 
     @Test
