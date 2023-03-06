@@ -117,4 +117,16 @@ public class Beef {
   public String toString() {
     return String.format(STRING_FORMAT, id, cut, grade, weight, price);
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean equals(Object object){
+    if(object instanceof Beef){
+      Beef beef = (Beef)object;
+      return this.getId() == beef.getId() && this.getCut().equals(beef.getCut()) && this.getGrade().equals(beef.getGrade()) && this.getWeight() == beef.getWeight() && this.getPrice() == beef.getPrice();
+    }
+    return false;
+  }
 }
