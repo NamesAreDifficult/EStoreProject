@@ -120,7 +120,8 @@ public class UserFileDAOTests {
     public void testCheckout(){}
 
     @Test
-    public void testAddToCart(){}
+    public void testAddToCart(){
+    }
 
     @Test
     public void testRemoveFromCart(){}
@@ -129,13 +130,34 @@ public class UserFileDAOTests {
     public void clearCart(){}
 
     // TODO: Implement defensive testing, might not use all of these
-    @Test public void testDeleteUserAbsent(){}
+    @Test public void testDeleteUserAbsent(){
+        boolean result = assertDoesNotThrow(() -> userFileDAO.DeleteUser("Josh Allen"),
+                                "Unexpected exception thrown");
+        assertEquals(userFileDAO.users.size(), testUsers.length);
+        assertFalse(result);
+    }
     
-    @Test public void testCreateAdminPresent(){}
+    @Test public void testCreateAdminPresent(){
+        Admin existAdmin = new Admin("Wendy");
+        Admin result = assertDoesNotThrow(() -> userFileDAO.createAdmin(existAdmin),
+                            "Unexpected exception thrown");
+        assertNull(result);
+    }
 
-    @Test public void testCreateCustomerPresent(){}
+    @Test public void testCreateCustomerPresent(){
+        Customer customer = new Customer("Joe", new CartBeef[1]);
+        Customer result = assertDoesNotThrow(() -> userFileDAO.createCustomer(customer),
+                            "Unexpected exception thrown");
+        assertNull(result);
+    }
 
-    @Test public void testGetUserAbsent(){}
+    @Test public void testGetUserAbsent(){
+        User result = assertDoesNotThrow(() -> userFileDAO.GetUser("Zuckerberg"),
+                        "Unexpected exception thrown");
+        assertNull(result);
+    }
+
+    @Test public void testAddToCartAdmin(){}
 
     @Test public void testAddToCartPresent(){}
 
