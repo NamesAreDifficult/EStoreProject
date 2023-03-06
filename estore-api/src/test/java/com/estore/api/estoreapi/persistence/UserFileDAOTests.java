@@ -14,11 +14,15 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.estore.api.estoreapi.users.User;
+import com.estore.api.estoreapi.users.Customer;
+import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.products.CartBeef;
 
 @Tag("Persistence-tier")
 public class UserFileDAOTests {
@@ -27,7 +31,18 @@ public class UserFileDAOTests {
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupUserFileDao() throws IOException{}
+    public void setupUserFileDao() throws IOException{
+        mockObjectMapper = mock(ObjectMapper.class);
+        
+        testUsers = new User[3];
+        testUsers[0] = new Customer("Joe", new CartBeef[1]);
+        testUsers[1] = new Customer("Candice", new CartBeef[2]);
+        testUsers[1] = new Customer("Wendy", new CartBeef[0]);
+
+        when(mockObjectMapper.readValue(new File("doesnt_matter.txt"),User[].class)).thenReturn(testUsers);
+
+        userFileDAO = new UserFileDAO("test.txt", mockObjectMapper);
+    }
 
     @Test
     public void testGetUserArray(){}
