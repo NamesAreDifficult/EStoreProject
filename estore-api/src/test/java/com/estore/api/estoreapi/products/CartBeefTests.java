@@ -44,8 +44,7 @@ public class CartBeefTests {
 
     }
 
-    // @Test
-    // public void testWeight 
+    
 
     @Test
     public void testEqual(){
