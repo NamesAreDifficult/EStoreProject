@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,29 +37,57 @@ public class UserFileDAOTests {
         
         testUsers = new User[3];
         testUsers[0] = new Customer("Joe", new CartBeef[1]);
-        testUsers[1] = new Customer("Candice", new CartBeef[2]);
-        testUsers[1] = new Customer("Wendy", new CartBeef[0]);
+        testUsers[1] = new Customer("Candice", new CartBeef[5]);
+        testUsers[2] = new Admin("Wendy");
 
-        when(mockObjectMapper.readValue(new File("doesnt_matter.txt"),User[].class)).thenReturn(testUsers);
+        when(mockObjectMapper.readValue(new File("test.txt"),User[].class)).thenReturn(testUsers);
 
         userFileDAO = new UserFileDAO("test.txt", mockObjectMapper);
     }
 
     @Test
-    public void testGetUserArray(){}
+    public void testGetUsers(){
+        User[] users = assertDoesNotThrow(() -> userFileDAO.GetUsers(),
+                                "Unexpected exception thrown");
+        assertEquals(users.length, testUsers.length);
+        for (int i = 0; i < testUsers.length;++i)
+            assertEquals(users[i], testUsers[i]);
+    }
 
     @Test
-    public void testGetCustomer(){}
+    public void testGetUser(){
+        User first = assertDoesNotThrow(() -> userFileDAO.GetUser("Joe"),
+                                "Unexpected exception thrown");
+        User second = assertDoesNotThrow(() -> userFileDAO.GetUser("Candice"),
+                                "Unexpected exception thrown");
+        User third = assertDoesNotThrow(() -> userFileDAO.GetUser("Wendy"),
+                                "Unexpected exception thrown");
+        assertEquals(first, testUsers[0]);
+        assertEquals(second, testUsers[1]);
+        assertEquals(third, testUsers[2]);
+    }
 
     @Test
-    public void testGetUser(){}
+    public void testDeleteUser(){
+        boolean result = assertDoesNotThrow(() -> userFileDAO.DeleteUser("Joe"),
+                            "Unexpected exception thrown");
+        assertTrue(result);
+        assertEquals(userFileDAO.users.size(), testUsers.length - 1);
+    }
 
     @Test
-    public void testGetUsers(){}
+    public void testIsAdmin(){
+        boolean adminResult = assertDoesNotThrow(() -> userFileDAO.IsAdmin("Wendy"),
+                            "Unexpected exception thrown");
+        boolean customerResult = assertDoesNotThrow(() -> userFileDAO.IsAdmin("Joe"),
+                            "Unexpected exception thrown");
+        assertTrue(adminResult);
+        assertFalse(customerResult);
+    }
 
     @Test
-    public void testDeleteUser(){}
+    public void testCreateCustomer(){}
 
     @Test
-    public void testIsAdmin(){}
+    public void testCreateAdmin(){}
 }
