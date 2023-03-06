@@ -30,4 +30,15 @@ public class Admin extends User {
         return true;
     }
 
+    @Override
+    public boolean equals(Object other){
+        if (other instanceof Customer) {
+            Customer otherCustomer = (Customer) other;
+            if (otherCustomer.getUsername().equals(this.getUsername())){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

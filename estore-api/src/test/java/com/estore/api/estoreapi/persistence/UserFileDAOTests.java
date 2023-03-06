@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 
 @Tag("Persistence-tier")
@@ -35,10 +36,15 @@ public class UserFileDAOTests {
     @BeforeEach
     public void setupUserFileDao() throws IOException{
         mockObjectMapper = mock(ObjectMapper.class);
-        
         testUsers = new User[3];
-        testUsers[0] = new Customer("Joe", new CartBeef[1]);
-        testUsers[1] = new Customer("Candice", new CartBeef[5]);
+        CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99), 2);
+        CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99), 3);
+        CartBeef[] firstCart = new CartBeef[1];
+        CartBeef[] secondCart = new CartBeef[1];
+        firstCart[0] = first;
+        secondCart[0] = second;
+        testUsers[0] = new Customer("Joe", firstCart);
+        testUsers[1] = new Customer("Candice", secondCart);
         testUsers[2] = new Admin("Wendy");
 
         when(mockObjectMapper.readValue(new File("test.txt"),User[].class)).thenReturn(testUsers);
@@ -51,7 +57,8 @@ public class UserFileDAOTests {
         User[] users = assertDoesNotThrow(() -> userFileDAO.GetUsers(),
                                 "Unexpected exception thrown");
         assertEquals(users.length, testUsers.length);
-        assertArrayEquals(users, testUsers);
+        for (int i = 0; i < testUsers.length;++i)
+            assertEquals(users[i], testUsers[i]);
     }
 
     @Test
@@ -107,4 +114,17 @@ public class UserFileDAOTests {
                             "Unexpected exception thrown");
         assertEquals(newAdmin.getUsername(), actual.getUsername());
     }
+
+    // TODO: Implement tests related to CartBeef
+    @Test
+    public void testCheckout(){}
+
+    @Test
+    public void testAddToCart(){}
+
+    @Test
+    public void testRemoveFromCart(){}
+
+    @Test
+    public void clearCart(){}
 }
