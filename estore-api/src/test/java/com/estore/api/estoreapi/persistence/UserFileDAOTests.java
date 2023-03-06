@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,8 +51,7 @@ public class UserFileDAOTests {
         User[] users = assertDoesNotThrow(() -> userFileDAO.GetUsers(),
                                 "Unexpected exception thrown");
         assertEquals(users.length, testUsers.length);
-        for (int i = 0; i < testUsers.length;++i)
-            assertEquals(users[i], testUsers[i]);
+        assertArrayEquals(users, testUsers);
     }
 
     @Test
@@ -86,7 +86,16 @@ public class UserFileDAOTests {
     }
 
     @Test
-    public void testCreateCustomer(){}
+    public void testCreateCustomer(){
+        Customer newCustomer = new Customer("John", new CartBeef[1]);
+        Customer result = assertDoesNotThrow(() -> userFileDAO.createCustomer(newCustomer),
+                            "Unexpected exception thrown");
+        assertNotNull(result);
+        Customer actual = (Customer) assertDoesNotThrow(() -> userFileDAO.GetUser("John"),
+                            "Unexpected exception thrown");
+        assertEquals(newCustomer.getCart(), actual.getCart());
+        assertEquals(newCustomer.getUsername(), actual.getUsername());
+    }
 
     @Test
     public void testCreateAdmin(){}
