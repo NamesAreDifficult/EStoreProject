@@ -66,4 +66,23 @@ public class CartBeef {
         return this.weight;
     }
 
+    /*
+     * Checks if another object is an equal{@linkplain CartBeef cartBeef}
+     * 
+     * @return - if the other object is an equal {@linkplain CartBeef cartBeef}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this.getClass() == other.getClass()) {
+            CartBeef otherCartBeef = (CartBeef) other;
+
+            if (otherCartBeef.getId() == this.getId())
+                return true;
+
+        }
+
+        return false;
+
+    }
+
 }
