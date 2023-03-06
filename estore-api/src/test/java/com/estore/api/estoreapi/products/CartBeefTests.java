@@ -15,12 +15,30 @@ public class CartBeefTests {
     
     @Test
     public void testCtor(){
+        //setup
         int expectedId = 2;
         float expectedWeight = (float)10.1;
 
         CartBeef testCartBeef = new CartBeef(expectedId, expectedWeight);
 
-        assertNotNull(testCartBeef, () -> "The cart is empty");
+        //tests
+        assertNotNull(testCartBeef, () -> "The cart should not be empty");
+        assertEquals(expectedId, testCartBeef.getId());
+        assertEquals(expectedWeight, testCartBeef.getWeight());
+
+    }
+
+    @Test 
+    public void testOverloadCtor() {
+        //setup
+        int expectedId = 2;
+        float expectedWeight = (float) 10.1;
+        Beef expectedBeef = new Beef(2, "Ribeye", (float)12.2, "A5", 13.00);
+
+        CartBeef testCartBeef = new CartBeef(expectedBeef, expectedWeight);
+
+        //tests
+        assertNotNull(testCartBeef, () -> "The cart should not be empty");
         assertEquals(expectedId, testCartBeef.getId());
         assertEquals(expectedWeight, testCartBeef.getWeight());
 
