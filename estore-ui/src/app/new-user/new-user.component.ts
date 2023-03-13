@@ -12,6 +12,12 @@ export class NewUserComponent {
 
   userAlert: String = ""
 
+  Observer = {
+    next: (user: User) => (this.userAlert = `Welcome ${user.username}!`),
+    error: (err: Error) => (console.log(err))
+
+  }
+
   // Constructor for the LandingComponent that takes an instance of UserService
   constructor(userService: UserService) {
 
@@ -26,10 +32,11 @@ export class NewUserComponent {
 
     if (newUser) {
       this.userService.createCustomer(newUser)
-        .subscribe();
+        .subscribe(
+          this.Observer
+        );
     }
 
-    this.userAlert = `Welcome ${newUser.username}!`
     return newUser
   }
 
