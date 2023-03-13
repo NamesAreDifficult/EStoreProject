@@ -1,0 +1,8 @@
+<div>
+    <div>
+        New user page
+    </div>
+    <label for="username">Username: </label>
+    <input id="username" #username (keyup.enter)=submit(username.value)>
+    <button (click)=submit(username.value)>Submit</button>
+</div>
