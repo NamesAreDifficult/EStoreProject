@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User, UserService } from '../user.service';
 
 @Component({
@@ -6,14 +6,16 @@ import { User, UserService } from '../user.service';
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.css']
 })
-export class NewUserComponent {
+export class NewUserComponent implements OnInit {
   // Property to store an instance of the UserService class
   userService: UserService;
 
   userAlert: String = ""
 
   Observer = {
-    next: (user: User) => (this.userAlert = `Welcome ${user.username}!`),
+    next: (user: User) => {
+      this.userAlert = `Welcome ${user.username}!`;
+    },
     error: (err: Error) => (console.log(err))
 
   }
@@ -23,6 +25,13 @@ export class NewUserComponent {
 
     // Initializing the userService property with the provided instance of UserService
     this.userService = userService;
+  }
+
+  ngOnInit() {
+    var loggedIn: User = this.userService.getLoggedIn();
+    if (loggedIn != null) {
+      this.userAlert = `You are already logged in ${loggedIn.username}`
+    }
   }
 
   // Method that takes a username string parameter and returns a User object
