@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Brendan Battisti
  */
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
     @JsonProperty("username")
     private final String username;
@@ -46,4 +46,15 @@ public abstract class User {
      */
     @JsonProperty("admin")
     public abstract boolean isAdmin();
+
+    /*
+     * Compares the current user to another user
+     * 
+     * @return an integer depending on whether the current user is greater than,
+     * less than, or equal to the other user
+     */
+    @Override
+    public int compareTo(User user) {
+        return this.username.compareTo(user.getUsername());
+    }
 }

@@ -17,7 +17,7 @@ public class Beef {
 
   // Format strings
   static final String NAME_FORMAT = "%s %s";
-  static final String STRING_FORMAT = "Beef [id=%s cut=%s grade=%s weight=%s]";
+  static final String STRING_FORMAT = "Beef [id=%s cut=%s grade=%s weight=%s price=%s]";
   
   /**
    * Create a cut of Beef with the supplied paramaters
@@ -116,5 +116,17 @@ public class Beef {
   @Override
   public String toString() {
     return String.format(STRING_FORMAT, id, cut, grade, weight, price);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean equals(Object object){
+    if(object instanceof Beef){
+      Beef beef = (Beef)object;
+      return this.getId() == beef.getId() && this.getCut().equals(beef.getCut()) && this.getGrade().equals(beef.getGrade()) && this.getWeight() == beef.getWeight() && this.getPrice() == beef.getPrice();
+    }
+    return false;
   }
 }

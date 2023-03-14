@@ -2,4 +2,6 @@
 .vscode/settings.json
 estore-api/data/inventory.json
 estore-api/data/inventory.json
+estore-ui/node_modules
+estore-ui/.angular
 *.json
