@@ -1,0 +1,15 @@
+{
+  "name": "estore-ui",
+  "version": "1.0.0",
+  "description": "Estore UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "git",
+    "repository:"
+  ],
+  "author": "Brendan Battisti",
+  "license": "ISC"
+}
