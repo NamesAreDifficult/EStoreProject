@@ -16,8 +16,6 @@ export class UserAuthenticationService implements CanActivate {
     if (currentUser == null) {
       return true;
     }
-
-
     else {
       // User is not logged in, go to new-user
       this.router.navigate([''])

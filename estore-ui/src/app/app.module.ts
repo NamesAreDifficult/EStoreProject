@@ -7,6 +7,9 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
+import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
+import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 
 @NgModule({
   declarations: [
@@ -20,8 +23,7 @@ import { CatalogComponent } from './components/catalog/catalog.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [UserAuthenticationService, CustomerAuthenticationService, AdminAuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 
