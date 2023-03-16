@@ -136,7 +136,14 @@ public class InventoryFileDAO implements InventoryDAO {
     // Serializes the Java Objects to JSON objects into the file
     // writeValue will thrown an IOException if there is an issue
     // with the file or reading from the file
-    objectMapper.writeValue(new File(filename), beefArray);
+    try {
+      objectMapper.writeValue(new File(filename), beefArray);
+    } catch (IOException err) {
+
+      // Creates the file then writes to it
+      FileUtility.createFileWithDirectories(filename);
+      objectMapper.writeValue(new File(filename), beefArray);
+    }
     return true;
   }
 

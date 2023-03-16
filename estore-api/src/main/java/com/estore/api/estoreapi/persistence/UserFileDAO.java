@@ -2,6 +2,8 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,6 +12,7 @@ import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
+import com.estore.api.estoreapi.persistence.FileUtility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,7 +30,7 @@ public class UserFileDAO implements UserDAO {
                                      // to the file
   private String filename; // Filename to read from and write to
 
-  public UserFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) throws IOException {
+  public UserFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) {
     this.filename = filename;
     this.objectMapper = objectMapper;
     try {
@@ -51,7 +54,14 @@ public class UserFileDAO implements UserDAO {
     // Serializes the Java Objects to JSON objects into the file
     // writeValue will thrown an IOException if there is an issue
     // with the file or reading from the file
-    objectMapper.writeValue(new File(filename), userArray);
+    try {
+      objectMapper.writeValue(new File(filename), userArray);
+    } catch (IOException err) {
+
+      // Creates the file then writes to it
+      FileUtility.createFileWithDirectories(filename);
+      objectMapper.writeValue(new File(filename), userArray);
+    }
     return true;
   }
 
