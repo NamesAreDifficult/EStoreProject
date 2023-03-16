@@ -51,7 +51,7 @@ public class ShoppingCart {
         return true;
     }
 
-    public CartBeef[] getCart() {
+    public CartBeef[] getContents() {
         return this.cart;
     }
 
