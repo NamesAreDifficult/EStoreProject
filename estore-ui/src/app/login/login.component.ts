@@ -57,7 +57,13 @@ export class LoginComponent implements OnInit {
 
 
 
-  public submit(username: string): User {
+  public submit(username: string) {
+
+    if (username == "") {
+      this.warning
+      return;
+    }
+
     // Creating and returning a User object with the username property set to the provided value
     var user: User = {
       username: username,
@@ -68,7 +74,6 @@ export class LoginComponent implements OnInit {
       this.userService.loginUser(user)
         .subscribe(this.Observer);
     }
-    return user
   }
 
 }
