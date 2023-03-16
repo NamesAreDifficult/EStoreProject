@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, tap, of } from 'rxjs';
+import { Observable, catchError, tap, of, throwError } from 'rxjs';
 
 export interface User {
   username: string;
-  admin?: boolean;
+  admin: boolean;
+}
+
+export interface LoginUser {
+  username: string;
 }
 
 @Injectable({
@@ -13,7 +17,7 @@ export interface User {
 export class UserService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private userUrl = 'http://localhost:8080/user'
 
@@ -22,18 +26,25 @@ export class UserService {
 
 
   // Gets a customer from the backend
-  createCustomer(customer: User): Observable<any> {
-    return this.http.post(this.userUrl + "/customer", customer, this.httpOptions).pipe(
+  createCustomer(customer: LoginUser): Observable<any> {
+    return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
       tap(_ => this.log(`Created customer: ${customer.username}`)),
-      catchError(this.handleError<any>('createCustomer'))
+      catchError(err => {
+        this.handleError<any>('createCustomer')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 
   //  Logs in a user using the backend
-  loginUser(user: User): Observable<any> {
-    return this.http.get(this.userUrl + `/${user.username}`, this.httpOptions).pipe(
+  loginUser(user: LoginUser): Observable<any> {
+    return this.http.get<User>(this.userUrl + `/${user.username}`, this.httpOptions).pipe(
       tap(_ => this.log(`Logged in user: ${user.username}`)),
-      catchError(this.handleError<any>('loginUser'))
+      catchError(
+        err => {
+          this.handleError<any>('loginUser')
+          return throwError((() => new Error(err.status)));
+        })
     );
   }
 
@@ -55,6 +66,29 @@ export class UserService {
   // Logs data
   private log(message: string) {
     console.log(`HeroService: ${message}`);
+  }
+
+  // Get signed in user
+  public getLoggedIn(): User | null {
+    var username = localStorage.getItem("user")
+
+    // Converts string to boolean
+    var admin = (localStorage.getItem("admin") === 'true')
+    if (username) {
+      var user: User = {
+        username: username,
+        admin: admin
+      }
+      return user;
+    }
+    return null;
+  }
+
+  // Signs user in
+  public signUserIn(user: User) {
+    this.log(`signUserIn: ${user.username}`)
+    localStorage.setItem("user", user.username);
+    localStorage.setItem("admin", String(user.admin));
   }
 
 }

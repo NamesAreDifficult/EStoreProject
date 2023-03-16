@@ -12,15 +12,26 @@ export class LoginComponent implements OnInit {
 
   Observer = {
     next: (user: User) => {
-      this.userService.setLoggedInUser(user);
+      this.userService.signUserIn(user);
       this.checkLogin()
     },
-    error: (err: Error) => (console.log(err))
+    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
 
   }
 
-  checkLogin() {
-    var loggedIn: User = this.userService.getLoggedIn()
+  // Catches status codes from the backend
+  private catchStatusCode(code: number) {
+
+    // Conflict error
+    if (code == 404) {
+      this.warning = "User not found, try again"
+    } else if (code == 500) {
+      this.warning = "Internal server error"
+    }
+  }
+
+  private checkLogin() {
+    var loggedIn: User | null = this.userService.getLoggedIn()
     if (loggedIn != null) {
       this.warning = `You are logged in as ${loggedIn.username} admin: ${loggedIn.admin}`
     } else {
@@ -36,19 +47,22 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    var loggedIn: User = this.userService.getLoggedIn();
+    var loggedIn: User | null = this.userService.getLoggedIn();
     if (loggedIn != null) {
       this.warning = `You are already logged in ${loggedIn.username}`
     } else {
-      this.warning = "You are not currently logged in"
+      this.warning = "You are not logged in"
     }
   }
 
 
 
-  submit(username: string): User {
+  public submit(username: string): User {
     // Creating and returning a User object with the username property set to the provided value
-    var user: User = { username: username }
+    var user: User = {
+      username: username,
+      admin: false
+    }
 
     if (user) {
       this.userService.loginUser(user)

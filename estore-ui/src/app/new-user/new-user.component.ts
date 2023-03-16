@@ -1,5 +1,6 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { User, UserService } from '../user.service';
+import { LoginUser, User, UserService } from '../user.service';
 
 @Component({
   selector: 'app-new-user',
@@ -15,8 +16,20 @@ export class NewUserComponent implements OnInit {
   Observer = {
     next: (user: User) => {
       this.userAlert = `Welcome ${user.username}!`;
+      this.userService.signUserIn(user);
     },
-    error: (err: Error) => (console.log(err))
+    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
+  }
+
+  // Catches status codes from the backend
+  private catchStatusCode(code: number) {
+    console.log(code)
+    // Conflict error
+    if (code == 409) {
+      this.userAlert = "Username is already taken, please enter another"
+    } else if (code == 500) {
+      this.userAlert = "Internal server error"
+    }
 
   }
 
@@ -28,25 +41,23 @@ export class NewUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    var loggedIn: User = this.userService.getLoggedIn();
+    var loggedIn: User | null = this.userService.getLoggedIn();
     if (loggedIn != null) {
       this.userAlert = `You are already logged in ${loggedIn.username}`
     }
   }
 
   // Method that takes a username string parameter and returns a User object
-  submit(username: string): User {
+  submit(username: string) {
     // Creating and returning a User object with the username property set to the provided value
-    var newUser: User = { username: username }
-
-    if (newUser) {
-      this.userService.createCustomer(newUser)
-        .subscribe(
-          this.Observer
-        );
+    var newUser: LoginUser = {
+      username: username
     }
 
-    return newUser
+    this.userService.createCustomer(newUser)
+      .subscribe(
+        this.Observer
+      );
   }
 
 }
