@@ -74,7 +74,17 @@ public class UserController {
    */
   @GetMapping("/{username}")
   public ResponseEntity<User> getUser(@PathVariable String username) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    try {
+      User user = this.userDao.GetUser(username);
+      // User not found
+      if (user == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      // User found
+      return new ResponseEntity<User>(user, HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   /**
