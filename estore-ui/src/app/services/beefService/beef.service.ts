@@ -51,7 +51,7 @@ export class BeefService {
   searchBeef(term: string): Observable<Beef[]> {
     // if the search term is empty
     if (!term.trim()) {
-      return of([]);
+      return this.getAllBeef();
     }
     return this.http.get<Beef[]>(`${this.apiUrl}/?name=${term}`)
       .pipe(

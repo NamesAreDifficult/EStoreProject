@@ -1,9 +1,13 @@
 <h1>Catalog</h1>
-<app-search></app-search>
-<ul class="beefArray">
-  <li *ngFor="let beef of beefArray">
-    <a routerLink="/product/{{beef.id}}">
-      <span class="badge">{{beef.id}}</span> {{beef.grade}} {{beef.cut}}
-    </a>
-  </li>
-</ul>
+<div>
+  <label for="search-box">Search Beef </label>
+  <input #searchBox id="search-box" (input)="search(searchBox.value)">
+
+  <ul class="search-result">
+    <li *ngFor="let beef of beef$ | async">
+      <a routerLink="/product/{{beef.id}}">
+        {{beef.grade}} {{beef.cut}}
+      </a>
+    </li>
+  </ul>
+</div>
