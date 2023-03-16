@@ -223,9 +223,12 @@ public class UserFileDAOTests {
         public void testConstructorException() throws IOException {
                 doThrow(new IOException())
                                 .when(mockObjectMapper)
-                                .readValue(new File("test.txt"), User[].class);
+                                .readValue(new File("testcustomer.txt"), User[].class);
+                doThrow(new IOException())
+                                .when(mockObjectMapper)
+                                .readValue(new File("testadmin.txt"), User[].class);
                 assertThrows(IOException.class,
-                                () -> new UserFileDAO("test.txt", mockObjectMapper),
+                                () -> new UserFileDAO("testcustomer.txt", "testadmin.txt", mockObjectMapper),
                                 "IOException not thrown");
         }
 
