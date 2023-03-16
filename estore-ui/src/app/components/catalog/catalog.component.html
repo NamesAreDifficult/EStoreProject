@@ -1,0 +1,9 @@
+<h1>Catalog</h1>
+<app-search></app-search>
+<ul class="beefArray">
+  <li *ngFor="let beef of beefArray">
+    <a routerLink="/product/{{beef.id}}">
+      <span class="badge">{{beef.id}}</span> {{beef.grade}} {{beef.cut}}
+    </a>
+  </li>
+</ul>
