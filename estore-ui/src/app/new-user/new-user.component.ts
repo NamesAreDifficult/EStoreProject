@@ -46,20 +46,21 @@ export class NewUserComponent implements OnInit {
     }
   }
 
+  // Method that takes a username string parameter and validates that it meets username requirements
+  validate(username: string): boolean {
+    // Regex to match a usernames against, matches are allowed usernames
+    var regexp = new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{3,26}$');
+    
+    if(regexp.test(username)){
+      return true;
+    }
+    return false;
+  }
+
   // Method that takes a username string parameter and returns a User object
   submit(username: string) {
 
-    if (username.length > 25) {
-      this.userAlert = "Username must be less than 25 characters"
-      return
-    }
-
-    if (username == "") {
-      this.userAlert = "Please enter a username"
-      return;
-    }
-
-
+    if (this.validate(username)){
     // Creating and returning a User object with the username property set to the provided value
     var newUser: LoginUser = {
       username: username
@@ -69,6 +70,8 @@ export class NewUserComponent implements OnInit {
       .subscribe(
         this.Observer
       );
+    }else{
+      this.userAlert = "Usernames must be between 3-26 alphanumeric characters and must only use the following special characters: !@#$%^&*()-_+=?";
+    }
   }
-
 }
