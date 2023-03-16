@@ -181,7 +181,7 @@ public class UserFileDAO implements UserDAO {
 
       Customer customer = GetCustomer(username);
 
-      customer.addToCart(new CartBeef(beefId, weight));
+      customer.getCart().addToCart(new CartBeef(beefId, weight));
       return customer;
     }
   }
@@ -195,7 +195,7 @@ public class UserFileDAO implements UserDAO {
 
       Customer customer = GetCustomer(username);
 
-      customer.removeFromCart(beefId);
+      customer.getCart().removeFromCart(beefId);
       return customer;
     }
   }
@@ -209,7 +209,7 @@ public class UserFileDAO implements UserDAO {
 
       Customer customer = GetCustomer(username);
 
-      customer.clearCart();
+      customer.getCart().clearCart();
       return customer;
     }
   }
