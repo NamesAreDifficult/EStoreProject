@@ -23,7 +23,6 @@ export class NewUserComponent implements OnInit {
 
   // Catches status codes from the backend
   private catchStatusCode(code: number) {
-    console.log(code)
     // Conflict error
     if (code == 409) {
       this.userAlert = "Username is already taken, please enter another"
