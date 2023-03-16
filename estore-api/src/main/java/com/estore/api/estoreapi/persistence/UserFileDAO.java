@@ -2,8 +2,6 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,8 +10,6 @@ import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
-import com.estore.api.estoreapi.persistence.FileUtility;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -28,10 +24,13 @@ public class UserFileDAO implements UserDAO {
   private ObjectMapper objectMapper; // Provides conversion between user
                                      // objects and JSON text format written
                                      // to the file
-  private String filename; // Filename to read from and write to
+  private String customerFilename; // Filename to read from and write to for storing customers
+  private String adminFilename; // Filename to read from and write to for storing admins
 
-  public UserFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) {
-    this.filename = filename;
+  public UserFileDAO(@Value("${customer.file}") String customerFilename, @Value("${admin.file}") String AdminFilename,
+      ObjectMapper objectMapper) {
+    this.customerFilename = customerFilename;
+    this.adminFilename = AdminFilename;
     this.objectMapper = objectMapper;
     try {
       load(); // load the users from the file
@@ -49,20 +48,68 @@ public class UserFileDAO implements UserDAO {
    * @throws IOException when file cannot be accessed or written to
    */
   private boolean save() throws IOException {
-    User[] userArray = getUserArray();
+    Customer[] customerArray = this.getCustomers();
+    Admin[] adminArray = this.getAdmins();
 
     // Serializes the Java Objects to JSON objects into the file
     // writeValue will thrown an IOException if there is an issue
     // with the file or reading from the file
     try {
-      objectMapper.writeValue(new File(filename), userArray);
+      objectMapper.writeValue(new File(customerFilename), customerArray);
+      objectMapper.writeValue(new File(adminFilename), adminArray);
     } catch (IOException err) {
 
       // Creates the file then writes to it
-      FileUtility.createFileWithDirectories(filename);
-      objectMapper.writeValue(new File(filename), userArray);
+      FileUtility.createFileWithDirectories(customerFilename);
+      FileUtility.createFileWithDirectories(adminFilename);
+      objectMapper.writeValue(new File(customerFilename), customerArray);
+      objectMapper.writeValue(new File(adminFilename), adminArray);
     }
     return true;
+  }
+
+  /*
+   * Returns all the customers
+   * 
+   * @return an array of all the customers
+   */
+  private Customer[] getCustomers() {
+    ArrayList<Customer> customerArrayList = new ArrayList<>();
+    for (User user : this.users.values()) {
+      if (user instanceof Customer) {
+        customerArrayList.add((Customer) user);
+      }
+    }
+
+    int i = 0;
+    Customer[] result = new Customer[customerArrayList.size()];
+    for (Customer customer : customerArrayList) {
+      result[i++] = customer;
+    }
+
+    return result;
+  }
+
+  /*
+   * Returns all the admins
+   * 
+   * @return an array of all the admins
+   */
+  private Admin[] getAdmins() {
+    ArrayList<Admin> adminArrayList = new ArrayList<>();
+    for (User user : this.users.values()) {
+      if (user instanceof Admin) {
+        adminArrayList.add((Admin) user);
+      }
+    }
+
+    int i = 0;
+    Admin[] result = new Admin[adminArrayList.size()];
+    for (Admin admin : adminArrayList) {
+      result[i++] = admin;
+    }
+
+    return result;
   }
 
   /**
@@ -78,12 +125,18 @@ public class UserFileDAO implements UserDAO {
     // Deserializes the JSON objects from the file into an array of userArray
     // readValue will throw an IOException if there's an issue with the file
     // or reading from the file
-    User[] userArray = objectMapper.readValue(new File(filename), User[].class);
+    Customer[] customerArray = objectMapper.readValue(new File(customerFilename), Customer[].class);
+    Admin[] adminArray = objectMapper.readValue(new File(adminFilename), Admin[].class);
 
     // Adds each user to the map
-    for (User user : userArray) {
-      users.put(user.getUsername(), user);
+    for (Customer customer : customerArray) {
+      users.put(customer.getUsername(), customer);
     }
+
+    for (Admin admin : adminArray) {
+      users.put(admin.getUsername(), admin);
+    }
+
     return true;
   }
 
