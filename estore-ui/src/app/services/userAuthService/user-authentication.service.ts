@@ -9,7 +9,7 @@ import { UserService, User } from '../userService/user.service';
 * Class used for designating a page as only for users not logged in
 */
 @Injectable()
-export class CustomerAuthenticationService implements CanActivate {
+export class UserAuthenticationService implements CanActivate {
   canActivate() {
     var currentUser: User | null = this.userService.getLoggedIn()
 
