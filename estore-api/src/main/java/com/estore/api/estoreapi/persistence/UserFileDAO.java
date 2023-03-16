@@ -30,7 +30,11 @@ public class UserFileDAO implements UserDAO {
   public UserFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) throws IOException {
     this.filename = filename;
     this.objectMapper = objectMapper;
-    load(); // load the users from the file
+    try {
+      load(); // load the users from the file
+    } catch (IOException err) {
+      this.users = new TreeMap<>();
+    }
   }
 
   /**
