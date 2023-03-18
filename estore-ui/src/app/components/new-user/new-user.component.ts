@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LoginUser, User, UserService } from '../user.service';
+import { LoginUser, User, UserService } from '../../services/userService/user.service';
 
 @Component({
   selector: 'app-new-user',
