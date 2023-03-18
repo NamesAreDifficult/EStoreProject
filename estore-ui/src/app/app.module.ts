@@ -10,13 +10,15 @@ import { CatalogComponent } from './components/catalog/catalog.component';
 import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewUserComponent,
     LoginComponent,
-    CatalogComponent
+    CatalogComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
