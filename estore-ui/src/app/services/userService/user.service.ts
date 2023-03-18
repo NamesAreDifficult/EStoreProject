@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, tap, of, throwError } from 'rxjs';
-import { LoggingService } from './logging.service';
+import { LoggingService } from '../loggingService/logging.service';
 
 export interface User {
   username: string;
@@ -29,7 +29,7 @@ export class UserService {
   // Gets a customer from the backend
   createCustomer(customer: LoginUser): Observable<any> {
     return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
-      tap(_ => this.logger.log(`Created customer: ${customer.username}`)),
+      tap(_ => this.logger.add(`Created customer: ${customer.username}`)),
       catchError(err => {
         this.handleError<any>('createCustomer')
         return throwError((() => new Error(err.status)));
@@ -40,7 +40,7 @@ export class UserService {
   //  Logs in a user using the backend
   loginUser(user: LoginUser): Observable<any> {
     return this.http.get<User>(this.userUrl + `/${user.username}`, this.httpOptions).pipe(
-      tap(_ => this.logger.log(`Logged in user: ${user.username}`)),
+      tap(_ => this.logger.add(`Logged in user: ${user.username}`)),
       catchError(
         err => {
           this.handleError<any>('loginUser')
@@ -54,7 +54,7 @@ export class UserService {
     return (error: any): Observable<T> => {
 
       // TODO: better job of transforming error for user consumption
-      this.logger.log(`${operation} failed: ${error.message}`);
+      this.logger.add(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -79,7 +79,7 @@ export class UserService {
 
   // Signs user in
   public signUserIn(user: User) {
-    this.logger.log(`signUserIn: ${user.username}`)
+    this.logger.add(`signUserIn: ${user.username}`)
     localStorage.setItem("user", user.username);
     localStorage.setItem("admin", String(user.admin));
   }
