@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { LoggingService } from '../loggingService/logging.service';
 
 export interface Beef{
-  id: number;
+  id?: number;
   cut: string;
   grade: string;
   weight: number;

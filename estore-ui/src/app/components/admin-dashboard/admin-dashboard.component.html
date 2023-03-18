@@ -1,1 +1,15 @@
-<p>admin-dashboard works!</p>
+<h1>Admin Dashboard</h1>
+<div>
+    {{adminAlert}}
+</div>
+<div class = "Create Product">
+  <label for="cut">Cut:</label>
+  <input id="cut" #cut/>
+  <label for="weight">Weight:</label>
+  <input id="weight" #weight/>
+  <label for="grade">Grade:</label>
+  <input id="grade" #grade/>
+  <label for="price">Price:</label>
+  <input id="price" #price/>
+  <button (click)='create(cut.value, +weight.value, grade.value, +price.value)'>Create</button>
+</div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { BeefService } from 'src/app/services/beefService/beef.service';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,12 +15,19 @@ export class AdminDashboardComponent {
     this.beefService = beefService;
   }
 
+  createObserver = {
+    next: (beef: Beef) => {
+      this.beefService.addBeef(beef);
+    },
+    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
+  }
+
   private catchStatusCode(code: number) {
     // Conflict error
     if (code == 409) {
       this.adminAlert = "Item already exists. Please edit quantity to change amount."
     } else if (code == 400) {
-      this.adminAlert = "Invalid attributes. If removing an item, please click delete instead."
+      this.adminAlert = "Invalid request."
     } else if (code == 200) {
       this.adminAlert = ""
     } else if (code == 404) {
@@ -28,5 +36,15 @@ export class AdminDashboardComponent {
       this.adminAlert = "Internal server error"
     }
 
+  }
+
+  create(cut: string, weight: number, grade: string, price: number){
+    var beef: Beef = {
+      cut: cut,
+      weight: weight,
+      grade: grade,
+      price: price
+    }
+    this.beefService.addBeef(beef).subscribe(this.createObserver);
   }
 }
