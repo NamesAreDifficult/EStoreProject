@@ -18,11 +18,6 @@ export class AdminDashboardComponent {
   }
 
   ngOnInit(){
-    // Initiates inventory display
-    this.getInventory();
-  }
-
-  getInventory = async(): Promise<void> => {
     this.beef$ = this.beefService.getAllBeef();
   }
   
@@ -30,21 +25,23 @@ export class AdminDashboardComponent {
     next: (beef: Beef) => {
       this.beefService.addBeef(beef);
     },
-    error: (err: Error) => (this.createStatus(Number(err.message)))
+    error: (err: Error) => (this.createStatus(Number(err.message))),
+    complete: () => this.beef$ = this.beefService.getAllBeef(),
   }
 
   deleteObserver = {
     next: (beef: Beef) => {
       this.beefService.deleteBeef(beef.id!);
     },
-    error: (err: Error) => (this.deleteStatus(Number(err.message)))
+    error: (err: Error) => (this.deleteStatus(Number(err.message))),
+    complete: () => this.beef$ = this.beefService.getAllBeef(),
   }
 
   updateObserver = {
     next: (beef: Beef) => {
       this.beefService.updateBeef(beef);
     },
-    error: (err: Error) => (this.updateStatus(Number(err.message)))
+    error: (err: Error) => (this.updateStatus(Number(err.message))),
   }
 
   private createStatus(code: number) {
@@ -108,7 +105,7 @@ export class AdminDashboardComponent {
         grade: grade.trim(),
         price: price
       }
-    this.beefService.addBeef(beef).subscribe(this.createObserver);
+    this.beefService.addBeef(beef).subscribe(this.createObserver)
     this.adminAlert = "Product created."
     }
   }

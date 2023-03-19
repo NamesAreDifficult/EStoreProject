@@ -14,8 +14,8 @@
   <button id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value)">Create</button>
 </div>
 
-<ul class="Inventory">Inventory
-    <table id="inventory" *ngFor="let beef of beef$ | async">
+<ul id="inventory" class="Inventory">Inventory
+    <table id="table" *ngFor="let beef of beef$ | async">
       <div class = "Product">
         <label for="/product/{{beef.id}}">Name:
             {{beef.grade}} {{beef.cut}}
