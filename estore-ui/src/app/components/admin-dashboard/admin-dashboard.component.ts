@@ -1,5 +1,6 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 
 @Component({
@@ -9,12 +10,27 @@ import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 })
 export class AdminDashboardComponent {
   beefService: BeefService;
+  beef$!: Observable<Beef[]>;
   adminAlert: String = ""
+  private beefSubject = new BehaviorSubject(this.beef$)
 
   constructor(beefService: BeefService) {
     this.beefService = beefService;
   }
 
+  ngOnInit(): void{
+    // Initiates inventory display
+    this.displayInventory();
+  }
+
+  displayInventory = async(): Promise<void> => {
+    this.beef$ = this.beefSubject.pipe(
+      debounceTime(1),
+      distinctUntilChanged(),
+      switchMap(() => this.beefService.getAllBeef()),
+    );
+  }
+  
   createObserver = {
     next: (beef: Beef) => {
       this.beefService.addBeef(beef);
@@ -37,12 +53,12 @@ export class AdminDashboardComponent {
   }
 
   validateCreate(cut: string, weight: number, grade: string, price: number): boolean {
-    var cutRegexp = new RegExp('^[a-zA-Z0-9 ]+$');
-    var gradeRegexp = new RegExp('^[a-zA-Z0-9 ]+$');
+    var cutRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$');
+    var gradeRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$');
     if ((cutRegexp.test(cut) && cut.trim()) && (gradeRegexp.test(grade) && grade.trim())){
       return true;
     }
-    this.adminAlert = "Item cut and grade must be alphanumeric and have at least one non-whitespace character."
+    this.adminAlert = "Cut and grade must be alphanumeric with least one non-whitespace character, and have a length of 1-32 characters."
     return false;
   }
 
@@ -55,7 +71,8 @@ export class AdminDashboardComponent {
         price: price
       }
     this.beefService.addBeef(beef).subscribe(this.createObserver);
-    this.adminAlert = "Product created"
+    this.adminAlert = "Product created."
     }
+    this.displayInventory()
   }
 }
