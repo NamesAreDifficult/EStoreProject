@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { throwError, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { LoggingService } from '../loggingService/logging.service';
@@ -63,10 +63,13 @@ export class BeefService {
   }
 
   // add new Beef item tot he inventory
-  addBeef(beef: Beef): Observable<Beef> {
+  addBeef(beef: Beef): Observable<any> {
     return this.http.post<Beef>(this.apiUrl, beef, this.httpOptions).pipe(
       tap((newBeef: Beef) => this.log(`added beef with id=${newBeef.id}`)),
-      catchError(this.handleError<Beef>(`addBeef`))
+      catchError(err => {
+        this.handleError<any>('loginUser')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 

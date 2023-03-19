@@ -1,5 +1,5 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 
 @Component({
@@ -19,32 +19,43 @@ export class AdminDashboardComponent {
     next: (beef: Beef) => {
       this.beefService.addBeef(beef);
     },
-    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
+    error: (err: Error) => (this.createStatus(Number(err.message)))
   }
 
-  private catchStatusCode(code: number) {
+  private createStatus(code: number) {
     // Conflict error
     if (code == 409) {
       this.adminAlert = "Item already exists. Please edit quantity to change amount."
+    // Creating item with missing fields
     } else if (code == 400) {
-      this.adminAlert = "Invalid request."
-    } else if (code == 200) {
-      this.adminAlert = ""
-    } else if (code == 404) {
-      this.adminAlert = "Item not found."
+      this.adminAlert = "Items cannot have negative weight or price."
+    // Reset message if good
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     }
 
   }
 
-  create(cut: string, weight: number, grade: string, price: number){
-    var beef: Beef = {
-      cut: cut,
-      weight: weight,
-      grade: grade,
-      price: price
+  validateCreate(cut: string, weight: number, grade: string, price: number): boolean {
+    var cutRegexp = new RegExp('^[a-zA-Z0-9 ]+$');
+    var gradeRegexp = new RegExp('^[a-zA-Z0-9 ]+$');
+    if ((cutRegexp.test(cut) && cut.trim()) && (gradeRegexp.test(grade) && grade.trim())){
+      return true;
     }
+    this.adminAlert = "Item cut and grade must be alphanumeric and have at least one non-whitespace character."
+    return false;
+  }
+
+  create(cut: string, weight: number, grade: string, price: number) {
+    if (this.validateCreate(cut, weight, grade, price)){
+      var beef: Beef = {
+        cut: cut.trim(),
+        weight: weight,
+        grade: grade.trim(),
+        price: price
+      }
     this.beefService.addBeef(beef).subscribe(this.createObserver);
+    this.adminAlert = "Product created"
+    }
   }
 }
