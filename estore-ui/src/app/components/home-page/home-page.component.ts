@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Beef, BeefService } from '../../services/beefService/beef.service';
 
 @Component({
@@ -8,5 +9,15 @@ import { Beef, BeefService } from '../../services/beefService/beef.service';
 })
 export class HomePageComponent {
 
+  beef$!: Observable<Beef[]>;
+  
   constructor(private beefService: BeefService) {}
+  
+  getAllBeef(): void {
+    this.beef$ = this.beefService.getAllBeef();
+  } 
+
+  ngOnInit(): void {
+    this.getAllBeef();
+  }
 }
