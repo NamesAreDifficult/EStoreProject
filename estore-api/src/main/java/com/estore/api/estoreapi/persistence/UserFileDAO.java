@@ -206,8 +206,12 @@ public class UserFileDAO implements UserDAO {
   public boolean DeleteUser(String username) throws IOException {
 
     synchronized (users) {
-      User removed_user = users.remove(username);
-      return (removed_user != null);
+      if (users.containsKey(username)) {
+        users.remove(username);
+        return save();
+      } else {
+        return false;
+      }
     }
   }
 
