@@ -8,6 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
 import { CartComponent } from './components/cart/cart.component';
+import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
+import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
+import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -15,14 +19,15 @@ import { CartComponent } from './components/cart/cart.component';
     NewUserComponent,
     LoginComponent,
     CatalogComponent,
-    CartComponent
+    CartComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [UserAuthenticationService, CustomerAuthenticationService, AdminAuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
