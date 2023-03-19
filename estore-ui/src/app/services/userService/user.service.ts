@@ -84,4 +84,13 @@ export class UserService {
     localStorage.setItem("admin", String(user.admin));
   }
 
+  public logout() {
+    var user: User | null = this.getLoggedIn();
+
+    if (user != null) {
+      this.logger.add(`logout: ${user.username}`)
+      localStorage.clear();
+    }
+  }
+
 }
