@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 
 @Component({
@@ -8,32 +7,29 @@ import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
 })
+
 export class AdminDashboardComponent {
   beefService: BeefService;
   beef$!: Observable<Beef[]>;
   adminAlert: String = ""
-  private beefSubject = new BehaviorSubject(this.beef$)
 
   constructor(beefService: BeefService) {
     this.beefService = beefService;
   }
 
-  ngOnInit(): void{
+  ngOnInit(){
     // Initiates inventory display
-    this.displayInventory();
+    this.getInventory();
   }
 
-  displayInventory = async(): Promise<void> => {
-    this.beef$ = this.beefSubject.pipe(
-      debounceTime(1),
-      distinctUntilChanged(),
-      switchMap(() => this.beefService.getAllBeef()),
-    );
+  getInventory = async(): Promise<void> => {
+    this.beef$ = this.beefService.getAllBeef();
   }
   
   createObserver = {
     next: (beef: Beef) => {
       this.beefService.addBeef(beef);
+      this.getInventory();
     },
     error: (err: Error) => (this.createStatus(Number(err.message)))
   }
@@ -41,6 +37,7 @@ export class AdminDashboardComponent {
   deleteObserver = {
     next: (beef: Beef) => {
       this.beefService.deleteBeef(beef.id!);
+      this.getInventory();
     },
     error: (err: Error) => (this.deleteStatus(Number(err.message)))
   }
@@ -88,13 +85,13 @@ export class AdminDashboardComponent {
       }
     this.beefService.addBeef(beef).subscribe(this.createObserver);
     this.adminAlert = "Product created."
+    window.location.reload();
     }
-    this.displayInventory()
   }
 
   delete(id: number) {
     this.beefService.deleteBeef(id).subscribe(this.deleteObserver);
     this.adminAlert = "Product deleted."
-    this.displayInventory()
+    window.location.reload();
   }
 }
