@@ -26,6 +26,11 @@
         <label for="/product/{{beef.id}}">Price:
             ${{beef.price.toFixed(2)}}
         </label>
+        <label for="updateWeight">Add/Remove Weight:</label>
+        <input type="number" id="updateWeight" value="0" #updateWeight/>
+        <label for="updatePrice">Set Price: </label>
+        <input type="number" id="updatePrice" value={{beef.price.toFixed(2)}} #updatePrice/>
+        <button id="editPrice" (click)="update(beef, +updateWeight.value, +updatePrice.value)">Update</button>
         <button id="delete" (click)="delete(beef.id!)">Delete</button>
       </div>
     </table>

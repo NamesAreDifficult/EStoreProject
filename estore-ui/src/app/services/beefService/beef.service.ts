@@ -90,7 +90,10 @@ export class BeefService {
   updateBeef(beef: Beef): Observable<any> {
     return this.http.put(this.apiUrl, beef, this.httpOptions).pipe(
       tap(_ => this.log(`Updated beef id=${beef.id}`)),
-      catchError(this.handleError<any>(`updateBeef`))
+      catchError(err => {
+        this.handleError<any>('updateBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 

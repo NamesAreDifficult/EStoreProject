@@ -29,7 +29,6 @@ export class AdminDashboardComponent {
   createObserver = {
     next: (beef: Beef) => {
       this.beefService.addBeef(beef);
-      this.getInventory();
     },
     error: (err: Error) => (this.createStatus(Number(err.message)))
   }
@@ -37,9 +36,15 @@ export class AdminDashboardComponent {
   deleteObserver = {
     next: (beef: Beef) => {
       this.beefService.deleteBeef(beef.id!);
-      this.getInventory();
     },
     error: (err: Error) => (this.deleteStatus(Number(err.message)))
+  }
+
+  updateObserver = {
+    next: (beef: Beef) => {
+      this.beefService.updateBeef(beef);
+    },
+    error: (err: Error) => (this.updateStatus(Number(err.message)))
   }
 
   private createStatus(code: number) {
@@ -65,6 +70,18 @@ export class AdminDashboardComponent {
     }
   }
 
+  private updateStatus(code: number) {
+    // Item not found error
+    if (code == 404) {
+      this.adminAlert = "Item not found."
+    // Internal server error
+    } else if (code == 500) {
+      this.adminAlert = "Internal server error"
+    } else if (code == 400) {
+      this.adminAlert = "Items cannot have negative weight or price."
+    }
+  }
+
   validateCreate(cut: string, weight: number, grade: string, price: number): boolean {
     var cutRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$');
     var gradeRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$');
@@ -72,6 +89,14 @@ export class AdminDashboardComponent {
       return true;
     }
     this.adminAlert = "Cut and grade must be alphanumeric with least one non-whitespace character, and have a length of 1-32 characters."
+    return false;
+  }
+
+  validateUpdate(beef: Beef, weight: number, price: number): boolean {
+    if (beef.weight + weight >= 0 && price >= 0){
+      return true;
+    }
+    this.adminAlert = "Items cannot have negative weight or price."
     return false;
   }
 
@@ -85,13 +110,20 @@ export class AdminDashboardComponent {
       }
     this.beefService.addBeef(beef).subscribe(this.createObserver);
     this.adminAlert = "Product created."
-    window.location.reload();
     }
   }
 
   delete(id: number) {
     this.beefService.deleteBeef(id).subscribe(this.deleteObserver);
     this.adminAlert = "Product deleted."
-    window.location.reload();
+  }
+
+  update(beef: Beef, weight: number, price: number) {
+      if (this.validateUpdate(beef, weight, price)){
+      beef.weight += weight;
+      beef.price = price;
+      this.beefService.updateBeef(beef).subscribe(this.updateObserver);
+      this.adminAlert = "Product updated."
+    }
   }
 }
