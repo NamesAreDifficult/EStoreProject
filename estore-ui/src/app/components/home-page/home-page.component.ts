@@ -9,12 +9,15 @@ import { Beef, BeefService } from '../../services/beefService/beef.service';
 })
 export class HomePageComponent {
 
-  beef$!: Observable<Beef[]>;
+  beef$: Beef[] = [];
   
   constructor(private beefService: BeefService) {}
   
   getAllBeef(): void {
-    this.beef$ = this.beefService.getAllBeef();
+    //this.beef$ = this.beefService.getAllBeef();
+    this.beefService.getAllBeef()
+        .subscribe(beef$ => this.beef$ = beef$);
+
   } 
 
   ngOnInit(): void {
