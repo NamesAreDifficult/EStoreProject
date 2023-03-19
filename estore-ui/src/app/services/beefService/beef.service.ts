@@ -63,11 +63,11 @@ export class BeefService {
   }
 
   // add new Beef item tot he inventory
-  addBeef(beef: Beef): Observable<any> {
+  addBeef(beef: Beef): Observable<Beef> {
     return this.http.post<Beef>(this.apiUrl, beef, this.httpOptions).pipe(
       tap((newBeef: Beef) => this.log(`added beef with id=${newBeef.id}`)),
       catchError(err => {
-        this.handleError<any>('loginUser')
+        this.handleError<any>('addBeef')
         return throwError((() => new Error(err.status)));
       })
     );
@@ -78,8 +78,11 @@ export class BeefService {
     const url = `${this.apiUrl}/${id}`;
 
     return this.http.delete<Beef>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Beef>(`deleteBeef`))
+      tap(_ => this.log(`deleted beef id=${id}`)),
+      catchError(err => {
+        this.handleError<any>('deleteBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 

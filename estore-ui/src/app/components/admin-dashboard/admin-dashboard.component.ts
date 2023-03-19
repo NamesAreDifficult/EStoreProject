@@ -38,18 +38,34 @@ export class AdminDashboardComponent {
     error: (err: Error) => (this.createStatus(Number(err.message)))
   }
 
+  deleteObserver = {
+    next: (beef: Beef) => {
+      this.beefService.deleteBeef(beef.id!);
+    },
+    error: (err: Error) => (this.deleteStatus(Number(err.message)))
+  }
+
   private createStatus(code: number) {
     // Conflict error
     if (code == 409) {
       this.adminAlert = "Item already exists. Please edit quantity to change amount."
-    // Creating item with missing fields
+    // Creating item with invalid fields
     } else if (code == 400) {
       this.adminAlert = "Items cannot have negative weight or price."
-    // Reset message if good
+    // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     }
+  }
 
+  private deleteStatus(code: number) {
+    // Item not found error
+    if (code == 404) {
+      this.adminAlert = "Item not found."
+    // Internal server error
+    } else if (code == 500) {
+      this.adminAlert = "Internal server error"
+    }
   }
 
   validateCreate(cut: string, weight: number, grade: string, price: number): boolean {
@@ -73,6 +89,12 @@ export class AdminDashboardComponent {
     this.beefService.addBeef(beef).subscribe(this.createObserver);
     this.adminAlert = "Product created."
     }
+    this.displayInventory()
+  }
+
+  delete(id: number) {
+    this.beefService.deleteBeef(id).subscribe(this.deleteObserver);
+    this.adminAlert = "Product deleted."
     this.displayInventory()
   }
 }
