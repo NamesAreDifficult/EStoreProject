@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Beef, BeefService } from '../../services/beefService/beef.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -9,14 +10,13 @@ import { Beef, BeefService } from '../../services/beefService/beef.service';
 })
 export class HomePageComponent {
 
-  beef$: Beef[] = [];
+  beef: Beef[] = [];
   
   constructor(private beefService: BeefService) {}
   
   getAllBeef(): void {
-    //this.beef$ = this.beefService.getAllBeef();
     this.beefService.getAllBeef()
-        .subscribe(beef$ => this.beef$ = beef$);
+        .subscribe(beef => this.beef = beef.slice(0,4));
 
   } 
 

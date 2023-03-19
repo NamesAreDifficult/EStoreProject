@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: "new-user", component: NewUserComponent },
   { path: "login", component: LoginComponent },
   { path: "catalog", component: CatalogComponent },
-  { path: "home page", component: HomePageComponent}
+  { path: "home-page", component: HomePageComponent}
 ];
 
 @NgModule({
