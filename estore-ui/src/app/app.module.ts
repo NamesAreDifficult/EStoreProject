@@ -7,13 +7,15 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewUserComponent,
     LoginComponent,
-    CatalogComponent
+    CatalogComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -24,4 +26,3 @@ import { CatalogComponent } from './components/catalog/catalog.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 
