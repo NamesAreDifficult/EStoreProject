@@ -9,8 +9,7 @@
       <!-- <a routerLink="/product/{{beef.id}}">
         {{beef.grade}} {{beef.cut}}
       </a> -->
-      <a routerLink="/product/{{beef.id}}" [class.selected]="beef === selectedBeef" type="button"
-      (click)="OnSelect(beef)">
+      <a routerLink="/detail/{{beef.id}}">
       <span class="badge">{{beef.grade}} </span>
       <span class="name">{{beef.cut}}</span>
   
@@ -29,4 +28,3 @@
   </li>
 </ul> -->
 
-<app-product-details [beef]="selectedBeef"></app-product-details>
