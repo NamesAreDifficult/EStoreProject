@@ -27,14 +27,15 @@ public class UserFileDAO implements UserDAO {
   private String customerFilename; // Filename to read from and write to for storing customers
   private String adminFilename; // Filename to read from and write to for storing admins
 
-  public UserFileDAO(@Value("${customer.file}") String customerFilename, @Value("${admin.file}") String AdminFilename,
+  public UserFileDAO(@Value("${customer.file}") String customerFilename, @Value("${admin.file}") String adminFilename,
       ObjectMapper objectMapper) {
     this.customerFilename = customerFilename;
-    this.adminFilename = AdminFilename;
+    this.adminFilename = adminFilename;
     this.objectMapper = objectMapper;
     try {
       load(); // load the users from the file
     } catch (IOException err) {
+      System.out.println(err);
       this.users = new TreeMap<>();
     }
   }

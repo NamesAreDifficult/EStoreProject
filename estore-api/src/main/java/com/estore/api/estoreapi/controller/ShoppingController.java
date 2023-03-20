@@ -63,14 +63,16 @@ public class ShoppingController {
      */
     @GetMapping("/{username}")
     public ResponseEntity<CartBeef[]> getShoppingCart(@PathVariable String username) {
+        System.out.println("sdgdsfgdefg");
 
         try {
             Customer customer = this.getCustomer(username);
-
+            System.out.println(customer.getCart().getContents());
             // Checks if user exists and is a customer
             if (customer != null) {
                 return new ResponseEntity<CartBeef[]>(customer.getCart().getContents(), HttpStatus.OK);
             }
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         } catch (IOException e) {

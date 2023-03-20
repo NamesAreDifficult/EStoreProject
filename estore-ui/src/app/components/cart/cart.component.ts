@@ -12,11 +12,11 @@ import { User, UserService } from 'src/app/services/userService/user.service';
 export class CartComponent {
 
   constructor(private shoppingService: CartServiceService, private userService: UserService, private logger: LoggingService, private beefService: BeefService) {
-    this.cart = [];
+    this.cart$ = [];
     this.getCart();
   }
 
-  public cart: Beef[];
+  public cart$: Beef[];
 
   private getCart() {
     var user: User | null = this.userService.getLoggedIn()
@@ -30,6 +30,7 @@ export class CartComponent {
           .subscribe(
             {
               next: (cartBeefs: CartBeef[]) => {
+                console.log(cartBeefs.length)
                 var beefs: Beef[] = new Array(cartBeefs.length);
                 cartBeefs.forEach(cartBeef => {
                   this.beefService.getBeef(cartBeef.id).subscribe({
@@ -38,7 +39,9 @@ export class CartComponent {
                   );
 
                 });
-                this.cart = beefs;
+                this.cart$ = beefs;
+                console.log(this.cart$)
+
               },
               error: (err: Error) => (this.logger.handleError(err.message))
             }

@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { LoggingService } from '../loggingService/logging.service';
 
 
-export interface Beef{
+export interface Beef {
   id?: number;
   cut: string;
   grade: string;
@@ -68,7 +68,7 @@ export class BeefService {
     return this.http.post<Beef>(this.apiUrl, beef, this.httpOptions).pipe(
       tap((newBeef: Beef) => this.log(`added beef with id=${newBeef.id}`)),
       catchError(err => {
-        this.handleError<any>('addBeef')
+        this.loggingService.handleError<any>('addBeef')
         return throwError((() => new Error(err.status)));
       })
     );
@@ -81,7 +81,7 @@ export class BeefService {
     return this.http.delete<Beef>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted beef id=${id}`)),
       catchError(err => {
-        this.handleError<any>('deleteBeef')
+        this.loggingService.handleError<any>('deleteBeef')
         return throwError((() => new Error(err.status)));
       })
     );
@@ -93,7 +93,7 @@ export class BeefService {
       tap(_ => this.log(`Updated beef id=${beef.id}`)),
 
       catchError(err => {
-        this.handleError<any>('updateBeef')
+        this.loggingService.handleError<any>('updateBeef')
         return throwError((() => new Error(err.status)));
       })
     );
