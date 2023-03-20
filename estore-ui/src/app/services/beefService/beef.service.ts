@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { throwError, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { LoggingService } from '../loggingService/logging.service';
 
-export interface Beef {
-  id: number;
+
+export interface Beef{
+  id?: number;
   cut: string;
   grade: string;
   weight: number;
@@ -66,7 +67,10 @@ export class BeefService {
   addBeef(beef: Beef): Observable<Beef> {
     return this.http.post<Beef>(this.apiUrl, beef, this.httpOptions).pipe(
       tap((newBeef: Beef) => this.log(`added beef with id=${newBeef.id}`)),
-      catchError(this.loggingService.handleError<Beef>(`addBeef`))
+      catchError(err => {
+        this.handleError<any>('addBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 
@@ -75,8 +79,11 @@ export class BeefService {
     const url = `${this.apiUrl}/${id}`;
 
     return this.http.delete<Beef>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
-      catchError(this.loggingService.handleError<Beef>(`deleteBeef`))
+      tap(_ => this.log(`deleted beef id=${id}`)),
+      catchError(err => {
+        this.handleError<any>('deleteBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 
@@ -84,7 +91,11 @@ export class BeefService {
   updateBeef(beef: Beef): Observable<any> {
     return this.http.put(this.apiUrl, beef, this.httpOptions).pipe(
       tap(_ => this.log(`Updated beef id=${beef.id}`)),
-      catchError(this.loggingService.handleError<any>(`updateBeef`))
+
+      catchError(err => {
+        this.handleError<any>('updateBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 
