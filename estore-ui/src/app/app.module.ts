@@ -14,6 +14,7 @@ import { AdminAuthenticationService } from './services/adminAuthService/admin-au
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
+import { ProductNotFoundComponent } from './components/product-not-found/product-not-found.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     CatalogComponent,
     AdminDashboardComponent,
     LogoutComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductNotFoundComponent
   ],
   imports: [
     BrowserModule,
