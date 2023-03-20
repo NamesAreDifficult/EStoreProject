@@ -6,4 +6,7 @@
     <input id="username" #username (keyup.enter)=submit(username.value)>
     <button (click)=submit(username.value)>Submit</button>
     {{warning}}
+    <div>
+      <a routerLink="/new-user"> Create an account </a>
+    </div>
 </div>
