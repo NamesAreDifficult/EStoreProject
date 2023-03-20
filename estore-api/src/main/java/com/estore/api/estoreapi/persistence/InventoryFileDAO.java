@@ -93,36 +93,6 @@ public class InventoryFileDAO implements InventoryDAO {
   }
 
   /**
-   * Generates an array of {@linkplain Beef beef} from the tree map for any
-   * {@linkplain Beef beef} that contains the text specified by containsText
-   * <br>
-   * If containsText is null, the array contains all of the {@linkplain Beef beef}
-   * in the tree map
-   * 
-   * @return The array of {@link Beef beef}, may be empty
-   */
-  private Beef[] getBeefArray(String grade, String cut, float lowPrice, float highPrice) { // if containsText == null,
-                                                                                           // no filter
-    ArrayList<Beef> beefArrayList = new ArrayList<>();
-
-    for (Beef beef : inventory.values()) {
-      if (grade == null || grade == beef.getGrade()) {
-        if (cut == null || cut == beef.getCut()) {
-          if (lowPrice <= beef.getPrice()) {
-            if (highPrice >= beef.getPrice()) {
-              beefArrayList.add(beef);
-            }
-          }
-        }
-      }
-    }
-
-    Beef[] beefArray = new Beef[beefArrayList.size()];
-    beefArrayList.toArray(beefArray);
-    return beefArray;
-  }
-
-  /**
    * Saves the {@linkplain Beef beef} from the map into the file as an array of
    * JSON objects
    * 
@@ -261,7 +231,7 @@ public class InventoryFileDAO implements InventoryDAO {
         }
         inventory.put(beef.getId(), updatedBeef);
         save();
-        return updatedBeef;
+        return getBeef(beef.getId());
       } else {
         return null;
       }
