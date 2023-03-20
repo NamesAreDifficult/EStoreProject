@@ -29,4 +29,8 @@ export class ProductDetailsComponent {
     this.beefService.getBeef(id)
       .subscribe(beef => this.beef = beef);
   }
+  
+  goBack(): void {
+    this.location.back();
+  }
 }
