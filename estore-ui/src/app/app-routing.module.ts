@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: "catalog", component: CatalogComponent },
   { path: "admin-dashboard", component: AdminDashboardComponent},
   { path: "detail/:id", component: ProductDetailsComponent}
+  
 ];
 
 @NgModule({
