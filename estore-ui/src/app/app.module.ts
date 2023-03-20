@@ -19,7 +19,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     NewUserComponent,
     LoginComponent,
     CatalogComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
     LogoutComponent
   ],
   imports: [
