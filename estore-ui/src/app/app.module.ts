@@ -7,13 +7,15 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewUserComponent,
     LoginComponent,
-    CatalogComponent
+    CatalogComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+<div>
+  <a routerLink="/home"> Home </a>
+  <a routerLink="/catalog"> Catalog </a>
+  <a routerLink="/shoppingCart"> Shopping Cart </a>
+  <a *ngIf="user === null" routerLink="/login"> Login </a>
+  <ng-template #elseBlock><span>"{{user!.username}}"</span></ng-template> 
+</div>
