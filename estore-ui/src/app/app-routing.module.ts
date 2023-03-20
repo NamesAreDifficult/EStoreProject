@@ -5,11 +5,12 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
-
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 const routes: Routes = [
-  { path: "new-user", component: NewUserComponent, canActivate: [UserAuthenticationService] },
-  { path: "login", component: LoginComponent, canActivate: [UserAuthenticationService] },
-  { path: "catalog", component: CatalogComponent, canActivate: [CustomerAuthenticationService] }
+  { path: "new-user", component: NewUserComponent },
+  { path: "login", component: LoginComponent },
+  { path: "catalog", component: CatalogComponent },
+  { path: "admin-dashboard", component: AdminDashboardComponent}
 ];
 
 @NgModule({
