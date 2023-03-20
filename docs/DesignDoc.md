@@ -54,10 +54,14 @@ This section describes the application domain.
 
 ![Domain Model](domain-model-placeholder.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
-
+At the center of the domain model is the product entity, which represents beef. Beef is
+contained in the inventory, and the admin adds different beef items as they become available.
+These beef items are displayed on the catalog page for users to view and purchase, and users
+are able to search by name or partial name in order to find the type of beef they want. Both
+admins and customers are users that log in via the login page, which connects them to
+the rest of the e-store. Customers can then add products to their shopping cart. Customers
+can then purchase their shopping cart as an order, which is then displayed as a receipt for the
+customer to reference their purchase.
 
 ## Architecture and Design
 
