@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Beef } from '../../services/beefService/beef.service';
+
+
 
 @Component({
   selector: 'app-product-details',
@@ -7,4 +10,5 @@ import { Component } from '@angular/core';
 })
 export class ProductDetailsComponent {
 
+  @Input() beef?: Beef;
 }

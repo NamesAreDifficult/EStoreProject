@@ -1,1 +1,19 @@
-<p>product-details works!</p>
+<div *ngIf="beef">
+    <h2>{{beef.name | uppercase}} Details</h2>
+    <div>
+        <label for="beef-grade"> Grade: </label>
+        <input id="beef-grade" [(ngModel)]="beef.grade" placeholder="grade">
+    </div>
+    <div>
+        <label for="beef-cut"> Cut: </label>
+        <input id="beef-cut" [(ngModel)]="beef.cut" placeholder="cut">
+    </div>
+    <div>
+        <label for="beef-weight"> Weight: </label>
+        <input id="beef-weight" [(ngModel)]="beef.weight" placeholder="weight">
+    </div>
+    <div>
+        <label for="beef-price"> Price: $ </label>
+        <input id="beef-price" [(ngModel)]="beef.price" placeholder="price">
+    </div>
+</div>
