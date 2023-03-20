@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
@@ -62,15 +65,22 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{username}")
-    public ResponseEntity<CartBeef[]> getShoppingCart(@PathVariable String username) {
+    public ResponseEntity<Beef[]> getShoppingCart(@PathVariable String username) {
         System.out.println("sdgdsfgdefg");
-
         try {
             Customer customer = this.getCustomer(username);
             System.out.println(customer.getCart().getContents());
             // Checks if user exists and is a customer
             if (customer != null) {
-                return new ResponseEntity<CartBeef[]>(customer.getCart().getContents(), HttpStatus.OK);
+                ArrayList<Beef> beefs = new ArrayList<Beef>();
+                for (CartBeef cartBeef : customer.getCart().getContents()) {
+                    Beef newBeef = this.inventoryDao.getBeef(cartBeef.getId());
+                    newBeef.setWeight(cartBeef.getWeight());
+                    beefs.add(newBeef);
+                }
+                Beef[] returnBeef = (Beef[]) beefs.toArray();
+
+                return new ResponseEntity<Beef[]>(returnBeef, HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,7 +88,6 @@ public class ShoppingController {
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     /**

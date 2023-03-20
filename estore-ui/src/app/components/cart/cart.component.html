@@ -1,8 +1,4 @@
 <p>Your shopping cart:</p>
-<div>
-    <ul>
-        <li *ngFor="let cartBeef of cart$">
-            {{cartBeef.id}}
-        </li>
-    </ul>
-</div>
+<ul>
+    <li *ngFor="let beef of cart$">{{ beef.id }}</li>
+</ul>

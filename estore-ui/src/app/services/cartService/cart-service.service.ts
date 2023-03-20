@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError } from 'rxjs';
-import { BeefService } from '../beefService/beef.service';
+import { Beef, BeefService } from '../beefService/beef.service';
 import { LoggingService } from '../loggingService/logging.service';
 import { User, UserService } from '../userService/user.service';
 
@@ -24,14 +24,24 @@ export class CartServiceService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient, private logger: LoggingService) { }
+  constructor(private http: HttpClient, private logger: LoggingService, private userService: UserService) { }
 
-  public getCart(username: String): Observable<any> {
+  public getCart(): Observable<Beef[]> {
 
-    return this.http.get<CartBeef[]>(this.shoppingUrl + "/" + username, this.httpOptions).pipe(
+    var user: User | null = this.userService.getLoggedIn();
+
+    var username: String;
+
+    if (user != null) {
+      username = user.username;
+    } else {
+      username = "";
+    }
+
+    return this.http.get<Beef[]>(this.shoppingUrl + "/" + username, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Got Cart for customer: ${username}`)),
       catchError(err => {
-        this.logger.handleError<any>('createCustomer')
+        this.logger.handleError<any>('getCart')
         return throwError((() => new Error(err.status)));
 
       })
