@@ -1,7 +1,13 @@
 <h1>Home Page</h1>
+<h1>Welcome to our store! We have the beef.
+</h1>
 <h2> Featured Products </h2>
 <div class ="beef-menu">
     <a *ngFor ="let beef of beef">
-        {{beef.cut}}{{beef.grade}}
+        {{beef.grade}} {{beef.cut}}
+        <p>
+           price:  ${{beef.price}}  Weight: {{beef.weight}}
+    </p>
     </a>
+    
 </div>
