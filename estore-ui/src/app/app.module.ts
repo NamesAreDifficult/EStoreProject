@@ -14,7 +14,7 @@ import { AdminAuthenticationService } from './services/adminAuthService/admin-au
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
-import { ProductNotFoundComponent } from './components/product-not-found/product-not-found.component';
+import { MessagesComponent } from '/Users/aj/SWEN/Project/team-project-2225-swen-261-06-c-cowrelatedpun/estore-ui/src/app/components/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { ProductNotFoundComponent } from './components/product-not-found/product
     AdminDashboardComponent,
     LogoutComponent,
     ProductDetailsComponent,
-    ProductNotFoundComponent
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
