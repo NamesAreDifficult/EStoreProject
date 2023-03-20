@@ -1,28 +1,26 @@
 ---
 geometry: margin=1in
 ---
-# PROJECT Design Documentation
-
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
+# Cow Related Pun Design Documentation
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Cow Related Pun
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  Brendan Battisti
+  Alice Cauchi
+  Brian McNulty
+  Ryan Wagoner
+  John West
 
 ## Executive Summary
 
-This is a summary of the project.
+Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades,
+as well as the ability to sponsor and reserve different cuts from cows.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+
+Our purpose is to facilitate the browsing and purchase of locally sourced beef between a butcher
+and customers, and to provide the butcher with a portal to create and list items as they become available.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
