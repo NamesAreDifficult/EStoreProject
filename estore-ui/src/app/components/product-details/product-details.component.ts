@@ -14,6 +14,17 @@ export class ProductDetailsComponent {
 
   @Input() beef?: Beef;
 
+  productAlert: String = ""
+
+  Observer = {
+    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
+  }
+
+  private catchStatusCode(code: number) {
+    if (code == 404) {
+      this.productAlert = "Product does not exist, please click on another object"
+    }
+  }
   constructor(
     private route: ActivatedRoute,
     private beefService: BeefService,
