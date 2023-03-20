@@ -17,12 +17,17 @@ export class ProductDetailsComponent {
   productAlert: String = ""
 
   Observer = {
+    next: (beef: Beef) => {
+      this.beef=beef;
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+      this.beefService.getBeef(id)
+    },
     error: (err: Error) => (this.catchStatusCode(Number(err.message)))
   }
 
   private catchStatusCode(code: number) {
     if (code == 404) {
-      this.productAlert = "Product does not exist, please click on another object"
+      this.productAlert = "Product does not exist, please click on an existing product"
     }
   }
   constructor(
@@ -38,7 +43,7 @@ export class ProductDetailsComponent {
   getBeef(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.beefService.getBeef(id)
-      .subscribe(beef => this.beef = beef);
+      .subscribe(this.Observer);
   }
   
   goBack(): void {
