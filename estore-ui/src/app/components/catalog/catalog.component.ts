@@ -12,10 +12,14 @@ import { Beef, BeefService } from '../../services/beefService/beef.service';
 export class CatalogComponent {
   beef$!: Observable<Beef[]>;
   private searchTerms = new BehaviorSubject<string>('');
+  selectedBeef?: Beef;
 
   constructor(private beefService: BeefService) {
   }
 
+  OnSelect(beef: Beef): void {
+    this.selectedBeef=beef;
+  }
   search(term: string): void{
     this.searchTerms.next(term);
   }

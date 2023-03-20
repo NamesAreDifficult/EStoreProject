@@ -13,6 +13,7 @@ import { CustomerAuthenticationService } from './services/customerAuthService/cu
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [UserAuthenticationService, CustomerAuthenticationService, AdminAuthenticationService],
   bootstrap: [AppComponent]
