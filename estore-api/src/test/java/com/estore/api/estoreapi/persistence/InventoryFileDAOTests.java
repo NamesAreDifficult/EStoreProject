@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.persistence;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -60,6 +61,23 @@ public class InventoryFileDAOTests {
   }
 
   @Test
+  public void testUpdateBeef(){
+    Beef expectedBeef = new Beef(1, "Ribeye", (float)13.66, "A5", 49.99);
+    Beef updatedBeef = new Beef(1, "Ribeye", (float)1, "A5", 49.99);
+    Beef nonExistant = new Beef(99999, "Slim Jim", (float)30.1, "Z19", 999.99);
+    
+    assertDoesNotThrow(() -> {
+      assertEquals(expectedBeef, inventoryFileDAO.updateBeef(updatedBeef));
+    });
+
+    assertDoesNotThrow(() -> {
+      assertNull(inventoryFileDAO.updateBeef(nonExistant));
+    });
+
+    assertEquals(expectedBeef, inventoryFileDAO.getBeef(1));
+  } 
+
+  @Test
   public void testFindBeef(){
     Beef[] beefArray = inventoryFileDAO.findBeef("i");
 
@@ -79,31 +97,28 @@ public class InventoryFileDAOTests {
   @Test
   public void testCreateBeef(){
     Beef beef = new Beef(4, "Skirt", (float)4.02, "C3", 8.99);
-    try{
+    assertDoesNotThrow(() ->{
       inventoryFileDAO.createBeef(beef);
-    }catch(IOException e){
-      fail(e.getMessage());
-    }
+    });
 
     assertEquals(beef, inventoryFileDAO.getBeef(4));
-
     Beef duplicateBeef = new Beef(1, "Ribeye", (float)12.66, "A5", 299.99);
 
-    try{
+    assertDoesNotThrow(() -> {
       assertNull(inventoryFileDAO.createBeef(duplicateBeef));
-    }catch(IOException e){
-      fail(e.getMessage());
-    }
+    });
   }
 
   @Test
   public void deleteBeef(){
-    try{
+    assertDoesNotThrow(() -> {
       assertTrue(inventoryFileDAO.deleteBeef(1));
+    });
+
+    assertDoesNotThrow(() -> {
       assertFalse(inventoryFileDAO.deleteBeef(10));
-    }catch(IOException e){
-      fail(e.getMessage());
-    }
+    });
+
     assertNull(inventoryFileDAO.getBeef(1));
   }
 }
