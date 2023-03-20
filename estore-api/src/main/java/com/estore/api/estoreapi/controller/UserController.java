@@ -146,7 +146,15 @@ public class UserController {
    */
   @DeleteMapping("/{username}")
   public ResponseEntity<User> DeleteUser(@PathVariable String username) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    try {
+      User user = this.userDao.GetUser(username);
+      if(user == null){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      userDao.DeleteUser(username);
+      return new ResponseEntity<User>(HttpStatus.OK);
+      }catch(IOException e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
   }
-
 }
