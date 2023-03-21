@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { throwError, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { LoggingService } from '../loggingService/logging.service';
 
-export interface Beef{
-  id: number;
+
+export interface Beef {
+  id?: number;
   cut: string;
   grade: string;
   weight: number;
@@ -33,8 +34,8 @@ export class BeefService {
   getAllBeef(): Observable<Beef[]> {
     return this.http.get<Beef[]>(this.apiUrl)
       .pipe(
-        tap(_=> this.log('fetched Beef')),
-        catchError(this.handleError<Beef[]>('getAllBeef', []))
+        tap(_ => this.log('fetched Beef')),
+        catchError(this.loggingService.handleError<Beef[]>('getAllBeef', []))
       );
   }
 
@@ -43,8 +44,11 @@ export class BeefService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Beef>(url).pipe(
       tap(_ => this.log(`fetched Beef id=$[id}`)),
-      catchError(this.handleError<Beef>(`getBeef id=${id}`))
-    );
+
+      catchError(err => {
+        this.loggingService.handleError<any>('getBeef')
+        return throwError((() => new Error(err.status)));
+      }));
   }
 
   // Search beef name with the provided term
@@ -58,7 +62,8 @@ export class BeefService {
         tap(x => x.length ?
           this.log(`found beef matching ${term}`) :
           this.log(`no beef matching ${term}`)),
-        catchError(this.handleError<Beef[]>(`searchBeef`, []))
+        catchError(this.loggingService.handleError<Beef[]>(`searchBeef`, []))
+
       );
   }
 
@@ -66,17 +71,23 @@ export class BeefService {
   addBeef(beef: Beef): Observable<Beef> {
     return this.http.post<Beef>(this.apiUrl, beef, this.httpOptions).pipe(
       tap((newBeef: Beef) => this.log(`added beef with id=${newBeef.id}`)),
-      catchError(this.handleError<Beef>(`addBeef`))
+      catchError(err => {
+        this.loggingService.handleError<any>('addBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 
   // Delete a beef item from the inventory
-  deleteBeef(id: number):Observable<Beef> {
+  deleteBeef(id: number): Observable<Beef> {
     const url = `${this.apiUrl}/${id}`;
 
     return this.http.delete<Beef>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Beef>(`deleteBeef`))
+      tap(_ => this.log(`deleted beef id=${id}`)),
+      catchError(err => {
+        this.loggingService.handleError<any>('deleteBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
   }
 
@@ -84,20 +95,12 @@ export class BeefService {
   updateBeef(beef: Beef): Observable<any> {
     return this.http.put(this.apiUrl, beef, this.httpOptions).pipe(
       tap(_ => this.log(`Updated beef id=${beef.id}`)),
-      catchError(this.handleError<any>(`updateBeef`))
+
+      catchError(err => {
+        this.loggingService.handleError<any>('updateBeef')
+        return throwError((() => new Error(err.status)));
+      })
     );
-  }
-
-
-  //Error handling for failed operations
-  private handleError<T>(operation = `operation`, result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-
-      this.log(`${operation} failed: ${error.message}`);
-
-      return of(result as T);
-    }
   }
 
   //Logging service handler
