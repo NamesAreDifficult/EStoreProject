@@ -119,6 +119,9 @@ public class ShoppingController {
     public ResponseEntity<CartBeef> AddToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
 
         try {
+            if (cartBeef.getWeight() <= 0) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             // Checks if beef exists
             if (this.inventoryDao.getBeef(cartBeef.getId()) != null) {
                 Customer customer = this.getCustomer(username);
