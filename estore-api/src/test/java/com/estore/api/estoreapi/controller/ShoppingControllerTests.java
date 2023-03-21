@@ -120,6 +120,7 @@ public class ShoppingControllerTests {
   @Test 
   public void testAddToShoppingCart() throws IOException{
     when(mockCartBeef.getWeight()).thenReturn((float)3);
+    when(mockBeef.getWeight()).thenReturn((float)5);
     ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
     
     assertEquals(HttpStatus.OK, response.getStatusCode());
