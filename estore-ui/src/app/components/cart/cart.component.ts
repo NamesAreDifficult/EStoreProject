@@ -1,11 +1,8 @@
 import { CartBeef, CartServiceService } from 'src/app/services/cartService/cart-service.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
-import { User, UserService } from 'src/app/services/userService/user.service';
 import { Component } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
-import { Beef, BeefService } from '../../services/beefService/beef.service';
+import { Observable } from 'rxjs';
+import { Beef } from '../../services/beefService/beef.service';
 
 @Component({
   selector: 'app-cart',
