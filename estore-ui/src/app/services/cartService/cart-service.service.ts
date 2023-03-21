@@ -50,9 +50,9 @@ export class CartServiceService {
     return username;
   }
 
-  public removeFromCart(id: number) {
-    console.log(this.shoppingUrl + "/" + this.getUsername() + "/" + id)
-    return this.http.delete(this.shoppingUrl + "/" + this.getUsername() + "/" + id, this.httpOptions).pipe(
+  public removeFromCart(id: number): Observable<any> {
+    const url = this.shoppingUrl + "/" + this.getUsername() + "/" + String(id)
+    return this.http.delete(url, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Removed ${id} from ${this.getUsername()}'s shopping cart`)),
       catchError(err => {
         this.logger.handleError<any>('removeFromCart')

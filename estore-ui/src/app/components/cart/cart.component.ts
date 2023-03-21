@@ -24,7 +24,11 @@ export class CartComponent {
   }
 
   removeFromCart(id: number) {
-    this.shoppingService.removeFromCart(id)
+    this.shoppingService.removeFromCart(id).subscribe(
+      {
+        next: (any: any) => this.cart$ = this.shoppingService.getCart()
+      }
+    )
   }
 
 }

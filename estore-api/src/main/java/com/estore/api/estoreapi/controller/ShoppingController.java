@@ -178,7 +178,6 @@ public class ShoppingController {
      */
     @DeleteMapping("/{username}/{beefId}")
     public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
-        System.out.println("jdjdfigbs");
         try {
             Customer customer = this.getCustomer(username);
 
