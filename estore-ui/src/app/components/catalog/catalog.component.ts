@@ -16,6 +16,7 @@ export class CatalogComponent {
   }
 
   search(term: string): void {
+
     this.searchTerms.next(term);
   }
 
