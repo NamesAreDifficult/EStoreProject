@@ -138,20 +138,19 @@ delete the product.
 
 ### View Tier
 
-When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. This is controlled by the home-page and nav-bar components. 
+When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. 
+This is controlled by the home-page and nav-bar components. 
 From there the users are able to see the log-in page and log-in with their respective username, which is controlled by the login component. Both users, customers and admins, will be redirected to the landing page after log in. 
 Both admin and customers can view the catalog and product details that are controlled via the product-details and catalog components. 
-From there the admin can view the inventory in the admin dashboard, via the admin-dashboard component. Because the admin has no access to a shopping cart, if the admin were to try and access a shopping cart, they will also be redirected to the admin dashboard. 
-Customers cannot access the admin dashboard, but they do have access to the shopping cart and checkout. The view of the shopping cart is controlled by the cart compononent. 
+From there the admin can view the inventory in the admin dashboard, via the admin-dashboard component. 
+Because the admin has no access to a shopping cart, if the admin were to try and access a shopping cart, they will also be redirected to the admin dashboard. 
+Customers cannot access the admin dashboard, but they do have access to the shopping cart and checkout. 
+The view of the shopping cart is controlled by the cart compononent. 
 Once a customer is done shopping and the admin is finished, they can log out view the log out compononent.  
 
 ### ViewModel Tier
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information. The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go. The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
 
 
 
