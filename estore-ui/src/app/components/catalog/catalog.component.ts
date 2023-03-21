@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
 import { Beef, BeefService } from '../../services/beefService/beef.service';
 
 @Component({

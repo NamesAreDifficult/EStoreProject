@@ -59,4 +59,16 @@ export class CartServiceService {
         return throwError((() => new Error(err.status)));
       }))
   }
+
+  public addToCart(cartBeef: CartBeef): Observable<any> {
+    const url = this.shoppingUrl + "/" + this.getUsername()
+    return this.http.post<CartBeef>(url, cartBeef, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Added ${cartBeef.id} to ${this.getUsername()}`)),
+      catchError(err => {
+        this.logger.handleError<any>('addToCart')
+        return throwError((() => new Error(err.status)));
+      })
+    );
+
+  }
 }
