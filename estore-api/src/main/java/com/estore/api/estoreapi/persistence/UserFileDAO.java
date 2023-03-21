@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.estore.api.estoreapi.controller.InventoryController;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
@@ -253,8 +254,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
-
-      return customer.getCart().addToCart(new CartBeef(beefId, weight));
+      Boolean ret = customer.getCart().addToCart(new CartBeef(beefId, weight));
+      save();
+      return ret;
     }
   }
 
@@ -266,8 +268,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
-
-      return customer.getCart().removeFromCart(beefId);
+      Boolean ret = customer.getCart().removeFromCart(beefId);
+      save();
+      return ret;
     }
   }
 
@@ -281,6 +284,7 @@ public class UserFileDAO implements UserDAO {
       Customer customer = GetCustomer(username);
 
       customer.getCart().clearCart();
+      save();
       return true;
     }
   }
