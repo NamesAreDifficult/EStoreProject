@@ -10,25 +10,25 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class AdminTests {
 
-    @Test
-    public void testCtor() {
+  @Test
+  public void testCtor() {
 
-        Admin testAdmin = new Admin("Test");
+    Admin testAdmin = new Admin("Test");
 
-        assertNotNull(testAdmin, () -> "The admin should not be null");
-    }
+    assertNotNull(testAdmin, () -> "The admin should not be null");
+  }
 
-    @Test
-    public void testIsAdmin() {
-        Admin testAdmin = new Admin("Test");
+  @Test
+  public void testIsAdmin() {
+    Admin testAdmin = new Admin("Test");
 
-        assertTrue(testAdmin.isAdmin(), "The admin should be an admin");
-    }
+    assertTrue(testAdmin.isAdmin(), "The admin should be an admin");
+  }
 
-    @Test
-    public void testGetUsername() {
-        Admin testAdmin = new Admin("Test");
+  @Test
+  public void testGetUsername() {
+    Admin testAdmin = new Admin("Test");
 
-        assertEquals("Test", testAdmin.getUsername());
-    }
+    assertEquals("Test", testAdmin.getUsername());
+  }
 }
