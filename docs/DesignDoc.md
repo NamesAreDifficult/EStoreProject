@@ -138,17 +138,13 @@ delete the product.
 
 
 ### View Tier
-> _Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
 
-> _You must also provide sequence diagrams as is relevant to a particular aspects 
-> of the design that you are describing.  For example, in e-store you might create a 
-> sequence diagram of a customer searching for an item and adding to their cart. 
-> Be sure to include an relevant HTTP reuqests from the client-side to the server-side 
-> to help illustrate the end-to-end flow._
-
+When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. This is controlled by the home-page and nav-bar components. 
+From there the users are able to see the log-in page and log-in with their respective username, which is controlled by the login component. Both users, customers and admins, will be redirected to the landing page after log in. 
+Both admin and customers can view the catalog and product details that are controlled via the product-details and catalog components. 
+From there the admin can view the inventory in the admin dashboard, via the admin-dashboard component. Because the admin has no access to a shopping cart, if the admin were to try and access a shopping cart, they will also be redirected to the admin dashboard. 
+Customers cannot access the admin dashboard, but they do have access to the shopping cart and checkout. The view of the shopping cart is controlled by the cart compononent. 
+Once a customer is done shopping and the admin is finished, they can log out view the log out compononent.  
 
 ### ViewModel Tier
 > _Provide a summary of this tier of your architecture. This
@@ -159,21 +155,14 @@ delete the product.
 > static models (UML class diagrams) with some details such as critical attributes and methods._
 
 
+
 ### Model Tier
+> _Provide a summary of this tier of your architecture. This
+> section will follow the same instructions that are given for the View
+> Tier above._
 
-The model tier consists of beef, shopping carts, and users, which may be
-customers or administrators. Customers have a shopping cart, that may contain
-zero or more products, whereas admins do not. Shopping carts are represented by a class,
-with CartBeef representing Beef as an item in the shopping cart. Both users are identified by username.
-Beef has an incrementing id as its identifier, and has a grade, cut, weight, and price.
-Beef contains methods to add, get, delete, and get all beef objects, as well as updating
-the price and field of beef objects. Users can add items to their shopping cart field via
-a method, but this method and attribute does not exist for administrators. Within admin and customer
-classes, there exists a method to validate whether or not the use is an admin, which is used in the view tier
-for the acceptance criteria. There are also methods to get users by username, and create adminis and customer
-if necessary from the backend.
-
-![Model Tier](model-tier.png)
+> _At appropriate places as part of this narrative provide one or more
+> static models (UML class diagrams) with some details such as critical attributes and methods._
 
 ### Static Code Analysis/Design Improvements
 
