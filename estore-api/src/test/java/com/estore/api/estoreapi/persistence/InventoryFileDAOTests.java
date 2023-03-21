@@ -1,12 +1,15 @@
 package com.estore.api.estoreapi.persistence;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,14 +52,29 @@ public class InventoryFileDAOTests {
   }
 
   @Test
+  public void testUpdateBeef() throws IOException{
+    Beef updatedBeef = new Beef(1, "Ribeye", (float)1.34, "A5", 49.99);
+    Beef expectedBeef = new Beef(1, "Ribeye", 14, "A5", 49.99);
+
+    assertDoesNotThrow(() -> {
+      assertEquals(expectedBeef, inventoryFileDAO.updateBeef(updatedBeef));
+    });
+
+    doThrow(new IOException("Failed to write"))
+      .when(mockObjectMapper)
+      .writeValue(any(File.class), any(Beef[].class));
+
+    assertThrows(IOException.class, 
+      () -> inventoryFileDAO.updateBeef(updatedBeef),
+      "IOException ont thrown");
+  }
+
+  @Test
   public void testGetAllBeef(){
     Beef[] beef = inventoryFileDAO.getBeef();
 
     assertEquals(3, beef.length);
-
-    for(int i = 0; i < beef.length; i++){
-      assertEquals(testBeefArray[i], beef[i]);
-    }
+    assertTrue(Arrays.equals(testBeefArray, beef));
   }
 
   @Test
@@ -79,31 +97,31 @@ public class InventoryFileDAOTests {
   @Test
   public void testCreateBeef(){
     Beef beef = new Beef(4, "Skirt", (float)4.02, "C3", 8.99);
-    try{
+    assertDoesNotThrow(() -> {
       inventoryFileDAO.createBeef(beef);
-    }catch(IOException e){
-      fail(e.getMessage());
-    }
+    });
 
     assertEquals(beef, inventoryFileDAO.getBeef(4));
 
     Beef duplicateBeef = new Beef(1, "Ribeye", (float)12.66, "A5", 299.99);
 
-    try{
+    assertDoesNotThrow(() -> {
       assertNull(inventoryFileDAO.createBeef(duplicateBeef));
-    }catch(IOException e){
-      fail(e.getMessage());
-    }
+    });
   }
 
   @Test
   public void deleteBeef(){
-    try{
+    assertDoesNotThrow(() -> {
       assertTrue(inventoryFileDAO.deleteBeef(1));
+    });
+
+    assertDoesNotThrow(()->{
       assertFalse(inventoryFileDAO.deleteBeef(10));
-    }catch(IOException e){
-      fail(e.getMessage());
-    }
+    });
+
     assertNull(inventoryFileDAO.getBeef(1));
   }
+
+
 }
