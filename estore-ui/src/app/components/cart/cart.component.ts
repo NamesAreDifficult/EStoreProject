@@ -3,6 +3,7 @@ import { LoggingService } from 'src/app/services/loggingService/logging.service'
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Beef } from '../../services/beefService/beef.service';
+import { CustomerAuthenticationService } from 'src/app/services/customerAuthService/customer-authentication.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,9 +14,10 @@ export class CartComponent {
 
   cart$!: Observable<Beef[]>
 
-  constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
+  constructor(private shoppingService: CartServiceService, private customerAuthenticationService: CustomerAuthenticationService, private logger: LoggingService) {
 
   }
+  
   ngOnInit() {
     this.cart$ = this.shoppingService.getCart();
   }
