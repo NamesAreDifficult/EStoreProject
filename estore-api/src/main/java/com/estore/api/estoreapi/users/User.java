@@ -50,11 +50,33 @@ public abstract class User implements Comparable<User> {
     /*
      * Compares the current user to another user
      * 
+     * @param user other user to compare to
+     * 
      * @return an integer depending on whether the current user is greater than,
      * less than, or equal to the other user
      */
     @Override
     public int compareTo(User user) {
         return this.username.compareTo(user.getUsername());
+    }
+
+    /*
+     * Checks if two users are the same
+     * 
+     * @param other user to compare to
+     * 
+     * @return true if users are the same, else false
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this.getClass() == other.getClass()) {
+            User otherUser = (User) other;
+
+            if (otherUser.getUsername() == this.getUsername())
+
+                return otherUser.isAdmin() == this.isAdmin();
+
+        }
+        return false;
     }
 }

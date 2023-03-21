@@ -20,7 +20,8 @@ public class FileUtility {
         File file = new File(path);
 
         if (!file.exists()) {
-            file.getParentFile().mkdirs();
+          
+            file.mkdirs();
             file.createNewFile();
         }
     }
