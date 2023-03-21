@@ -16,22 +16,15 @@ export class AdminDashboardComponent {
   beef$!: Observable<Beef[]>
   // Alert for displaying success/error messages
   adminAlert: String = ""
-  adminAuthenticationService: AdminAuthenticationService
 
   // Constructor for Admin Dashboard that takes an instance of BeefService and AdminAuthenticationService
-  constructor(beefService: BeefService, adminAuthenticationService: AdminAuthenticationService) {
+  constructor(beefService: BeefService) {
     this.beefService = beefService
-    this.adminAuthenticationService = adminAuthenticationService
   }
 
   // Initializes the inventory
   ngOnInit(){
-    this.isAdmin();
     this.beef$ = this.beefService.getAllBeef()
-  }
-
-  isAdmin(){
-    return this.adminAuthenticationService.canActivate()
   }
   
   // Observer for handling creation of new beef 

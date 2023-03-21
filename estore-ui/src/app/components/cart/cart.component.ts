@@ -14,7 +14,7 @@ export class CartComponent {
 
   cart$!: Observable<Beef[]>
 
-  constructor(private shoppingService: CartServiceService, private customerAuthenticationService: CustomerAuthenticationService, private logger: LoggingService) {
+  constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
 
   }
   
