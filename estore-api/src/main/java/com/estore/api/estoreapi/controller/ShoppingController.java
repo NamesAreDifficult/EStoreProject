@@ -120,7 +120,7 @@ public class ShoppingController {
     public ResponseEntity<CartBeef> AddToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
 
         try {
-            if (cartBeef.getWeight() <= 0 || cartBeef.getWeight() > this.inventoryDao.getBeef(cartBeef.getId()).getWeight()) {
+            if (cartBeef.getWeight() <= 0) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             // Checks if beef exists
