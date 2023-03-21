@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -73,6 +75,16 @@ public class UserFileDAOTests {
                 userFileDAO = new UserFileDAO("customer.txt", "admin.txt", mockObjectMapper);
         }
 
+        @AfterEach
+        public void cleanupTests(){
+          File[] files = new File[] {new File("customer.txt"), new File("admin.txt")};
+          for(File file : files){
+            if (file.exists()){
+              file.delete();
+            }
+          }
+        }
+        
         @Test
         public void testGetUsers() {
                 User[] users = assertDoesNotThrow(() -> userFileDAO.GetUsers(),
