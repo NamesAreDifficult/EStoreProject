@@ -31,7 +31,7 @@ export class UserService {
     return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Created customer: ${customer.username}`)),
       catchError(err => {
-        this.handleError<any>('createCustomer')
+        this.logger.handleError<any>('createCustomer')
         return throwError((() => new Error(err.status)));
       })
     );
@@ -43,23 +43,12 @@ export class UserService {
       tap(_ => this.logger.add(`Logged in user: ${user.username}`)),
       catchError(
         err => {
-          this.handleError<any>('loginUser')
+          this.logger.handleError<any>('loginUser')
           return throwError((() => new Error(err.status)));
         })
     );
   }
 
-  // Error Handling
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: better job of transforming error for user consumption
-      this.logger.add(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 
   // Get signed in user
   public getLoggedIn(): User | null {

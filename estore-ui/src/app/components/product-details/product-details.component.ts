@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Beef, BeefService } from '../../services/beefService/beef.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { CartServiceService } from 'src/app/services/cartService/cart-service.service';
 
 
 
@@ -18,7 +19,7 @@ export class ProductDetailsComponent {
 
   Observer = {
     next: (beef: Beef) => {
-      this.beef=beef;
+      this.beef = beef;
       const id = Number(this.route.snapshot.paramMap.get('id'));
       this.beefService.getBeef(id)
     },
@@ -33,8 +34,9 @@ export class ProductDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private beefService: BeefService,
-    private location: Location
-  ) {}
+    private location: Location,
+    private shoppingService: CartServiceService
+  ) { }
 
   ngOnInit(): void {
     this.getBeef();
@@ -45,8 +47,33 @@ export class ProductDetailsComponent {
     this.beefService.getBeef(id)
       .subscribe(this.Observer);
   }
-  
+
   goBack(): void {
     this.location.back();
   }
+
+  public addToCart(id: number, amount: string) {
+    var amount_number = Number(amount)
+
+    if (isNaN(amount_number)) {
+      return null;
+    } else if (amount_number <= 0) {
+      return null;
+    }
+
+
+
+    this.shoppingService.addToCart(
+      {
+        id: id,
+        weight: Number(amount)
+      }
+    ).subscribe(
+      {
+        next: (any: any) => { }
+      }
+    )
+    return null;
+  }
 }
+

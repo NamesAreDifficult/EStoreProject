@@ -14,6 +14,7 @@ import { UserAuthenticationService } from './services/userAuthService/user-authe
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 
@@ -26,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     HomePageComponent,
     AdminDashboardComponent,
     LogoutComponent,
+    CartComponent,
     ProductDetailsComponent
   ],
   imports: [
