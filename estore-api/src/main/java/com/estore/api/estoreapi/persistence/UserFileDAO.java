@@ -35,7 +35,6 @@ public class UserFileDAO implements UserDAO {
     try {
       load(); // load the users from the file
     } catch (IOException err) {
-      System.out.println(err);
       this.users = new TreeMap<>();
       Admin defaultAdmin = new Admin("admin");
       this.users.put(defaultAdmin.getUsername(), defaultAdmin);
