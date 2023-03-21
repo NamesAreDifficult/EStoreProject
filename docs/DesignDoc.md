@@ -9,7 +9,6 @@ geometry: margin=1in
   Brendan Battisti
   Alice Cauchi
   Brian McNulty
-  Ryan Wagoner
   John West
 
 ## Executive Summary
