@@ -156,12 +156,17 @@ Once a customer is done shopping and the admin is finished, they can log out vie
 
 
 ### Model Tier
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
+The model tier consists of beef, shopping carts, and users, which may be
+customers or administrators.
+Customers have a shopping cart, that may contain zero or more products, whereas admins do not.
+Shopping carts are represented by a class, with CartBeef representing Beef as an item in the shopping cart. Both users are identified by username.
+Beef has an incrementing id as its identifier, and has a grade, cut, weight, and price.
+Beef contains methods to add, get, delete, and get all beef objects, as well as updating the price and field of beef objects. Users can add items to their shopping cart field via
+a method, but this method and attribute does not exist for administrators.
+Within admin and customer classes, there exists a method to validate whether or not the use is an admin, which is used in the view tier
+for the acceptance criteria. There are also methods to get users by username, and create adminis and customer if necessary from the backend.
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+![Model Tier](model-tier.png)
 
 ### Static Code Analysis/Design Improvements
 
