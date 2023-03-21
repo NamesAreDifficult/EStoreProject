@@ -3,7 +3,7 @@
 </h1>
 <h2> Featured Products </h2>
 <div class ="beef-menu">
-    <a *ngFor ="let beef of beef">
+    <a  *ngFor ="let beef of beef" routerLink="/detail/{{beef.id}}">
         {{beef.grade}} {{beef.cut}}
         <p>
            price:  ${{beef.price}}  Weight: {{beef.weight}}
