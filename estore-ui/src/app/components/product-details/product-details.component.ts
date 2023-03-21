@@ -53,9 +53,14 @@ export class ProductDetailsComponent {
   }
 
   public addToCart(id: number, amount: string) {
-    if (isNaN(Number(amount))) {
+    var amount_number = Number(amount)
+
+    if (isNaN(amount_number)) {
+      return null;
+    } else if (amount_number <= 0) {
       return null;
     }
+
 
 
     this.shoppingService.addToCart(
