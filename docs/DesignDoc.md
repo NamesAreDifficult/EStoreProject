@@ -159,8 +159,6 @@ The services that are critical for the data use are beef-service, which contains
 
 
 
-
-
 ### Model Tier
 The model tier consists of beef, shopping carts, and users, which may be
 customers or administrators.
