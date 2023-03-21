@@ -5,15 +5,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
@@ -62,21 +66,28 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{username}")
-    public ResponseEntity<CartBeef[]> getShoppingCart(@PathVariable String username) {
-
+    public ResponseEntity<Beef[]> getShoppingCart(@PathVariable String username) {
         try {
             Customer customer = this.getCustomer(username);
-
             // Checks if user exists and is a customer
             if (customer != null) {
-                return new ResponseEntity<CartBeef[]>(customer.getCart().getContents(), HttpStatus.OK);
+                CartBeef[] cartBeefs = customer.getCart().getContents();
+                Beef[] beefs = new Beef[cartBeefs.length];
+                int index = 0;
+                for (CartBeef cartBeef : customer.getCart().getContents()) {
+                    Beef newBeef = this.inventoryDao.getBeef(cartBeef.getId());
+                    newBeef.setWeight(cartBeef.getWeight());
+                    beefs[index++] = newBeef;
+                }
+
+                return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
             }
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     /**
@@ -104,10 +115,13 @@ public class ShoppingController {
      *         of adding to the shopping cart<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PutMapping("/{username}")
+    @PostMapping("/{username}")
     public ResponseEntity<CartBeef> AddToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
 
         try {
+            if (cartBeef.getWeight() <= 0) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             // Checks if beef exists
             if (this.inventoryDao.getBeef(cartBeef.getId()) != null) {
                 Customer customer = this.getCustomer(username);
@@ -166,7 +180,7 @@ public class ShoppingController {
      *         of CREATED<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/{username}/{beefId}")
     public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
         try {
             Customer customer = this.getCustomer(username);

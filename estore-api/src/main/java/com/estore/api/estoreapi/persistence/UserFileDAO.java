@@ -27,14 +27,15 @@ public class UserFileDAO implements UserDAO {
   private String customerFilename; // Filename to read from and write to for storing customers
   private String adminFilename; // Filename to read from and write to for storing admins
 
-  public UserFileDAO(@Value("${customer.file}") String customerFilename, @Value("${admin.file}") String AdminFilename,
+  public UserFileDAO(@Value("${customer.file}") String customerFilename, @Value("${admin.file}") String adminFilename,
       ObjectMapper objectMapper) {
     this.customerFilename = customerFilename;
-    this.adminFilename = AdminFilename;
+    this.adminFilename = adminFilename;
     this.objectMapper = objectMapper;
     try {
       load(); // load the users from the file
     } catch (IOException err) {
+      System.out.println(err);
       this.users = new TreeMap<>();
     }
   }
@@ -247,13 +248,12 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer AddToCart(String username, int beefId, float weight) throws IOException {
+  public Boolean AddToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
-      customer.getCart().addToCart(new CartBeef(beefId, weight));
-      return customer;
+      return customer.getCart().addToCart(new CartBeef(beefId, weight));
     }
   }
 
@@ -261,13 +261,12 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer RemoveFromCart(String username, int beefId) throws IOException {
+  public Boolean RemoveFromCart(String username, int beefId) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
-      customer.getCart().removeFromCart(beefId);
-      return customer;
+      return customer.getCart().removeFromCart(beefId);
     }
   }
 
@@ -275,13 +274,13 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer ClearCart(String username) throws IOException {
+  public Boolean ClearCart(String username) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
       customer.getCart().clearCart();
-      return customer;
+      return true;
     }
   }
 
