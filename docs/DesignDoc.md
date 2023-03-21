@@ -150,7 +150,17 @@ Once a customer is done shopping and the admin is finished, they can log out vie
 
 ### ViewModel Tier
 
-The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information. The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go. The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
+The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information.
+![BeefServiceDiagram](BeefServiceDiagram.png)
+ The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go.
+![UserAuthServiceDiagram](userAuthServiceDiagram.png)
+![UserServiceDiagram](userServiceDiagram.png)
+
+
+ The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
+![CartServiceDiagram](CartServiceDiagram.png)
+
+
 
 
 
