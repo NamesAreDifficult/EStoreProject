@@ -75,9 +75,10 @@ public class ShoppingController {
                 Beef[] beefs = new Beef[cartBeefs.length];
                 int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
-                    Beef newBeef = this.inventoryDao.getBeef(cartBeef.getId());
-                    newBeef.setWeight(cartBeef.getWeight());
-                    beefs[index++] = newBeef;
+                    Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
+                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
+                                retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                    beefs[index++] = copyBeef;
                 }
 
                 return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
