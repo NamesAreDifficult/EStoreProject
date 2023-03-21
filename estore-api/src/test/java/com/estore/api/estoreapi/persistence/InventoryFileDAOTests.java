@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,7 +38,7 @@ public class InventoryFileDAOTests {
    * @throws IOException
    */
   @BeforeEach
-  public void setupHeroFileDAO() throws IOException {
+  public void setupInventoryFileDAO() throws IOException {
       mockObjectMapper = mock(ObjectMapper.class);
       testBeefArray = new Beef[3];
       testBeefArray[0] = new Beef(1, "Ribeye", (float)12.66, "A5", 299.99);
@@ -49,6 +51,14 @@ public class InventoryFileDAOTests {
         .readValue(new File("doesnt_matter.txt"),Beef[].class))
           .thenReturn(testBeefArray);  
       inventoryFileDAO = new InventoryFileDAO("doesnt_matter.txt",mockObjectMapper);
+  }
+
+  @AfterEach
+  public void cleanupInventoryFileDAO() {
+    File file = new File("doesnt_matter.txt");
+    if (file.exists()){
+      file.delete();
+    }
   }
 
   @Test
