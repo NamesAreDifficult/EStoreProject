@@ -12,7 +12,7 @@ import { UserAuthenticationService } from './services/userAuthService/user-authe
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 import { LogoutComponent } from './components/logout/logout.component';
-import { CommonModule } from '@angular/common';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -21,11 +21,11 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     CatalogComponent,
     AdminDashboardComponent,
-    LogoutComponent
+    LogoutComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
-    CommonModule,
     AppRoutingModule,
     HttpClientModule
   ],

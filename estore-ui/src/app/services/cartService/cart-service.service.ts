@@ -28,23 +28,35 @@ export class CartServiceService {
 
   public getCart(): Observable<Beef[]> {
 
-    var user: User | null = this.userService.getLoggedIn();
-
-    var username: String;
-
-    if (user != null) {
-      username = user.username;
-    } else {
-      username = "";
-    }
-
-    return this.http.get<Beef[]>(this.shoppingUrl + "/" + username, this.httpOptions).pipe(
-      tap(_ => this.logger.add(`Got Cart for customer: ${username}`)),
+    return this.http.get<Beef[]>(this.shoppingUrl + "/" + this.getUsername(), this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Got Cart for customer: ${this.getUsername()}`)),
       catchError(err => {
         this.logger.handleError<any>('getCart')
         return throwError((() => new Error(err.status)));
 
       })
     );
+  }
+
+  private getUsername(): String {
+    var user: User | null = this.userService.getLoggedIn();
+
+    var username: String;
+    if (user != null) {
+      username = user.username;
+    } else {
+      username = "";
+    }
+    return username;
+  }
+
+  public removeFromCart(id: number) {
+    console.log(this.shoppingUrl + "/" + this.getUsername() + "/" + id)
+    return this.http.delete(this.shoppingUrl + "/" + this.getUsername() + "/" + id, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Removed ${id} from ${this.getUsername()}'s shopping cart`)),
+      catchError(err => {
+        this.logger.handleError<any>('removeFromCart')
+        return throwError((() => new Error(err.status)));
+      }))
   }
 }

@@ -1,4 +1,22 @@
 <p>Your shopping cart:</p>
 <ul>
-    <li *ngFor="let beef of cart$">{{ beef.id }}</li>
+    <li *ngFor="let beef of cart$ | async">
+        <div>
+            <div>
+                Cut: {{beef.cut}}
+            </div>
+            <div>
+                Grade: {{beef.grade}}
+            </div>
+            <div>
+                Amount: {{beef.weight}}
+            </div>
+            <div>
+                Price: {{beef.weight * beef.price}}
+            </div>
+            <button (click)="removeFromCart(beef.id!)">
+                Remove
+            </button>
+        </div>
+    </li>
 </ul>

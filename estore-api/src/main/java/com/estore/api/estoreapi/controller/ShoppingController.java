@@ -66,21 +66,20 @@ public class ShoppingController {
      */
     @GetMapping("/{username}")
     public ResponseEntity<Beef[]> getShoppingCart(@PathVariable String username) {
-        System.out.println("sdgdsfgdefg");
         try {
             Customer customer = this.getCustomer(username);
-            System.out.println(customer.getCart().getContents());
             // Checks if user exists and is a customer
             if (customer != null) {
-                ArrayList<Beef> beefs = new ArrayList<Beef>();
+                CartBeef[] cartBeefs = customer.getCart().getContents();
+                Beef[] beefs = new Beef[cartBeefs.length];
+                int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef newBeef = this.inventoryDao.getBeef(cartBeef.getId());
                     newBeef.setWeight(cartBeef.getWeight());
-                    beefs.add(newBeef);
+                    beefs[index++] = newBeef;
                 }
-                Beef[] returnBeef = (Beef[]) beefs.toArray();
 
-                return new ResponseEntity<Beef[]>(returnBeef, HttpStatus.OK);
+                return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -177,8 +176,9 @@ public class ShoppingController {
      *         of CREATED<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/{username}/{beefId}")
     public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
+        System.out.println("jdjdfigbs");
         try {
             Customer customer = this.getCustomer(username);
 
