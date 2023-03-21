@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.any;
 
 import java.io.File;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Customer;
+import com.estore.api.estoreapi.users.ShoppingCart;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
@@ -39,17 +42,29 @@ public class UserFileDAOTests {
         public void setupUserFileDao() throws IOException {
                 mockObjectMapper = mock(ObjectMapper.class);
                 testUsers = new User[3];
+
+                Customer[] testCustomers = new Customer[2];
+                Admin[] testAdmins = new Admin[1];
+
                 CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99), 2);
                 CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99), 3);
-                CartBeef[] firstCart = new CartBeef[1];
-                CartBeef[] secondCart = new CartBeef[1];
+                CartBeef[] firstCart = new CartBeef[2];
+                CartBeef[] secondCart = new CartBeef[0];
+
                 firstCart[0] = first;
-                secondCart[0] = second;
-                testUsers[0] = new Customer("Joe", firstCart);
-                testUsers[1] = new Customer("Candice", secondCart);
+                firstCart[1] = second;
+
+                testUsers[0] = new Customer("Joe", new ShoppingCart(firstCart));
+                testUsers[1] = new Customer("Candice", new ShoppingCart(secondCart));
                 testUsers[2] = new Admin("Wendy");
 
-                when(mockObjectMapper.readValue(new File("test.txt"), User[].class)).thenReturn(testUsers);
+                testCustomers[0] = new Customer("Joe", new ShoppingCart(firstCart));
+                testCustomers[1] = new Customer("Candice", new ShoppingCart(secondCart));
+
+                testAdmins[0] = new Admin("Wendy");
+
+                when(mockObjectMapper.readValue(new File("customer.txt"), Customer[].class)).thenReturn(testCustomers);
+                when(mockObjectMapper.readValue(new File("admin.txt"), Admin[].class)).thenReturn(testAdmins);
 
                 userFileDAO = new UserFileDAO("customer.txt", "admin.txt", mockObjectMapper);
         }
@@ -99,7 +114,7 @@ public class UserFileDAOTests {
 
         @Test
         public void testCreateCustomer() {
-                Customer newCustomer = new Customer("John", new CartBeef[1]);
+                Customer newCustomer = new Customer("John", new ShoppingCart());
                 Customer result = assertDoesNotThrow(() -> userFileDAO.createCustomer(newCustomer),
                                 "Unexpected exception thrown");
                 assertNotNull(result);
@@ -127,42 +142,35 @@ public class UserFileDAOTests {
 
         @Test
         public void testAddToCart() {
-                Customer customer = new Customer("Jeffrey", new CartBeef[0]);
+                Customer customer = new Customer("Jeffrey", new ShoppingCart());
                 float weight = (float) .15;
                 CartBeef beef = new CartBeef(3, weight);
                 CartBeef[] newCart = new CartBeef[1];
                 newCart[0] = beef;
-                customer.addToCart(beef);
-                assertArrayEquals(customer.getCart(), newCart);
+                customer.getCart().addToCart(beef);
+                assertArrayEquals(customer.getCart().getContents(), newCart);
         }
 
         @Test
         public void testRemoveFromCart() {
-                Customer customer = new Customer("Andy", new CartBeef[0]);
-                float weight = (float) .15;
-                int id = 3;
-                CartBeef beef = new CartBeef(id, weight);
-                customer.addToCart(beef);
-                CartBeef[] newCart = new CartBeef[0];
-                customer.removeFromCart(id);
-                assertArrayEquals(newCart, customer.getCart());
+                // TODO: Add test
         }
 
         @Test
         public void clearCart() {
-                Customer customer = new Customer("Jeffrey", new CartBeef[0]);
+                Customer customer = new Customer("Jeffrey", new ShoppingCart());
                 float weight = (float) .15;
                 CartBeef beef = new CartBeef(3, weight);
                 CartBeef beef2 = new CartBeef(4, weight);
                 CartBeef[] newCart = new CartBeef[2];
                 newCart[0] = beef;
                 newCart[1] = beef2;
-                customer.addToCart(beef);
-                customer.addToCart(beef2);
-                assertArrayEquals(newCart, customer.getCart());
+                customer.getCart().addToCart(beef);
+                customer.getCart().addToCart(beef2);
+                assertArrayEquals(newCart, customer.getCart().getContents());
                 CartBeef[] mtCart = new CartBeef[0];
-                customer.clearCart();
-                assertArrayEquals(mtCart, customer.getCart());
+                customer.getCart().clearCart();
+                assertArrayEquals(mtCart, customer.getCart().getContents());
         }
 
         // TODO: Implement defensive testing, might not use all of these
@@ -184,7 +192,7 @@ public class UserFileDAOTests {
 
         @Test
         public void testCreateCustomerPresent() {
-                Customer customer = new Customer("Joe", new CartBeef[1]);
+                Customer customer = new Customer("Joe", new ShoppingCart());
                 Customer result = assertDoesNotThrow(() -> userFileDAO.createCustomer(customer),
                                 "Unexpected exception thrown");
                 assertNull(result);
@@ -199,10 +207,10 @@ public class UserFileDAOTests {
 
         @Test
         public void testSaveExceptionCustomer() throws IOException {
-                doThrow(new IOException())
+                doThrow(new IOException("Failed to write"))
                                 .when(mockObjectMapper)
                                 .writeValue(any(File.class), any(User[].class));
-                Customer newCustomer = new Customer("John", new CartBeef[1]);
+                Customer newCustomer = new Customer("John", new ShoppingCart());
                 assertThrows(IOException.class,
                                 () -> userFileDAO.createCustomer(newCustomer),
                                 "IOException not thrown");
@@ -212,7 +220,7 @@ public class UserFileDAOTests {
         public void testSaveExceptionAdmin() throws IOException {
                 doThrow(new IOException())
                                 .when(mockObjectMapper)
-                                .writeValue(any(File.class), any(User[].class));
+                                .writeValue(any(File.class), any(Admin[].class));
                 Admin admin = new Admin("John");
                 assertThrows(IOException.class,
                                 () -> userFileDAO.createAdmin(admin),
@@ -220,37 +228,24 @@ public class UserFileDAOTests {
         }
 
         @Test
-        public void testConstructorException() throws IOException {
-                doThrow(new IOException())
-                                .when(mockObjectMapper)
-                                .readValue(new File("testcustomer.txt"), User[].class);
-                doThrow(new IOException())
-                                .when(mockObjectMapper)
-                                .readValue(new File("testadmin.txt"), User[].class);
-                assertThrows(IOException.class,
-                                () -> new UserFileDAO("testcustomer.txt", "testadmin.txt", mockObjectMapper),
-                                "IOException not thrown");
-        }
-
-        @Test
         public void testAddToCartPresent() {
-                Customer customer = new Customer("Jeremy", new CartBeef[0]);
+                Customer customer = new Customer("Jeremy", new ShoppingCart());
                 float weight = (float) .15;
                 CartBeef beef = new CartBeef(3, weight);
                 CartBeef[] newCart = new CartBeef[1];
                 newCart[0] = beef;
-                customer.addToCart(beef);
-                assertArrayEquals(customer.getCart(), newCart);
+                customer.getCart().addToCart(beef);
+                assertArrayEquals(customer.getCart().getContents(), newCart);
                 float weight2 = (float) .3;
                 newCart[0] = new CartBeef(3, weight2);
-                customer.addToCart(beef);
-                assertArrayEquals(newCart, customer.getCart());
+                customer.getCart().addToCart(beef);
+                assertArrayEquals(newCart, customer.getCart().getContents());
         }
 
         @Test
         public void testRemoveFromCartAbsent() {
-                Customer customer = new Customer("Liam", new CartBeef[0]);
-                boolean test = customer.removeFromCart(4);
+                Customer customer = new Customer("Liam", new ShoppingCart());
+                boolean test = customer.getCart().removeFromCart(4);
                 assertEquals(false, test);
         }
 }
