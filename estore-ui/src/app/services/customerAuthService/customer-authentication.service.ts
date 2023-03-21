@@ -17,7 +17,7 @@ export class CustomerAuthenticationService implements CanActivate {
 
       //  User is an admin
       if (currentUser.admin) {
-        this.router.navigate([''])
+        this.router.navigate(['admin-dashboard'])
 
       }
       // User is a customer
