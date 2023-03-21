@@ -177,19 +177,32 @@ moving forward.
 
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+
+Acceptance testing was successful, excluding the checkout component. Improving
+code coverage required changing various parts of our implementation due to inadequate
+return types, but was ultimately successful at 93 percent.
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+
+The number of user stories that passed all criteria is 10.
+
+The number of stories that have failed all acceptance testing is 2,
+both of these stories are related to the checkout feature, which was
+not implemented due to time constraints.
+
+There is one story that does not currently meet all of its acceptance criteria, and it
+is the navigation bar. The navigation bar is not a part for the MVP for this particular
+sprint, so it was not the primary focus of the team. A fair amount of criteria
+was created with designing the CSS for this component in mind and was not really necessary
+for this sprint, and other stories of greater importance were prioritized.
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+![Code Coverage](code-coverage.png)
+
+Using mock objects, our team tested the mode, controller, and persistence
+tiers. We achieved an overall code coverage of 93 percent. Given an average
+of 90 percent was the goal for the overall average, we set a target for
+90 percent minimum for each of these tiers, with the main estore-api folder
+being the exception at 88 percent. Overall, our unit testing for this
+phase was cohesive.
