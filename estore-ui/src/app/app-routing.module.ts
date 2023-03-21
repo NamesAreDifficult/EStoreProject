@@ -5,6 +5,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent, canActivate: [UserAuthenticationService] },
   { path: "catalog", component: CatalogComponent, canActivate: [CustomerAuthenticationService] },
   { path: "home-page", component: HomePageComponent},
+  { path: "admin-dashboard", component: AdminDashboardComponent},
   { path: '', redirectTo: '/home-page', pathMatch: 'full'},
 ];
 
