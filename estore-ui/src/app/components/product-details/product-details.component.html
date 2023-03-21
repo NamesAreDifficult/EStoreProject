@@ -2,21 +2,21 @@
     <h2>Product Details</h2>
     <div>
         <label for="beef-grade"> Grade: </label>
-        <input id="beef-grade" [(ngModel)]="beef.grade" placeholder="grade">
+        <label for="beef-grade" >{{beef.grade}}</label>
     </div>
     <div>
         <label for="beef-cut"> Cut: </label>
-        <input id="beef-cut" [(ngModel)]="beef.cut" placeholder="cut">
+        <label for="beef-cut" >{{beef.cut}}</label>
     </div>
     <div>
         <label for="beef-weight"> Weight: </label>
-        <input id="beef-weight" [(ngModel)]="beef.weight" placeholder="weight">
+        <label for="beef-weight" >{{beef.weight}} lbs</label>
     </div>
     <div>
         <label for="beef-price"> Price: $ </label>
-        <input id="beef-price" [(ngModel)]="beef.price" placeholder="price">
+        <label for="beef-price" >{{beef.price}}</label>
     </div>
-    <button type="button" (click)="goBack()">go back</button>
+    <button type="button" (click)="goBack()"> Go Back</button>
 </div>
 <div>
     {{productAlert}}

@@ -1,18 +1,19 @@
 /* ProductDetailComponent's private CSS styles */
+h2 {
+  font-size: 3rem;
+}
 label {
     color: #435960;
     font-weight: bold;
+    font-size: 2rem;
   }
-  input {
-    font-size: 1em;
-    padding: .5rem;
-  }
+  
   button {
     margin-top: 20px;
     background-color: #eee;
     padding: 1rem;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 1.75rem;
   }
   button:hover {
     background-color: #cfd8dc;
