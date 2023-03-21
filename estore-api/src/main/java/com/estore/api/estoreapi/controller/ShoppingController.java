@@ -78,7 +78,7 @@ public class ShoppingController {
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
-                                retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                            retrievedBeef.getGrade(), retrievedBeef.getPrice());
                     beefs[index++] = copyBeef;
                 }
 
@@ -124,9 +124,15 @@ public class ShoppingController {
             if (cartBeef.getWeight() <= 0) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
+            Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
+
             // Checks if beef exists
-            if (this.inventoryDao.getBeef(cartBeef.getId()) != null) {
+            if (retrievedBeef != null) {
                 Customer customer = this.getCustomer(username);
+
+                if (retrievedBeef.getWeight() < cartBeef.getWeight()) {
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+                }
 
                 // Checks if user exists and is a customer
                 if (customer != null) {
