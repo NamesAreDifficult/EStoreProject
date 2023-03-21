@@ -43,8 +43,10 @@ export class BeefService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Beef>(url).pipe(
       tap(_ => this.log(`fetched Beef id=$[id}`)),
-      catchError(this.handleError<Beef>(`getBeef id=${id}`))
-    );
+      catchError(err => {
+        this.handleError<any>('getBeef')
+        return throwError((() => new Error(err.status)));
+      })    );
   }
 
   // Search beef name with the provided term
@@ -59,6 +61,8 @@ export class BeefService {
           this.log(`found beef matching ${term}`) :
           this.log(`no beef matching ${term}`)),
         catchError(this.handleError<Beef[]>(`searchBeef`, []))
+        
+
       );
   }
 

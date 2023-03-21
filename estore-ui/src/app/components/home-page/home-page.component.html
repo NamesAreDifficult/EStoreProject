@@ -6,7 +6,7 @@
     <a  *ngFor ="let beef of beef" routerLink="/product/{{beef.id}}">
         {{beef.grade}} {{beef.cut}}
         <p>
-           price:  ${{beef.price}}  Weight: {{beef.weight}}
+           price:  ${{beef.price.toFixed(2)}}  Weight: {{beef.weight}}
     </p>
     </a>
     

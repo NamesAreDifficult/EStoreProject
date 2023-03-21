@@ -14,6 +14,8 @@ import { UserAuthenticationService } from './services/userAuthService/user-authe
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,14 @@ import { LogoutComponent } from './components/logout/logout.component';
     CatalogComponent,
     HomePageComponent,
     AdminDashboardComponent,
-    LogoutComponent
+    LogoutComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [UserAuthenticationService, CustomerAuthenticationService, AdminAuthenticationService],
   bootstrap: [AppComponent]

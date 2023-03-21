@@ -7,14 +7,16 @@ import { CustomerAuthenticationService } from './services/customerAuthService/cu
 import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 const routes: Routes = [
   { path: "new-user", component: NewUserComponent, canActivate: [UserAuthenticationService] },
   { path: "login", component: LoginComponent, canActivate: [UserAuthenticationService] },
-  { path: "catalog", component: CatalogComponent, canActivate: [CustomerAuthenticationService] },
-  { path: "home-page", component: HomePageComponent},
-  { path: "admin-dashboard", component: AdminDashboardComponent},
-  { path: '', redirectTo: '/home-page', pathMatch: 'full'},
+  { path: "catalog", component: CatalogComponent },
+  { path: "home-page", component: HomePageComponent },
+  { path: "admin-dashboard", component: AdminDashboardComponent, canActivate: [AdminAuthenticationService] },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: "product/:id", component: ProductDetailsComponent }
 ];
 
 @NgModule({

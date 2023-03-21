@@ -16,6 +16,7 @@ export class CatalogComponent {
   constructor(private beefService: BeefService) {
   }
 
+  
   search(term: string): void{
     this.searchTerms.next(term);
   }
