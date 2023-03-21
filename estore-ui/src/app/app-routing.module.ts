@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: "new-user", component: NewUserComponent, canActivate: [UserAuthenticationService] },
   { path: "login", component: LoginComponent, canActivate: [UserAuthenticationService] },
   { path: "catalog", component: CatalogComponent, canActivate: [CustomerAuthenticationService] },
-  { path: "home-page", component: HomePageComponent}
+  { path: "home-page", component: HomePageComponent},
+  { path: '', redirectTo: '/home-page', pathMatch: 'full'},
 ];
 
 @NgModule({
