@@ -18,7 +18,7 @@ export class AdminAuthenticationService implements CanActivate {
         return true;
       }
       else {
-        this.router.navigate(['catalog'])
+        this.router.navigate(['home-page'])
         return false;
       }
     }
