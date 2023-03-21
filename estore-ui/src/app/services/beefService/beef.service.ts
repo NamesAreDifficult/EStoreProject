@@ -46,9 +46,9 @@ export class BeefService {
       tap(_ => this.log(`fetched Beef id=$[id}`)),
 
       catchError(err => {
-        this.handleError<any>('getBeef')
+        this.loggingService.handleError<any>('getBeef')
         return throwError((() => new Error(err.status)));
-      })    );
+      }));
   }
 
   // Search beef name with the provided term

@@ -27,7 +27,7 @@ import { FormsModule } from '@angular/forms';
     HomePageComponent,
     AdminDashboardComponent,
     LogoutComponent,
-    CartComponent
+    CartComponent,
     ProductDetailsComponent
   ],
   imports: [
