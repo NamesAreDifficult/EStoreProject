@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.persistence.UserFileDAO;
 import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;
@@ -75,9 +76,10 @@ public class ShoppingController {
                 Beef[] beefs = new Beef[cartBeefs.length];
                 int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
-                    Beef newBeef = this.inventoryDao.getBeef(cartBeef.getId());
-                    newBeef.setWeight(cartBeef.getWeight());
-                    beefs[index++] = newBeef;
+                    Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
+                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
+                                retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                    beefs[index++] = copyBeef;
                 }
 
                 return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
@@ -128,7 +130,8 @@ public class ShoppingController {
 
                 // Checks if user exists and is a customer
                 if (customer != null) {
-                    customer.getCart().addToCart(cartBeef);
+                    userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
+
                     return new ResponseEntity<CartBeef>(cartBeef, HttpStatus.OK);
 
                 }
@@ -186,7 +189,7 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
-                boolean result = customer.getCart().removeFromCart(beefId);
+                boolean result = userDAO.RemoveFromCart(username, beefId);
                 return new ResponseEntity<Boolean>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

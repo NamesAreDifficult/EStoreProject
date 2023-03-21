@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.estore.api.estoreapi.controller.InventoryController;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
@@ -249,13 +250,13 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer AddToCart(String username, int beefId, float weight) throws IOException {
+  public Boolean AddToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
-
-      customer.getCart().addToCart(new CartBeef(beefId, weight));
-      return customer;
+      Boolean ret = customer.getCart().addToCart(new CartBeef(beefId, weight));
+      save();
+      return ret;
     }
   }
 
@@ -263,13 +264,13 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer RemoveFromCart(String username, int beefId) throws IOException {
+  public Boolean RemoveFromCart(String username, int beefId) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
-
-      customer.getCart().removeFromCart(beefId);
-      return customer;
+      Boolean ret = customer.getCart().removeFromCart(beefId);
+      save();
+      return ret;
     }
   }
 
@@ -277,13 +278,14 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer ClearCart(String username) throws IOException {
+  public Boolean ClearCart(String username) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
       customer.getCart().clearCart();
-      return customer;
+      save();
+      return true;
     }
   }
 

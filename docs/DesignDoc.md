@@ -34,7 +34,6 @@ and customers, and to provide the butcher with a portal to create and list items
 |  INV | Inventory |
 |  AD  | Admin Dashboard |
 |  PP  | Product Page |
-|  NB  | Navigation Bar |
 
 
 ## Requirements
@@ -44,7 +43,6 @@ This section describes the features of the application.
 - Users login via LP
 - Users logout via LB
 - Users are directed to FPP upon sign in
-- Users navigate to pages via NB
 - Customers are able to browse and search CT for beef
 - Customers may click on beef to go to PP
 - Customers may add beef to and view SC
@@ -122,18 +120,17 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-When not logged in, the user is first directed to FPP. At the top of the screen, there is a NB
-which contains links to FPP, CT, SC, LP, and AD. The user is not able to access SC if not signed in.
+When not logged in, the user is first directed to FPP. At the top of the screen, at this point in time,
+there is no navigation bar, so the user must enter links to links to FPP, CT, SC, LP, and AD.
+The user is not able to access SC if not signed in.
 If the user is logged in, the LP is replaced with LB, and they gain access to SC. On the FPP,
 the user sees the 4 featured products, the price, and the weight available. The user can click on
-a product to go to the product page. Alternatively, if the user goes to the catalog,
+a product to go to the PP. Alternatively, if the user goes to the catalog,
 they may then type in part of a product name to search for the product, and then click on the desired
-product to go to its product page. After going here, the user can add a quantity to their shopping cart via
-a button. Admins have access to these features, but they may not add items to their shopping cart or view shopping cart
-page, as they are redirected upon going to the page. Admins can click on AD to go to the Admin Dashboard,
-where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen.
-Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to
-delete the product.
+product to go to its PP. After going here, the user can add a quantity to their SC via
+a button. Admins have access to these features, but they may not add items to their SC or view SC
+page, as they are redirected upon going to the page. Admins can navigate to ND,
+where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
 
 
 ### View Tier
@@ -187,19 +184,32 @@ moving forward.
 
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+
+Acceptance testing was successful, excluding the checkout component. Improving
+code coverage required changing various parts of our implementation due to inadequate
+return types, but was ultimately successful at 93 percent.
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+
+The number of user stories that passed all criteria is 10.
+
+The number of stories that have failed all acceptance testing is 2,
+both of these stories are related to the checkout feature, which was
+not implemented due to time constraints.
+
+There is one story that does not currently meet all of its acceptance criteria, and it
+is the navigation bar. The navigation bar is not a part for the MVP for this particular
+sprint, so it was not the primary focus of the team. A fair amount of criteria
+was created with designing the CSS for this component in mind and was not really necessary
+for this sprint, and other stories of greater importance were prioritized.
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+![Code Coverage](code-coverage.png)
+
+Using mock objects, our team tested the mode, controller, and persistence
+tiers. We achieved an overall code coverage of 93 percent. Given an average
+of 90 percent was the goal for the overall average, we set a target for
+90 percent minimum for each of these tiers, with the main estore-api folder
+being the exception at 88 percent. Overall, our unit testing for this
+phase was cohesive.
