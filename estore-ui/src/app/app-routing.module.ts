@@ -14,6 +14,8 @@ const routes: Routes = [
   { path: "catalog", component: CatalogComponent, canActivate: [CustomerAuthenticationService] },
   { path: "cart", component: CartComponent },
   { path: "admin-dashboard", component: AdminDashboardComponent}
+  { path: "home-page", component: HomePageComponent},
+  { path: '', redirectTo: '/home-page', pathMatch: 'full'},
 ];
 
 @NgModule({

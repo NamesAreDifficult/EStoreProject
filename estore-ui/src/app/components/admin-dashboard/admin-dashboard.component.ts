@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AdminAuthenticationService } from 'src/app/services/adminAuthService/admin-authentication.service';
 import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 
 @Component({
@@ -15,15 +16,22 @@ export class AdminDashboardComponent {
   beef$!: Observable<Beef[]>
   // Alert for displaying success/error messages
   adminAlert: String = ""
+  adminAuthenticationService: AdminAuthenticationService
 
-  // Constructor for Admin Dashboard that takes an instance of BeefService
-  constructor(beefService: BeefService) {
+  // Constructor for Admin Dashboard that takes an instance of BeefService and AdminAuthenticationService
+  constructor(beefService: BeefService, adminAuthenticationService: AdminAuthenticationService) {
     this.beefService = beefService
+    this.adminAuthenticationService = adminAuthenticationService
   }
 
   // Initializes the inventory
   ngOnInit(){
+    this.isAdmin();
     this.beef$ = this.beefService.getAllBeef()
+  }
+
+  isAdmin(){
+    return this.adminAuthenticationService.canActivate()
   }
   
   // Observer for handling creation of new beef 

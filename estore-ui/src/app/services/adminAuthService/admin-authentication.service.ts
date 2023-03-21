@@ -11,9 +11,22 @@ import { UserService, User } from '../userService/user.service';
 @Injectable()
 export class AdminAuthenticationService implements CanActivate {
   canActivate() {
-    // Todo Implement
-    return true;
+    var currentUser: User | null = this.userService.getLoggedIn()
+    if (currentUser != null) {
+      //  User is an admin
+      if (currentUser.admin) {
+        return true;
+      }
+      else {
+        this.router.navigate(['catalog'])
+        return false;
+      }
+    }
+    this.router.navigate(['login'])
+    this.logger.add('Admin Auth#canActivate called');
+    return false;
   }
+
   //Constructor 
   constructor(private router: Router, private userService: UserService, private logger: LoggingService) { }
 }

@@ -7,7 +7,9 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+
 import { UserAuthenticationService } from './services/userAuthService/user-authentication.service';
 import { CustomerAuthenticationService } from './services/customerAuthService/customer-authentication.service';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
@@ -20,6 +22,7 @@ import { CartComponent } from './components/cart/cart.component';
     NewUserComponent,
     LoginComponent,
     CatalogComponent,
+    HomePageComponent,
     AdminDashboardComponent,
     LogoutComponent,
     CartComponent
