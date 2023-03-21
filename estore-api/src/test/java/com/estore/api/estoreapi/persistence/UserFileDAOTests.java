@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.any;
@@ -37,10 +39,12 @@ public class UserFileDAOTests {
         UserFileDAO userFileDAO;
         User[] testUsers;
         ObjectMapper mockObjectMapper;
+        ShoppingCart mockShoppingCart;
 
         @BeforeEach
         public void setupUserFileDao() throws IOException {
                 mockObjectMapper = mock(ObjectMapper.class);
+                mockShoppingCart = mock(ShoppingCart.class);
                 testUsers = new User[3];
 
                 Customer[] testCustomers = new Customer[2];
@@ -54,11 +58,11 @@ public class UserFileDAOTests {
                 firstCart[0] = first;
                 firstCart[1] = second;
 
-                testUsers[0] = new Customer("Joe", new ShoppingCart(firstCart));
+                testUsers[0] = new Customer("Joe", mockShoppingCart);
                 testUsers[1] = new Customer("Candice", new ShoppingCart(secondCart));
                 testUsers[2] = new Admin("Wendy");
 
-                testCustomers[0] = new Customer("Joe", new ShoppingCart(firstCart));
+                testCustomers[0] = new Customer("Joe", mockShoppingCart);
                 testCustomers[1] = new Customer("Candice", new ShoppingCart(secondCart));
 
                 testAdmins[0] = new Admin("Wendy");
@@ -140,38 +144,35 @@ public class UserFileDAOTests {
         public void testCheckout() {
         }
 
-        @Test
-        public void testAddToCart() {
-                Customer customer = new Customer("Jeffrey", new ShoppingCart());
-                float weight = (float) .15;
-                CartBeef beef = new CartBeef(3, weight);
-                CartBeef[] newCart = new CartBeef[1];
-                newCart[0] = beef;
-                customer.getCart().addToCart(beef);
-                assertArrayEquals(customer.getCart().getContents(), newCart);
-        }
+  @Test
+  public void testAddToCart() {
+    when(mockShoppingCart.addToCart(any(CartBeef.class))).thenReturn(true);
+    assertDoesNotThrow(() -> {
+      assertTrue(userFileDAO.AddToCart("Joe", 1, (float)3.4));
+    });
+  }
 
-        @Test
-        public void testRemoveFromCart() {
-                // TODO: Add test
-        }
+  @Test
+  public void testRemoveFromCart() {
+    //Test for when an item is not removed from the cart
+    when(mockShoppingCart.removeFromCart(anyInt())).thenReturn(true);
+    assertDoesNotThrow(() -> {
+      assertTrue(userFileDAO.RemoveFromCart("Joe", 1));
+    });
 
-        @Test
-        public void clearCart() {
-                Customer customer = new Customer("Jeffrey", new ShoppingCart());
-                float weight = (float) .15;
-                CartBeef beef = new CartBeef(3, weight);
-                CartBeef beef2 = new CartBeef(4, weight);
-                CartBeef[] newCart = new CartBeef[2];
-                newCart[0] = beef;
-                newCart[1] = beef2;
-                customer.getCart().addToCart(beef);
-                customer.getCart().addToCart(beef2);
-                assertArrayEquals(newCart, customer.getCart().getContents());
-                CartBeef[] mtCart = new CartBeef[0];
-                customer.getCart().clearCart();
-                assertArrayEquals(mtCart, customer.getCart().getContents());
-        }
+    //Test for when an item is not removed from cart
+    when(mockShoppingCart.removeFromCart(anyInt())).thenReturn(false);
+    assertDoesNotThrow(() -> {
+      assertFalse(userFileDAO.RemoveFromCart("Joe", 0));
+    });
+  }
+
+  @Test
+  public void clearCart() {
+    assertDoesNotThrow(() -> {
+      userFileDAO.ClearCart("Joe");
+    });
+  }
 
         // TODO: Implement defensive testing, might not use all of these
         @Test

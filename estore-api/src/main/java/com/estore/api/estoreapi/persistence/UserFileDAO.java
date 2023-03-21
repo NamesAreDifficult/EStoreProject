@@ -249,13 +249,12 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer AddToCart(String username, int beefId, float weight) throws IOException {
+  public Boolean AddToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
-      customer.getCart().addToCart(new CartBeef(beefId, weight));
-      return customer;
+      return customer.getCart().addToCart(new CartBeef(beefId, weight));
     }
   }
 
@@ -263,13 +262,12 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer RemoveFromCart(String username, int beefId) throws IOException {
+  public Boolean RemoveFromCart(String username, int beefId) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
-      customer.getCart().removeFromCart(beefId);
-      return customer;
+      return customer.getCart().removeFromCart(beefId);
     }
   }
 
@@ -277,13 +275,13 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Customer ClearCart(String username) throws IOException {
+  public Boolean ClearCart(String username) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
 
       customer.getCart().clearCart();
-      return customer;
+      return true;
     }
   }
 
