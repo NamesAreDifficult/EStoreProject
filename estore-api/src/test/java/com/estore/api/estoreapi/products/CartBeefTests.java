@@ -13,59 +13,51 @@ import org.junit.jupiter.api.Test;
 //@SpringBootTest
 public class CartBeefTests {
     
-    @Test
-    public void testCtor(){
-        //setup
-        int expectedId = 2;
-        float expectedWeight = (float)10.1;
+  @Test
+  public void testCtor(){
+    //setup
+    int expectedId = 2;
+    float expectedWeight = (float)10.1;
 
-        CartBeef testCartBeef = new CartBeef(expectedId, expectedWeight);
+    CartBeef testCartBeef = new CartBeef(expectedId, expectedWeight);
 
-        //tests
-        assertNotNull(testCartBeef, () -> "The cart should not be empty");
-        assertEquals(expectedId, testCartBeef.getId());
-        assertEquals(expectedWeight, testCartBeef.getWeight());
+    //tests
+    assertNotNull(testCartBeef, () -> "The cart should not be empty");
+    assertEquals(expectedId, testCartBeef.getId());
+    assertEquals(expectedWeight, testCartBeef.getWeight());
+  }
 
-    }
+  @Test 
+  public void testOverloadCtor() {
+    //setup
+    int expectedId = 2;
+    float expectedWeight = (float) 10.1;
+    Beef expectedBeef = new Beef(2, "Ribeye", (float)12.2, "A5", 13.00);
 
-    @Test 
-    public void testOverloadCtor() {
-        //setup
-        int expectedId = 2;
-        float expectedWeight = (float) 10.1;
-        Beef expectedBeef = new Beef(2, "Ribeye", (float)12.2, "A5", 13.00);
+    CartBeef testCartBeef = new CartBeef(expectedBeef, expectedWeight);
 
-        CartBeef testCartBeef = new CartBeef(expectedBeef, expectedWeight);
-
-        //tests
-        assertNotNull(testCartBeef, () -> "The cart should not be empty");
-        assertEquals(expectedId, testCartBeef.getId());
-        assertEquals(expectedWeight, testCartBeef.getWeight());
-
-    }
+    //tests
+    assertNotNull(testCartBeef, () -> "The cart should not be empty");
+    assertEquals(expectedId, testCartBeef.getId());
+    assertEquals(expectedWeight, testCartBeef.getWeight());
+  }
 
     
 
-    @Test
-    public void testEqual(){
-        //Setup
-        CartBeef testCartBeef1 = new CartBeef( 2, (float)10.1);
-        CartBeef testCartBeef2 = new CartBeef(2, (float)12.1);
+  @Test
+  public void testEqual(){
+     //Setup
+    CartBeef testCartBeef1 = new CartBeef( 2, (float)10.1);
+    CartBeef testCartBeef2 = new CartBeef(2, (float)12.1);
 
-        //testing to see if equals correctly returns true
-        boolean equal = testCartBeef1.equals(testCartBeef2);
-        assertTrue(equal);
+    //testing to see if equals correctly returns true
+    boolean equal = testCartBeef1.equals(testCartBeef2);
+    assertTrue(equal);
 
-        CartBeef testCartBeef3 = new CartBeef(1, (float)10.1);
+    CartBeef testCartBeef3 = new CartBeef(1, (float)10.1);
         
-        //testing to see if equals correctly returns false
-        equal= testCartBeef1.equals(testCartBeef3);
-        assertFalse(equal);
-
-        
-    }
-
-
-
-
+    //testing to see if equals correctly returns false
+    equal= testCartBeef1.equals(testCartBeef3);
+    assertFalse(equal);
+  }
 }

@@ -29,7 +29,6 @@ export class NewUserComponent implements OnInit {
     } else if (code == 500) {
       this.userAlert = "Internal server error"
     }
-
   }
 
   // Constructor for the LandingComponent that takes an instance of UserService
@@ -50,8 +49,8 @@ export class NewUserComponent implements OnInit {
   validate(username: string): boolean {
     // Regex to match a usernames against, matches are allowed usernames
     var regexp = new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{3,26}$');
-    
-    if(regexp.test(username)){
+
+    if (regexp.test(username)) {
       return true;
     }
     return false;
@@ -60,17 +59,17 @@ export class NewUserComponent implements OnInit {
   // Method that takes a username string parameter and returns a User object
   submit(username: string) {
 
-    if (this.validate(username)){
-    // Creating and returning a User object with the username property set to the provided value
-    var newUser: LoginUser = {
-      username: username
-    }
+    if (this.validate(username)) {
+      // Creating and returning a User object with the username property set to the provided value
+      var newUser: LoginUser = {
+        username: username
+      }
 
-    this.userService.createCustomer(newUser)
-      .subscribe(
-        this.Observer
-      );
-    }else{
+      this.userService.createCustomer(newUser)
+        .subscribe(
+          this.Observer
+        );
+    } else {
       this.userAlert = "Usernames must be between 3-26 alphanumeric characters and must only use the following special characters: !@#$%^&*()-_+=?";
     }
   }

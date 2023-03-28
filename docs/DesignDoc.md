@@ -1,69 +1,104 @@
 ---
 geometry: margin=1in
 ---
-# PROJECT Design Documentation
-
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
+# Cow Related Pun Design Documentation
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Cow Related Pun
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  Brendan Battisti
+  Alice Cauchi
+  Brian McNulty
+  John West
 
 ## Executive Summary
 
-This is a summary of the project.
+Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades,
+as well as the ability to sponsor and reserve different cuts from cows.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+
+Our purpose is to facilitate the browsing and purchase of locally sourced beef between a butcher
+and customers, and to provide the butcher with a portal to create and list items as they become available.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
-| SPA | Single Page |
+|  CT  | Catalog    |
+|  LB  | Logout button |
+|  LP  | Login Page |
+|  FPP | Featured Products Page |
+|  SC  | Shopping Cart |
+|  SPA | Single Page |
+|  INV | Inventory |
+|  AD  | Admin Dashboard |
+|  PP  | Product Page |
 
 
 ## Requirements
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+- Users login via LP
+- Users logout via LB
+- Users are directed to FPP upon sign in
+- Customers are able to browse and search CT for beef
+- Customers may click on beef to go to PP
+- Customers may add beef to and view SC
+- Admins may not add beef to or view SC
+- Admins may add, remove, or update beef to INV via AD
+- Admins may not add or update beef fields to be negative on AD
+
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+
+ The MVP includes minimal user authentication for admins and users, with a reserved
+ admin account and other usernames being user accounts, the ability for customers to search
+ for products and add them to shopping carts, and the ability for admins to add, remove, and
+ edit product data.
+
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+
+- Create User File
+- New Account Page
+- Catalog Page
+- Admin Dashboard
+- Landing Page
+- Product Page
+- Navigation Bar Component
+- Shopping Cart
+- Admin/Customer Authentication
+
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+
+- Sponsoring a Cow
+- Password Management
+- Password Security
 
 
 ## Application Domain
 
 This section describes the application domain.
 
-![Domain Model](domain-model-placeholder.png)
+![Domain Model](domain-model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+At the center of the domain model is the product entity, which represents beef. Beef is
+contained in the inventory, and the admin adds different beef items as they become available.
+These beef items are displayed on the catalog page for users to view and purchase, and users
+are able to search by name or partial name in order to find the type of beef they want. Both
+admins and customers are users that log in via the login page, which connects them to
+the rest of the e-store. Customers can then add products to their shopping cart. Customers
+can then purchase their shopping cart as an order, which is then displayed as a receipt for the
+customer to reference their purchase.
 
 
 ## Architecture and Design
 
 This section describes the application architecture.
+
 
 ### Summary
 
@@ -85,66 +120,86 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+When not logged in, the user is first directed to FPP. At the top of the screen, at this point in time,
+there is no navigation bar, so the user must enter links to links to FPP, CT, SC, LP, and AD.
+The user is not able to access SC if not signed in.
+If the user is logged in, the LP is replaced with LB, and they gain access to SC. On the FPP,
+the user sees the 4 featured products, the price, and the weight available. The user can click on
+a product to go to the PP. Alternatively, if the user goes to the catalog,
+they may then type in part of a product name to search for the product, and then click on the desired
+product to go to its PP. After going here, the user can add a quantity to their SC via
+a button. Admins have access to these features, but they may not add items to their SC or view SC
+page, as they are redirected upon going to the page. Admins can navigate to ND,
+where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
 
 
 ### View Tier
-> _Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
 
-> _You must also provide sequence diagrams as is relevant to a particular aspects 
-> of the design that you are describing.  For example, in e-store you might create a 
-> sequence diagram of a customer searching for an item and adding to their cart. 
-> Be sure to include an relevant HTTP reuqests from the client-side to the server-side 
-> to help illustrate the end-to-end flow._
-
+When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. 
+This is controlled by the home-page and nav-bar components. 
+From there the users are able to see the log-in page and log-in with their respective username, which is controlled by the login component. Both users, customers and admins, will be redirected to the landing page after log in. 
+Both admin and customers can view the catalog and product details that are controlled via the product-details and catalog components. 
+From there the admin can view the inventory in the admin dashboard, via the admin-dashboard component. 
+Because the admin has no access to a shopping cart, if the admin were to try and access a shopping cart, they will also be redirected to the admin dashboard. 
+Customers cannot access the admin dashboard, but they do have access to the shopping cart and checkout. 
+The view of the shopping cart is controlled by the cart compononent. 
+Once a customer is done shopping and the admin is finished, they can log out view the log out compononent.  
 
 ### ViewModel Tier
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information. The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go. The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
+
 
 
 ### Model Tier
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
+The model tier consists of beef, shopping carts, and users, which may be
+customers or administrators.
+Customers have a shopping cart, that may contain zero or more products, whereas admins do not.
+Shopping carts are represented by a class, with CartBeef representing Beef as an item in the shopping cart. Both users are identified by username.
+Beef has an incrementing id as its identifier, and has a grade, cut, weight, and price.
+Beef contains methods to add, get, delete, and get all beef objects, as well as updating the price and field of beef objects. Users can add items to their shopping cart field via
+a method, but this method and attribute does not exist for administrators.
+Within admin and customer classes, there exists a method to validate whether or not the use is an admin, which is used in the view tier
+for the acceptance criteria. There are also methods to get users by username, and create adminis and customer if necessary from the backend.
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+![Model Tier](model-tier.png)
 
 ### Static Code Analysis/Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements._
 
-> _With the results from the Static Code Analysis exercise, 
-> discuss the resulting issues/metrics measurements along with your analysis
-> and recommendations for further improvements. Where relevant, include 
-> screenshots from the tool and/or corresponding source code that was flagged._
+Should the project be continued, we will need to implement the CSS to make the pages look nicer.
+In addition, we will also need to implement the checkout page and receipt functionality to meet
+the requirements of the domain model. We need to improve our unit testing moving forward to be
+more cohesive and complete, and we also need to make sure all code adheres to the Java Style Guidelines
+moving forward.
+
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+
+Acceptance testing was successful, excluding the checkout component. Improving
+code coverage required changing various parts of our implementation due to inadequate
+return types, but was ultimately successful at 93 percent.
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+
+The number of user stories that passed all criteria is 10.
+
+The number of stories that have failed all acceptance testing is 2,
+both of these stories are related to the checkout feature, which was
+not implemented due to time constraints.
+
+There is one story that does not currently meet all of its acceptance criteria, and it
+is the navigation bar. The navigation bar is not a part for the MVP for this particular
+sprint, so it was not the primary focus of the team. A fair amount of criteria
+was created with designing the CSS for this component in mind and was not really necessary
+for this sprint, and other stories of greater importance were prioritized.
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+![Code Coverage](code-coverage.png)
+
+Using mock objects, our team tested the mode, controller, and persistence
+tiers. We achieved an overall code coverage of 93 percent. Given an average
+of 90 percent was the goal for the overall average, we set a target for
+90 percent minimum for each of these tiers, with the main estore-api folder
+being the exception at 88 percent. Overall, our unit testing for this
+phase was cohesive.

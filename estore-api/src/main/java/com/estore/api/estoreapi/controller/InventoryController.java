@@ -223,7 +223,7 @@ public class InventoryController {
       inventoryDao.deleteBeef(id);
       LOG.info("Deleted " + beef.toString());
 
-      return new ResponseEntity<Beef>(HttpStatus.OK);
+      return new ResponseEntity<Beef>(beef, HttpStatus.OK);
       }catch(IOException e) {
         LOG.log(Level.SEVERE, e.getLocalizedMessage());
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,7 +1,16 @@
-<div>
-  <a routerLink="/home"> Home </a>
-  <a routerLink="/catalog"> Catalog </a>
-  <a routerLink="/shoppingCart"> Shopping Cart </a>
+<div class="navBar" *ngIf="!user?.admin">
+  <a class="navLink" routerLink="/home-page"> Home </a>
+  <a class="navLink" routerLink="/catalog"> Catalog </a>
+  <a class="navLink" routerLink="/cart"> Shopping Cart </a>
   <a *ngIf="user === null" routerLink="/login"> Login </a>
-  <ng-template #elseBlock><span>"{{user!.username}}"</span></ng-template> 
+  <div *ngIf="user !== null">
+    <div class="dropdown">
+      <span class="dropdown-toggle">{{user.username}}</span>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/profile">Profile</a></li>
+        <li><a routerLink="/settings">Settings</a></li>
+        <li><app-logout></app-logout></li>
+      </ul>
+    </div>
+  </div>
 </div>

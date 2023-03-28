@@ -1,0 +1,31 @@
+<div *ngIf="beef">
+    <h2>Product Details</h2>
+    <div>
+        <label for="beef-grade"> Grade: </label>
+        <label for="beef-grade">{{beef.grade}}</label>
+    </div>
+    <div>
+        <label for="beef-cut"> Cut: </label>
+        <label for="beef-cut">{{beef.cut}}</label>
+    </div>
+    <div>
+        <label for="beef-weight"> Weight: </label>
+        <label for="beef-weight">{{beef.weight}} lbs</label>
+    </div>
+    <div>
+        <label for="beef-price"> Price: $ </label>
+        <label for="beef-price">{{beef.price.toFixed(2)}}</label>
+    </div>
+    <div>
+        Amount:
+        <input id="amount" #amount (keyup.enter)="addToCart(beef.id!, amount.value)">
+
+    </div>
+    <div>
+        <button (click)="addToCart(beef.id!, amount.value)">Add to Cart</button>
+    </div>
+    <button type="button" (click)="goBack()"> Go Back</button>
+</div>
+<div>
+    {{productAlert}}
+</div>

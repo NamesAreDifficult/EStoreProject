@@ -78,13 +78,11 @@ public interface UserDAO {
      * 
      * @param beefid   The id of the beef to remove
      * 
-     * @return a {@link User user} object with the matching username
-     *         <br>
-     *         null if no {@link User user} with a matching username is found
+     * @return a {@link Boolean boolean} depending on if the object was successfully added
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Customer AddToCart(String username, int beefId, float weight) throws IOException;
+    Boolean AddToCart(String username, int beefId, float weight) throws IOException;
 
     /**
      * Clears a customer's shopping cart {@linkplain Customer customer}
@@ -95,13 +93,11 @@ public interface UserDAO {
      * 
      * @param weight   Weight of the beef to add to the shopping cart
      * 
-     * @return a {@link User user} object with the matching username
-     *         <br>
-     *         null if no {@link User user} with a matching username is found
+     * @return a {@link Boolean boolean} depending on if the cart was successfully cleared
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Customer ClearCart(String username) throws IOException;
+    Boolean ClearCart(String username) throws IOException;
 
     /**
      * Retrieves all {@linkplain User user}
@@ -133,11 +129,9 @@ public interface UserDAO {
      * 
      * @param beefid   The id of the beef to remove
      * 
-     * @return a {@link User user} object with the matching username
-     *         <br>
-     *         null if no {@link User user} with a matching username is found
+     * @return a {@link Boolean boolean} object whether the item was removed successfully
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    Customer RemoveFromCart(String username, int beefId) throws IOException;
+    Boolean RemoveFromCart(String username, int beefId) throws IOException;
 }

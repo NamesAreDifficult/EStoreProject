@@ -1,13 +1,30 @@
 <h1>Catalog</h1>
+<app-logout></app-logout>
 <div>
   <label for="search-box">Search Beef </label>
   <input #searchBox id="search-box" (input)="search(searchBox.value)">
 
   <ul class="search-result">
     <li *ngFor="let beef of beef$ | async">
-      <a routerLink="/product/{{beef.id}}">
+      <!-- <a routerLink="/product/{{beef.id}}">
         {{beef.grade}} {{beef.cut}}
-      </a>
+      </a> -->
+      <a routerLink="/product/{{beef.id}}">
+      <span class="badge">{{beef.grade}} </span>
+      <span class="name">{{beef.cut}}</span>
+  
+    </a>
     </li>
   </ul>
 </div>
+<!-- <ul class="beef">
+  <li *ngFor="let beef of beef$ | async">
+    <button [class.selected]="beef === selectedBeef" type="button"
+    (click)="OnSelect(beef)">
+    <span class="badge">{{beef.grade}}</span>
+    <span class="name">{{beef.cut}}</span>
+
+  </button>
+  </li>
+</ul> -->
+
