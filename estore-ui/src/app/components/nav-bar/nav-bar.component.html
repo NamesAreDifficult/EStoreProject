@@ -1,16 +1,20 @@
-<div class="navBar" *ngIf="!user?.admin">
-  <a class="navLink" routerLink="/home-page"> Home </a>
-  <a class="navLink" routerLink="/catalog"> Catalog </a>
-  <a class="navLink" routerLink="/cart"> Shopping Cart </a>
-  <a *ngIf="user === null" routerLink="/login"> Login </a>
-  <div *ngIf="user !== null">
-    <div class="dropdown">
-      <span class="dropdown-toggle">{{user.username}}</span>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/profile">Profile</a></li>
-        <li><a routerLink="/settings">Settings</a></li>
-        <li><app-logout></app-logout></li>
-      </ul>
+<div class="navBar">
+  <div class="leftContainer">
+    <a class="navLink" routerLink="/home-page"> Home </a>
+    <a class="navLink" routerLink="/catalog"> Catalog </a>
+  </div>
+  <span class="title">Cow Related Pun</span>
+  <div class="rightContainer">
+    <a class="navLink" routerLink="/cart"> Shopping Cart </a>
+    <a class="navLink" *ngIf="user === null" routerLink="/login"> Login </a>
+    <div *ngIf="user !== null">
+      <div class="dropdown">
+        <span class="dropdown-toggle">{{user.username}}</span>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/profile">Profile</a></li>
+          <li><app-logout></app-logout></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
