@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, tap, of, throwError } from 'rxjs';
+import { Observable, catchError, tap, of, throwError, BehaviorSubject } from 'rxjs';
 import { LoggingService } from '../loggingService/logging.service';
 
 export interface User {
@@ -21,10 +21,10 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private userUrl = 'http://localhost:8080/user'
-
   // Constructor
   constructor(private http: HttpClient, private logger: LoggingService) { }
 
+  userNotifier = new EventEmitter();
 
   // Gets a customer from the backend
   createCustomer(customer: LoginUser): Observable<any> {
@@ -40,7 +40,10 @@ export class UserService {
   //  Logs in a user using the backend
   loginUser(user: LoginUser): Observable<any> {
     return this.http.get<User>(this.userUrl + `/${user.username}`, this.httpOptions).pipe(
-      tap(_ => this.logger.add(`Logged in user: ${user.username}`)),
+      tap(_ => {
+        this.logger.add(`Logged in user: ${user.username}`);
+        this.userNotifier.emit(user);
+      }),
       catchError(
         err => {
           this.logger.handleError<any>('loginUser')
@@ -77,6 +80,7 @@ export class UserService {
     var user: User | null = this.getLoggedIn();
 
     if (user != null) {
+      this.userNotifier.emit(null);
       this.logger.add(`logout: ${user.username}`)
       localStorage.clear();
     }

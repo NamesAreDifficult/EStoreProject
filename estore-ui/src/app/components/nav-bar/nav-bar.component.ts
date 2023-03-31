@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { User, UserService } from 'src/app/services/userService/user.service';
 
 @Component({
@@ -11,7 +12,12 @@ export class NavBarComponent {
 
   user = this.userService.getLoggedIn();
 
-  ngOnInit():void{
-    console.log(this.user)
+  //Watches for changes in the user to update the navbar
+  ngOnInit() {
+    this.userService.userNotifier.subscribe(currentUser => {
+      this.user = currentUser;
+    });
   }
+
+
 }

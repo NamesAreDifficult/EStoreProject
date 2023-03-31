@@ -9,7 +9,7 @@
     <a class="navLink" *ngIf="user === null" routerLink="/login"> Login </a>
     <div *ngIf="user !== null">
       <div class="dropdown">
-        <span class="dropdown-toggle">{{user.username}}</span>
+        <span class="dropdown-toggle">{{user?.username}}</span>
         <ul class="dropdown-menu">
           <li><a routerLink="/profile">Profile</a></li>
           <li><app-logout></app-logout></li>
