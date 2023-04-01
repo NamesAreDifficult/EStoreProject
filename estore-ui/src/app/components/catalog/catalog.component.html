@@ -1,5 +1,4 @@
 <h1>Catalog</h1>
-<app-logout></app-logout>
 <div>
   <label for="search-box">Search Beef </label>
   <input #searchBox id="search-box" (input)="search(searchBox.value)">
@@ -10,10 +9,10 @@
         {{beef.grade}} {{beef.cut}}
       </a> -->
       <a routerLink="/product/{{beef.id}}">
-      <span class="badge">{{beef.grade}} </span>
-      <span class="name">{{beef.cut}}</span>
-  
-    </a>
+        <span class="badge">{{beef.grade}} </span>
+        <span class="name">{{beef.cut}}</span>
+
+      </a>
     </li>
   </ul>
 </div>
@@ -27,4 +26,3 @@
   </button>
   </li>
 </ul> -->
-
