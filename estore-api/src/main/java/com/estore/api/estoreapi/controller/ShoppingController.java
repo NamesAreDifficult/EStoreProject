@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
-import com.estore.api.estoreapi.persistence.UserFileDAO;
 import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;

@@ -325,16 +325,6 @@ public class UserFileDAO implements UserDAO {
     }
   }
 
-/**
- * {@InheritDoc}
- */
-  public User createUser(User user) throws IOException{
-    if(user.isAdmin()){
-      return this.createAdmin((Admin)user);
-    }
-    return this.createCustomer((Customer)user);
-  }
-
   /**
    * {@inheritDoc}}
    */

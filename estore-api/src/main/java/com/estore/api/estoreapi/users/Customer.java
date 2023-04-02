@@ -1,6 +1,5 @@
 package com.estore.api.estoreapi.users;
 
-import com.estore.api.estoreapi.products.CartBeef;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*

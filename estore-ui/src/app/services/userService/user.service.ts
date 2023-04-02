@@ -8,12 +8,6 @@ export interface User {
   admin: boolean;
 }
 
-export interface NewUser{
-  username: string;
-  admin: boolean;
-  password: string;
-}
-
 export interface LoginUser {
   username: string;
   password: string;
@@ -34,9 +28,9 @@ export class UserService {
   userNotifier = new EventEmitter();
 
   // Gets a customer from the backend
-  createCustomer(customer: NewUser): Observable<any> {
+  createCustomer(customer: LoginUser): Observable<any> {
     return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
-      tap(_ => this.logger.add(`Created customer: ${customer.username} ${customer.password} ${customer.admin}`)),
+      tap(_ => this.logger.add(`Created customer: ${customer.username} ${customer.password}`)),
       catchError(err => {
         this.logger.handleError<any>('createCustomer')
         return throwError((() => new Error(err.status)));
