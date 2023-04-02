@@ -16,6 +16,7 @@ export interface NewUser{
 
 export interface LoginUser {
   username: string;
+  password: string;
 }
 
 @Injectable({
@@ -45,7 +46,10 @@ export class UserService {
 
   //  Logs in a user using the backend
   loginUser(user: LoginUser): Observable<any> {
-    return this.http.get<User>(this.userUrl + `/${user.username}`, this.httpOptions).pipe(
+    var loginOptions = {
+      headers: new HttpHeaders({'Authorization': user.password})
+    };
+    return this.http.get<User>(this.userUrl + `/login/${user.username}`, loginOptions).pipe(
       tap(_ => {
         this.logger.add(`Logged in user: ${user.username}`);
         this.userNotifier.emit(user);

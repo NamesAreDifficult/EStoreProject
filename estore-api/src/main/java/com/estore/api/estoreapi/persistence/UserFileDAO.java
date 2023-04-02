@@ -335,4 +335,17 @@ public class UserFileDAO implements UserDAO {
     return this.createCustomer((Customer)user);
   }
 
+  /**
+   * {@inheritDoc}}
+   */
+  public User loginUser(String username, String password) throws IOException{
+    User user = GetUser(username);
+    if(user == null){
+      return null;
+    }
+    if(user.getPassword().equals(password)){
+      return user;
+    }
+    return null;
+  }
 }

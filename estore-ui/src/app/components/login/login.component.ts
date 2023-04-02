@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User, UserService } from '../../services/userService/user.service';
+import { LoginUser, NewUser, User, UserService } from '../../services/userService/user.service';
 
 @Component({
   selector: 'app-login',
@@ -57,17 +57,20 @@ export class LoginComponent implements OnInit {
 
 
 
-  public submit(username: string) {
+  public submit(username: string, password: string) {
 
     if (username == "") {
-      this.warning
+      this.warning = "Username is required"
+      return;
+    } else if(password == ""){
+      this.warning = "Password is required"
       return;
     }
 
     // Creating and returning a User object with the username property set to the provided value
-    var user: User = {
+    var user: LoginUser = {
       username: username,
-      admin: false
+      password: password
     }
 
     if (user) {
