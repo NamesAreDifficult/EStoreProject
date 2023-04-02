@@ -87,6 +87,19 @@ public class UserController {
     }
   }
 
+  @PostMapping("/user")
+  public ResponseEntity<User> createUser(@RequestBody User user){
+    try{
+      User newUser = this.userDao.createUser(user);
+      if(newUser == null){
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
+      }
+      return new ResponseEntity<User>(newUser, HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  
   /**
    * Creates a {@linkplain Customer customer} with the provided customer object
    * 

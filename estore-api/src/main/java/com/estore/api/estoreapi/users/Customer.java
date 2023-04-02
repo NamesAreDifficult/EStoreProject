@@ -28,8 +28,9 @@ public class Customer extends User {
      */
     public Customer(
             @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
             @JsonProperty("cart") ShoppingCart cart) {
-        super(username);
+        super(username, password);
 
         if (cart == null) {
             this.cart = new ShoppingCart();

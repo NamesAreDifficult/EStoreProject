@@ -31,6 +31,18 @@ public interface UserDAO {
     Admin createAdmin(Admin admin) throws IOException;
 
     /**
+     * Passes a User object to be created to the proper call to either
+     * createAdmin() or createCustomer()
+     * 
+     * @param user {@linkplain User user} The object to be created and saved
+     * 
+     * @return new {@link User user} if succesful, null otherwise
+     * 
+     * @throws IOException If an issue with underlying storage
+     */
+    public User createUser(User user) throws IOException;
+
+    /**
      * Retrieves a {@linkplain User user} with the given username
      * 
      * @param username The username of the {@link User user} to get

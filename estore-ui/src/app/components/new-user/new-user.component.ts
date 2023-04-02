@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LoginUser, User, UserService } from '../../services/userService/user.service';
+import { NewUser, LoginUser, User, UserService } from '../../services/userService/user.service';
 
 @Component({
   selector: 'app-new-user',
@@ -57,12 +57,14 @@ export class NewUserComponent implements OnInit {
   }
 
   // Method that takes a username string parameter and returns a User object
-  submit(username: string) {
+  submit(username: string, password: string, isAdmin: boolean) {
 
     if (this.validate(username)) {
       // Creating and returning a User object with the username property set to the provided value
-      var newUser: LoginUser = {
-        username: username
+      var newUser: NewUser = {
+        username: username,
+        password: password,
+        admin: isAdmin
       }
 
       this.userService.createCustomer(newUser)

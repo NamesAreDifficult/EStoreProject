@@ -37,7 +37,7 @@ public class UserFileDAO implements UserDAO {
       load(); // load the users from the file
     } catch (IOException err) {
       this.users = new TreeMap<>();
-      Admin defaultAdmin = new Admin("admin");
+      Admin defaultAdmin = new Admin("admin", "admin");
       this.users.put(defaultAdmin.getUsername(), defaultAdmin);
     }
   }
@@ -323,6 +323,16 @@ public class UserFileDAO implements UserDAO {
       save();
       return admin;
     }
+  }
+
+/**
+ * {@InheritDoc}
+ */
+  public User createUser(User user) throws IOException{
+    if(user.isAdmin()){
+      return this.createAdmin((Admin)user);
+    }
+    return this.createCustomer((Customer)user);
   }
 
 }
