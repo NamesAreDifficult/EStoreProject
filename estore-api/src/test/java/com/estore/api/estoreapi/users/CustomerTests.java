@@ -12,21 +12,21 @@ public class CustomerTests {
   @Test
   public void testCtor() {
 
-    Customer testCustomer = new Customer("Test", new ShoppingCart());
+    Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
 
     assertNotNull(testCustomer, () -> "The customer should not be null");
   }
 
   @Test
   public void testIsAdmin() {
-    Customer testCustomer = new Customer("Test", new ShoppingCart());
+    Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
 
     assertFalse(testCustomer.isAdmin(), "The customer should not be an admin");
   }
 
   @Test
   public void testGetUsername() {
-    Customer testCustomer = new Customer("Test", new ShoppingCart());
+    Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
 
     assertEquals("Test", testCustomer.getUsername());
   }
