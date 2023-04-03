@@ -107,7 +107,7 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
-                boolean ret = customer.getCart().Checkout();
+                boolean ret = userDAO.Checkout(customer.getUsername());
                 if (ret) {
                     return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
                 }

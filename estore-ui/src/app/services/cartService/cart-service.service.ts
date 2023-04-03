@@ -77,7 +77,7 @@ export class CartServiceService {
     return this.http.put<CartBeef>(url, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Checked out ${this.getUsername()}`)),
       catchError(err => {
-        this.logger.handleError<any>('addToCart')
+        this.logger.handleError<any>('checkout')
         return throwError((() => new Error(err.status)));
       })
     );
