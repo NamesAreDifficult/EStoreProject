@@ -30,8 +30,7 @@ public class ShoppingCart {
      * 
      * @param cartBeef beef to be added to the cart
      * 
-     * @return boolean depending on whether or no the addition was
-     * successful
+     * @return boolean depending on whether the item exists in cart
      */
     public boolean addToCart(CartBeef cartBeef) {
 
@@ -40,6 +39,7 @@ public class ShoppingCart {
         for (CartBeef currentBeef : this.cart) {
             if (currentBeef.equals(cartBeef)) {
                 currentBeef.addWeight(cartBeef.getWeight());
+                return false;
             }
 
             newCart[newCartIndex] = currentBeef;
