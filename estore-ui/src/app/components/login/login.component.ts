@@ -75,7 +75,13 @@ export class LoginComponent implements OnInit {
 
     if (user) {
       this.userService.loginUser(user)
-        .subscribe(this.Observer);
+        .subscribe({
+          next: (user) => {
+            this.Observer.next(user)
+          },
+          error: (err) => {
+            this.warning = "Username or password incorrect"
+          }});
     }
   }
 
