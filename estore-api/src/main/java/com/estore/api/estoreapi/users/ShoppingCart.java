@@ -87,6 +87,14 @@ public class ShoppingCart {
         return result;
     }
 
+    /*
+     * Retrieves a CartBeef object given id
+     * 
+     * @param id id of the CartBeef to be retrieved
+     * 
+     * @return CartBeef object if successful, otherwise null
+     *
+     */
     public CartBeef getCartBeef(int id){
         for (CartBeef cartBeef : this.cart) {
             if (cartBeef.getId() == id) {
