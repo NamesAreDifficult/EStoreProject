@@ -39,7 +39,7 @@ public class ShoppingCart {
         int newCartIndex = 0;
         for (CartBeef currentBeef : this.cart) {
             if (currentBeef.equals(cartBeef)) {
-                return false;
+                currentBeef.addWeight(cartBeef.getWeight());
             }
 
             newCart[newCartIndex] = currentBeef;
