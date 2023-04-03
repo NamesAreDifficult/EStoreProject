@@ -94,4 +94,14 @@ public class ShoppingCart {
         this.cart = new CartBeef[0];
     }
 
+    public boolean Checkout(){
+        if (this.cart.length == 0) {
+            return false;
+        }
+        else {
+            this.cart = new CartBeef[0];
+            return true;
+        }
+    }
+
 }
