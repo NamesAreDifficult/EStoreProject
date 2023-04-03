@@ -170,6 +170,14 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
+                for (CartBeef retrievedBeef : customer.getCart().getContents()){
+                    Beef inventoryBeef = inventoryDao.getBeef(retrievedBeef.getId());
+                    if (retrievedBeef != null) {
+                        Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
+                                        inventoryBeef.getGrade(), inventoryBeef.getPrice());
+                        inventoryDao.updateBeef(copyBeef);
+                    }
+                }
                 customer.getCart().clearCart();
                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);
             }
@@ -198,10 +206,10 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
-                CartBeef retrivedBeef = customer.getCart().getCartBeef(beefId);
+                CartBeef retrievedBeef = customer.getCart().getCartBeef(beefId);
                 Beef inventoryBeef = inventoryDao.getBeef(beefId);
-                if (retrivedBeef != null) {
-                    Beef copyBeef = new Beef(retrivedBeef.getId(), inventoryBeef.getCut(), retrivedBeef.getWeight(),
+                if (retrievedBeef != null) {
+                    Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
                                     inventoryBeef.getGrade(), inventoryBeef.getPrice());
                     inventoryDao.updateBeef(copyBeef);
                 }
