@@ -22,10 +22,6 @@ export class CartComponent {
   
   ngOnInit() {
     this.cart$ = this.shoppingService.getCart();
-    if (this.cart$.pipe(isEmpty(),)){
-      document.getElementById("goToCheckout")!.style.visibility = "hidden";
-      this.cartAlert = "Your shopping cart is empty!"
-    }
   }
 
   removeFromCart(id: number) {
@@ -34,10 +30,6 @@ export class CartComponent {
         next: (any: any) => this.cart$ = this.shoppingService.getCart()
       }
     )
-    if (this.cart$.pipe(isEmpty(),)){
-      document.getElementById("goToCheckout")!.style.visibility = "hidden";
-      this.cartAlert = "Your shopping cart is empty!"
-    }
   }
 
 }

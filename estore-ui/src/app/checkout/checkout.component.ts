@@ -21,10 +21,6 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this.cart$ = this.shoppingService.getCart();
-    if (this.cart$.pipe(isEmpty(),)){
-      document.getElementById("checkoutButton")!.style.visibility = "hidden";
-      this.checkoutAlert = "Your shopping cart is empty!"
-    }
   }
 
   checkout(){
