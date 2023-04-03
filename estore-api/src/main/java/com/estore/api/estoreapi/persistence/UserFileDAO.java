@@ -241,8 +241,10 @@ public class UserFileDAO implements UserDAO {
   @Override
   public boolean Checkout(String username) throws IOException {
     synchronized (users) {
-      return true; // Todo implement
-
+      Customer customer = GetCustomer(username);
+      boolean ret = customer.getCart().Checkout();
+      save();
+      return ret;
     }
   }
 

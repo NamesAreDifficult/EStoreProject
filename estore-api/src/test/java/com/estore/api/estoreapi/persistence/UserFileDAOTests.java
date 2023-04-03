@@ -47,9 +47,9 @@ public class UserFileDAOTests {
   public void setupUserFileDao() throws IOException {
     mockObjectMapper = mock(ObjectMapper.class);
     mockShoppingCart = mock(ShoppingCart.class);
-    testUsers = new User[3];
+    testUsers = new User[4];
 
-    Customer[] testCustomers = new Customer[2];
+    Customer[] testCustomers = new Customer[3];
     Admin[] testAdmins = new Admin[1];
 
     CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99), 2);
@@ -63,9 +63,11 @@ public class UserFileDAOTests {
     testUsers[0] = new Customer("Joe", mockShoppingCart);
     testUsers[1] = new Customer("Candice", new ShoppingCart(secondCart));
     testUsers[2] = new Admin("Wendy");
+    testUsers[3] = new Customer("Heisenberg", new ShoppingCart (firstCart));
 
     testCustomers[0] = new Customer("Joe", mockShoppingCart);
     testCustomers[1] = new Customer("Candice", new ShoppingCart(secondCart));
+    testCustomers[2] = new Customer("Heisenberg", new ShoppingCart (firstCart));
 
     testAdmins[0] = new Admin("Wendy");
 
@@ -151,9 +153,18 @@ public class UserFileDAOTests {
     assertEquals(newAdmin.getUsername(), actual.getUsername());
   }
 
-  // TODO: Implement tests related to CartBeef
   @Test
   public void testCheckout() {
+    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Heisenberg"),
+        "Unexpected exception thrown");
+    assertTrue(result);
+  }
+
+  @Test
+  public void testCheckoutEmpty() {
+    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Candice"),
+        "Unexpected exception thrown");
+    assertFalse(result);
   }
 
   @Test
