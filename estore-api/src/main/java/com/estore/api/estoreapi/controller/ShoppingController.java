@@ -136,7 +136,9 @@ public class ShoppingController {
 
                 // Checks if user exists and is a customer
                 if (customer != null) {
-                    retrievedBeef.setWeight(retrievedBeef.getWeight() - cartBeef.getWeight());
+                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
+                                    retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                    inventoryDao.updateBeef(copyBeef);
                     userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
                     return new ResponseEntity<CartBeef>(cartBeef, HttpStatus.OK);
