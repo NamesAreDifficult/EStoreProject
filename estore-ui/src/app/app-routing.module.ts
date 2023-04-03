@@ -10,11 +10,13 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
+import { AccountPageComponent } from './components/account-page/account-page.component';
 
 const routes: Routes = [
   { path: "new-user", component: NewUserComponent, canActivate: [UserAuthenticationService] },
   { path: "login", component: LoginComponent, canActivate: [UserAuthenticationService] },
   { path: "cart", component: CartComponent, canActivate: [CustomerAuthenticationService] },
+  { path: "account-page", component: AccountPageComponent, canActivate: [CustomerAuthenticationService] },
   { path: "admin-dashboard", component: AdminDashboardComponent, canActivate: [AdminAuthenticationService] },
   { path: "home-page", component: HomePageComponent},
   { path: '', redirectTo: '/home-page', pathMatch: 'full'},
