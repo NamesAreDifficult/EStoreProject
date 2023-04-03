@@ -1,1 +1,22 @@
-<p>checkout works!</p>
+<p>Checkout</p>
+<div>
+    {{checkoutAlert}}
+  </div>
+<ul>
+    <li *ngFor="let beef of cart$ | async">
+        <div>
+            <div>
+                Item: {{beef.grade}} {{beef.cut}} 
+            </div>
+            <div>
+                Amount: {{beef.weight}}
+            </div>
+            <div>
+                Price: ${{(beef.weight * beef.price).toFixed(2)}}
+            </div>
+        </div>
+    </li>
+    <button id="checkoutButton" (click)="checkout()">
+        Checkout
+    </button>
+</ul>

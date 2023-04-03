@@ -71,4 +71,16 @@ export class CartServiceService {
     );
 
   }
+
+  public checkout(): Observable<any> {
+    const url = this.shoppingUrl + "/checkout/" + this.getUsername()
+    return this.http.put<CartBeef>(url, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Checked out ${this.getUsername()}`)),
+      catchError(err => {
+        this.logger.handleError<any>('addToCart')
+        return throwError((() => new Error(err.status)));
+      })
+    );
+
+  }
 }
