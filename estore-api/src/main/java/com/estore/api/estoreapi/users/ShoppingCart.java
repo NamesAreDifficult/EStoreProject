@@ -87,6 +87,15 @@ public class ShoppingCart {
         return result;
     }
 
+    public CartBeef getCartBeef(int id){
+        for (CartBeef cartBeef : this.cart) {
+            if (cartBeef.getId() == id) {
+                return cartBeef;
+            }
+        }
+        return null;
+    }
+
     /*
      * Clears the contents of the customer's cart
      */

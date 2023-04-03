@@ -198,6 +198,13 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
+                CartBeef retrivedBeef = customer.getCart().getCartBeef(beefId);
+                Beef inventoryBeef = inventoryDao.getBeef(beefId);
+                if (retrivedBeef != null) {
+                    Beef copyBeef = new Beef(retrivedBeef.getId(), inventoryBeef.getCut(), retrivedBeef.getWeight(),
+                                    inventoryBeef.getGrade(), inventoryBeef.getPrice());
+                    inventoryDao.updateBeef(copyBeef);
+                }
                 boolean result = userDAO.RemoveFromCart(username, beefId);
                 return new ResponseEntity<Boolean>(result, HttpStatus.OK);
             }
