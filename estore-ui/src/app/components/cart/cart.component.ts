@@ -3,6 +3,7 @@ import { LoggingService } from 'src/app/services/loggingService/logging.service'
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Beef } from '../../services/beefService/beef.service';
+import { isEmpty } from 'rxjs/operators';  
 
 @Component({
   selector: 'app-cart',
@@ -13,12 +14,18 @@ export class CartComponent {
 
   cart$!: Observable<Beef[]>
 
+  cartAlert = ""
+
   constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
 
   }
   
   ngOnInit() {
     this.cart$ = this.shoppingService.getCart();
+    if (this.cart$.pipe(isEmpty(),)){
+      document.getElementById("goToCheckout")!.style.visibility = "hidden";
+      this.cartAlert = "Your shopping cart is empty!"
+    }
   }
 
   removeFromCart(id: number) {
@@ -27,6 +34,10 @@ export class CartComponent {
         next: (any: any) => this.cart$ = this.shoppingService.getCart()
       }
     )
+    if (this.cart$.pipe(isEmpty(),)){
+      document.getElementById("goToCheckout")!.style.visibility = "hidden";
+      this.cartAlert = "Your shopping cart is empty!"
+    }
   }
 
 }

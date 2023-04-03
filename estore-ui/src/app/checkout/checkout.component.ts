@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Beef } from 'src/app/services/beefService/beef.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
+import { isEmpty } from 'rxjs/operators';  
 
 @Component({
   selector: 'app-checkout',
@@ -20,6 +21,10 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this.cart$ = this.shoppingService.getCart();
+    if (this.cart$.pipe(isEmpty(),)){
+      document.getElementById("checkoutButton")!.style.visibility = "hidden";
+      this.checkoutAlert = "Your shopping cart is empty!"
+    }
   }
 
   checkout(){
@@ -28,6 +33,7 @@ export class CheckoutComponent {
         next: (any: any) => this.cart$ = this.shoppingService.checkout()
       }
     )
+    document.getElementById("checkoutButton")!.style.visibility = "hidden";
     this.checkoutAlert = "Thanks for shopping at Cow-Related Pun!"
   }
 }
