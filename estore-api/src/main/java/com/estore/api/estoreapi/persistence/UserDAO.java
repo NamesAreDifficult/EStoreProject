@@ -146,4 +146,19 @@ public interface UserDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     Boolean RemoveFromCart(String username, int beefId) throws IOException;
+
+    /**
+     * Updates a {@linkplain User user} password
+     * 
+     * @param username The username of the {@link User user} to update the password
+     * @param oldPassword the old password of the {@link User user} to update
+     * @param newPassword the new password to set the {@link User user} password to
+     * 
+     * @return a {@link int code} status code for the result of the operation
+     * 0 for success
+     * 1 for user not found
+     * 2 for invalid password
+     */
+    int updatePassword(String username, String oldPassword, String newPassword) throws IOException;
 }
+

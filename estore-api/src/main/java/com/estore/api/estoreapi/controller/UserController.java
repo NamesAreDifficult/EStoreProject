@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +85,31 @@ public class UserController {
       // User found
       return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Responds to PUT request for a {@linkplain User user} to update passwords
+   * 
+   * @param username - username of the user to update
+   * @param newPassword - password to update the user's password to
+   * @param oldPassword - current password of the user
+   * @return
+   */
+  @PutMapping("/{username}")
+  public ResponseEntity<Boolean> updatePassword(@PathVariable String username, @RequestHeader("NewAuth") String newPassword, @RequestHeader("Authorization") String oldPassword){
+    LOG.info(String.format("attempted to update user: %s oldPass: %s, newPass: %s", username, oldPassword, newPassword));
+    try{
+      int status = this.userDao.updatePassword(username, oldPassword, newPassword);
+      if(status == 0){
+        return new ResponseEntity<>(HttpStatus.OK);
+      }else if(status == 1){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }else {
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+      }
+    }catch(IOException e){
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

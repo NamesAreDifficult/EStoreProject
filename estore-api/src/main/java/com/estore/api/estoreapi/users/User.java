@@ -52,6 +52,12 @@ public abstract class User implements Comparable<User> {
     }
     
     /*
+     * Set the user password
+     */
+    public void setPassword(String newPassword){
+      this.password = newPassword;
+    }
+    /*
      * Returns if the user is an admin
      * 
      * @return true if user is an admin

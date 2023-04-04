@@ -30,7 +30,10 @@ export class UserService {
   // Gets a customer from the backend
   createCustomer(customer: LoginUser): Observable<any> {
     return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
-      tap(_ => this.logger.add(`Created customer: ${customer.username} ${customer.password}`)),
+      tap(_ => {
+        this.logger.add(`Created customer: ${customer.username}`)
+        this.userNotifier.emit(customer)
+      }),
       catchError(err => {
         this.logger.handleError<any>('createCustomer')
         return throwError((() => new Error(err.status)));
@@ -90,4 +93,24 @@ export class UserService {
     }
   }
 
+  public updatePassword(oldPassword: string, newPassword: string){
+    var user: User | null = this.getLoggedIn();
+
+    if(user != null){
+      var passwordOptions ={
+        headers: new HttpHeaders({"Authorization":  oldPassword, "NewAuth": newPassword})
+      }
+      console.log(`${this.userUrl}/${user.username}`)
+      return this.http.put(`${this.userUrl}/${user.username}`, null, passwordOptions).pipe(
+        tap(_ => {
+          console.log("hit")
+        }),
+        catchError(err => {
+          this.logger.handleError<any>('updatePassword')
+          return throwError((() => new Error(err.status)));
+        })
+      )
+    }
+    return null
+  }
 }

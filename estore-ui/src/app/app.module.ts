@@ -7,6 +7,8 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
@@ -18,6 +20,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 import { AccountPageComponent } from './components/account-page/account-page.component';
+import { PasswordManagerComponent } from './components/password-manager/password-manager.component';
+
 
 @NgModule({
   declarations: [
@@ -25,12 +29,14 @@ import { AccountPageComponent } from './components/account-page/account-page.com
     NewUserComponent,
     LoginComponent,
     CatalogComponent,
+    NavBarComponent,
     HomePageComponent,
     AdminDashboardComponent,
     LogoutComponent,
     CartComponent,
     ProductDetailsComponent,
-    AccountPageComponent
+    AccountPageComponent,
+    PasswordManagerComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,8 +12,7 @@ export class CatalogComponent {
   beef$!: Observable<Beef[]>;
   private searchTerms = new BehaviorSubject<string>('');
 
-  constructor(private beefService: BeefService) {
-  }
+  constructor(private beefService: BeefService) {}
 
   search(term: string): void {
 
