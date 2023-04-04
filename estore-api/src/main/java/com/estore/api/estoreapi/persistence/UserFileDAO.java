@@ -11,6 +11,7 @@ import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
+import com.estore.api.estoreapi.users.CreditCard;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -322,6 +323,56 @@ public class UserFileDAO implements UserDAO {
       users.put(admin.getUsername(), admin);
       save();
       return admin;
+    }
+  }
+
+  /**
+   ** {@inheritDoc}
+   */
+  @Override
+  public Boolean addCard(String username, CreditCard creditCard) throws IOException {
+    synchronized (users) {
+
+      Customer customer = GetCustomer(username);
+      if (customer == null){
+        return false;
+      }
+      Boolean ret = customer.addCard(creditCard);
+      save();
+      return ret;
+    }
+  }
+
+  /**
+   ** {@inheritDoc}
+   */
+  @Override
+  public Boolean removeCard(String username, CreditCard creditCard) throws IOException {
+    synchronized (users) {
+
+      Customer customer = GetCustomer(username);
+      if (customer == null){
+        return false;
+      }
+      Boolean ret = customer.removeCard(creditCard);
+      save();
+      return ret;
+    }
+  }
+
+  /**
+   ** {@inheritDoc}
+   */
+  @Override
+  public CreditCard[] getCards(String username) throws IOException {
+    synchronized (users) {
+      Customer customer = GetCustomer(username);
+      if (customer == null){
+        return null;
+      }
+      CreditCard[] ret = customer.getCards();
+      save();
+      return ret;
     }
   }
 
