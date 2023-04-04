@@ -58,7 +58,7 @@ public class CreditCard {
      *
      */
     public String getCVV(){
-        return this.getCVV();
+        return this.cvv;
     }
 
     /*
