@@ -31,6 +31,18 @@ public interface UserDAO {
     Admin createAdmin(Admin admin) throws IOException;
 
     /**
+     * Logs a {@linkplain User user} in if correct credentials are provided
+     * 
+     * @param username The username of the {@link User user} to login to
+     * @param password The password of the {@link User user} to login to 
+     * 
+     * @return {@link User user} object if the credentials are correct, null if incorrect
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    User loginUser(String username, String password) throws IOException;
+
+    /**
      * Retrieves a {@linkplain User user} with the given username
      * 
      * @param username The username of the {@link User user} to get

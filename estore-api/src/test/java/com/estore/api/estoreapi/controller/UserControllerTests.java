@@ -46,7 +46,7 @@ public class UserControllerTests {
 
   @Test
   public void testCreateCustomer() throws IOException {
-    Customer customer = new Customer("Jack", new ShoppingCart());
+    Customer customer = new Customer("Jack","password", new ShoppingCart());
     when(mockUserDAO.createCustomer(customer)).thenReturn(customer);
     ResponseEntity<Customer> response = userController.createCustomer(customer);
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -55,7 +55,7 @@ public class UserControllerTests {
 
   @Test
   public void testCreateCustomerFailed() throws IOException {
-    Customer customer = new Customer("Jack", new ShoppingCart());
+    Customer customer = new Customer("Jack","password", new ShoppingCart());
     when(mockUserDAO.createCustomer(customer)).thenReturn(null);
     ResponseEntity<Customer> response = userController.createCustomer(customer);
     assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
@@ -63,7 +63,7 @@ public class UserControllerTests {
 
   @Test
   public void testCreateCustomerHandleException() throws IOException {
-    Customer customer = new Customer("Jack", new ShoppingCart());
+    Customer customer = new Customer("Jack", "password", new ShoppingCart());
     doThrow(new IOException()).when(mockUserDAO).createCustomer(customer);
     ResponseEntity<Customer> response = userController.createCustomer(customer);
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -71,7 +71,7 @@ public class UserControllerTests {
 
   @Test
   public void testCreateAdmin() throws IOException {
-    Admin admin = new Admin("John");
+    Admin admin = new Admin("John", "password");
     when(mockUserDAO.createAdmin(admin)).thenReturn(admin);
     ResponseEntity<Admin> response = userController.createAdmin(admin);
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -80,7 +80,7 @@ public class UserControllerTests {
 
   @Test
   public void testCreateAdminFailed() throws IOException {
-    Admin admin = new Admin("John");
+    Admin admin = new Admin("John", "password");
     when(mockUserDAO.createAdmin(admin)).thenReturn(null);
     ResponseEntity<Admin> response = userController.createAdmin(admin);
     assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
@@ -88,7 +88,7 @@ public class UserControllerTests {
 
   @Test
   public void testCreateAdminHandleException() throws IOException {
-    Admin admin = new Admin("John");
+    Admin admin = new Admin("John", "password");
     doThrow(new IOException()).when(mockUserDAO).createAdmin(admin);
     ResponseEntity<Admin> response = userController.createAdmin(admin);
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -97,8 +97,8 @@ public class UserControllerTests {
   @Test
   public void testGetUsers() throws IOException {
     User[] users = new User[2];
-    users[0] = new Customer("Jack", new ShoppingCart());
-    users[1] = new Admin("John");
+    users[0] = new Customer("Jack", "password", new ShoppingCart());
+    users[1] = new Admin("John", "password");
     when(mockUserDAO.GetUsers()).thenReturn(users);
     ResponseEntity<User[]> response = userController.GetUsers();
     // Analyze
