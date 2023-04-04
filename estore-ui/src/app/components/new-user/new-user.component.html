@@ -3,8 +3,12 @@
         New user page
     </div>
     <label for="username">Username: </label>
-    <input id="username" #username (keyup.enter)=submit(username.value)>
-    <button (click)=submit(username.value)>Submit</button>
+    <input id="username" #username (keyup.enter)=submit(username.value,password.value)>
+    <br>
+    <label for="password">Password: </label>
+    <input id="password" #password (keyup.enter)=submit(username.value,password.value)>
+    <br>
+    <button (click)=submit(username.value,password.value)>Submit</button>
     <div>
         {{userAlert}}
     </div>
