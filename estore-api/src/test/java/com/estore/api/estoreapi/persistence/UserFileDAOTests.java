@@ -63,9 +63,11 @@ public class UserFileDAOTests {
     testUsers[0] = new Customer("Joe", "password", mockShoppingCart);
     testUsers[1] = new Customer("Candice", "password", new ShoppingCart(secondCart));
     testUsers[2] = new Admin("Wendy", "password");
+    testUsers[3] = new Customer("Heisenberg", "password", new ShoppingCart(firstCart));
 
     testCustomers[0] = new Customer("Joe", "password", mockShoppingCart);
     testCustomers[1] = new Customer("Candice", "password", new ShoppingCart(secondCart));
+    testCustomers[2] = new Customer("Heisenberg", "password", new ShoppingCart(firstCart));
 
     testAdmins[0] = new Admin("Wendy", "password");
 
