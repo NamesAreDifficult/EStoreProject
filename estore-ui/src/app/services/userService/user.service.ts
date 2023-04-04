@@ -31,6 +31,7 @@ export class UserService {
   createCustomer(customer: LoginUser): Observable<any> {
     return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Created customer: ${customer.username} ${customer.password}`)),
+
       catchError(err => {
         this.logger.handleError<any>('createCustomer')
         return throwError((() => new Error(err.status)));
@@ -44,6 +45,7 @@ export class UserService {
       headers: new HttpHeaders({'Authorization': user.password})
     };
     return this.http.get<User>(this.userUrl + `/login/${user.username}`, loginOptions).pipe(
+
       tap(_ => {
         this.logger.add(`Logged in user: ${user.username}`);
         this.userNotifier.emit(user);

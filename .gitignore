@@ -5,3 +5,9 @@ estore-api/data/inventory.json
 estore-ui/node_modules
 estore-ui/.angular
 *.json
+estore-ui/.scannerwork/.sonar_lock
+estore-ui/.scannerwork/scanner-report/analysis.log
+estore-ui/src/.scannerwork/.sonar_lock
+estore-ui/src/.scannerwork/report-task.txt
+estore-ui/src/app/.scannerwork/.sonar_lock
+estore-ui/src/app/.scannerwork/report-task.txt
