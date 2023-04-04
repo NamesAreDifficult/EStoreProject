@@ -16,7 +16,8 @@
             </div>
         </div>
     </li>
-    <button id="checkoutButton" (click)="checkout()">
+    
+    <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
         Checkout
     </button>
 </ul>

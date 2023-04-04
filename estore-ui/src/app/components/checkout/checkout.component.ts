@@ -1,6 +1,6 @@
 import { CartServiceService } from 'src/app/services/cartService/cart-service.service';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Beef } from 'src/app/services/beefService/beef.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
 import { isEmpty } from 'rxjs/operators';  
@@ -14,13 +14,19 @@ export class CheckoutComponent {
   checkoutAlert = ""
 
   cart$!: Observable<Beef[]>
+  isEmpty!: boolean;
 
   constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
 
   }
 
   ngOnInit() {
-    this.cart$ = this.shoppingService.getCart();
+    this.cart$ = this.shoppingService.getCart().pipe(
+      tap((cartItems: Beef[]) =>{
+        this.isEmpty = cartItems.length === 0;
+      })
+    );
+
   }
 
   checkout(){
