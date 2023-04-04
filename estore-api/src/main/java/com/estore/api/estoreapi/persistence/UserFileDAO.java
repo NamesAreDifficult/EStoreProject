@@ -242,6 +242,9 @@ public class UserFileDAO implements UserDAO {
   public boolean Checkout(String username) throws IOException {
     synchronized (users) {
       Customer customer = GetCustomer(username);
+      if (customer == null){
+        return false;
+      }
       boolean ret = customer.getCart().Checkout();
       save();
       return ret;
