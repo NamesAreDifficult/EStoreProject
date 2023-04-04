@@ -7,27 +7,35 @@
     <div class="material-symbols-outlined">
       <a routerLink="/catalog"> inventory </a>
     </div>
+    <div *ngIf="user !== null" class="material-symbols-outlined">
+      <a *ngIf="user.admin" routerLink="/admin-dashboard">dashboard</a>
+      <a *ngIf="!user.admin" routerLink="/cart">shopping_cart</a>
+    </div>
     <div class="titlebox">
       <span class="title">Cow Related Pun</span>
     </div>
-    <div *ngIf="user !== null" class="material-symbols-outlined">
-      <a *ngIf="!user.admin" routerLink="/admin-dashboard">shopping_cart</a>
-      <a *ngIf="user.admin" routerLink="/cart"> dashboard </a>
-    </div>
+
     <div *ngIf="user === null" class="material-symbols-outlined">
       <a routerLink="/new-user"> person_add </a>
     </div>
-    <div *ngIf="user===null" class="material-symbols-outlined">
+    <div *ngIf="user === null" class="material-symbols-outlined">
       <a routerLink="/login"> login </a>
     </div>
-    <div *ngIf="user !== null" class="dropdown">
-      {{user?.username}}
-      <ul class="dropdown-menu">
-        <li *ngIf="!user.admin" class="material-symbols-outlined">
-          <a routerLink="/profile">account_circle</a>
-        </li>
-        <li><app-logout></app-logout></li>
-      </ul>
+    <div *ngIf="user !== null and !user.admin">
+      {{user.username}}
     </div>
+    <div *ngIf="user !== null and user.admin">
+
+    </div>
+
+    <div *ngIf="user !== null" class="material-symbols-outlined">
+      <a *ngIf="!user!.admin" routerLink="/profile">account_circle</a>
+      <p *ngIf="user!.admin">{{user.username}}</p>
+    </div>
+
+    <div *ngIf="user !== null" id="logout" (click)=logout() class="material-symbols-outlined">
+      <p>logout</p>
+    </div>
+
   </div>
 </div>
