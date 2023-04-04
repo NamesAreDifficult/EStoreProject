@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
+
 
 /**
  * Handles the REST API requests for the users
@@ -98,7 +102,7 @@ public class UserController {
    *         HTTP status of OK<br>
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR or NOT_FOUND otherwise
    */
-  @GetMapping("cards/{username}")
+  @GetMapping("/cards/{username}")
   public ResponseEntity<CreditCard[]> getCards(@PathVariable String username) {
     try {
       Customer customer = this.getCustomer(username);
@@ -111,6 +115,70 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  /**
+   * Adds a {@linkplain CreditCard creditCard} to the specified customer
+   * 
+   * @param username - String containing the username of the customer
+   * @param creditCard - CreditCard to be added
+   * 
+   * @return ResponseEntity with created {@link Boolean boolean} object and HTTP
+   *         status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
+   *         error
+   *         ResponseEntity with HTTP status of CONFLICT if card exists on user
+   *         ResponseEntity with HTTP status NOT_FOUND if user is not found
+   */
+  @PostMapping("/{username}")
+  public ResponseEntity<Boolean> addCard(@PathVariable String username, @RequestBody CreditCard creditCard) {
+    try {
+      Customer customer = this.getCustomer(username);
+      if (customer == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      boolean result = this.userDao.addCard(username, creditCard);
+      if (result) {
+        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+      }
+      else {
+        return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+      }
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Removes a {@linkplain CreditCard creditCard} to the specified customer
+   * 
+   * @param username - String containing the username of the customer
+   * @param creditCard - CreditCard to be removed
+   * 
+   * @return ResponseEntity with created {@link Boolean boolean} object and HTTP
+   *         status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
+   *         error
+   *         ResponseEntity with HTTP status of BAD_REQUEST if card is not found on user
+   *         ResponseEntity with HTTP status NOT_FOUND if user is not found
+   */
+  @DeleteMapping("/{username}/{creditCard}")
+    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable CreditCard card) {
+        try {
+            Customer customer = this.getCustomer(username);
+            if (customer != null) {
+                boolean result = customer.removeCard(card);
+                if (result) {
+                  return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                }
+                else {
+                  return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
   /**
    * Creates a {@linkplain Customer customer} with the provided customer object
