@@ -30,8 +30,7 @@ public class ShoppingCart {
      * 
      * @param cartBeef beef to be added to the cart
      * 
-     * @return boolean depending on whether or no the addition was
-     * successful
+     * @return boolean depending on whether the item exists in cart
      */
     public boolean addToCart(CartBeef cartBeef) {
 
@@ -39,6 +38,7 @@ public class ShoppingCart {
         int newCartIndex = 0;
         for (CartBeef currentBeef : this.cart) {
             if (currentBeef.equals(cartBeef)) {
+                currentBeef.addWeight(cartBeef.getWeight());
                 return false;
             }
 
@@ -85,6 +85,23 @@ public class ShoppingCart {
             this.cart = finalCart;
         }
         return result;
+    }
+
+    /*
+     * Retrieves a CartBeef object given id
+     * 
+     * @param id id of the CartBeef to be retrieved
+     * 
+     * @return CartBeef object if successful, otherwise null
+     *
+     */
+    public CartBeef getCartBeef(int id){
+        for (CartBeef cartBeef : this.cart) {
+            if (cartBeef.getId() == id) {
+                return cartBeef;
+            }
+        }
+        return null;
     }
 
     /*

@@ -21,14 +21,20 @@ export class ProductDetailsComponent {
     next: (beef: Beef) => {
       this.beef = beef;
       const id = Number(this.route.snapshot.paramMap.get('id'));
-      this.beefService.getBeef(id)
     },
-    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
+    error: (err: Error) => (this.catchStatusCode(Number(err.message))),
+    complete: () => this.getBeef()
   }
 
   private catchStatusCode(code: number) {
     if (code == 404) {
       this.productAlert = "Product does not exist, please click on an existing product"
+    }
+    else if (code == 400) {
+      this.productAlert = "Please enter positive values only"
+    }
+    else if (code == 409) {
+      this.productAlert = "Not enough available to add to cart"
     }
   }
   constructor(
@@ -56,8 +62,7 @@ export class ProductDetailsComponent {
     var amount_number = Number(amount)
 
     if (isNaN(amount_number)) {
-      return null;
-    } else if (amount_number <= 0) {
+      this.productAlert = "Please enter numbers only"
       return null;
     }
 
@@ -68,11 +73,8 @@ export class ProductDetailsComponent {
         id: id,
         weight: Number(amount)
       }
-    ).subscribe(
-      {
-        next: (any: any) => { }
-      }
-    )
+    ).subscribe(this.Observer)
+    this.productAlert = "Item added to your shopping cart"
     return null;
   }
 }

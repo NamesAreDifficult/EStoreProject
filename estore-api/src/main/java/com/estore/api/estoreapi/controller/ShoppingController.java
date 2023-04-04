@@ -152,6 +152,9 @@ public class ShoppingController {
 
                 // Checks if user exists and is a customer
                 if (customer != null) {
+                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
+                                    retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                    inventoryDao.updateBeef(copyBeef);
                     userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
                     return new ResponseEntity<CartBeef>(cartBeef, HttpStatus.OK);
@@ -183,6 +186,14 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
+                for (CartBeef retrievedBeef : customer.getCart().getContents()){
+                    Beef inventoryBeef = inventoryDao.getBeef(retrievedBeef.getId());
+                    if (retrievedBeef != null) {
+                        Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
+                                        inventoryBeef.getGrade(), inventoryBeef.getPrice());
+                        inventoryDao.updateBeef(copyBeef);
+                    }
+                }
                 customer.getCart().clearCart();
                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);
             }
@@ -211,6 +222,13 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
+                CartBeef retrievedBeef = customer.getCart().getCartBeef(beefId);
+                Beef inventoryBeef = inventoryDao.getBeef(beefId);
+                if (retrievedBeef != null) {
+                    Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
+                                    inventoryBeef.getGrade(), inventoryBeef.getPrice());
+                    inventoryDao.updateBeef(copyBeef);
+                }
                 boolean result = userDAO.RemoveFromCart(username, beefId);
                 return new ResponseEntity<Boolean>(result, HttpStatus.OK);
             }

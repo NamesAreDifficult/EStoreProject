@@ -1,0 +1,29 @@
+<div class="container">
+
+  <div class="navBar">
+    <div>
+      <a routerLink="/home-page"> Home </a>
+    </div>
+    <div>
+      <a routerLink="/catalog"> Catalog </a>
+    </div>
+
+    <div class="titlebox">
+      <span class="title">Cow Related Pun</span>
+    </div>
+    <div>
+      <a routerLink="/cart"> Shopping Cart </a>
+    </div>
+    <div *ngIf="user===null">
+      <a routerLink="/login"> Login </a>
+    </div>
+    <div *ngIf="user !== null" class="dropdown">
+      {{user?.username}}
+      <ul class="dropdown-menu">
+        <li *ngIf="!user.admin"><a routerLink="/profile">Profile</a></li>
+        <li *ngIf="user.admin"><a routerLink="/admin-dashboard">Dashboard</a></li>
+        <li><app-logout></app-logout></li>
+      </ul>
+    </div>
+  </div>
+</div>
