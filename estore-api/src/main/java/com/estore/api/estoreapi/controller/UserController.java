@@ -152,27 +152,30 @@ public class UserController {
    * Removes a {@linkplain CreditCard creditCard} to the specified customer
    * 
    * @param username - String containing the username of the customer
-   * @param creditCard - CreditCard to be removed
+   * @param cardNumber - Number of credit card to be removed
    * 
    * @return ResponseEntity with created {@link Boolean boolean} object and HTTP
    *         status of OK<br>
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
    *         error
    *         ResponseEntity with HTTP status of BAD_REQUEST if card is not found on user
-   *         ResponseEntity with HTTP status NOT_FOUND if user is not found
+   *         ResponseEntity with HTTP status NOT_FOUND if user/card is not found
    */
-  @DeleteMapping("/{username}/{creditCard}")
-    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable CreditCard card) {
+  @DeleteMapping("/{username}/{cardNumber}")
+    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
         try {
             Customer customer = this.getCustomer(username);
             if (customer != null) {
-                boolean result = customer.removeCard(card);
-                if (result) {
-                  return new ResponseEntity<Boolean>(result, HttpStatus.OK);
-                }
-                else {
-                  return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
-                }
+                CreditCard card = customer.getCard(cardNumber);
+                if (card != null){
+                  boolean result = customer.removeCard(card);
+                  if (result) {
+                    return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                  }
+                  else {
+                    return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
+                  }
+              }
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {

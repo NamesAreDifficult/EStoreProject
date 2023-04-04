@@ -61,6 +61,22 @@ public class Customer extends User {
     }
 
     /*
+     * Returns a credit card with the specified number if a credit card exists, otherwise null
+     * 
+     * @param number: The credit card number for retrival from customer
+     * 
+     * @return The customer's credit card with the number, or null
+     */
+    public CreditCard getCard(String number){
+        for (CreditCard creditCard : this.cards){
+            if (creditCard.getNumber().equals(number)){
+                return creditCard;
+            }
+        }
+        return null;
+    }
+
+    /*
      * Adds a credit card to the customer's card list if there is space
      * 
      * The credit card object to be added to the card list
@@ -68,7 +84,7 @@ public class Customer extends User {
      * @return boolean of whether the addition was successful
      */
     public boolean addCard(CreditCard card){
-        if (cards.length == 3){
+        if (cards.length >= 3){
             return false;
         }
         CreditCard[] newCards = new CreditCard[this.cards.length + 1];
