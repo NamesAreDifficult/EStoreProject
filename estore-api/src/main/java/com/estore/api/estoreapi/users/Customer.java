@@ -1,6 +1,5 @@
 package com.estore.api.estoreapi.users;
 
-import com.estore.api.estoreapi.products.CartBeef;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*
@@ -28,8 +27,9 @@ public class Customer extends User {
      */
     public Customer(
             @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
             @JsonProperty("cart") ShoppingCart cart) {
-        super(username);
+        super(username, password);
 
         if (cart == null) {
             this.cart = new ShoppingCart();

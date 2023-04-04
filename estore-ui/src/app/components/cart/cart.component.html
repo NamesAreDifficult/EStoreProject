@@ -1,22 +1,29 @@
-<h1>Your shopping cart:<h1>
-        <ul>
-            <li *ngFor="let beef of cart$ | async">
-                <div>
-                    <div>
-                        Cut: {{beef.cut}}
-                    </div>
-                    <div>
-                        Grade: {{beef.grade}}
-                    </div>
-                    <div>
-                        Amount: {{beef.weight}}
-                    </div>
-                    <div>
-                        Price: {{beef.weight * beef.price}}
-                    </div>
-                    <button (click)="removeFromCart(beef.id!)">
-                        Remove
-                    </button>
-                </div>
-            </li>
-        </ul>
+<h1>Your shopping cart:</h1>
+<div>
+{{cartAlert}}
+  </div>
+<ul>
+    <li *ngFor="let beef of cart$ | async">
+        <div>
+            <div>
+                Cut: {{beef.cut}}
+            </div>
+            <div>
+                Grade: {{beef.grade}}
+            </div>
+            <div>
+                Amount: {{beef.weight}}
+            </div>
+            <div>
+                Price: {{beef.weight * beef.price}}
+            </div>
+            <button (click)="removeFromCart(beef.id!)">
+                Remove
+            </button>
+        </div>
+    </li>
+    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
+        Proceed to Checkout
+    </button>
+</ul>
+

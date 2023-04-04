@@ -20,6 +20,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 import { BaseTemplateComponent } from './components/base-template/base-template.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+
 
 
 @NgModule({
@@ -35,6 +37,7 @@ import { BaseTemplateComponent } from './components/base-template/base-template.
     CartComponent,
     ProductDetailsComponent,
     BaseTemplateComponent
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

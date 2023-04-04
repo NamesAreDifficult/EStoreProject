@@ -13,21 +13,21 @@ public class AdminTests {
   @Test
   public void testCtor() {
 
-    Admin testAdmin = new Admin("Test");
+    Admin testAdmin = new Admin("Test", "password");
 
     assertNotNull(testAdmin, () -> "The admin should not be null");
   }
 
   @Test
   public void testIsAdmin() {
-    Admin testAdmin = new Admin("Test");
+    Admin testAdmin = new Admin("Test", "password");
 
     assertTrue(testAdmin.isAdmin(), "The admin should be an admin");
   }
 
   @Test
   public void testGetUsername() {
-    Admin testAdmin = new Admin("Test");
+    Admin testAdmin = new Admin("Test", "password");
 
     assertEquals("Test", testAdmin.getUsername());
   }
