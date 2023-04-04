@@ -1,7 +1,9 @@
 package com.estore.api.estoreapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -111,11 +113,38 @@ public class ShoppingControllerTests {
   // Test the normal functionality of checkoutShoppingCart (Unimplemented)
   @Test
   public void testCheckoutShoppingCart() throws IOException {
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("Test");
+    when(mockUserDAO.Checkout(any())).thenReturn(true);
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
 
-    assertEquals(HttpStatus.NOT_IMPLEMENTED, response.getStatusCode());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertTrue(response.getBody());
   }
 
+  @Test
+  public void testBadCheckoutShoppingCart() throws IOException {
+    when(mockUserDAO.Checkout(any())).thenReturn(false);
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+  }
+  
+  @Test
+  public void testUserNotFound() throws IOException{
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+  }
+
+  @Test
+  public void testCheckoutError() throws IOException{
+    doThrow(new IOException("Failed to read from file"))
+        .when(mockUserDAO)
+        .GetUser(anyString());
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+    
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+  }
   // Test the normal functionality of adding items to the shopping cart
   @Test 
   public void testAddToShoppingCart() throws IOException{

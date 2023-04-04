@@ -100,7 +100,23 @@ public class ShoppingController {
      */
     @PutMapping("/checkout/{username}")
     public ResponseEntity<Boolean> CheckoutShoppingCart(@PathVariable String username) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        try {
+            Customer customer = this.getCustomer(username);
+
+            if (customer != null) {
+                boolean ret = userDAO.Checkout(customer.getUsername());
+                if (ret) {
+                    return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
+                }
+                else {
+                    return new ResponseEntity<Boolean>(ret, HttpStatus.BAD_REQUEST);
+                }
+            }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

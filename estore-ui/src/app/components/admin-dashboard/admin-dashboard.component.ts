@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AdminAuthenticationService } from 'src/app/services/adminAuthService/admin-authentication.service';
 import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
 
 @Component({
