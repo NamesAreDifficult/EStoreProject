@@ -128,6 +128,7 @@ public class UserController {
    *         error
    *         ResponseEntity with HTTP status of CONFLICT if card exists on user
    *         ResponseEntity with HTTP status NOT_FOUND if user is not found
+   *         ResponseEntity with HTTP status BAD_REQUEST if credit card is invalid
    */
   @PostMapping("/{username}")
   public ResponseEntity<Boolean> addCard(@PathVariable String username, @RequestBody CreditCard creditCard) {
@@ -135,6 +136,10 @@ public class UserController {
       Customer customer = this.getCustomer(username);
       if (customer == null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      boolean isValid = isValid(creditCard);
+      if (!isValid){
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       boolean result = this.userDao.addCard(username, creditCard);
       if (result) {
@@ -270,5 +275,19 @@ public class UserController {
           return customer;
       }
       return null;
+  }
+
+  private boolean isValid(CreditCard creditCard){
+    if (creditCard == null){
+      return false;
+    }
+    if ((creditCard.getNumber().matches("\\d+") && creditCard.getNumber().strip().length() == 16) &&
+        (creditCard.getExpiration().matches("(?:0[1-9]|1[0-2])/[0-9]{2}")) &&
+        (creditCard.getCVV().matches("^[0-9]{3,4}$"))){
+          return true;
+    }
+    else{
+      return false;
+    }
   }
 }
