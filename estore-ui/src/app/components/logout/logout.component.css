@@ -1,4 +1,26 @@
-button {
-    height: 100%;
-    width: 100%;
+div {
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+    padding: 1%;
+    color: #FFFEFE;
+    caret-color: transparent;
+    height: 4vw;
+    width: 4vw;
+    text-align: center;
+    text-decoration: none;
+    font-size: xx-large;
+    color: inherit;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    border-radius: 50%;
+    line-height: 4vw;
+    cursor: pointer;
+
+}
+
+div:hover {
+    background-color: white;
+    color: black;
 }

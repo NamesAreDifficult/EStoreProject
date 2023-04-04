@@ -1,29 +1,43 @@
 <div class="container">
 
   <div class="navBar">
-    <div>
-      <a routerLink="/home-page"> Home </a>
+    <div class="material-symbols-outlined">
+      <a routerLink="/home-page"> home </a>
     </div>
-    <div>
-      <a routerLink="/catalog"> Catalog </a>
+    <div class="material-symbols-outlined">
+      <a routerLink="/catalog"> inventory </a>
     </div>
-
+    <div *ngIf="user !== null" class="material-symbols-outlined">
+      <a *ngIf="user.admin" routerLink="/admin-dashboard">dashboard</a>
+      <a *ngIf="!user.admin" routerLink="/cart">shopping_cart</a>
+    </div>
     <div class="titlebox">
       <span class="title">Cow Related Pun</span>
     </div>
-    <div>
-      <a routerLink="/cart"> Shopping Cart </a>
+
+    <div *ngIf="user === null" class="material-symbols-outlined">
+      <a routerLink="/new-user"> person_add </a>
     </div>
-    <div *ngIf="user===null">
-      <a routerLink="/login"> Login </a>
+    <div *ngIf="user === null" class="material-symbols-outlined">
+      <a routerLink="/login"> login </a>
     </div>
-    <div *ngIf="user !== null" class="dropdown">
-      {{user?.username}}
-      <ul class="dropdown-menu">
-        <li *ngIf="!user.admin"><a routerLink="/profile">Profile</a></li>
-        <li *ngIf="user.admin"><a routerLink="/admin-dashboard">Dashboard</a></li>
-        <li><app-logout></app-logout></li>
-      </ul>
+
+
+    <div *ngIf="user !== null && !user.admin">
+      <p>{{user.username}}</p>
     </div>
+    <div *ngIf="user !== null && user.admin">
+
+    </div>
+
+    <div *ngIf="user !== null">
+      <a *ngIf="!user!.admin" class="material-symbols-outlined" routerLink="/profile">account_circle</a>
+      <p *ngIf="user!.admin">{{user.username}}</p>
+    </div>
+
+    <div *ngIf="user !== null" id="logout" (click)=logout() class="material-symbols-outlined">
+      <a>logout</a>
+    </div>
+
   </div>
 </div>
