@@ -1,5 +1,5 @@
 .navBar {
-  min-height: 8%;
+  min-height: 6%;
   width: 100vw;
   display: flex;
   background-color: #030F11;
@@ -64,19 +64,23 @@
 .dropdown-menu {
   position: absolute;
   top: 100%;
+  left: -53%;
   display: none;
   background-color: #941C2F;
-  width: 100%;
+  width: 150%;
   margin: 0;
   padding: 0;
 }
 
 .dropdown-menu li {
   margin: 0;
-  padding: 0;
+  padding: 5%;
+  align-items: center;
+  justify-content: center;
   list-style: none;
   width: 100%;
   text-align: center;
+  color: white;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
 }
