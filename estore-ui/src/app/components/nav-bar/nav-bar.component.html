@@ -20,7 +20,8 @@
     <div *ngIf="user !== null" class="dropdown">
       {{user?.username}}
       <ul class="dropdown-menu">
-        <li><a routerLink="/profile">Profile</a></li>
+        <li><a *ngIf="!user.admin"routerLink="/profile">Profile</a></li>
+        <li><a *ngIf="user.admin"routerLink="/admin-dashboard">Dashboard</a></li>
         <li><app-logout></app-logout></li>
       </ul>
     </div>
