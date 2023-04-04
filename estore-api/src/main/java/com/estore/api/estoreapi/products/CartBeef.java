@@ -67,6 +67,15 @@ public class CartBeef {
     }
 
     /*
+     * Adds new weight to an existing CartBeef object
+     * 
+     * @param newWeight: Weight to be added to the CartBeef object
+     */
+    public void addWeight(float newWeight){
+        this.weight += newWeight;
+    }
+
+    /*
      * Checks if another object is an equal{@linkplain CartBeef cartBeef}
      * 
      * @return - if the other object is an equal {@linkplain CartBeef cartBeef}

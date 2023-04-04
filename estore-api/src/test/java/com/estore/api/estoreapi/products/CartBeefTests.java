@@ -27,6 +27,15 @@ public class CartBeefTests {
     assertEquals(expectedWeight, testCartBeef.getWeight());
   }
 
+  @Test
+  public void testGetID(){
+    int expectedId = 2;
+    float expectedWeight = (float)10.1;
+
+    CartBeef testCartBeef = new CartBeef(expectedId, expectedWeight);
+    assertEquals(2, testCartBeef.getId());
+  }
+
   @Test 
   public void testOverloadCtor() {
     //setup
