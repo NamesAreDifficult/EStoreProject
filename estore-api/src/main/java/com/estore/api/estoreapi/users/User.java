@@ -11,6 +11,7 @@ public abstract class User implements Comparable<User> {
 
     @JsonProperty("username")
     private final String username;
+    private String password;
 
     /**
      * Create a user with a username
@@ -26,8 +27,10 @@ public abstract class User implements Comparable<User> {
      *                 value, i.e. 0 for int
      */
     public User(
-            @JsonProperty("username") String username) {
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password) {
         this.username = username;
+        this.password = password;
     }
 
     /*
@@ -39,6 +42,15 @@ public abstract class User implements Comparable<User> {
         return this.username;
     }
 
+    /*
+     * Get the password of the user
+     * 
+     * @return password of the user
+     */
+    public String getPassword(){
+      return this.password;
+    }
+    
     /*
      * Returns if the user is an admin
      * 
