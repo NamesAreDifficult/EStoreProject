@@ -21,20 +21,22 @@
     <div *ngIf="user === null" class="material-symbols-outlined">
       <a routerLink="/login"> login </a>
     </div>
-    <div *ngIf="user !== null and !user.admin">
-      {{user.username}}
+
+
+    <div *ngIf="user !== null && !user.admin">
+      <p>{{user.username}}</p>
     </div>
-    <div *ngIf="user !== null and user.admin">
+    <div *ngIf="user !== null && user.admin">
 
     </div>
 
-    <div *ngIf="user !== null" class="material-symbols-outlined">
-      <a *ngIf="!user!.admin" routerLink="/profile">account_circle</a>
+    <div *ngIf="user !== null">
+      <a *ngIf="!user!.admin" class="material-symbols-outlined" routerLink="/profile">account_circle</a>
       <p *ngIf="user!.admin">{{user.username}}</p>
     </div>
 
     <div *ngIf="user !== null" id="logout" (click)=logout() class="material-symbols-outlined">
-      <p>logout</p>
+      <a>logout</a>
     </div>
 
   </div>
