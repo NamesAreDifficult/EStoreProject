@@ -31,4 +31,10 @@
     background-color: black;
     color: white;
     z-index: 11;
+
+}
+
+#meme {
+    text-align: center;
+    font-size: xx-large;
 }
