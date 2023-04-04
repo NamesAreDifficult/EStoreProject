@@ -65,12 +65,12 @@
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: -53%;
   display: none;
   background-color: #941C2F;
-  width: 150%;
+  width: 100%;
   margin: 0;
   padding: 0;
+  z-index: 1000;
 }
 
 .dropdown-menu li {
