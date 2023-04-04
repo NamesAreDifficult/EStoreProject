@@ -1,6 +1,6 @@
 package com.estore.api.estoreapi.users;
 
-import com.estore.api.estoreapi.products.CartBeef;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*
@@ -12,6 +12,9 @@ public class Customer extends User {
 
     @JsonProperty("cart")
     private ShoppingCart cart;
+
+    @JsonProperty("cards")
+    private CreditCard[] cards;
 
     /**
      * Create a customer with a username
@@ -30,12 +33,11 @@ public class Customer extends User {
             @JsonProperty("username") String username,
             @JsonProperty("cart") ShoppingCart cart) {
         super(username);
-
+        this.cards = new CreditCard[0];
         if (cart == null) {
             this.cart = new ShoppingCart();
         } else {
             this.cart = cart;
-
         }
     }
 
@@ -46,6 +48,22 @@ public class Customer extends User {
      */
     public ShoppingCart getCart() {
         return this.cart;
+    }
+
+    /*
+     * Adds a credit card to the customer's card list if there is space
+     * 
+     * @return boolean of whether the addition was successful
+     */
+    public boolean addCard(CreditCard card){
+        if (cards.length == 3){
+            return false;
+        }
+        else{
+            this.cards = Arrays.copyOf(cards, cards.length + 1);
+            this.cards[cards.length - 1] = card;
+            return true;
+        }
     }
 
     /**
