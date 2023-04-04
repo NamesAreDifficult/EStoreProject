@@ -19,7 +19,6 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
-import { BaseTemplateComponent } from './base-template/base-template.component';
 
 
 @NgModule({
@@ -33,8 +32,7 @@ import { BaseTemplateComponent } from './base-template/base-template.component';
     AdminDashboardComponent,
     LogoutComponent,
     CartComponent,
-    ProductDetailsComponent,
-    BaseTemplateComponent
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,
