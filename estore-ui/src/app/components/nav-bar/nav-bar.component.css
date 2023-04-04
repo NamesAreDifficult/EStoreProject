@@ -17,11 +17,12 @@
   padding: 1%;
   color: #FFFEFE;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  caret-color: transparent;
 }
 
 .navBar a {
   text-decoration: none;
-  font-size: x-large;
+  font-size: xx-large;
   color: inherit;
 }
 
