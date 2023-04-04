@@ -32,9 +32,10 @@ public class Customer extends User {
      */
     public Customer(
             @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
             @JsonProperty("cart") ShoppingCart cart) {
-        super(username);
-        this.cards = new CreditCard[0];
+        super(username, password);
+
         if (cart == null) {
             this.cart = new ShoppingCart();
         } else {

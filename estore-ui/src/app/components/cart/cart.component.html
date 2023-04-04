@@ -1,4 +1,7 @@
 <p>Your shopping cart:</p>
+<div>
+{{cartAlert}}
+  </div>
 <ul>
     <li *ngFor="let beef of cart$ | async">
         <div>
@@ -19,4 +22,7 @@
             </button>
         </div>
     </li>
+    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
+        Proceed to Checkout
+    </button>
 </ul>

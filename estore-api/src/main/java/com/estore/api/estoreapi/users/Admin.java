@@ -18,8 +18,9 @@ public class Admin extends User {
    * is not provided in the JSON object, the Java field gets the default Java
    * value, i.e. 0 for int
    */
-    public Admin(@JsonProperty("username") String username) {
-        super(username);
+    public Admin(@JsonProperty("username") String username,
+                 @JsonProperty("password") String password) {
+        super(username, password);
     }
 
    

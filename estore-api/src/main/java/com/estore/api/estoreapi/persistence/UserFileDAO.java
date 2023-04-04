@@ -38,7 +38,7 @@ public class UserFileDAO implements UserDAO {
       load(); // load the users from the file
     } catch (IOException err) {
       this.users = new TreeMap<>();
-      Admin defaultAdmin = new Admin("admin");
+      Admin defaultAdmin = new Admin("admin", "admin");
       this.users.put(defaultAdmin.getUsername(), defaultAdmin);
     }
   }
@@ -242,8 +242,13 @@ public class UserFileDAO implements UserDAO {
   @Override
   public boolean Checkout(String username) throws IOException {
     synchronized (users) {
-      return true; // Todo implement
-
+      Customer customer = GetCustomer(username);
+      if (customer == null){
+        return false;
+      }
+      boolean ret = customer.getCart().Checkout();
+      save();
+      return ret;
     }
   }
 
@@ -375,5 +380,17 @@ public class UserFileDAO implements UserDAO {
       return ret;
     }
   }
-
+  /**
+   ** {@inheritDoc}}
+   */
+  public User loginUser(String username, String password) throws IOException{
+    User user = GetUser(username);
+    if(user == null){
+      return null;
+    }
+    if(user.getPassword().equals(password)){
+      return user;
+    }
+    return null;
+  }
 }
