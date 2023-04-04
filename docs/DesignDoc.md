@@ -67,13 +67,14 @@ This section describes the features of the application.
 - Admin Dashboard
 - Landing Page
 - Product Page
-- Navigation Bar Component
 - Shopping Cart
 - Admin/Customer Authentication
 
 
 ### Roadmap of Enhancements
 
+- Checkout Features
+- Navigation Bar Component
 - Sponsoring a Cow
 - Password Management
 - Password Security
@@ -147,7 +148,15 @@ Once a customer is done shopping and the admin is finished, they can log out vie
 
 ### ViewModel Tier
 
-The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information. The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go. The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
+The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information.
+![BeefServiceDiagram](BeefServiceDiagram.png)
+ The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go.
+![UserAuthServiceDiagram](userAuthServiceDiagram.png)
+![UserServiceDiagram](userServiceDiagram.png)
+
+
+ The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
+![CartServiceDiagram](CartServiceDiagram.png)
 
 
 
@@ -183,15 +192,9 @@ return types, but was ultimately successful at 93 percent.
 
 The number of user stories that passed all criteria is 10.
 
-The number of stories that have failed all acceptance testing is 2,
-both of these stories are related to the checkout feature, which was
-not implemented due to time constraints.
-
-There is one story that does not currently meet all of its acceptance criteria, and it
-is the navigation bar. The navigation bar is not a part for the MVP for this particular
-sprint, so it was not the primary focus of the team. A fair amount of criteria
-was created with designing the CSS for this component in mind and was not really necessary
-for this sprint, and other stories of greater importance were prioritized.
+The number of stories that have failed all acceptance testing is 3,
+these stories are related to the navigation bar and checkout features, which we did not
+have time to implement this sprint due to time constraints.
 
 ### Unit Testing and Code Coverage
 
