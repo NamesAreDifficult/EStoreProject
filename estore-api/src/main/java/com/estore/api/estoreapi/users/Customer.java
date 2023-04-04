@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.users;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*
@@ -51,7 +52,18 @@ public class Customer extends User {
     }
 
     /*
+     * Returns an array containing all the customer's credit cards
+     * 
+     * @return The customer's credit cards
+     */
+    public CreditCard[] getCards(){
+        return this.cards;
+    }
+
+    /*
      * Adds a credit card to the customer's card list if there is space
+     * 
+     * The credit card object to be added to the card list
      * 
      * @return boolean of whether the addition was successful
      */
@@ -59,11 +71,53 @@ public class Customer extends User {
         if (cards.length == 3){
             return false;
         }
-        else{
-            this.cards = Arrays.copyOf(cards, cards.length + 1);
-            this.cards[cards.length - 1] = card;
-            return true;
+        CreditCard[] newCards = new CreditCard[this.cards.length + 1];
+        int newCardIndex = 0;
+        for (CreditCard creditCard : this.cards) {
+            if (creditCard.equals(card)) {
+                return false;
+            }
+
+            newCards[newCardIndex] = creditCard;
+            newCardIndex += 1;
         }
+
+        newCards[newCardIndex] = card;
+        this.cards = newCards;
+        return true;
+    }
+    
+    /*
+     * Removes a credit card to the customer's card list if it exists
+     * 
+     * @param card: The credit card object to be removed
+     * 
+     * @return True if card is present and removed, false otherwise
+     */
+    public boolean removeCard(CreditCard card){
+        if (this.cards.length == 0){
+            return false;
+        }
+        ArrayList<CreditCard> newCards = new ArrayList<>();
+
+        for (CreditCard creditCard : this.cards) {
+            if (!creditCard.equals(card)) {
+                newCards.add(creditCard);
+            }
+        }
+
+        boolean result = newCards.size() != this.cards.length;
+
+        if (result) {
+            CreditCard[] finalCards = new CreditCard[this.cards.length - 1];
+            int index = 0;
+            for (CreditCard creditCard : newCards) {
+                finalCards[index] = creditCard;
+                index++;
+            }
+            this.cards = finalCards;
+        }
+        return result;
     }
 
     /**
