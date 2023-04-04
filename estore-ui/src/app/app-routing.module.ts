@@ -10,7 +10,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
-import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   { path: "new-user", component: NewUserComponent, canActivate: [UserAuthenticationService] },
