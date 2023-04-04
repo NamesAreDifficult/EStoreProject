@@ -36,7 +36,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     LogoutComponent,
     CartComponent,
     ProductDetailsComponent,
-    BaseTemplateComponent
+    BaseTemplateComponent,
     CheckoutComponent
   ],
   imports: [
