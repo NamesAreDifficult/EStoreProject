@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
 
@@ -88,6 +89,30 @@ public class UserController {
   }
 
   /**
+   * Retrieves {@linkplain CreditCard[] creditCards} given a username
+   * 
+   * @param username - username of the user
+   * 
+   * @return ResponseEntity with a {@link CreditCard[] creditCards} (may be empty)
+   *         and
+   *         HTTP status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR or NOT_FOUND otherwise
+   */
+  @GetMapping("cards/{username}")
+  public ResponseEntity<CreditCard[]> getCards(@PathVariable String username) {
+    try {
+      Customer customer = this.getCustomer(username);
+      // User not found
+      if (customer == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<CreditCard[]>(this.userDao.getCards(username), HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
    * Creates a {@linkplain Customer customer} with the provided customer object
    * 
    * @param customer - The {@link Customer customer} to create
@@ -156,5 +181,23 @@ public class UserController {
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
+  }
+
+    /*
+     * Returns a customer given a username
+     * 
+     * @param username username of the customer
+     * 
+     * @return Customer instance
+     */
+    private Customer getCustomer(String username) throws IOException {
+      User user = this.userDao.GetUser(username);
+
+      // Checks if user exists and is a customer
+      if (user != null && (user instanceof Customer)) {
+          Customer customer = (Customer) user;
+          return customer;
+      }
+      return null;
   }
 }
