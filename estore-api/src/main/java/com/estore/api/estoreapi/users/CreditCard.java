@@ -30,4 +30,53 @@ public class CreditCard {
         this.expiration = expiration;
         this.cvv = cvv;
     }
+
+    /*
+     * Retrieves the card number of a given credit card
+     * 
+     * @return Card number, as a string
+     *
+     */
+    public String getNumber(){
+        return this.number;
+    }
+
+    /*
+     * Retrieves the expiration date of a given credit card
+     * 
+     * @return Expiration date, as a string
+     *
+     */
+    public String getExpiration(){
+        return this.expiration;
+    }
+
+    /*
+     * Retrieves the CVV of a given credit card
+     * 
+     * @return CVV, as a string
+     *
+     */
+    public String getCVV(){
+        return this.getCVV();
+    }
+
+    /*
+     * Checks if another object is an equal{@linkplain CreditCard creditCard}
+     * 
+     * @return - if the other object is an equal {@linkplain CreditCard creditCard}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this.getClass() == other.getClass()) {
+            CreditCard otherCard = (CreditCard) other;
+
+            if (otherCard.getNumber().equals(this.getNumber())){
+                return true;
+            }
+        }
+
+        return false;
+
+    }
 }
