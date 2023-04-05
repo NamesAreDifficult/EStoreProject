@@ -1,7 +1,6 @@
-<h1>
+<div class="pageTitle">
     Welcome to our store! We have the beef.
-</h1>
-<h2> Featured Products </h2>
+</div>
 <div class="beefMenu">
     <div class="item" *ngFor="let beef of beef" routerLink="/product/{{beef.id}}">
         <div class="title">
@@ -10,7 +9,8 @@
         <div class="imageContainer">
             <img src={{beef.imageUrl}}>
         </div>
-        <div>
+        <br>
+        <div class="info">
             <div>
                 Price: ${{beef.price.toFixed(2)}}/lbs
             </div>
