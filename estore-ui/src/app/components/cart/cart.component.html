@@ -9,9 +9,12 @@
 <div>
 {{cartAlert}}
   </div>
-<ul>
+
+
+
     <li *ngFor="let beef of cart$ | async">
-        <div>
+        <div class="card">
+            <img src="{{beef.imageURL}}">
             <div>
                 Cut: {{beef.cut}}
             </div>
@@ -32,5 +35,4 @@
     <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
         Proceed to Checkout
     </button>
-</ul>
 
