@@ -133,9 +133,10 @@ export class AdminDashboardComponent {
   // Updates price and weight of beef objects if the fields are valid
   update(beef: Beef, weight: number, price: number) {
       if (this.validateUpdate(beef, weight, price)){
-      beef.weight += weight
+      beef.weight = weight
       beef.price = price
       this.beefService.updateBeef(beef).subscribe(this.updateObserver);
+      this.beef$ = this.beefService.getAllBeef()
       this.adminAlert = "Product updated."
     }
   }
