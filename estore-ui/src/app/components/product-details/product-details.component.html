@@ -26,9 +26,7 @@
                         <button class="material-symbols-outlined"
                             (click)="addToCart(beef.id!, amount.value)">add_shopping_cart
                         </button>
-                        <button class="material-symbols-outlined" routerLink="/checkout">
-                            shopping_cart_checkout
-                        </button>
+
                     </div>
                 </div>
 
@@ -43,4 +41,10 @@
     <div class="alert">
         {{productAlert}}
     </div>
+    <div class="checkoutButton">
+        <button class="material-symbols-outlined" routerLink="/checkout">
+            shopping_cart_checkout
+        </button>
+    </div>
+
 </div>
