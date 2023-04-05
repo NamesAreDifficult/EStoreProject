@@ -91,4 +91,12 @@ public class CartBeef {
     }
     return false;
   }
+
+  /*
+   * {@inheritDoc}
+   */
+  @Override
+  public int hashCode(){
+    return String.format("%d%f", this.getId(), this.getWeight()).hashCode();
+  }
 }
