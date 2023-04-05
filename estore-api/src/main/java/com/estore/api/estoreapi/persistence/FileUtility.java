@@ -22,7 +22,9 @@ public class FileUtility {
         if (!file.exists()) {
           
             file.mkdirs();
-            file.createNewFile();
+            if(!file.createNewFile()){
+              throw new IOException("Failed to create new file");
+            }
         }
     }
 
