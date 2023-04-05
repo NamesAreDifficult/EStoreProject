@@ -22,8 +22,7 @@ export class ProductDetailsComponent {
       this.beef = beef;
       const id = Number(this.route.snapshot.paramMap.get('id'));
     },
-    error: (err: Error) => (this.catchStatusCode(Number(err.message))),
-    complete: () => this.getBeef()
+    error: (err: Error) => (this.catchStatusCode(Number(err.message)))
   }
 
   private catchStatusCode(code: number) {

@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
+import com.estore.api.estoreapi.users.ShoppingCart;
 
 public interface UserDAO {
 
@@ -29,6 +31,18 @@ public interface UserDAO {
      * @throws IOException if an issue with underlying storage
      */
     Admin createAdmin(Admin admin) throws IOException;
+
+    /**
+     * Logs a {@linkplain User user} in if correct credentials are provided
+     * 
+     * @param username The username of the {@link User user} to login to
+     * @param password The password of the {@link User user} to login to 
+     * 
+     * @return {@link User user} object if the credentials are correct, null if incorrect
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    User loginUser(String username, String password) throws IOException;
 
     /**
      * Retrieves a {@linkplain User user} with the given username
@@ -134,4 +148,41 @@ public interface UserDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     Boolean RemoveFromCart(String username, int beefId) throws IOException;
+
+    /**
+     * Removes a {@linkplain CreditCard creditCard} from a {@linkplain} User user}
+     * 
+     * @param username The username of the {@link User user}
+     * 
+     * @param creditCard The creditCard to remove
+     * 
+     * @return a {@link Boolean boolean} object whether the card was removed successfully
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Boolean removeCard(String username, CreditCard creditCard) throws IOException;
+
+    /**
+     * Adds a {@linkplain CreditCard creditCard} from a {@linkplain} User user}
+     * 
+     * @param username The username of the {@link User user}
+     * 
+     * @param creditCard The creditCard to add
+     * 
+     * @return a {@link Boolean boolean} object whether the card was added successfully
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Boolean addCard(String username, CreditCard creditCard) throws IOException;
+
+    /**
+     * Gets all {@linkplain CreditCard creditCard} from a {@linkplain} User user}
+     * 
+     * @param username The username of the {@link User user}
+     * 
+     * @return a {@link CreditCard creditCard} array of all their credit cards
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    CreditCard[] getCards(String username) throws IOException;
 }

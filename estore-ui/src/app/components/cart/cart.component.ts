@@ -1,9 +1,9 @@
-import { CartBeef, CartServiceService } from 'src/app/services/cartService/cart-service.service';
+import {CartServiceService } from 'src/app/services/cartService/cart-service.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Beef } from '../../services/beefService/beef.service';
-import { CustomerAuthenticationService } from 'src/app/services/customerAuthService/customer-authentication.service';
+import { isEmpty } from 'rxjs/operators';  
 
 @Component({
   selector: 'app-cart',
@@ -13,13 +13,20 @@ import { CustomerAuthenticationService } from 'src/app/services/customerAuthServ
 export class CartComponent {
 
   cart$!: Observable<Beef[]>
+  isEmpty!: boolean;
+
+  cartAlert = ""
 
   constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
 
   }
   
   ngOnInit() {
-    this.cart$ = this.shoppingService.getCart();
+    this.cart$ = this.shoppingService.getCart().pipe(
+      tap((cartItems: Beef[]) =>{
+        this.isEmpty = cartItems.length === 0;
+      })
+    );
   }
 
   removeFromCart(id: number) {

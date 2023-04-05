@@ -3,6 +3,7 @@ package com.estore.api.estoreapi.users;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -83,4 +84,15 @@ public class ShoppingCartTests {
 
   }
 
+  @Test
+  public void testCheckout() {
+    // Tests checkout on a normal shopping cart
+    assertTrue(testCart.Checkout());
+    // Validates that the length is set to zero
+    assertEquals(0, testCart.getContents().length);
+
+    // Testing on empty shopping cart
+    ShoppingCart newTestCart = new ShoppingCart();
+    assertFalse(newTestCart.Checkout());
+  }
 }
