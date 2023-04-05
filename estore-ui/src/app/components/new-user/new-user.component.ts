@@ -62,6 +62,14 @@ export class NewUserComponent implements OnInit {
     var newUser: LoginUser = {
       username: username,
       password: password
+      }
+      this.userService.createCustomer(newUser)
+        .subscribe(
+          this.Observer
+        );
+      location.reload();
+    } else {
+      this.userAlert = "Usernames must be between 3-26 alphanumeric characters and must only use the following special characters: !@#$%^&*()-_+=?";
     }
 
     this.userService.createCustomer(newUser)

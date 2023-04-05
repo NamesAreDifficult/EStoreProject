@@ -42,11 +42,12 @@ export class UserService {
   //  Logs in a user using the backend
   loginUser(user: LoginUser): Observable<any> {
     var loginOptions = {
-      headers: new HttpHeaders({'Authorization': user.password})
+      headers: new HttpHeaders({ 'Authorization': user.password })
     };
     return this.http.get<User>(this.userUrl + `/login/${user.username}`, loginOptions).pipe(
       tap(_ => {
         this.logger.add(`Logged in user: ${user.username}`);
+        this.signUserIn({ username: user.username, admin: false });
         this.userNotifier.emit(user);
       }),
       catchError(
