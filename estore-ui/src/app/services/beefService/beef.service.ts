@@ -13,6 +13,7 @@ export interface Beef {
   grade: string;
   weight: number;
   price: number;
+  imageUrl: string;
 }
 
 @Injectable({
