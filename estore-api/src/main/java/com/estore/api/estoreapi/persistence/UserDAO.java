@@ -150,7 +150,6 @@ public interface UserDAO {
     Boolean RemoveFromCart(String username, int beefId) throws IOException;
 
     /**
-
      * Updates a {@linkplain User user} password
      * 
      * @param username The username of the {@link User user} to update the password
@@ -164,6 +163,7 @@ public interface UserDAO {
      */
     int updatePassword(String username, String oldPassword, String newPassword) throws IOException;
 
+    /*
      * Removes a {@linkplain CreditCard creditCard} from a {@linkplain} User user}
      * 
      * @param username The username of the {@link User user}
