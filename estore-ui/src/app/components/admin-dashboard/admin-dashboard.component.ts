@@ -50,6 +50,7 @@ export class AdminDashboardComponent {
       this.beefService.updateBeef(beef)
     },
     error: (err: Error) => (this.updateStatus(Number(err.message))),
+    complete: () => this.beef$ = this.beefService.getAllBeef()
   }
 
   // Catches error code for create method and displays text
@@ -136,7 +137,6 @@ export class AdminDashboardComponent {
       beef.weight = weight
       beef.price = price
       this.beefService.updateBeef(beef).subscribe(this.updateObserver);
-      this.beef$ = this.beefService.getAllBeef()
       this.adminAlert = "Product updated."
     }
   }
