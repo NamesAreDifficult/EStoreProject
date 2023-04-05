@@ -111,13 +111,14 @@ export class AdminDashboardComponent {
   }
 
   // Adds new beef object to inventory if the fields are valid
-  create(cut: string, weight: number, grade: string, price: number) {
+  create(cut: string, weight: number, grade: string, price: number, imageUrl:string) {
     if (this.validateCreate(cut, grade)){
       var beef: Beef = {
         cut: cut.trim(),
         weight: weight,
         grade: grade.trim(),
-        price: price
+        price: price,
+        imageUrl: imageUrl
       }
     this.beefService.addBeef(beef).subscribe(this.createObserver)
     this.adminAlert = "Product created."
@@ -131,10 +132,11 @@ export class AdminDashboardComponent {
   }
 
   // Updates price and weight of beef objects if the fields are valid
-  update(beef: Beef, weight: number, price: number) {
+  update(beef: Beef, weight: number, price: number, imageUrl:string) {
       if (this.validateUpdate(beef, weight, price)){
       beef.weight += weight
       beef.price = price
+      beef.imageUrl = imageUrl
       this.beefService.updateBeef(beef).subscribe(this.updateObserver);
       this.adminAlert = "Product updated."
     }

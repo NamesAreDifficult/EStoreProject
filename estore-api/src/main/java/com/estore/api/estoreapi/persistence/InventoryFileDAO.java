@@ -195,7 +195,7 @@ public class InventoryFileDAO implements InventoryDAO {
           return null;
         }
       }
-      Beef newBeef = new Beef(nextId(), beef.getCut(), beef.getWeight(), beef.getGrade(), beef.getPrice());
+      Beef newBeef = new Beef(nextId(), beef.getCut(), beef.getWeight(), beef.getGrade(), beef.getPrice(), beef.getImageUrl());
       inventory.put(newBeef.getId(), newBeef);
       save(); // may throw an IOException
       return newBeef;
@@ -226,6 +226,7 @@ public class InventoryFileDAO implements InventoryDAO {
       if (inventory.containsKey(beef.getId())) {
         Beef updatedBeef = inventory.get(beef.getId());
         updatedBeef.addWeight(beef.getWeight());
+        updatedBeef.setImageUrl(beef.getImageUrl());
         if (beef.getPrice() > 0) {
           updatedBeef.setPrice(beef.getPrice());
         }

@@ -52,8 +52,8 @@ public class UserFileDAOTests {
     Customer[] testCustomers = new Customer[3];
     Admin[] testAdmins = new Admin[1];
 
-    CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99), 2);
-    CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99), 3);
+    CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), 2);
+    CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), 3);
     CartBeef[] firstCart = new CartBeef[2];
     CartBeef[] secondCart = new CartBeef[0];
 
