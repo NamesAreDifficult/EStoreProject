@@ -6,7 +6,7 @@
 <ul>
     <form>
     <label *ngFor="let card of cards$ | async">
-        <input type="radio" name="card" value="{{card.number}}">
+        <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}">
         <div>
             <div>
                 Card Number: {{card.number}} 

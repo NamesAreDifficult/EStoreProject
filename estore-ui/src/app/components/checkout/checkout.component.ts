@@ -15,6 +15,7 @@ export class CheckoutComponent {
   cart$!: Observable<Beef[]>
   isEmpty!: boolean;
   cards$!: Observable<CreditCard[]>
+  currentCard: CreditCard | undefined;
 
   constructor(private shoppingService: CartServiceService, private logger: LoggingService,
               private cardService: CardService) {
@@ -29,13 +30,22 @@ export class CheckoutComponent {
     );
   }
 
+  selectCard(card: CreditCard){
+    this.currentCard = card
+  }
+
   checkout(){
+    if (this.currentCard === undefined){
+      this.checkoutAlert = "Please select a credit card"
+    }
+    else{
     this.shoppingService.checkout().subscribe(
       {
         next: (any: any) => this.cart$ = this.shoppingService.checkout()
       }
     )
-    document.getElementById("checkoutButton")!.style.visibility = "hidden";
-    this.checkoutAlert = "Thanks for shopping at Cow-Related Pun!"
+      document.getElementById("checkoutButton")!.style.visibility = "hidden";
+      this.checkoutAlert = "Thanks for shopping at Cow-Related Pun!"
+    }
   }
 }
