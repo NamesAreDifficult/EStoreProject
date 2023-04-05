@@ -85,6 +85,11 @@ public class Customer extends User {
      * @return boolean of whether the addition was successful
      */
     public boolean addCard(CreditCard card){
+        if (cards == null){
+            this.cards = new CreditCard[1];
+            this.cards[0] = card;
+            return true;
+        }
         if (cards.length >= 3){
             return false;
         }
@@ -112,7 +117,7 @@ public class Customer extends User {
      * @return True if card is present and removed, false otherwise
      */
     public boolean removeCard(CreditCard card){
-        if (this.cards.length == 0){
+        if (this.cards == null){
             return false;
         }
         ArrayList<CreditCard> newCards = new ArrayList<>();
