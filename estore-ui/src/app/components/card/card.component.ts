@@ -79,7 +79,7 @@ export class CardComponent {
     next: (card: CreditCard) => {
       this.cardService.removeCard(card.number)
     },
-    error: (err: Error) => (this.addStatus(Number(err.message))),
+    error: (err: Error) => (this.removeStatus(Number(err.message))),
     complete: () => this.cards$ = this.cardService.getCards().pipe(
       tap((cardItems: CreditCard[]) =>{
         this.isMax = cardItems.length === 3;
