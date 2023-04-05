@@ -39,9 +39,9 @@ export class CheckoutComponent {
       this.checkoutAlert = "Please select a credit card"
     }
     else{
-    this.shoppingService.checkout().subscribe(
+    this.shoppingService.checkout(this.currentCard.number).subscribe(
       {
-        next: (any: any) => this.cart$ = this.shoppingService.checkout()
+        next: (any: any) => this.cart$ = this.shoppingService.checkout(this.currentCard!.number)
       }
     )
       document.getElementById("checkoutButton")!.style.visibility = "hidden";

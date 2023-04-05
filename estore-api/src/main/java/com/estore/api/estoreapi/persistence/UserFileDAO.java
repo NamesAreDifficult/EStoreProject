@@ -240,10 +240,14 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean Checkout(String username) throws IOException {
+  public boolean Checkout(String username, String cardNumber) throws IOException {
     synchronized (users) {
       Customer customer = GetCustomer(username);
       if (customer == null){
+        return false;
+      }
+      CreditCard card = customer.getCard(cardNumber);
+      if (card == null){
         return false;
       }
       boolean ret = customer.getCart().Checkout();
