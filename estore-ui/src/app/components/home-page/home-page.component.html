@@ -3,11 +3,16 @@
 </h1>
 <h2> Featured Products </h2>
 <div class="beef-menu">
-    <a *ngFor="let beef of beef" routerLink="/product/{{beef.id}}">
-        {{beef.grade}} {{beef.cut}}
-        <p>
+    <a class="item" *ngFor="let beef of beef" routerLink="/product/{{beef.id}}">
+        <div class="title">
+            {{beef.grade}}-{{beef.cut}}
+        </div>
+        <div class="imageContainer">
+            <img src={{beef.imageUrl}}>
+        </div>
+        <div>
             price: ${{beef.price.toFixed(2)}} Weight: {{beef.weight}}
-        </p>
+        </div>
     </a>
 
 </div>
