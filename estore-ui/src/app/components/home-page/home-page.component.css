@@ -1,51 +1,55 @@
-/* DashboardComponent's private CSS styles */
+.beefMenu {
+  margin: 0 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
 
-h2 {
-    text-align: center;
-  }
-  
-  .heroes-menu {
-    padding: 0;
-    margin: auto;
-    max-width: 1000px;
-  
-    /* flexbox */
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-content: flex-start;
-    align-items: flex-start;
-  }
-  
-  a {
-    background-color: #3f525c;
-    border-radius: 2px;
-    padding: 1rem;
-    font-size: 1.2rem;
-    text-decoration: none;
-    display: inline-block;
-    color: #fff;
-    text-align: center;
-    width: 100%;
-    min-width: 70px;
-    margin: 1rem auto;
-    margin-left: 5px;
-    box-sizing: border-box;
-  
-    /* flexbox */
-    order: 0;
-    flex: 0 1 auto;
-    align-self: auto;
-  }
-  
-  @media (min-width: 600px) {
-    a {
-      width: 18%;
-      box-sizing: content-box;
-    }
-  }
-  
-  a:hover {
-    background-color: #000;
-  }
+.pageTitle {
+  text-align: center;
+  font-family: "Anton", sans-serif;
+  font-size: xx-large;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.item {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 10%;
+  width: 25%;
+  cursor: pointer;
+  font-family: "Anton", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 2%;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.item:hover {
+  transform: scale(1.12);
+}
+
+.title {
+  font-size: x-large;
+  text-align: center;
+  text-decoration: underline;
+
+}
+
+.imageContainer {
+  width: 80%;
+  display: flex;
+  margin: auto;
+}
+
+.info {
+  margin: 0 auto;
+}

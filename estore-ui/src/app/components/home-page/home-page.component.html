@@ -1,13 +1,25 @@
-<h1>Home Page</h1>
-<h1>Welcome to our store! We have the beef.
-</h1>
-<h2> Featured Products </h2>
-<div class ="beef-menu">
-    <a  *ngFor ="let beef of beef" routerLink="/product/{{beef.id}}">
-        {{beef.grade}} {{beef.cut}}
-        <p>
-           price:  ${{beef.price.toFixed(2)}}  Weight: {{beef.weight}}
-    </p>
-    </a>
-    
+<div class="pageTitle">
+    Welcome to our store! We have the beef.
+    <br>
+    Check out our some of our featured products!
+</div>
+<div class="beefMenu">
+    <div class="item" *ngFor="let beef of beef" routerLink="/product/{{beef.id}}">
+        <div class="title">
+            {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
+        </div>
+        <div class="imageContainer">
+            <img src={{beef.imageUrl}}>
+        </div>
+        <br>
+        <div class="info">
+            <div>
+                Price: ${{beef.price.toFixed(2)}}/lbs
+            </div>
+            <div>
+                Total Amount: {{beef.weight}}
+            </div>
+        </div>
+    </div>
+
 </div>

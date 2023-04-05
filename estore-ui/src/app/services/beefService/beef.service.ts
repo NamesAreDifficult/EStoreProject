@@ -13,6 +13,7 @@ export interface Beef {
   grade: string;
   weight: number;
   price: number;
+  imageUrl: string;
 }
 
 @Injectable({
@@ -43,7 +44,7 @@ export class BeefService {
   getBeef(id: number): Observable<Beef> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Beef>(url).pipe(
-      tap(_ => this.log(`fetched Beef id=$[id}`)),
+      tap(_ => this.log(`fetched Beef id=${id}`)),
 
       catchError(err => {
         this.loggingService.handleError<any>('getBeef')

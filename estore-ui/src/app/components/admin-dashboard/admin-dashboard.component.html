@@ -11,7 +11,9 @@
   <input id="grade" #grade />
   <label for="price">Price:</label>
   <input type="number" id="price" #price />
-  <button id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value)">Create</button>
+  <label for="imageUrl">ImageURL:</label>
+  <input id="imageUrl" #imageUrl />
+  <button id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value)">Create</button>
 </div>
 
 <ul id="inventory" class="Inventory">Inventory
@@ -30,8 +32,10 @@
       <input type="number" id="updateWeight" value="0" #updateWeight />
       <label for="updatePrice">Set Price: </label>
       <input type="number" id="updatePrice" value={{beef.price.toFixed(2)}} #updatePrice />
+      <label for="updateImageUrl">Update Image:</label>
+      <input for="updateImageUrl" value={{beef.imageUrl}} #updateImageUrl/>
       <button id="editPrice"
-        (click)="update(beef, +updateWeight.value, +updatePrice.value); updateWeight.value = '0'; updatePrice.value = beef.price.toFixed(2);">Update</button>
+        (click)="update(beef, +updateWeight.value, +updatePrice.value, updateImageUrl.value); updateWeight.value = '0'; updatePrice.value = beef.price.toFixed(2); updateImageUrl.value = beef.imageUrl;">Update</button>
       <button id="delete" (click)="delete(beef.id!)">Delete</button>
     </div>
   </table>
