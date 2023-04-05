@@ -1,6 +1,6 @@
-<div *ngIf="beef">
+<div *ngIf="beef" class="productPage">
     <div>
-        <a routerLink="/catalog" class="back">Back</a>
+        <button (click)="goBack()">Back</button>
     </div>
 
     <div class="title">
@@ -13,25 +13,25 @@
         </div>
         <div class="productInfo">
             <div>
-                $/lbs
-                <br>
-                {{beef.price.toFixed(2)}}
+                ${{beef.price.toFixed(2)}}/lbs
             </div>
             <div>
                 Total Amount: <br>{{beef.weight}}
             </div>
         </div>
-    </div>
-
-    <div>
-        Amount:
-        <input id="amount" #amount (keyup.enter)="addToCart(beef.id!, amount.value)">
 
     </div>
-    <div>
-        <button (click)="addToCart(beef.id!, amount.value)">Add to Cart</button>
+    <div class="bottom">
+        <div class="amount">
+            Amount:
+            <input id="amount" #amount (keyup.enter)="addToCart(beef.id!, amount.value)">
+        </div>
+        <div class="addButton">
+            <button (click)="addToCart(beef.id!, amount.value)">Add to Cart</button>
+        </div>
     </div>
-</div>
-<div>
-    {{productAlert}}
+    <div>
+        {{productAlert}}
+    </div>
+
 </div>
