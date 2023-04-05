@@ -1,0 +1,55 @@
+.beefMenu {
+    margin: 0 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.pageTitle {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: xx-large;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.item {
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 10%;
+    width: 20%;
+    cursor: pointer;
+    font-family: "Anton", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2%;
+    transition-duration: 1s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.item:hover {
+    transform: scale(1.12);
+}
+
+.title {
+    font-size: x-large;
+    text-align: center;
+    text-decoration: underline;
+
+}
+
+.imageContainer {
+    width: 80%;
+    display: flex;
+    margin: auto;
+}
+
+.info {
+    margin: 0 auto;
+}
