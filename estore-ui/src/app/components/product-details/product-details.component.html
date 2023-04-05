@@ -1,6 +1,9 @@
 <div *ngIf="beef">
     <h2>Product Details</h2>
     <div>
+        <img src={{beef.imageUrl}}>
+    </div>
+    <div>
         <label for="beef-grade"> Grade: </label>
         <label for="beef-grade">{{beef.grade}}</label>
     </div>
