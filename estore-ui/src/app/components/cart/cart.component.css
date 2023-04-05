@@ -5,6 +5,7 @@
     justify-content: center;
     padding-top: 30px;
     display: flex;
+    
 
 }
 label{
@@ -24,6 +25,16 @@ label{
     letter-spacing:2px;
     
 
+ }
+
+ .card{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    background-color: white;
+    color: black;
+    padding: 2px 16px;
+    border-radius: 5px;
+    text-align: right;
+    text-transform: capitalize;
  }
  
  

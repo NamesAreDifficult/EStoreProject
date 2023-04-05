@@ -14,22 +14,23 @@
 
     <li *ngFor="let beef of cart$ | async">
         <div class="card">
-            <img src="{{beef.imageURL}}">
-            <div>
-                Cut: {{beef.cut}}
+            <!-- <img src="{{beef.imageURL}}"> -->
+
+            <div class="container">
+                <div class="name">
+                    {{beef.grade}} {{beef.cut}} 
+                </div>
+                
+                <div>
+                    Amount: {{beef.weight}}
+                </div>
+                <div>
+                    Price: {{beef.weight * beef.price}}
+                </div>
+                <button (click)="removeFromCart(beef.id!)">
+                    Remove
+                </button>
             </div>
-            <div>
-                Grade: {{beef.grade}}
-            </div>
-            <div>
-                Amount: {{beef.weight}}
-            </div>
-            <div>
-                Price: {{beef.weight * beef.price}}
-            </div>
-            <button (click)="removeFromCart(beef.id!)">
-                Remove
-            </button>
         </div>
     </li>
     <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
