@@ -31,7 +31,7 @@
     </div>
 
     <div *ngIf="user !== null">
-      <a *ngIf="!user!.admin" class="material-symbols-outlined" routerLink="/profile">account_circle</a>
+      <a *ngIf="!user!.admin" class="material-symbols-outlined" routerLink="/account-page">account_circle</a>
       <p *ngIf="user!.admin">{{user.username | titlecase}}</p>
     </div>
     <div *ngIf="user !== null" id="logout" (click)=logout() class="material-symbols-outlined">

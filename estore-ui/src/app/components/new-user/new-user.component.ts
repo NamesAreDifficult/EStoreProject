@@ -53,7 +53,7 @@ export class NewUserComponent implements OnInit {
       return;
     }
 
-    if(!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{8,26}$').test(password)){
+    if (!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{8,26}$').test(password)) {
       this.userAlert = "Passwords must be between 8-26 alphanumeric and special characters. Allowed special Characters: !@#$%^&*()-_+=?";
       return;
     }
@@ -62,17 +62,12 @@ export class NewUserComponent implements OnInit {
     var newUser: LoginUser = {
       username: username,
       password: password
-      }
-      this.userService.createCustomer(newUser)
-        .subscribe(
-          this.Observer
-        );
-      location.reload();
-    } else {
-      this.userAlert = "Usernames must be between 3-26 alphanumeric characters and must only use the following special characters: !@#$%^&*()-_+=?";
     }
-
     this.userService.createCustomer(newUser)
-      .subscribe(this.Observer);
+      .subscribe(
+        this.Observer
+      );
+    location.reload();
+
   }
 }
