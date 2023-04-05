@@ -64,10 +64,6 @@ export class NewUserComponent implements OnInit {
       password: password
     }
     this.userService.createCustomer(newUser)
-      .subscribe(
-        this.Observer
-      );
-    location.reload();
-
+      .subscribe(this.Observer);
   }
 }
