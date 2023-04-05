@@ -1,21 +1,29 @@
 <div *ngIf="beef">
-    <h2>Product Details</h2>
     <div>
-        <label for="beef-grade"> Grade: </label>
-        <label for="beef-grade">{{beef.grade}}</label>
+        <a routerLink="/catalog" class="back">Back</a>
     </div>
-    <div>
-        <label for="beef-cut"> Cut: </label>
-        <label for="beef-cut">{{beef.cut}}</label>
+
+    <div class="title">
+        {{beef.grade}} {{beef.cut}}
     </div>
-    <div>
-        <label for="beef-weight"> Weight: </label>
-        <label for="beef-weight">{{beef.weight}} lbs</label>
+
+    <div class="imgSplit">
+        <div class="imageContainer">
+            <img src="https://th.bing.com/th/id/OIP.WOibZ-zlIIn6OgSHqyNEPgHaE0?pid=ImgDet&rs=1">
+
+        </div>
+        <div>
+            <div>
+                $/lbs
+                <br>
+                {{beef.price.toFixed(2)}}
+            </div>
+            <div>
+                Total Amount: <br>{{beef.weight}}
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="beef-price"> Price: $ </label>
-        <label for="beef-price">{{beef.price.toFixed(2)}}</label>
-    </div>
+
     <div>
         Amount:
         <input id="amount" #amount (keyup.enter)="addToCart(beef.id!, amount.value)">
@@ -24,7 +32,6 @@
     <div>
         <button (click)="addToCart(beef.id!, amount.value)">Add to Cart</button>
     </div>
-    <button type="button" (click)="goBack()"> Go Back</button>
 </div>
 <div>
     {{productAlert}}
