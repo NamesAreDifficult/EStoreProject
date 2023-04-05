@@ -82,9 +82,8 @@ public class CartBeef {
   */
   @Override
   public boolean equals(Object other) {
-    if (this.getClass() == other.getClass()) {
+    if (other instanceof CartBeef) {
       CartBeef otherCartBeef = (CartBeef) other;
-
       if (otherCartBeef.getId() == this.getId()){
         return true;
       }
