@@ -15,6 +15,7 @@ export class CardComponent {
   constructor(private cardService: CardService){}
 
   ngOnInit(){
+    // Checks if user is at max amount of cards
     this.cards$ = this.cardService.getCards().pipe(
       tap((cardItems: CreditCard[]) =>{
         this.isMax = cardItems.length === 3;
@@ -63,6 +64,7 @@ export class CardComponent {
     }
   }
 
+  // Observer for handling addition of new cards
   addObserver = {
     next: (card: CreditCard) => {
       this.cardService.addCard(card)
@@ -75,6 +77,7 @@ export class CardComponent {
     )
   }
 
+  // Observer for handling removal of existing cards
   removeObserver = {
     next: (card: CreditCard) => {
       this.cardService.removeCard(card.number)
@@ -87,19 +90,20 @@ export class CardComponent {
     )
   }
 
+  // Adds card if attributes are valid and user has space
   addCard(number: string, expiration: string, cvv: string) {
-    if (true){
-      var card: CreditCard = {
-        number: number.trim(),
-        expiration: expiration,
-        cvv: cvv
-      }
+    var card: CreditCard = {
+      number: number.trim(),
+      expiration: expiration,
+      cvv: cvv
+    }
       
     this.cardService.addCard(card).subscribe(this.addObserver)
     this.cardAlert = "Card created."
-    }
+    
   }
 
+  // Removes card if it exists on user
   removeCard(number: string) {
     this.cardService.removeCard(number).subscribe(this.removeObserver);
     this.cardAlert = "Card deleted."
