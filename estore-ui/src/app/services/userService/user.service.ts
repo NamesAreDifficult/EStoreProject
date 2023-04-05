@@ -13,6 +13,12 @@ export interface LoginUser {
   password: string;
 }
 
+export interface CreditCard {
+  number: string;
+  expiration: string;
+  cvv: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +40,17 @@ export class UserService {
 
       catchError(err => {
         this.logger.handleError<any>('createCustomer')
+        return throwError((() => new Error(err.status)));
+      })
+    );
+  }
+
+  // Gets a customer's credit cards from the backend from the backend
+  getCards(customer: LoginUser): Observable<CreditCard[]> {
+    return this.http.get<CreditCard[]>(this.userUrl + "/cards/" + customer.username, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Got cards from: ${customer.username}`)),
+      catchError(err => {
+        this.logger.handleError<any>('getCards')
         return throwError((() => new Error(err.status)));
       })
     );
