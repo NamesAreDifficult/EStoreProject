@@ -1,6 +1,10 @@
 package com.estore.api.estoreapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -9,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 
 import java.io.IOException;
@@ -16,6 +22,7 @@ import java.io.IOException;
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.ShoppingCart;
 import com.estore.api.estoreapi.products.CartBeef;
@@ -24,13 +31,109 @@ import com.estore.api.estoreapi.products.CartBeef;
 public class UserControllerTests {
   private UserController userController;
   private UserDAO mockUserDAO;
+  private Customer mockCustomer;
+  private CreditCard mockCreditCard;
 
   @BeforeEach
-  public void setupUserController() {
+  public void setupUserController() throws IOException{
+    mockCustomer = mock(Customer.class);
     mockUserDAO = mock(UserDAO.class);
+    mockCreditCard = mock(CreditCard.class);
+
     userController = new UserController(mockUserDAO);
+
+    when(mockUserDAO.GetUser(anyString())).thenReturn(mockCustomer);
+    when(mockCreditCard.getNumber()).thenReturn("1234567890987654");
+    when(mockCreditCard.getExpiration()).thenReturn("01/27");
+    when(mockCreditCard.getCVV()).thenReturn("999");
+    when(mockCustomer.getCard(anyString())).thenReturn(mockCreditCard);
   }
 
+  @Test
+  public void testAddCard() throws IOException{
+    when(mockUserDAO.addCard(anyString(), any(CreditCard.class))).thenReturn(true);
+    ResponseEntity<Boolean> response = userController.addCard("Shrek", mockCreditCard);
+    
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertTrue(response.getBody());
+  }
+
+  @Test
+  public void testAddCardInvalidCustomer() throws IOException{
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response = userController.addCard("Mona Lisa", mockCreditCard);
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testAddCardInvalidCard() throws IOException{
+    when(mockCreditCard.getCVV()).thenReturn("2");
+    ResponseEntity<Boolean> response = userController.addCard("Dragonborn", mockCreditCard);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testAddCardConflict() throws IOException{
+    when(mockUserDAO.addCard(anyString(), any(CreditCard.class))).thenReturn(false);
+    ResponseEntity<Boolean> response = userController.addCard("Your Mother", mockCreditCard);
+
+    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    assertFalse(response.getBody());
+  }
+
+  @Test 
+  public void testAddCardError() throws IOException{
+    doThrow(new IOException("Failed to access file"))
+      .when(mockUserDAO)
+      .GetUser(anyString());
+    ResponseEntity<Boolean> response = userController.addCard("Luca", mockCreditCard);
+
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testRemoveCard() throws IOException{
+    when(mockCustomer.removeCard(any(CreditCard.class))).thenReturn(true);
+    ResponseEntity<Boolean> response = userController.removeCard("I am so hungry", "5");
+    
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertTrue(response.getBody());
+  }
+
+  @Test
+  public void testRemoveCardConflict() throws IOException{
+    when(mockCustomer.removeCard(any(CreditCard.class))).thenReturn(false);
+    ResponseEntity<Boolean> response = userController.removeCard("Samuel Jackson", "5");
+    
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertFalse(response.getBody());
+  }
+
+  @Test
+  public void testRemoveCardNotFound() throws IOException{
+    when(mockCustomer.getCard(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response = userController.removeCard("Brolaf", "5");
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testRemoveCardError() throws IOException{
+    doThrow(new IOException("Cannot read from file"))
+      .when(mockUserDAO)
+      .GetUser(anyString());
+    ResponseEntity<Boolean> response = userController.removeCard("Hercules", "5");
+
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+  
   // TODO: Implement these tests after GetUser is implemented
   @Test
   public void testGetUser() throws IOException {
