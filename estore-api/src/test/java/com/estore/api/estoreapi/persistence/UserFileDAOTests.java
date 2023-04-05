@@ -47,13 +47,13 @@ public class UserFileDAOTests {
   public void setupUserFileDao() throws IOException {
     mockObjectMapper = mock(ObjectMapper.class);
     mockShoppingCart = mock(ShoppingCart.class);
-    testUsers = new User[3];
+    testUsers = new User[4];
 
-    Customer[] testCustomers = new Customer[2];
+    Customer[] testCustomers = new Customer[3];
     Admin[] testAdmins = new Admin[1];
 
-    CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99), 2);
-    CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99), 3);
+    CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), 2);
+    CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), 3);
     CartBeef[] firstCart = new CartBeef[2];
     CartBeef[] secondCart = new CartBeef[0];
 
@@ -63,9 +63,11 @@ public class UserFileDAOTests {
     testUsers[0] = new Customer("Joe", "password", mockShoppingCart);
     testUsers[1] = new Customer("Candice", "password", new ShoppingCart(secondCart));
     testUsers[2] = new Admin("Wendy", "password");
+    testUsers[3] = new Customer("Heisenberg", "password", new ShoppingCart(firstCart));
 
     testCustomers[0] = new Customer("Joe", "password", mockShoppingCart);
     testCustomers[1] = new Customer("Candice", "password", new ShoppingCart(secondCart));
+    testCustomers[2] = new Customer("Heisenberg", "password", new ShoppingCart(firstCart));
 
     testAdmins[0] = new Admin("Wendy", "password");
 
@@ -151,9 +153,18 @@ public class UserFileDAOTests {
     assertEquals(newAdmin.getUsername(), actual.getUsername());
   }
 
-  // TODO: Implement tests related to CartBeef
   @Test
   public void testCheckout() {
+    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Heisenberg"),
+        "Unexpected exception thrown");
+    assertTrue(result);
+  }
+
+  @Test
+  public void testCheckoutEmpty() {
+    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Candice"),
+        "Unexpected exception thrown");
+    assertFalse(result);
   }
 
   @Test

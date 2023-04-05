@@ -11,6 +11,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AdminAuthenticationService } from './services/adminAuthService/admin-authentication.service';
 import { AccountPageComponent } from './components/account-page/account-page.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+
 
 const routes: Routes = [
   { path: "new-user", component: NewUserComponent, canActivate: [UserAuthenticationService] },
@@ -21,7 +23,8 @@ const routes: Routes = [
   { path: "home-page", component: HomePageComponent},
   { path: '', redirectTo: '/home-page', pathMatch: 'full'},
   { path: "catalog", component: CatalogComponent },
-  { path: "product/:id", component: ProductDetailsComponent }
+  { path: "product/:id", component: ProductDetailsComponent },
+  { path: "checkout", component: CheckoutComponent, canActivate: [CustomerAuthenticationService]}
 ];
 
 @NgModule({

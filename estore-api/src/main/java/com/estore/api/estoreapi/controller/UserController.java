@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
+
 
 /**
  * Handles the REST API requests for the users
@@ -88,6 +93,115 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @GetMapping("/login/{username}")
+  public ResponseEntity<User> loginUser(@PathVariable String username, @RequestHeader("Authorization") String password){
+    try{
+      User loginUser = this.userDao.loginUser(username, password);
+      if(loginUser == null){
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+    }catch(IOException e){
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Retrieves {@linkplain CreditCard[] creditCards} given a username
+   * 
+   * @param username - username of the user
+   * 
+   * @return ResponseEntity with a {@link CreditCard[] creditCards} (may be empty)
+   *         and
+   *         HTTP status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR or NOT_FOUND otherwise
+   */
+  @GetMapping("/cards/{username}")
+  public ResponseEntity<CreditCard[]> getCards(@PathVariable String username) {
+    try {
+      Customer customer = this.getCustomer(username);
+      // User not found
+      if (customer == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<CreditCard[]>(this.userDao.getCards(username), HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Adds a {@linkplain CreditCard creditCard} to the specified customer
+   * 
+   * @param username - String containing the username of the customer
+   * @param creditCard - CreditCard to be added
+   * 
+   * @return ResponseEntity with created {@link Boolean boolean} object and HTTP
+   *         status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
+   *         error
+   *         ResponseEntity with HTTP status of CONFLICT if card exists on user
+   *         ResponseEntity with HTTP status NOT_FOUND if user is not found
+   *         ResponseEntity with HTTP status BAD_REQUEST if credit card is invalid
+   */
+  @PostMapping("/{username}")
+  public ResponseEntity<Boolean> addCard(@PathVariable String username, @RequestBody CreditCard creditCard) {
+    try {
+      Customer customer = this.getCustomer(username);
+      if (customer == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      boolean isValid = isValid(creditCard);
+      if (!isValid){
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+      boolean result = this.userDao.addCard(username, creditCard);
+      if (result) {
+        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+      }
+      else {
+        return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+      }
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Removes a {@linkplain CreditCard creditCard} to the specified customer
+   * 
+   * @param username - String containing the username of the customer
+   * @param cardNumber - Number of credit card to be removed
+   * 
+   * @return ResponseEntity with created {@link Boolean boolean} object and HTTP
+   *         status of OK<br>
+   *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
+   *         error
+   *         ResponseEntity with HTTP status of BAD_REQUEST if card is not found on user
+   *         ResponseEntity with HTTP status NOT_FOUND if user/card is not found
+   */
+  @DeleteMapping("/{username}/{cardNumber}")
+    public ResponseEntity<Boolean> removeCard(@PathVariable String username, @PathVariable String cardNumber) {
+        try {
+            Customer customer = this.getCustomer(username);
+            if (customer != null) {
+                CreditCard card = customer.getCard(cardNumber);
+                if (card != null){
+                  boolean result = customer.removeCard(card);
+                  if (result) {
+                    return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                  }
+                  else {
+                    return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
+                  }
+              }
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
   /**
    * Responds to PUT request for a {@linkplain User user} to update passwords
@@ -200,5 +314,37 @@ public class UserController {
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
+  }
+
+    /*
+     * Returns a customer given a username
+     * 
+     * @param username username of the customer
+     * 
+     * @return Customer instance
+     */
+    private Customer getCustomer(String username) throws IOException {
+      User user = this.userDao.GetUser(username);
+
+      // Checks if user exists and is a customer
+      if (user != null && (user instanceof Customer)) {
+          Customer customer = (Customer) user;
+          return customer;
+      }
+      return null;
+  }
+
+  private boolean isValid(CreditCard creditCard){
+    if (creditCard == null){
+      return false;
+    }
+    if ((creditCard.getNumber().matches("\\d+") && creditCard.getNumber().strip().length() == 16) &&
+        (creditCard.getExpiration().matches("(?:0[1-9]|1[0-2])/[0-9]{2}")) &&
+        (creditCard.getCVV().matches("^[0-9]{3,4}$"))){
+          return true;
+    }
+    else{
+      return false;
+    }
   }
 }

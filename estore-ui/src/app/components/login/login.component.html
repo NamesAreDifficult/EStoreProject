@@ -1,15 +1,13 @@
-
 <div>
-   <div>
-        Login
-    </div>
-    <label for="username">Username: </label>
-    <input id="username" #username (keyup.enter)=submit(username.value,password.value)>
-    <br>
-    <label for="password">Password: </label>
-    <input id="password" #password>
-    <br>
-    <button (click)=submit(username.value,password.value)>Submit</button>
-    {{warning}}
-  <a routerLink="/new-user"> Create an account </a>
+  <div>
+    Login
+  </div>
+  <label for="username">Username: </label>
+  <input id="username" #username (keyup.enter)=submit(username.value,password.value)>
+  <br>
+  <label for="password">Password: </label>
+  <input id="password" #password (keyup.enter)=submit(username.value,password.value)>
+  <br>
+  <button (click)=submit(username.value,password.value)>Submit</button>
+  {{warning}}
 </div>

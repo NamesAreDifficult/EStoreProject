@@ -58,6 +58,7 @@ public abstract class User implements Comparable<User> {
       this.password = newPassword;
     }
     /*
+
      * Returns if the user is an admin
      * 
      * @return true if user is an admin

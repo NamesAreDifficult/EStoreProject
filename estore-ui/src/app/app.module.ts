@@ -21,6 +21,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { FormsModule } from '@angular/forms';
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { PasswordManagerComponent } from './components/password-manager/password-manager.component';
+import { BaseTemplateComponent } from './components/base-template/base-template.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { PasswordManagerComponent } from './components/password-manager/password
     ProductDetailsComponent,
     AccountPageComponent,
     PasswordManagerComponent,
+    BaseTemplateComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

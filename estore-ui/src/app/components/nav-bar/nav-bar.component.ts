@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { User, UserService } from 'src/app/services/userService/user.service';
 
@@ -8,7 +9,11 @@ import { User, UserService } from 'src/app/services/userService/user.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-  constructor (private userService: UserService){}
+  constructor(private userService: UserService, private router: Router) { }
+  logout() {
+    this.userService.logout();
+    location.reload();
+  }
 
   user = this.userService.getLoggedIn();
 
