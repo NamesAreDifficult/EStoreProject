@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, tap, of, throwError, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, tap, of, throwError, BehaviorSubject, map } from 'rxjs';
 import { LoggingService } from '../loggingService/logging.service';
 
 export interface User {
@@ -93,24 +93,36 @@ export class UserService {
     }
   }
 
-  public updatePassword(oldPassword: string, newPassword: string){
-    var user: User | null = this.getLoggedIn();
 
-    if(user != null){
-      var passwordOptions ={
+  public updatePassword(oldPassword: string, newPassword: string): Observable<number> {
+    var user: User | null = this.getLoggedIn();
+  
+    if (user != null) {
+      var passwordOptions = {
         headers: new HttpHeaders({"Authorization":  oldPassword, "NewAuth": newPassword})
       }
-      console.log(`${this.userUrl}/${user.username}`)
-      return this.http.put(`${this.userUrl}/${user.username}`, null, passwordOptions).pipe(
-        tap(_ => {
-          console.log("hit")
+      var updateUrl = `${this.userUrl}/${user.username}`
+      var body = {content: oldPassword}
+  
+      // Return the Observable from http.put()
+      return this.http.put<any>(updateUrl, body, passwordOptions).pipe(
+        map(response => {
+          // Handle successful response and return 200
+          return 200;
         }),
-        catchError(err => {
-          this.logger.handleError<any>('updatePassword')
-          return throwError((() => new Error(err.status)));
+        catchError(error => {
+          // Handle error response and return the status code
+          if (error instanceof HttpErrorResponse) {
+            console.log(error.status);
+            return of(error.status);
+          }
+          // Handle other errors and return -2
+          return of(-2);
         })
-      )
+      );
     }
-    return null
+  
+    // If user is null, return -1
+    return of(-1);
   }
 }
