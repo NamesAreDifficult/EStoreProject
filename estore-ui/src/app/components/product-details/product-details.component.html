@@ -1,34 +1,46 @@
-<div *ngIf="beef">
-    <h2>Product Details</h2>
-    <div>
-        <img src={{beef.imageUrl}}>
+<div *ngIf="beef" class="productPage">
+    <div class="backButton">
+        <button class="material-symbols-outlined" (click)="goBack()">arrow_back</button>
     </div>
     <div>
-        <label for="beef-grade"> Grade: </label>
-        <label for="beef-grade">{{beef.grade}}</label>
-    </div>
-    <div>
-        <label for="beef-cut"> Cut: </label>
-        <label for="beef-cut">{{beef.cut}}</label>
-    </div>
-    <div>
-        <label for="beef-weight"> Weight: </label>
-        <label for="beef-weight">{{beef.weight}} lbs</label>
-    </div>
-    <div>
-        <label for="beef-price"> Price: $ </label>
-        <label for="beef-price">{{beef.price.toFixed(2)}}</label>
-    </div>
-    <div>
-        Amount:
-        <input id="amount" #amount (keyup.enter)="addToCart(beef.id!, amount.value)">
+        <div class="split">
+            <div class="imageContainer">
+                <img src={{beef.imageUrl}}>
 
+            </div>
+            <div class="productInfo">
+                <div>
+                    <div class="title">{{beef.grade}}-{{beef.cut}}</div>
+                    <div>
+                        ${{beef.price.toFixed(2)}}/lb
+                    </div>
+                    <div>
+                        Total Amount: {{beef.weight.toFixed(1)}} lbs
+                    </div>
+                </div>
+                <div *ngIf="user !== null && !user.admin">
+
+                    <input id="amount" placeholder="Amount (lbs)" class="amountBox" #amount
+                        (keyup.enter)="addToCart(beef.id!, amount.value)">
+                    <div class="addButton">
+                        <button class="material-symbols-outlined"
+                            (click)="addToCart(beef.id!, amount.value)">add_shopping_cart
+                        </button>
+                        <button class="material-symbols-outlined" routerLink="/checkout">
+                            shopping_cart_checkout
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="user === null">
+                    <button routerLink="/login">Login</button>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <div>
-        <button (click)="addToCart(beef.id!, amount.value)">Add to Cart</button>
+
+    <div class="alert">
+        {{productAlert}}
     </div>
-    <button type="button" (click)="goBack()"> Go Back</button>
-</div>
-<div>
-    {{productAlert}}
 </div>

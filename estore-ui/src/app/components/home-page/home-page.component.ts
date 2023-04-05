@@ -11,14 +11,14 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class HomePageComponent {
 
   beef: Beef[] = [];
-  
-  constructor(private beefService: BeefService) {}
-  
+
+  constructor(private beefService: BeefService) { }
+
   getAllBeef(): void {
     this.beefService.getAllBeef()
-        .subscribe(beef => this.beef = beef.slice(0,4));
+      .subscribe(beef => this.beef = beef.slice(0, 3));
 
-  } 
+  }
 
   ngOnInit(): void {
     this.getAllBeef();
