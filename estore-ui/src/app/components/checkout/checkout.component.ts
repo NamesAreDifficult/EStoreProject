@@ -2,8 +2,10 @@ import { CartServiceService } from 'src/app/services/cartService/cart-service.se
 import { Component } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Beef } from 'src/app/services/beefService/beef.service';
+import { CreditCard } from 'src/app/services/userService/user.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
 import { isEmpty } from 'rxjs/operators';  
+import { UserService } from 'src/app/services/userService/user.service';
 
 @Component({
   selector: 'app-checkout',
@@ -12,21 +14,21 @@ import { isEmpty } from 'rxjs/operators';
 })
 export class CheckoutComponent {
   checkoutAlert = ""
-
   cart$!: Observable<Beef[]>
   isEmpty!: boolean;
+  cards$!: Observable<CreditCard[]>
 
-  constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
-
+  constructor(private shoppingService: CartServiceService, private logger: LoggingService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
+    this.cards$ = this.userService.getCards()
     this.cart$ = this.shoppingService.getCart().pipe(
       tap((cartItems: Beef[]) =>{
         this.isEmpty = cartItems.length === 0;
       })
     );
-
   }
 
   checkout(){

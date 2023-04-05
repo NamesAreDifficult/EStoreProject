@@ -3,6 +3,21 @@
     {{checkoutAlert}}
   </div>
 <ul>
+    <li *ngFor="let card of cards$ | async">
+        <div>
+            <div>
+                Card Number: {{card.number}} 
+            </div>
+            <div>
+                Expiration Date: {{card.expiration}}
+            </div>
+            <div>
+                CVV: {{card.cvv}}
+            </div>
+        </div>
+    </li>
+</ul>
+<ul>
     <li *ngFor="let beef of cart$ | async">
         <div>
             <div>
@@ -16,7 +31,6 @@
             </div>
         </div>
     </li>
-    
     <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
         Checkout
     </button>

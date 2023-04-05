@@ -45,10 +45,23 @@ export class UserService {
     );
   }
 
+  private getUsername(): String {
+    var user: User | null = this.getLoggedIn();
+
+    var username: String;
+    if (user != null) {
+      username = user.username;
+    } else {
+      username = "";
+    }
+    return username;
+  }
+
   // Gets a customer's credit cards from the backend from the backend
-  getCards(customer: LoginUser): Observable<CreditCard[]> {
-    return this.http.get<CreditCard[]>(this.userUrl + "/cards/" + customer.username, this.httpOptions).pipe(
-      tap(_ => this.logger.add(`Got cards from: ${customer.username}`)),
+  getCards(): Observable<CreditCard[]> {
+    const url = this.userUrl + "/cards/" + this.getUsername()
+    return this.http.get<CreditCard[]>(url, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Got cards from: ${this.getUsername()}`)),
       catchError(err => {
         this.logger.handleError<any>('getCards')
         return throwError((() => new Error(err.status)));
