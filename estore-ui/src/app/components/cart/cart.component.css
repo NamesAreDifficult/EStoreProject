@@ -45,8 +45,8 @@ h1 {
    border-radius: 5px;
    text-align: right;
    align-items: left;
-   margin-left: 30%;
-   margin-right: 50%;
+   /* margin-left: 30%;
+   margin-right: 50%; */
    margin-top: 30px;
    display: flex;
    flex-direction: row;
