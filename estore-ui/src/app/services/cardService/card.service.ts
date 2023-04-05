@@ -46,4 +46,28 @@ export class CardService {
       })
     );
   }
+
+  // Adds a customers credit card to the backend
+  addCard(card: CreditCard): Observable<CreditCard> {
+    const url = this.userUrl + "/" + this.getUsername()
+    return this.http.post<CreditCard>(url, card, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Added card to: ${this.getUsername()}`)),
+      catchError(err => {
+        this.logger.handleError<any>('addCard')
+        return throwError((() => new Error(err.status)));
+      })
+    );
+  }
+
+  // Removes a customer's credit card from the backend
+  removeCard(cardnumber: number): Observable<any> {
+    const url = this.userUrl + "/" + this.getUsername() + "/" + String(cardnumber)
+    return this.http.delete(url, this.httpOptions).pipe(
+      tap(_ => this.logger.add(`Got cards from: ${this.getUsername()}`)),
+      catchError(err => {
+        this.logger.handleError<any>('getCards')
+        return throwError((() => new Error(err.status)));
+      })
+    );
+  }
 }

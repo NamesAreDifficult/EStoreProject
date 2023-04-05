@@ -1,1 +1,28 @@
-<p>card works!</p>
+<p>Credit Cards</p>
+<div>
+    {{cardAlert}}
+  </div>
+  <div class="Add Card">
+    <label for="number">Card Number:</label>
+    <input id="number" #number />
+    <label for="expiration">Expiration Date:</label>
+    <input id="expiration" #expiration />
+    <label for="cvv">CVV:</label>
+    <input id="cvv" #cvv />
+    <button id="create" (click)="addCard(number.value, expiration.value, cvv.value)">Create</button>
+  </div>
+<ul>
+    <label *ngFor="let card of cards$ | async">
+        <div>
+            <div>
+                Card Number: {{card.number}} 
+            </div>
+            <div>
+                Expiration Date: {{card.expiration}}
+            </div>
+            <div>
+                CVV: {{card.cvv}}
+            </div>
+        </div>
+    </label>
+</ul>
