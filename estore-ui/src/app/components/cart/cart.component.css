@@ -1,8 +1,24 @@
-h1{
+.header {
+    align-items: center;
+    display: inline-block;
+    text-align: center;
+    justify-content: center;
     padding-top: 30px;
+    display: flex;
+
+}
+label{
+    vertical-align: middle;
+    font-size: 60px;
+    align-items: center;
+    text-align: center;
+} 
+ h1{
+    display: inline-block;
+    vertical-align: middle; 
     text-align: center;
     text-decoration: none;
     font-size: 60px;    
-    font-family: "Anton", sans-serif;
+    font-family: "Anton", sans-serif; 
 
-}
+ }
