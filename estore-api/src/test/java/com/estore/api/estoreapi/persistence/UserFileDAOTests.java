@@ -33,6 +33,7 @@ import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.ShoppingCart;
 import com.estore.api.estoreapi.users.Admin;
+import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 
@@ -155,14 +156,16 @@ public class UserFileDAOTests {
 
   @Test
   public void testCheckout() {
-    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Heisenberg"),
+    assertDoesNotThrow(() -> userFileDAO.addCard("Heisenberg", new CreditCard("1234567812345678", "04/20", "123")), "Unexpected exception thrown");
+    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Heisenberg", "1234567812345678"),
         "Unexpected exception thrown");
     assertTrue(result);
   }
 
   @Test
   public void testCheckoutEmpty() {
-    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Candice"),
+    assertDoesNotThrow(() -> userFileDAO.addCard("Candice", new CreditCard("1234567812345678", "04/20", "123")), "Unexpected exception thrown");
+    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Candice", "1234567812345678"),
         "Unexpected exception thrown");
     assertFalse(result);
   }
