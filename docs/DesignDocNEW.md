@@ -332,9 +332,12 @@ easier.
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 
+
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+
+Acceptance testing was successful, excluding the checkout component. Improving
+code coverage required changing various parts of our implementation due to inadequate
+return types, but was ultimately successful at 93 percent.
 
 ### Acceptance Testing
 > _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
@@ -342,6 +345,12 @@ easier.
 > criteria tests failing, and the number of user stories that
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
+
+The number of user stories that passed all criteria is 10.
+
+The number of stories that have failed all acceptance testing is 3,
+these stories are related to the navigation bar and checkout features, which we did not
+have time to implement this sprint due to time constraints.
 
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
@@ -351,3 +360,12 @@ easier.
 
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
+
+![Code Coverage](code-coverage.png)
+
+Using mock objects, our team tested the mode, controller, and persistence
+tiers. We achieved an overall code coverage of 93 percent. Given an average
+of 90 percent was the goal for the overall average, we set a target for
+90 percent minimum for each of these tiers, with the main estore-api folder
+being the exception at 88 percent. Overall, our unit testing for this
+phase was cohesive.
