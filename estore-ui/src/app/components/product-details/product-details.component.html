@@ -24,7 +24,11 @@
                         (keyup.enter)="addToCart(beef.id!, amount.value)">
                     <div class="addButton">
                         <button class="material-symbols-outlined"
-                            (click)="addToCart(beef.id!, amount.value)">add_shopping_cart</button>
+                            (click)="addToCart(beef.id!, amount.value)">add_shopping_cart
+                        </button>
+                        <button class="material-symbols-outlined" routerLink="/checkout">
+                            shopping_cart_checkout
+                        </button>
                     </div>
                 </div>
 
