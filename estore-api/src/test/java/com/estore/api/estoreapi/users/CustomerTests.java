@@ -58,8 +58,11 @@ public class CustomerTests {
   }
 
   @Test
-  public void testGetCards(){
-
+  public void testGetCard(){
+    Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
+    CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420");
+    testCustomer.addCard(testCard);
+    assertEquals(testCard, testCustomer.getCard(testCard.getNumber()));
   }
 
   @Test
