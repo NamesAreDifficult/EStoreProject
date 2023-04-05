@@ -96,17 +96,21 @@ public class UserController {
 
   @GetMapping("/login/{username}")
   public ResponseEntity<User> loginUser(@PathVariable String username, @RequestHeader("Authorization") String password){
+    LOG.info(String.format("Login attempt for %s", username));
     try{
       User loginUser = this.userDao.loginUser(username, password);
       if(loginUser == null){
+        LOG.info(String.format("Login for %s failed, invalid credentials", username));
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+      }
+      LOG.info(String.format("Login for %s success", username));
+      return new ResponseEntity<User>(loginUser, HttpStatus.OK);
     }catch(IOException e){
+      LOG.info(String.format("Login for %s failed, server error", username));
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  
   /**
    * Retrieves {@linkplain CreditCard[] creditCards} given a username
    * 
@@ -228,22 +232,6 @@ public class UserController {
     }
   }
 
-  @GetMapping("/login/{username}")
-  public ResponseEntity<User> loginUser(@PathVariable String username, @RequestHeader("Authorization") String password){
-    LOG.info(String.format("Login attempt for %s", username));
-    try{
-      User loginUser = this.userDao.loginUser(username, password);
-      if(loginUser == null){
-        LOG.info(String.format("Login for %s failed, invalid credentials", username));
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-      }
-      LOG.info(String.format("Login for %s success", username));
-      return new ResponseEntity<User>(loginUser, HttpStatus.OK);
-    }catch(IOException e){
-      LOG.info(String.format("Login for %s failed, server error", username));
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
 
   /**
    * Creates a {@linkplain Customer customer} with the provided customer object
