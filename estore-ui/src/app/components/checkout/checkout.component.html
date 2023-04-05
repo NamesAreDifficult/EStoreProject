@@ -2,8 +2,11 @@
 <div>
     {{checkoutAlert}}
   </div>
+<label for="creditCard">Credit Cards:</label>
 <ul>
-    <li *ngFor="let card of cards$ | async">
+    <form>
+    <label *ngFor="let card of cards$ | async">
+        <input type="radio" name="card" value="{{card.number}}">
         <div>
             <div>
                 Card Number: {{card.number}} 
@@ -15,8 +18,10 @@
                 CVV: {{card.cvv}}
             </div>
         </div>
-    </li>
+    </label>
+    </form>
 </ul>
+<label for="userCart">Your Shopping Cart:</label>
 <ul>
     <li *ngFor="let beef of cart$ | async">
         <div>
