@@ -80,7 +80,7 @@ public abstract class User implements Comparable<User> {
    */
   @Override
   public boolean equals(Object other) {
-    if (this.getClass() == other.getClass()) {
+    if (other instanceof User) {
       User otherUser = (User) other;
 
       if (otherUser.getUsername() == this.getUsername()){
@@ -88,5 +88,10 @@ public abstract class User implements Comparable<User> {
       }
     }
     return false;
+  }
+
+  @Override
+  public int hashCode(){
+    return String.format("%s%s", this.getUsername(), this.getPassword()).hashCode();
   }
 }
