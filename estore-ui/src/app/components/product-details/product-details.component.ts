@@ -3,6 +3,7 @@ import { Beef, BeefService } from '../../services/beefService/beef.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CartServiceService } from 'src/app/services/cartService/cart-service.service';
+import { UserService } from 'src/app/services/userService/user.service';
 
 
 
@@ -49,12 +50,15 @@ export class ProductDetailsComponent {
     private route: ActivatedRoute,
     private beefService: BeefService,
     private location: Location,
-    private shoppingService: CartServiceService
+    private shoppingService: CartServiceService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.getBeef();
   }
+
+  user = this.userService.getLoggedIn()
 
   getBeef(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));

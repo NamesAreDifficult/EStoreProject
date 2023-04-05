@@ -1,6 +1,7 @@
 img {
-  height: 100%;
   width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .page {
@@ -15,7 +16,7 @@ img {
   margin: 0 7%;
   padding-top: 3%;
   align-items: stretch;
-  justify-content: stretch;
+  justify-content: space-evenly;
 }
 
 
@@ -57,8 +58,9 @@ button:hover {
 
 
 .imageContainer {
-  width: 70%;
-
+  max-width: 70%;
+  overflow: hidden;
+  justify-content: center;
 }
 
 .titleBar {
@@ -74,7 +76,7 @@ button:hover {
 
 .productInfo {
   font-size: x-large;
-  margin: 0 auto;
+  margin-right: 0 8%;
   display: flex;
   flex-direction: column;
   justify-content: space-between
@@ -104,5 +106,3 @@ button:hover {
   height: 20%;
   font-size: x-large;
 }
-
-input {}

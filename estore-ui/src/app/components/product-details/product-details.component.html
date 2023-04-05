@@ -18,7 +18,7 @@
                         Total Amount: {{beef.weight}} lbs
                     </div>
                 </div>
-                <div>
+                <div *ngIf="user !== null && !user.admin">
 
                     <input id="amount" placeholder="Amount (lbs)" class="amountBox" #amount
                         (keyup.enter)="addToCart(beef.id!, amount.value)">
@@ -27,6 +27,11 @@
                             (click)="addToCart(beef.id!, amount.value)">add_shopping_cart</button>
                     </div>
                 </div>
+
+                <div *ngIf="user === null">
+                    <button routerLink="/login">Login</button>
+                </div>
+
             </div>
         </div>
     </div>
