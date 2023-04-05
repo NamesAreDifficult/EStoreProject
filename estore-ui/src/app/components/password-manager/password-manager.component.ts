@@ -17,6 +17,10 @@ export class PasswordManagerComponent {
   resetPassword(oldPassword: string, newPassword: string, confirmPassword: string){
     this.warning = ""
     console.log(newPassword, confirmPassword)
+    if(!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{8,26}$').test(newPassword)){
+      this.warning = "Passwords must be between 8-26 alphanumeric and special characters. Allowed special Characters: !@#$%^&*()-_+=?";
+      return;
+    }
     if(newPassword != confirmPassword){
       this.warning = "New password and confirmation do not match"
       return
