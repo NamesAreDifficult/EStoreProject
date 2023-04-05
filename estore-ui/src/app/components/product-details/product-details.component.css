@@ -3,17 +3,41 @@ img {
   width: 100%;
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.split {
+  display: flex;
+  flex-direction: row;
+  margin: 0 7%;
+  padding-top: 10%;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+
+
 .addButton {
+  font-family: "Anton", sans-serif;
+  text-align: center;
+  font-size: larger;
   width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-left: 30%;
   margin-top: 1%;
 }
 
+.addButton Button {
+  height: 100%;
+  margin: auto;
+  width: 50%;
+}
+
 button {
-  width: 9vw;
-  height: 4vw;
+  font-size: larger;
   color: white;
   border-radius: 20%;
   background-color: black;
@@ -21,21 +45,19 @@ button {
   cursor: pointer;
 }
 
+.backButton {
+  padding-left: 5%;
+  padding-top: 2%;
+}
+
 button:hover {
   background-color: white;
   color: black;
 }
 
-.imgSplit {
-  display: flex;
-  flex-direction: row;
-  margin: 0 7%;
-  align-items: stretch;
-  justify-content: stretch;
-}
 
 .imageContainer {
-  width: 60%;
+  width: 70%;
 
 }
 
@@ -47,23 +69,25 @@ button:hover {
 
 .title {
   font-size: xx-large;
-  text-align: center;
   width: 100%;
-  padding: 2%;
 }
 
 .productInfo {
   font-size: x-large;
-  justify-content: center;
-  text-align: center;
-  margin: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
 }
 
 .productPage {
   font-family: "Anton", sans-serif;
   background-color: wheat;
   color: black;
+  margin: auto;
+  height: 100%;
 }
+
 
 .amount {
   font-size: x-large;
@@ -74,9 +98,11 @@ button:hover {
 
 }
 
-.bottom {
-  display: flex;
-  flex-direction: row;
-  padding: 3% 7%;
+.alert {
+  text-align: center;
   width: 100%;
+  height: 20%;
+  font-size: x-large;
 }
+
+input {}

@@ -1,37 +1,37 @@
 <div *ngIf="beef" class="productPage">
-    <div>
-        <button (click)="goBack()">Back</button>
-    </div>
-
-    <div class="title">
-        {{beef.grade}} {{beef.cut}}
-    </div>
-    <div class="imgSplit">
-        <div class="imageContainer">
-            <img src="https://media.makeameme.org/created/file-not-found-c17b083c9c.jpg">
-
-        </div>
-        <div class="productInfo">
-            <div>
-                ${{beef.price.toFixed(2)}}/lbs
-            </div>
-            <div>
-                Total Amount: <br>{{beef.weight}}
-            </div>
-        </div>
-
-    </div>
-    <div class="bottom">
-        <div class="amount">
-            Amount:
-            <input id="amount" #amount (keyup.enter)="addToCart(beef.id!, amount.value)">
-        </div>
-        <div class="addButton">
-            <button (click)="addToCart(beef.id!, amount.value)">Add to Cart</button>
-        </div>
+    <div class="backButton">
+        <button class="material-symbols-outlined" (click)="goBack()">arrow_back</button>
     </div>
     <div>
+        <div class="split">
+            <div class="imageContainer">
+                <img src="https://media.makeameme.org/created/file-not-found-c17b083c9c.jpg">
+
+            </div>
+            <div class="productInfo">
+                <div>
+                    <div class="title">{{beef.grade}}-{{beef.cut}}</div>
+                    <div>
+                        ${{beef.price.toFixed(2)}}/lbs
+                    </div>
+                    <div>
+                        Total Amount: {{beef.weight}} lbs
+                    </div>
+                </div>
+                <div>
+
+                    <input id="amount" placeholder="Amount (lbs)" class="amountBox" #amount
+                        (keyup.enter)="addToCart(beef.id!, amount.value)">
+                    <div class="addButton">
+                        <button class="material-symbols-outlined"
+                            (click)="addToCart(beef.id!, amount.value)">add_shopping_cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert">
         {{productAlert}}
     </div>
-
 </div>
