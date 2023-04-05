@@ -50,6 +50,7 @@ export class AdminDashboardComponent {
       this.beefService.updateBeef(beef)
     },
     error: (err: Error) => (this.updateStatus(Number(err.message))),
+    complete: () => this.beef$ = this.beefService.getAllBeef()
   }
 
   // Catches error code for create method and displays text
@@ -134,7 +135,7 @@ export class AdminDashboardComponent {
   // Updates price and weight of beef objects if the fields are valid
   update(beef: Beef, weight: number, price: number, imageUrl:string) {
       if (this.validateUpdate(beef, weight, price)){
-      beef.weight += weight
+      beef.weight = weight
       beef.price = price
       beef.imageUrl = imageUrl
       this.beefService.updateBeef(beef).subscribe(this.updateObserver);
