@@ -1,7 +1,7 @@
 
 <div class ="header">
-    <div class="material-symbols-outlined">
-        <label> shopping_cart </label>   
+<div class="material-symbols-outlined">
+    <label> shopping_cart </label>
     </div> <h1> My Cart</h1>
    
 </div>
@@ -14,23 +14,26 @@
 
     <li *ngFor="let beef of cart$ | async">
         <div class="card">
-            <!-- <img src="{{beef.imageURL}}"> -->
-
+            <div class="image">
+                <img src="{{beef.imageUrl}}">
+            </div>
             <div class="container">
                 <div class="name">
                     {{beef.grade}} {{beef.cut}} 
-                </div>
-                
-                <div>
-                    Amount: {{beef.weight}}
-                </div>
-                <div>
-                    Price: {{beef.weight * beef.price}}
-                </div>
-                <button (click)="removeFromCart(beef.id!)">
-                    Remove
-                </button>
             </div>
+                
+            <div>
+                Amount: {{beef.weight}}
+            </div>
+            <div>
+                Price: {{beef.weight * beef.price}}
+            </div>
+            <div class="remove">
+            <button (click)="removeFromCart(beef.id!)">
+                Remove
+            </button>
+        </div>
+        </div>
         </div>
     </li>
     <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
