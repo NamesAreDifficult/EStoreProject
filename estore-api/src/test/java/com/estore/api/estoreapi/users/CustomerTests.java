@@ -66,16 +66,18 @@ public class CustomerTests {
   }
 
   @Test
-  public void removeCard(){
+  public void testRemoveCard(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420");
+    CreditCard testCard2 = new CreditCard("0987654321234567","01/23", "232");
     testCustomer.addCard(testCard);
+    testCustomer.addCard(testCard2);
     boolean result = testCustomer.removeCard(testCard);
     assertTrue(result);
   }
 
   @Test
-  public void removeCardAbsent(){
+  public void testRemoveCardAbsent(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420");
     boolean result = testCustomer.removeCard(testCard);
