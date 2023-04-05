@@ -17,8 +17,9 @@ public class BeefTests {
     double expectedPrice = 12.99;
     String expectedCut = "Ribeye";
     String expectedGrade = "A5";
+    String expectedImageUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
-    Beef testBeef = new Beef(expectedId, expectedCut, expectedWeight, expectedGrade, expectedPrice);
+    Beef testBeef = new Beef(expectedId, expectedCut, expectedWeight, expectedGrade, expectedPrice, expectedImageUrl);
 
     assertNotNull(testBeef, () -> "The Beef should not be null");
     assertEquals(expectedId, testBeef.getId());
@@ -32,7 +33,7 @@ public class BeefTests {
   public void testPrice() {
     double expectedPrice = 15.32;
 
-    Beef testBeef = new Beef(1, "Strip", (float) 42.3, "C3", 999.99);
+    Beef testBeef = new Beef(1, "Strip", (float) 42.3, "C3", 999.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     testBeef.setPrice(expectedPrice);
 
@@ -45,7 +46,7 @@ public class BeefTests {
     String grade = "A5";
     String expectedName = String.format("%s %s", grade, cut);
 
-    Beef testBeef = new Beef(1, cut, (float) 5, grade, 23.44);
+    Beef testBeef = new Beef(1, cut, (float) 5, grade, 23.44, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     assertEquals(expectedName, testBeef.getName());
   }
@@ -58,7 +59,7 @@ public class BeefTests {
     float expectedWeightIncrease = startWeight + increase;
     float expectedWeightDecrease = expectedWeightIncrease + decrease;
 
-    Beef testBeef = new Beef(1, "ribeye", startWeight, "B4", 12.50);
+    Beef testBeef = new Beef(1, "ribeye", startWeight, "B4", 12.50, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     testBeef.addWeight(increase);
 
@@ -83,7 +84,7 @@ public class BeefTests {
     String expectedString = String.format("Beef [id=%s cut=%s grade=%s weight=%s price=%s]", id, cut, grade, weight,
         price);
 
-    Beef testBeef = new Beef(id, cut, weight, grade, price);
+    Beef testBeef = new Beef(id, cut, weight, grade, price, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     assertEquals(expectedString, testBeef.toString());
   }
 
