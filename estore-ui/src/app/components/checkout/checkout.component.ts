@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Beef } from 'src/app/services/beefService/beef.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
-import { isEmpty } from 'rxjs/operators';  
 import { CardService, CreditCard } from 'src/app/services/cardService/card.service';
 
 @Component({

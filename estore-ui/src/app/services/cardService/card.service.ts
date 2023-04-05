@@ -35,7 +35,7 @@ export class CardService {
     return username;
   }
 
-  // Gets a customer's credit cards from the backend from the backend
+  // Gets a customer's credit cards from the backend
   getCards(): Observable<CreditCard[]> {
     const url = this.userUrl + "/cards/" + this.getUsername()
     return this.http.get<CreditCard[]>(url, this.httpOptions).pipe(
