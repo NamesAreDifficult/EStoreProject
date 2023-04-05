@@ -13,7 +13,7 @@ public class BeefTests {
   @Test
   public void testCtor() {
     int expectedId = 3;
-    float expectedWeight = (float) 12.3;
+    double expectedWeight =  12.3;
     double expectedPrice = 12.99;
     String expectedCut = "Ribeye";
     String expectedGrade = "A5";
@@ -32,7 +32,7 @@ public class BeefTests {
   public void testPrice() {
     double expectedPrice = 15.32;
 
-    Beef testBeef = new Beef(1, "Strip", (float) 42.3, "C3", 999.99);
+    Beef testBeef = new Beef(1, "Strip", 42.3, "C3", 999.99);
 
     testBeef.setPrice(expectedPrice);
 
@@ -45,18 +45,18 @@ public class BeefTests {
     String grade = "A5";
     String expectedName = String.format("%s %s", grade, cut);
 
-    Beef testBeef = new Beef(1, cut, (float) 5, grade, 23.44);
+    Beef testBeef = new Beef(1, cut, 5, grade, 23.44);
 
     assertEquals(expectedName, testBeef.getName());
   }
 
   @Test
   public void testWeight() {
-    float startWeight = (float) 15.00;
-    float increase = (float) 12.50;
-    float decrease = (float) -4.30;
-    float expectedWeightIncrease = startWeight + increase;
-    float expectedWeightDecrease = expectedWeightIncrease + decrease;
+    double startWeight = 15.00;
+    double increase =  12.50;
+    double decrease =  -4.30;
+    double expectedWeightIncrease = startWeight + increase;
+    double expectedWeightDecrease = expectedWeightIncrease + decrease;
 
     Beef testBeef = new Beef(1, "ribeye", startWeight, "B4", 12.50);
 
@@ -76,7 +76,7 @@ public class BeefTests {
   @Test
   public void testToString() {
     int id = 3;
-    float weight = (float) 12.3;
+    double weight = 12.3;
     double price = 12.99;
     String cut = "Ribeye";
     String grade = "A5";

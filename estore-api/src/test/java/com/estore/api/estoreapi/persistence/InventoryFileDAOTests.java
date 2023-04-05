@@ -41,9 +41,9 @@ public class InventoryFileDAOTests {
   public void setupInventoryFileDAO() throws IOException {
       mockObjectMapper = mock(ObjectMapper.class);
       testBeefArray = new Beef[3];
-      testBeefArray[0] = new Beef(1, "Ribeye", (float)12.66, "A5", 299.99);
-      testBeefArray[1] = new Beef(2,"Strip", (float)42.2, "C4", 13.99);
-      testBeefArray[2] = new Beef(3, "Flank", (float)87, "C2", 9.99);
+      testBeefArray[0] = new Beef(1, "Ribeye", 12.66, "A5", 299.99);
+      testBeefArray[1] = new Beef(2,"Strip", 42.2, "C4", 13.99);
+      testBeefArray[2] = new Beef(3, "Flank", 87, "C2", 9.99);
 
       // When the object mapper is supposed to read from the file
       // the mock object mapper will return the hero array above
@@ -63,7 +63,7 @@ public class InventoryFileDAOTests {
 
   @Test
   public void testUpdateBeef() throws IOException{
-    Beef updatedBeef = new Beef(1, "Ribeye", (float)1.34, "A5", 49.99);
+    Beef updatedBeef = new Beef(1, "Ribeye", 1.34, "A5", 49.99);
     Beef expectedBeef = new Beef(1, "Ribeye", 14, "A5", 49.99);
 
     assertDoesNotThrow(() -> {
@@ -92,7 +92,7 @@ public class InventoryFileDAOTests {
     Beef[] beefArray = inventoryFileDAO.findBeef("i");
 
     assertEquals(2, beefArray.length);
-    assertTrue(Arrays.equals(beefArray, new Beef[] {new Beef(1, "Ribeye", (float)12.66, "A5", 299.99), new Beef(2,"Strip", (float)42.2, "C4", 13.99)}));
+    assertTrue(Arrays.equals(beefArray, new Beef[] {new Beef(1, "Ribeye", 12.66, "A5", 299.99), new Beef(2,"Strip", 42.2, "C4", 13.99)}));
     assertTrue(Arrays.equals(inventoryFileDAO.findBeef("Chuck"), new Beef[] {}));
   }
 
@@ -106,13 +106,13 @@ public class InventoryFileDAOTests {
 
   @Test
   public void testCreateBeef(){
-    Beef beef = new Beef(4, "Skirt", (float)4.02, "C3", 8.99);
+    Beef beef = new Beef(4, "Skirt", 4.02, "C3", 8.99);
     assertDoesNotThrow(() -> {
       inventoryFileDAO.createBeef(beef);
     });
 
     assertEquals(beef, inventoryFileDAO.getBeef(4));
-    Beef duplicateBeef = new Beef(1, "Ribeye", (float)12.66, "A5", 299.99);
+    Beef duplicateBeef = new Beef(1, "Ribeye", 12.66, "A5", 299.99);
 
     assertDoesNotThrow(() -> {
       assertNull(inventoryFileDAO.createBeef(duplicateBeef));

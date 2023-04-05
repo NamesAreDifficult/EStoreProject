@@ -13,7 +13,7 @@ public class CartBeef {
   @JsonProperty("id")
   private final int id;
   @JsonProperty("weight")
-  private float weight;
+  private double weight;
 
   /**
   * Creates a represntation of beef to add to a shopping cart
@@ -29,7 +29,7 @@ public class CartBeef {
   *               default Java
   *               value, i.e. 0 for int
   */
-  public CartBeef(@JsonProperty("id") int id, @JsonProperty("weight") float weight) {
+  public CartBeef(@JsonProperty("id") int id, @JsonProperty("weight") double weight) {
     this.id = id;
     this.weight = weight;
   }
@@ -43,7 +43,7 @@ public class CartBeef {
   * @param weight - weight of the {@linkplain Beef beef} to be bought
   * 
   */
-  public CartBeef(Beef beef, float weight) {
+  public CartBeef(Beef beef, double weight) {
     this.id = beef.getId();
     this.weight = weight;
   }
@@ -62,7 +62,7 @@ public class CartBeef {
   * 
   * @return - weight of the {@linkplain CartBeef cartBeef}
   */
-  public float getWeight() {
+  public double getWeight() {
     return this.weight;
   }
 
@@ -71,7 +71,7 @@ public class CartBeef {
   * 
   * @param newWeight: Weight to be added to the CartBeef object
   */
-  public void addWeight(float newWeight){
+  public void addWeight(double newWeight){
     this.weight += newWeight;
   }
 

@@ -171,7 +171,7 @@ public class UserFileDAOTests {
   public void testAddToCart() {
   when(mockShoppingCart.addToCart(any(CartBeef.class))).thenReturn(true);
   assertDoesNotThrow(() -> {
-  assertTrue(userFileDAO.AddToCart("Joe", 1, (float)3.4));
+  assertTrue(userFileDAO.AddToCart("Joe", 1, 3.4));
   });
   }
 
@@ -254,13 +254,13 @@ public class UserFileDAOTests {
   @Test
   public void testAddToCartPresent() {
     Customer customer = new Customer("Jeremy", "password", new ShoppingCart());
-    float weight = (float) .15;
+    double weight = .15;
     CartBeef beef = new CartBeef(3, weight);
     CartBeef[] newCart = new CartBeef[1];
     newCart[0] = beef;
     customer.getCart().addToCart(beef);
     assertArrayEquals(customer.getCart().getContents(), newCart);
-    float weight2 = (float) .3;
+    double weight2 = .3;
     newCart[0] = new CartBeef(3, weight2);
     customer.getCart().addToCart(beef);
     assertArrayEquals(newCart, customer.getCart().getContents());

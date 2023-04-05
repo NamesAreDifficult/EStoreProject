@@ -16,7 +16,7 @@ public class Beef {
   @JsonProperty("grade")
   private final String grade;
   @JsonProperty("weight")
-  private float weight;
+  private double weight;
   @JsonProperty("price")
   private double price;
 
@@ -44,7 +44,7 @@ public class Beef {
    */
   public Beef(@JsonProperty("id") int id,
       @JsonProperty("cut") String cut,
-      @JsonProperty("weight") float weight,
+      @JsonProperty("weight") double weight,
       @JsonProperty("grade") String grade,
       @JsonProperty("price") double price) {
     this.id = id;
@@ -75,16 +75,16 @@ public class Beef {
   /**
    * Retrieves the weight of the piece of beef
    * 
-   * @return Float representing the weight in pounds of the beef
+   * @return double representing the weight in pounds of the beef
    */
-  public float getWeight() {
+  public double getWeight() {
     return this.weight;
   }
 
   /**
    * Sets the weight of the piece of beef
    */
-  public void setWeight(float newWeight) {
+  public void setWeight(double newWeight) {
     this.weight = newWeight;
   }
 
@@ -95,7 +95,7 @@ public class Beef {
    * 
    * @return the new total weight of the object
    */
-  public float addWeight(float extraWeight) {
+  public double addWeight(double extraWeight) {
     this.weight += extraWeight;
     return this.weight;
   }

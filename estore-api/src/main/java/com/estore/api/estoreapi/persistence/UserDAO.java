@@ -96,7 +96,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Boolean AddToCart(String username, int beefId, float weight) throws IOException;
+    Boolean AddToCart(String username, int beefId, double weight) throws IOException;
 
     /**
      * Clears a customer's shopping cart {@linkplain Customer customer}
