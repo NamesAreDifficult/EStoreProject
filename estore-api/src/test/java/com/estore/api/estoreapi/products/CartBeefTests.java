@@ -41,7 +41,7 @@ public class CartBeefTests {
     //setup
     int expectedId = 2;
     float expectedWeight = (float) 10.1;
-    Beef expectedBeef = new Beef(2, "Ribeye", (float)12.2, "A5", 13.00);
+    Beef expectedBeef = new Beef(2, "Ribeye", (float)12.2, "A5", 13.00, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     CartBeef testCartBeef = new CartBeef(expectedBeef, expectedWeight);
 

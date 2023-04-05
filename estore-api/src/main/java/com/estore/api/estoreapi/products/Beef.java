@@ -19,6 +19,8 @@ public class Beef {
   private double weight;
   @JsonProperty("price")
   private double price;
+  @JsonProperty("imageUrl")
+  private String imageUrl;
 
   // Format strings
   static final String NAME_FORMAT = "%s %s";
@@ -46,12 +48,14 @@ public class Beef {
       @JsonProperty("cut") String cut,
       @JsonProperty("weight") double weight,
       @JsonProperty("grade") String grade,
-      @JsonProperty("price") double price) {
+      @JsonProperty("price") double price,
+      @JsonProperty("imageUrl") String imageUrl) {
     this.id = id;
     this.cut = cut;
     this.weight = weight;
     this.grade = grade;
     this.price = Math.round(price * 100.0) / 100.0;
+    this.imageUrl = imageUrl;
   }
 
   /**
@@ -63,6 +67,23 @@ public class Beef {
     return id;
   }
 
+  /**
+   *  Retrieves the image url
+   * 
+   * @return the imageUrl for the beef object
+   */
+  public String getImageUrl(){
+    return this.imageUrl;
+  }
+
+  /**
+   * Sets the image url
+   * 
+   * @param url the String to set the URL to
+   */
+  public void setImageUrl(String newUrl){
+    this.imageUrl = newUrl;
+  }
   /**
    * Retrieves the name and grade of the beef
    * 

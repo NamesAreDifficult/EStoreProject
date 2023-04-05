@@ -70,6 +70,7 @@ export class NewUserComponent implements OnInit {
         .subscribe(
           this.Observer
         );
+      location.reload();
     } else {
       this.userAlert = "Usernames must be between 3-26 alphanumeric characters and must only use the following special characters: !@#$%^&*()-_+=?";
     }
