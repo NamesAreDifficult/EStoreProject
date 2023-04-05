@@ -3,6 +3,7 @@ import { Beef, BeefService } from '../../services/beefService/beef.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CartServiceService } from 'src/app/services/cartService/cart-service.service';
+import { UserService } from 'src/app/services/userService/user.service';
 
 
 
@@ -25,6 +26,15 @@ export class ProductDetailsComponent {
     error: (err: Error) => (this.catchStatusCode(Number(err.message)))
   }
 
+  AddCartObserver = {
+    next: (beef: Beef) => {
+      this.beef = beef;
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+    },
+    error: (err: Error) => (this.catchStatusCode(Number(err.message))),
+    complete: () => this.getBeef()
+  }
+
   private catchStatusCode(code: number) {
     if (code == 404) {
       this.productAlert = "Product does not exist, please click on an existing product"
@@ -40,12 +50,15 @@ export class ProductDetailsComponent {
     private route: ActivatedRoute,
     private beefService: BeefService,
     private location: Location,
-    private shoppingService: CartServiceService
+    private shoppingService: CartServiceService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.getBeef();
   }
+
+  user = this.userService.getLoggedIn()
 
   getBeef(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -72,7 +85,7 @@ export class ProductDetailsComponent {
         id: id,
         weight: Number(amount)
       }
-    ).subscribe(this.Observer)
+    ).subscribe(this.AddCartObserver)
     this.productAlert = "Item added to your shopping cart"
     return null;
   }

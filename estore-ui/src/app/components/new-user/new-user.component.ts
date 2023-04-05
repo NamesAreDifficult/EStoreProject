@@ -45,33 +45,29 @@ export class NewUserComponent implements OnInit {
     }
   }
 
-  // Method that takes a username string parameter and validates that it meets username requirements
-  validate(username: string): boolean {
-    // Regex to match a usernames against, matches are allowed usernames
-    var regexp = new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{3,26}$');
-
-    if (regexp.test(username)) {
-      return true;
-    }
-    return false;
-  }
 
   // Method that takes a username string parameter and returns a User object
   submit(username: string, password: string) {
-
-    if (this.validate(username)) {
-      // Creating and returning a User object with the username property set to the provided value
-      var newUser: LoginUser = {
-        username: username,
-        password: password
-      }
-
-      this.userService.createCustomer(newUser)
-        .subscribe(
-          this.Observer
-        );
-    } else {
-      this.userAlert = "Usernames must be between 3-26 alphanumeric characters and must only use the following special characters: !@#$%^&*()-_+=?";
+    if (!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{3,26}$').test(username)) {
+      this.userAlert = "Usernames must be between 3-26 alphanumeric and special characters. Allowed special Characters: !@#$%^&*()-_+=?";
+      return;
     }
+
+    if (!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{8,26}$').test(password)) {
+      this.userAlert = "Passwords must be between 8-26 alphanumeric and special characters. Allowed special Characters: !@#$%^&*()-_+=?";
+      return;
+    }
+
+    // Creating and returning a User object with the username property set to the provided value
+    var newUser: LoginUser = {
+      username: username,
+      password: password
+    }
+    this.userService.createCustomer(newUser)
+      .subscribe(
+        this.Observer
+      );
+    location.reload();
+
   }
 }

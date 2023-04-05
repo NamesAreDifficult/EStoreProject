@@ -75,7 +75,7 @@ public class ShoppingController {
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
-                            retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                            retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     beefs[index++] = copyBeef;
                 }
 
@@ -150,7 +150,7 @@ public class ShoppingController {
                 // Checks if user exists and is a customer
                 if (customer != null) {
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
-                                    retrievedBeef.getGrade(), retrievedBeef.getPrice());
+                                    retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                     userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
@@ -187,7 +187,7 @@ public class ShoppingController {
                     Beef inventoryBeef = inventoryDao.getBeef(retrievedBeef.getId());
                     if (retrievedBeef != null) {
                         Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
-                                        inventoryBeef.getGrade(), inventoryBeef.getPrice());
+                                        inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
                         inventoryDao.updateBeef(copyBeef);
                     }
                 }
@@ -223,7 +223,7 @@ public class ShoppingController {
                 Beef inventoryBeef = inventoryDao.getBeef(beefId);
                 if (retrievedBeef != null) {
                     Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
-                                    inventoryBeef.getGrade(), inventoryBeef.getPrice());
+                                    inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                 }
                 boolean result = userDAO.RemoveFromCart(username, beefId);

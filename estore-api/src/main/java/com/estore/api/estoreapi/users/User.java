@@ -41,22 +41,30 @@ public abstract class User implements Comparable<User> {
     return this.username;
   }
 
-  /*
-   * Get the password of the user
-   * 
-   * @return password of the user
-   */
-  public String getPassword(){
-    return this.password;
-  }
-  
-  /*
-   * Returns if the user is an admin
-   * 
-   * @return true if user is an admin
-   */
-  @JsonProperty("admin")
-  public abstract boolean isAdmin();
+
+    /*
+     * Get the password of the user
+     * 
+     * @return password of the user
+     */
+    public String getPassword(){
+      return this.password;
+    }
+    
+    /*
+     * Set the user password
+     */
+    public void setPassword(String newPassword){
+      this.password = newPassword;
+    }
+    /*
+
+     * Returns if the user is an admin
+     * 
+     * @return true if user is an admin
+     */
+    @JsonProperty("admin")
+    public abstract boolean isAdmin();
 
   /*
    * Compares the current user to another user

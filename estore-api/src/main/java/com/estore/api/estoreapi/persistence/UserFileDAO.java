@@ -389,6 +389,7 @@ public class UserFileDAO implements UserDAO {
       return ret;
     }
   }
+  
   /**
    ** {@inheritDoc}}
    */
@@ -401,5 +402,21 @@ public class UserFileDAO implements UserDAO {
       return user;
     }
     return null;
+  }
+
+  /**
+   * {@inheritDoc}}
+   */
+  public int updatePassword(String username, String oldPassword, String newPassword) throws IOException{
+    User targetUser = GetUser(username);
+    if(targetUser == null){
+      return 1;
+    }
+    if(!targetUser.getPassword().equals(oldPassword)){
+      return 2;
+    }
+    targetUser.setPassword(newPassword);
+    save();
+    return 0;
   }
 }
