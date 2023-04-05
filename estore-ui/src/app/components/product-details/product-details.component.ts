@@ -25,6 +25,15 @@ export class ProductDetailsComponent {
     error: (err: Error) => (this.catchStatusCode(Number(err.message)))
   }
 
+  AddCartObserver = {
+    next: (beef: Beef) => {
+      this.beef = beef;
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+    },
+    error: (err: Error) => (this.catchStatusCode(Number(err.message))),
+    complete: () => this.getBeef()
+  }
+
   private catchStatusCode(code: number) {
     if (code == 404) {
       this.productAlert = "Product does not exist, please click on an existing product"
@@ -72,7 +81,7 @@ export class ProductDetailsComponent {
         id: id,
         weight: Number(amount)
       }
-    ).subscribe(this.Observer)
+    ).subscribe(this.AddCartObserver)
     this.productAlert = "Item added to your shopping cart"
     return null;
   }
