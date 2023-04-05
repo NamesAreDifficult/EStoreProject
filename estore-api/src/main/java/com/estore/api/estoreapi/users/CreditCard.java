@@ -68,7 +68,7 @@ public class CreditCard {
    */
   @Override
   public boolean equals(Object other) {
-    if (this.getClass() == other.getClass()) {
+    if (other instanceof CreditCard) {
       CreditCard otherCard = (CreditCard) other;
 
       if (otherCard.getNumber().equals(this.getNumber())){
@@ -76,5 +76,10 @@ public class CreditCard {
       }
     }
     return false;
+  }
+
+  @Override
+  public int hashCode(){
+    return String.format("%s%s%s",this.getNumber(), this.getExpiration(), this.getCVV()).hashCode();
   }
 }
