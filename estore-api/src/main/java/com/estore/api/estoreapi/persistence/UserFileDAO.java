@@ -260,6 +260,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
+      if(customer == null){
+        return false;
+      }
       Boolean ret = customer.getCart().addToCart(new CartBeef(beefId, weight));
       save();
       return ret;
@@ -274,6 +277,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
+      if(customer == null){
+        return false;
+      }
       Boolean ret = customer.getCart().removeFromCart(beefId);
       save();
       return ret;
@@ -288,7 +294,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
-
+      if(customer == null){
+        return false;
+      }
       customer.getCart().clearCart();
       save();
       return true;
