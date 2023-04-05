@@ -171,7 +171,8 @@ public class UserFileDAO implements UserDAO {
   private Customer GetCustomer(String username) throws IOException {
     synchronized (users) {
       User user = GetUser(username);
-
+      if(user == null)
+        return null;
       // Check if the user is an admin
       if (user.isAdmin())
         return null;
@@ -260,6 +261,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
+      if(customer == null){
+        return false;
+      }
       Boolean ret = customer.getCart().addToCart(new CartBeef(beefId, weight));
       save();
       return ret;
@@ -274,6 +278,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
+      if(customer == null){
+        return false;
+      }
       Boolean ret = customer.getCart().removeFromCart(beefId);
       save();
       return ret;
@@ -288,7 +295,9 @@ public class UserFileDAO implements UserDAO {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
-
+      if(customer == null){
+        return false;
+      }
       customer.getCart().clearCart();
       save();
       return true;

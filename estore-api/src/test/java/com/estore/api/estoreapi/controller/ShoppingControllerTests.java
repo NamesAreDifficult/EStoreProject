@@ -80,12 +80,11 @@ public class ShoppingControllerTests {
 
     ResponseEntity<Beef[]> response = shoppingController.getShoppingCart("TestCustomer");
 
-    assertEquals(mockBeef, mockBeef);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     Beef[] shoppingCartBeefs = response.getBody();
     assertEquals(expected.length, response.getBody().length);
     for (int i = 0; i < expected.length; i++) {
-      assertEquals(shoppingCartBeefs[i].getId(), expected[i].getId());
+      assertEquals(expected[i].getId(), shoppingCartBeefs[i].getId());
     }
   }
 
