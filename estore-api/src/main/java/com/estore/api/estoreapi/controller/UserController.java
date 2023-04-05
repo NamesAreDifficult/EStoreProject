@@ -181,7 +181,7 @@ public class UserController {
    *         ResponseEntity with HTTP status NOT_FOUND if user/card is not found
    */
   @DeleteMapping("/{username}/{cardNumber}")
-    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
+    public ResponseEntity<Boolean> removeCard(@PathVariable String username, @PathVariable String cardNumber) {
         try {
             Customer customer = this.getCustomer(username);
             if (customer != null) {
