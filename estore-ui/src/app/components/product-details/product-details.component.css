@@ -58,7 +58,7 @@ button:hover {
 
 
 .imageContainer {
-  max-width: 70%;
+  width: 70%;
   overflow: hidden;
   justify-content: center;
 }
