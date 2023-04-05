@@ -103,6 +103,28 @@ public class UserFileDAOTests {
   }
 
   @Test
+  public void testSave() throws IOException{
+    doThrow(new IOException()).doNothing()
+      .when(mockObjectMapper)
+      .writeValue(any(File.class), any(Customer[].class));
+    assertDoesNotThrow(() -> {
+      userFileDAO.addCard("Joe", mockCreditCard);
+      userFileDAO.addCard("Candice", mockCreditCard);
+    });
+  }
+
+  @Test
+  public void testLoad() throws IOException{
+    doThrow(new IOException())
+      .when(mockObjectMapper)
+      .readValue(any(File.class), eq(Customer[].class));
+    assertDoesNotThrow(() ->{
+      UserFileDAO testDAO = new UserFileDAO("customer.txt", "admin.txt", mockObjectMapper);
+    });
+    
+  }
+
+  @Test
   public void testAddCard() throws IOException{
     assertTrue(userFileDAO.addCard("Joe", mockCreditCard));
   }
