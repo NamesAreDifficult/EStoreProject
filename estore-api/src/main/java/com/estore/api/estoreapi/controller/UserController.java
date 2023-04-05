@@ -295,14 +295,14 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @DeleteMapping("/{username}")
-  public ResponseEntity<User> DeleteUser(@PathVariable String username) {
+  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
     try {
       User user = this.userDao.GetUser(username);
       if(user == null){
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      userDao.DeleteUser(username);
-      return new ResponseEntity<User>(HttpStatus.OK);
+      boolean result = userDao.DeleteUser(username);
+      return new ResponseEntity<Boolean>(result, HttpStatus.OK);
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }

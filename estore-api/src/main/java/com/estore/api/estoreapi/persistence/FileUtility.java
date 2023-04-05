@@ -16,14 +16,16 @@ public class FileUtility {
      * 
      * @param path the path of the file
      */
-    public static void createFileWithDirectories(String path) throws IOException {
+    public static Boolean createFileWithDirectories(String path) throws IOException {
         File file = new File(path);
 
         if (!file.exists()) {
           
             file.mkdirs();
-            file.createNewFile();
+            return file.createNewFile();
+
         }
+        return false;
     }
 
 }
