@@ -22,11 +22,11 @@ export class CardComponent {
     );
   }
 
-  // Catches error code for create method and displays text
+  // Catches error code for add method and displays text
   private addStatus(code: number) {
     // Conflict error
     if (code == 400) {
-      this.cardAlert = "Invalid card attributes"
+      this.cardAlert = "Invalid card attributes."
     // Creating item with invalid fields
     } else if (code == 404) {
       this.cardAlert = "User not found."
@@ -38,17 +38,46 @@ export class CardComponent {
       }
       // Card already exists
       else{
-        this.cardAlert = "Card already exists on this account"
+        this.cardAlert = "Card already exists on this account."
       }
     // Internal server error
     } else if (code == 500) {
+      this.cardAlert = "Internal server error."
+    }
+  }
+
+  // Catches error code for remove card method and displays text
+  private removeStatus(code: number) {
+    // Conflict error
+    if (code == 409) {
+      this.cardAlert = "Card does not exist on user."
+    // Creating item with invalid fields
+    } else if (code == 404) {
+      this.cardAlert = "User/card not found."
+      // Handles existant card or max cards
+    } else if (code == 500) {
       this.cardAlert = "Internal server error"
+      // Handles empty credit card lists
+    } else if (code == 400) {
+      this.cardAlert = "You have no credit cards."
     }
   }
 
   addObserver = {
     next: (card: CreditCard) => {
       this.cardService.addCard(card)
+    },
+    error: (err: Error) => (this.addStatus(Number(err.message))),
+    complete: () => this.cards$ = this.cardService.getCards().pipe(
+      tap((cardItems: CreditCard[]) =>{
+        this.isMax = cardItems.length === 3;
+      })
+    )
+  }
+
+  removeObserver = {
+    next: (card: CreditCard) => {
+      this.cardService.removeCard(card.number)
     },
     error: (err: Error) => (this.addStatus(Number(err.message))),
     complete: () => this.cards$ = this.cardService.getCards().pipe(
@@ -69,5 +98,10 @@ export class CardComponent {
     this.cardService.addCard(card).subscribe(this.addObserver)
     this.cardAlert = "Card created."
     }
+  }
+
+  removeCard(number: string) {
+    this.cardService.removeCard(number).subscribe(this.removeObserver);
+    this.cardAlert = "Card deleted."
   }
 }

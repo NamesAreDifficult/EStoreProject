@@ -60,8 +60,8 @@ export class CardService {
   }
 
   // Removes a customer's credit card from the backend
-  removeCard(cardnumber: number): Observable<any> {
-    const url = this.userUrl + "/" + this.getUsername() + "/" + String(cardnumber)
+  removeCard(cardnumber: string): Observable<any> {
+    const url = this.userUrl + "/" + this.getUsername() + "/" + cardnumber
     return this.http.delete(url, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Got cards from: ${this.getUsername()}`)),
       catchError(err => {
