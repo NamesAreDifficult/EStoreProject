@@ -11,6 +11,7 @@ export class CardComponent {
   cards$!: Observable<CreditCard[]>
   cardAlert: String = ""
   isMax!: Boolean
+  isEmpty!: boolean;
 
   constructor(private cardService: CardService) {
 
@@ -21,7 +22,9 @@ export class CardComponent {
     this.cards$ = this.cardService.getCards().pipe(
       tap((cardItems: CreditCard[]) => {
         this.isMax = cardItems.length === 3;
+        this.isEmpty = cardItems.length === 0;
       })
+
     );
   }
 
@@ -82,7 +85,9 @@ export class CardComponent {
     error: (err: Error) => (this.addStatus(Number(err.message))),
     complete: () => this.cards$ = this.cardService.getCards().pipe(
       tap((cardItems: CreditCard[]) => {
+
         this.isMax = cardItems.length === 3;
+        this.isEmpty = cardItems.length === 0;
       })
     )
   }
@@ -96,6 +101,7 @@ export class CardComponent {
     complete: () => this.cards$ = this.cardService.getCards().pipe(
       tap((cardItems: CreditCard[]) => {
         this.isMax = cardItems.length === 3;
+        this.isEmpty = cardItems.length === 0;
       })
     )
   }

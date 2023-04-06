@@ -2,12 +2,14 @@
     text-align: center;
     font-family: "Anton", sans-serif;
     font-size: x-large;
+
 }
 
 .titleContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    width: 35%;
 }
 
 
@@ -49,8 +51,8 @@ button {
     transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.deleteButton{
-  margin: auto;
+.deleteButton {
+    margin: auto;
 }
 
 button:hover {
