@@ -139,7 +139,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("/{username}")
-    public ResponseEntity<CartBeef> AddToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
+    public ResponseEntity<CartBeef> addToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
 
         try {
             if (cartBeef.getWeight() <= 0) {
