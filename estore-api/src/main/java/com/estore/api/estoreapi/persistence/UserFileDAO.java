@@ -250,7 +250,7 @@ public class UserFileDAO implements UserDAO {
       if (card == null){
         return false;
       }
-      boolean ret = customer.getCart().Checkout();
+      boolean ret = customer.getCart().checkout();
       save();
       return ret;
     }

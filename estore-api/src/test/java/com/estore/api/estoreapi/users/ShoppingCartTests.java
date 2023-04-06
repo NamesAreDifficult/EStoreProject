@@ -98,12 +98,12 @@ class ShoppingCartTests {
   @Test
   void testCheckout() {
     // Tests checkout on a normal shopping cart
-    assertTrue(testCart.Checkout());
+    assertTrue(testCart.checkout());
     // Validates that the length is set to zero
     assertEquals(0, testCart.getContents().length);
 
     // Testing on empty shopping cart
     ShoppingCart newTestCart = new ShoppingCart();
-    assertFalse(newTestCart.Checkout());
+    assertFalse(newTestCart.checkout());
   }
 }
