@@ -115,6 +115,13 @@ export class CardComponent {
     }
 
     this.cardService.addCard(card).subscribe(this.addObserver)
+    var ccn = document.getElementById('credit-card-number') as HTMLInputElement;
+    var exp = document.getElementById('expiration') as HTMLInputElement;
+    var cv = document.getElementById('cvv') as HTMLInputElement;
+
+    ccn.value = ''
+    exp.value = ''
+    cv.value = ''
     this.cardAlert = "Card created."
 
   }
