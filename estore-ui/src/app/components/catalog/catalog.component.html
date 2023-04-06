@@ -1,28 +1,29 @@
-<h1>Catalog</h1>
-<div>
-  <label for="search-box">Search Beef </label>
-  <input #searchBox id="search-box" (input)="search(searchBox.value)">
-
-  <ul class="search-result">
-    <li *ngFor="let beef of beef$ | async">
-      <!-- <a routerLink="/product/{{beef.id}}">
-        {{beef.grade}} {{beef.cut}}
-      </a> -->
-      <a routerLink="/product/{{beef.id}}">
-        <span class="badge">{{beef.grade}} </span>
-        <span class="name">{{beef.cut}}</span>
-
-      </a>
-    </li>
-  </ul>
+<div class="pageTitle">
+  Catalog
 </div>
-<!-- <ul class="beef">
-  <li *ngFor="let beef of beef$ | async">
-    <button [class.selected]="beef === selectedBeef" type="button"
-    (click)="OnSelect(beef)">
-    <span class="badge">{{beef.grade}}</span>
-    <span class="name">{{beef.cut}}</span>
-
-  </button>
-  </li>
-</ul> -->
+<div class="searchRow">
+  <div class="material-symbols-outlined">
+    <div class="search">
+      search<input class="searchBox" #searchBox id="search-box" (input)="search(searchBox.value)">
+    </div>
+  </div>
+</div>
+<div class="beefMenu">
+  <div class="item" *ngFor="let beef of beef$ | async" routerLink="/product/{{beef.id}}">
+    <div class="title">
+      {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
+    </div>
+    <div class="imageContainer">
+      <img src={{beef.imageUrl}}>
+    </div>
+    <br>
+    <div class="info">
+      <div>
+        Price: ${{beef.price.toFixed(2)}}/lbs
+      </div>
+      <div>
+        Total Amount: {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
+      </div>
+    </div>
+  </div>
+</div>

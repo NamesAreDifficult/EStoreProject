@@ -17,6 +17,8 @@
                     <div>
                         Total Amount: {{ (beef.weight > 0) ? (beef.weight.toFixed(1) | number:'1.0':'en-US') + " lbs" :
                         "Out of Stock" }}
+
+               
                     </div>
                 </div>
                 <div *ngIf="user !== null && !user.admin">
@@ -27,9 +29,7 @@
                         <button class="material-symbols-outlined" [disabled]="beef.weight === 0"
                             (click)="addToCart(beef.id!, amount.value)">add_shopping_cart
                         </button>
-                        <button class="material-symbols-outlined" routerLink="/checkout" [disabled]="beef.weight === 0">
-                            shopping_cart_checkout
-                        </button>
+
                     </div>
                 </div>
 
@@ -44,4 +44,10 @@
     <div class="alert">
         {{productAlert}}
     </div>
+    <div class="checkoutButton">
+        <button class="material-symbols-outlined" routerLink="/checkout" [disabled]="beef.weight === 0">
+            shopping_cart_checkout
+        </button>
+    </div>
+
 </div>
