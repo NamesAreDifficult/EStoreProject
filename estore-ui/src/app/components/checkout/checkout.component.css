@@ -90,16 +90,25 @@ td {
 
 .cardTitle {
   margin: 0 auto;
-  padding-left: 60px;
+  padding: 0 60px;
   font-family: "Anton", sans-serif;
-  font-size: larger;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.cardTitle a {
+  font-family: "Anton", sans-serif;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+  margin: 0 auto;
 
 }
 
 .cardTitle h1 {
   text-align: left;
-  font-size: 40px;
-
 }
 
 .checkout button {

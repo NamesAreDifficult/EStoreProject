@@ -3,77 +3,80 @@
     {{checkoutAlert}}
 
 </div>
+
 <div *ngIf="isEmpty === false">
-    <div *ngIf="this.cardsEmpty === false">
-        <div class="cardTitle">
+    <div class="cardTitle">
+        <div>
             Select a card:
         </div>
-        <div class="cardsMenu">
-            <div class="cards" *ngFor="let card of cards$ | async">
-                <div class="cardButton">
-                    <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
-                        <div>
-                            Card Number: {{card.number}}
-                        </div>
-                        <div>
-                            Expiration Date: {{card.expiration}}
-                        </div>
-                        <div>
-                            CVV: {{card.cvv}}
-                        </div>
-                    </button>
-                </div>
+        <div>
+            <a routerLink="/account-page">Add a card to checkout</a>
+        </div>
+
+    </div>
+    <div class="cardsMenu">
+        <div class="cards" *ngFor="let card of cards$ | async">
+            <div class="cardButton">
+                <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
+                    <div>
+                        Card Number: {{card.number}}
+                    </div>
+                    <div>
+                        Expiration Date: {{card.expiration}}
+                    </div>
+                    <div>
+                        CVV: {{card.cvv}}
+                    </div>
+                </button>
             </div>
         </div>
     </div>
-    <div *ngIf="this.cardsEmpty === true">
-        <a routerLink="account-page">Add a card to checkout</a>
-    </div>
+</div>
 
-    <!-- </ul> -->
-    <div style="display: flex">
-        <h2 class="title" for="userCart">My Order</h2>
-    </div>
-    <div class="data">
-        <table id="order" class="orderTable">
-            <thead>
-                <tr>
-                    <th class="tableHeader">Product Name </th>
-                    <th class="tableHeader">Quantity</th>
-                    <th class="tableHeader">Price/lb</th>
-                    <th class="tableHeader">Quantity Price </th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let beef of cart$ | async">
-                    <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
-                    <td> {{beef.weight.toFixed(2)}} lbs </td>
-                    <td> ${{beef.price.toFixed(2)}}/lb</td>
-                    <td> ${{(beef.weight * beef.price).toFixed(2)}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        Total Price: ${{total.toFixed(2)}}
-                    </td>
-                </tr>
-            </tbody>
+<!-- </ul> -->
+<div style="display: flex">
+    <h2 class="title" for="userCart">My Order</h2>
+</div>
+<div class="data">
+    <table id="order" class="orderTable">
+        <thead>
+            <tr>
+                <th class="tableHeader">Product Name </th>
+                <th class="tableHeader">Quantity</th>
+                <th class="tableHeader">Price/lb</th>
+                <th class="tableHeader">Quantity Price </th>
 
-        </table>
-    </div>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let beef of cart$ | async">
+                <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
+                <td> {{beef.weight.toFixed(2)}} lbs </td>
+                <td> ${{beef.price.toFixed(2)}}/lb</td>
+                <td> ${{(beef.weight * beef.price).toFixed(2)}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    Total Price: ${{total.toFixed(2)}}
+                </td>
+            </tr>
+        </tbody>
 
-    <div class="checkout">
-        <button id="checkoutButton" (click)="checkout()">
-            Checkout
-        </button>
-    </div>
+    </table>
+</div>
+
+<div class="checkout">
+    <button id="checkoutButton" (click)="checkout()">
+        Checkout
+    </button>
 </div>
 
 <h1 *ngIf="isEmpty === true">Your cart is empty. Go buy stuff</h1>

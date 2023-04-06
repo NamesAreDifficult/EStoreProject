@@ -15,7 +15,6 @@ export class CheckoutComponent {
   checkoutAlert = ""
   cart$!: Observable<Beef[]>
   isEmpty!: boolean;
-  cardsEmpty!: boolean;
   cards$!: Observable<CreditCard[]>
   currentCard: CreditCard | undefined;
   user!: User | null;
@@ -26,7 +25,6 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this.cards$ = this.cardService.getCards()
-    this.cards$.pipe(isEmpty()).subscribe(val => this.cardsEmpty = val);
     this.cart$ = this.shoppingService.getCart().pipe(
       tap((cartItems: Beef[]) => {
         this.isEmpty = cartItems.length === 0;
