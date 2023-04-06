@@ -27,13 +27,13 @@
 
                 <div class="details">
                     <div>
-                        Weight: {{beef.weight}} lbs
+                        Weight: {{beef.weight | number:'1.0':'en-US'}} lbs
                     </div>
                     <div>
-                        Price/lb: $ {{beef.price}}
+                        Price/lb: $ {{beef.price | number:'1.0':'en-US'}}
                     </div>
                     <div>
-                        Quantity Price: $ {{beef.weight * beef.price}}
+                        Quantity Price: $ {{beef.weight * beef.price |number:'1.0':'en-US'}}
                     </div>
                 </div>
             </div>
