@@ -24,7 +24,7 @@ public class FileUtility {
               File dirs = new File(path.substring(0, path.lastIndexOf("/")));
               dirs.mkdirs();
             }
-            file.createNewFile();
+            return file.createNewFile();
         }
         return false;
     }
