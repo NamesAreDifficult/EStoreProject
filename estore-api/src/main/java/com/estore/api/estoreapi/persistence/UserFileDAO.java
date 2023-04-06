@@ -177,9 +177,7 @@ public class UserFileDAO implements UserDAO {
         return null;
 
       // Cast the user to a customer
-      Customer customer = (Customer) user;
-
-      return customer;
+      return (Customer) user;
     }
   }
 
