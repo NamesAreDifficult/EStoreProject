@@ -111,15 +111,24 @@ body {
     border-radius: 12px;
     border:0;
     box-sizing: border-box;
-    color: black;
+    color: #42533F;
     cursor: pointer;
     text-align: center;
     height: 40px;
     width: 300px;
     margin-top: 15px;
+    font-family: "Anton", sans-serif;
+    letter-spacing: 1px;
+    font-size: 20px;
 
   }
 
-  button:active {
+  button:hover {
     background-color: #42533F;
+    color:wheat;
+  }
+
+  .alert{
+    padding-top: 20px;
+    font-size: 20px;
   }
