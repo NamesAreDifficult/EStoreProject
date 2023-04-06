@@ -182,7 +182,8 @@ public class UserController {
    *         status of OK<br>
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
    *         error
-   *         ResponseEntity with HTTP status of BAD_REQUEST if card is not found on user
+   *         ResponseEntity with HTTP status of CONFLICT if card is not found on user
+   *         ResponseEntity with HTTP status of BAD_REQUEST if card list is empty
    *         ResponseEntity with HTTP status NOT_FOUND if user/card is not found
    */
   @DeleteMapping("/{username}/{cardNumber}")
@@ -199,6 +200,9 @@ public class UserController {
                   else {
                     return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
                   }
+              }
+              else{
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
               }
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -291,14 +295,14 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @DeleteMapping("/{username}")
-  public ResponseEntity<User> DeleteUser(@PathVariable String username) {
+  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
     try {
       User user = this.userDao.GetUser(username);
       if(user == null){
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      userDao.DeleteUser(username);
-      return new ResponseEntity<User>(HttpStatus.OK);
+      boolean result = userDao.DeleteUser(username);
+      return new ResponseEntity<Boolean>(result, HttpStatus.OK);
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }

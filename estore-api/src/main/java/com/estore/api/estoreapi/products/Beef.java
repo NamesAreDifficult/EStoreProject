@@ -176,4 +176,11 @@ public class Beef {
     }
     return false;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public int hashCode(){
+    return this.toString().hashCode();
+  }
 }

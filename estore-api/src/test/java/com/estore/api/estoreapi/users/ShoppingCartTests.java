@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.users;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,6 +38,16 @@ public class ShoppingCartTests {
 
   }
 
+  @Test
+  public void testGetCartBeef(){
+    assertEquals(cartBeefs[0], testCart.getCartBeef(cartBeefs[0].getId()));
+  }
+
+  @Test
+  public void testGetCartBeefNull(){
+    assertNull(testCart.getCartBeef(99));
+  }
+  
   @Test
   public void testAddToCart() {
 

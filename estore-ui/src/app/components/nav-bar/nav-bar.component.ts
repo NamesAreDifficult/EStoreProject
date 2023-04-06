@@ -12,7 +12,6 @@ export class NavBarComponent {
   constructor(private userService: UserService, private router: Router) { }
   logout() {
     this.userService.logout();
-    location.reload();
   }
 
   user = this.userService.getLoggedIn();
@@ -23,6 +22,4 @@ export class NavBarComponent {
       this.user = currentUser;
     });
   }
-
-
 }

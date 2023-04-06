@@ -72,8 +72,8 @@ export class CartServiceService {
 
   }
 
-  public checkout(): Observable<any> {
-    const url = this.shoppingUrl + "/checkout/" + this.getUsername()
+  public checkout(cardNumber: string): Observable<any> {
+    const url = this.shoppingUrl + "/checkout/" + this.getUsername() + "/" + cardNumber
     return this.http.put<CartBeef>(url, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Checked out ${this.getUsername()}`)),
       catchError(err => {
