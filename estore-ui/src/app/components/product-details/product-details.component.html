@@ -15,7 +15,7 @@
                         ${{beef.price.toFixed(2) | number:'1.0':'en-US'}}/lb
                     </div>
                     <div>
-                        Total Amount: {{ (beef.weight > 0) ? (beef.weight.toFixed(1) | number:'1.0':'en-US') + " lbs" :
+                        Total Amount: {{ (beef.weight > 0) ? (beef.weight.toFixed(2) | number:'1.0':'en-US') + " lbs" :
                         "Out of Stock" }}
                     </div>
                 </div>
