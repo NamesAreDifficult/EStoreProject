@@ -20,10 +20,11 @@ public class FileUtility {
         File file = new File(path);
 
         if (!file.exists()) {
-          
-            file.mkdirs();
-            return file.createNewFile();
-
+            if(path.contains("/")){
+              File dirs = new File(path.substring(0, path.lastIndexOf("/")));
+              dirs.mkdirs();
+            }
+            file.createNewFile();
         }
         return false;
     }
