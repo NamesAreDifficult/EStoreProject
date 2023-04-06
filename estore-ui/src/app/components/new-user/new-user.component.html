@@ -1,26 +1,35 @@
-<div class="form">
-    <div class="header">
-        Welcome
-    </div>
+<div class="formContainer">
+    <div class="form">
+        <div class="header">
+            Welcome
+        </div>
 
-    <div class="subheader">
-        Create a new user account!
-    </div>
+        <div class="subheader">
+            Create a new user account!
+        </div>
 
-    <div class="container c1"> 
-        <input id="Username" #username (keyup.enter)=submit(username.value,password.value) class="input" type="Text" placeholder="Username"/>
-        <!-- <input id ="Username" class="input" type="text" placeholder=""/> -->
-        <div class="cut"></div> 
-        <!-- <label for="Username" class="placeholder"> Username </label> -->
-    </div>
-    <div class="container c2"> 
-        <input id="Password" #password (keyup.enter)=submit(username.value,password.value) class ="input" type="Text" placeholder="Password "/>
-        <!-- <input id ="Username" class="input" type="text" placeholder=""/> -->
-        <div class="cut"></div> 
-        <!-- <label for="Password" class="placeholder"> Password </label> -->
-    </div>
-    <button (click)=submit(username.value,password.value)>Submit</button>
-    <div class="alert">
-        {{userAlert}}
+
+        <div class="container c1">
+            <input id="Username" #username (keyup.enter)=submit(username.value,password.value) class="input" type="Text"
+                placeholder="Username" />
+            <!-- <input id ="Username" class="input" type="text" placeholder=""/> -->
+            <div class="cut"></div>
+            <!-- <label for="Username" class="placeholder"> Username </label> -->
+        </div>
+        <div class="container c2">
+            <input id="Password" #password (keyup.enter)=submit(username.value,password.value) class="input" type="Text"
+                placeholder="Password " />
+            <!-- <input id ="Username" class="input" type="text" placeholder=""/> -->
+            <div class="cut"></div>
+            <!-- <label for="Password" class="placeholder"> Password </label> -->
+        </div>
+        <div class="container c3">
+
+            <button (click)=submit(username.value,password.value)>Submit</button>
+
+        </div>
+        <div class="container c4">
+            {{userAlert}}
+        </div>
     </div>
 </div>
