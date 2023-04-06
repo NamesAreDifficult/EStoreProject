@@ -30,7 +30,7 @@ public class InventoryFileDAO implements InventoryDAO {
   private ObjectMapper objectMapper; // Provides conversion between Beef
                                      // objects and JSON text format written
                                      // to the file
-  private static int nextId; // The next Id to assign to a new Beef
+  private int nextId; // The next Id to assign to a new Beef
   private String filename; // Filename to read from and write to
 
   /**
@@ -58,7 +58,7 @@ public class InventoryFileDAO implements InventoryDAO {
    * 
    * @return The next id
    */
-  private synchronized static int nextId() {
+  private synchronized int nextId() {
     int id = nextId;
     ++nextId;
     return id;
