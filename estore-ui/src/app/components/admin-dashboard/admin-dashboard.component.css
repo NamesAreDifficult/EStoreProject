@@ -49,14 +49,15 @@ th {
     justify-content: center;
     width: 50%;
     margin: auto;
-    position:relative;
+    position: relative;
 }
 
-.iconContainer{
-  position:absolute;
-  top: 35%;
-  left: 5%;
+.iconContainer {
+    position: absolute;
+    top: 35%;
+    left: 5%;
 }
+
 .moneyContainer input:focus {
     outline: 0;
 }

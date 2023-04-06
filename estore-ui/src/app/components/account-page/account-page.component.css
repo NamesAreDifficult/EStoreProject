@@ -1,13 +1,13 @@
 div {
-  background-color: crimson;
+  background-color: #97AE93;
   border: 2px solid black;
   border-radius: 15px;
-  width: 80%;
+  width: 60%;
   margin: 3% auto;
   padding: 3%;
 }
 
-.title {
+.username {
   text-align: center;
   font-family: "Anton", sans-serif;
   font-size: xx-large;
