@@ -21,14 +21,11 @@ import java.io.IOException;
 
 import com.estore.api.estoreapi.users.User;
 
-import net.bytebuddy.agent.VirtualMachine.ForHotSpot.Connection.Response;
-
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.ShoppingCart;
-import com.estore.api.estoreapi.products.CartBeef;
 
 @Tag("Controller-tier")
 class UserControllerTests {
