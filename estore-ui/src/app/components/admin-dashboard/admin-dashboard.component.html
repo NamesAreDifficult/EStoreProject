@@ -1,4 +1,6 @@
-<h1>Admin Dashboard</h1>
+<div class="pageTitle">
+  Admin Dashboard
+</div>
 <div>
   {{adminAlert}}
 </div>
@@ -22,7 +24,9 @@
       Image URL
     </th>
     <th>
-      Button
+    </th>
+    <th>
+
     </th>
   </tr>
 
@@ -42,8 +46,11 @@
     <td>
       <input value={{beef.imageUrl}}>
     </td>
-    <td>
-      <button>Fuck you</button>
+    <td class="update">
+      <button class="material-symbols-outlined">Update</button>
+    </td>
+    <td class="remove">
+      <button class="material-symbols-outlined">delete</button>
     </td>
   </tr>
 
@@ -63,9 +70,18 @@
     <td>
       <input #imageUrl>
     </td>
+    <td>
+      <button class="material-symbols-outlined" id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value);
+       cut.value = '';
+        weight.value='';
+         grade.value='';
+         price.value='';
+         imageUrl.value='';
+         ">
+        add
+      </button>
+    </td>
 
-    <button id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value)">Create
-    </button>
   </tr>
 
 

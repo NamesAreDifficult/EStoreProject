@@ -1,8 +1,23 @@
 td input {
-    width: 50%;
     margin: auto;
 }
 
 td {
     justify-content: center;
+}
+
+.pageTitle {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: xx-large;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: large;
 }

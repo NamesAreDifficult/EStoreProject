@@ -22,10 +22,10 @@ export class AdminDashboardComponent {
   }
 
   // Initializes the inventory
-  ngOnInit(){
+  ngOnInit() {
     this.beef$ = this.beefService.getAllBeef()
   }
-  
+
   // Observer for handling creation of new beef 
   createObserver = {
     next: (beef: Beef) => {
@@ -58,10 +58,10 @@ export class AdminDashboardComponent {
     // Conflict error
     if (code == 409) {
       this.adminAlert = "Item already exists. Please edit quantity to change amount."
-    // Creating item with invalid fields
+      // Creating item with invalid fields
     } else if (code == 400) {
       this.adminAlert = "Items cannot have negative weight or price."
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     }
@@ -72,7 +72,7 @@ export class AdminDashboardComponent {
     // Item not found error
     if (code == 404) {
       this.adminAlert = "Item not found."
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     }
@@ -83,7 +83,7 @@ export class AdminDashboardComponent {
     // Item not found error
     if (code == 404) {
       this.adminAlert = "Item not found."
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     } else if (code == 400) {
@@ -95,7 +95,7 @@ export class AdminDashboardComponent {
   validateCreate(cut: string, grade: string): boolean {
     var cutRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$')
     var gradeRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$')
-    if ((cutRegexp.test(cut) && cut.trim()) && (gradeRegexp.test(grade) && grade.trim())){
+    if ((cutRegexp.test(cut) && cut.trim()) && (gradeRegexp.test(grade) && grade.trim())) {
       return true
     }
     this.adminAlert = "Cut and grade must be alphanumeric with least one non-whitespace character, and have a length of 1-32 characters."
@@ -104,7 +104,7 @@ export class AdminDashboardComponent {
 
   // Validates beef if price and weight are non-negative numbers
   validateUpdate(beef: Beef, weight: number, price: number): boolean {
-    if (beef.weight + weight >= 0 && price >= 0){
+    if (beef.weight + weight >= 0 && price >= 0) {
       return true
     }
     this.adminAlert = "Items cannot have negative weight or price."
@@ -112,8 +112,8 @@ export class AdminDashboardComponent {
   }
 
   // Adds new beef object to inventory if the fields are valid
-  create(cut: string, weight: number, grade: string, price: number, imageUrl:string) {
-    if (this.validateCreate(cut, grade)){
+  create(cut: string, weight: number, grade: string, price: number, imageUrl: string) {
+    if (this.validateCreate(cut, grade)) {
       var beef: Beef = {
         cut: cut.trim(),
         weight: weight,
@@ -121,8 +121,8 @@ export class AdminDashboardComponent {
         price: price,
         imageUrl: imageUrl
       }
-    this.beefService.addBeef(beef).subscribe(this.createObserver)
-    this.adminAlert = "Product created."
+      this.beefService.addBeef(beef).subscribe(this.createObserver)
+      this.adminAlert = "Product created."
     }
   }
 
@@ -133,8 +133,8 @@ export class AdminDashboardComponent {
   }
 
   // Updates price and weight of beef objects if the fields are valid
-  update(beef: Beef, weight: number, price: number, imageUrl:string) {
-      if (this.validateUpdate(beef, weight, price)){
+  update(beef: Beef, weight: number, price: number, imageUrl: string) {
+    if (this.validateUpdate(beef, weight, price)) {
       beef.weight = weight
       beef.price = price
       beef.imageUrl = imageUrl
