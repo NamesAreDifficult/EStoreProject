@@ -220,7 +220,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/{username}/{beefId}")
-    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
+    public ResponseEntity<Boolean> removeFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
         try {
             Customer customer = this.getCustomer(username);
 
