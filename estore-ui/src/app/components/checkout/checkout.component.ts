@@ -59,6 +59,10 @@ export class CheckoutComponent {
         }
       )
       document.getElementById("checkoutButton")!.style.visibility = "hidden";
+      document.getElementById("cardsHead")!.style.visibility = "hidden";
+      document.getElementById("cardsMenu")!.style.visibility = "hidden";
+      document.getElementById("orderTitle")!.style.visibility = "hidden";
+      document.getElementById("order")!.style.visibility = "hidden";
       this.checkoutAlert = "Thanks for shopping at Cow-Related Pun!"
     }
   }
