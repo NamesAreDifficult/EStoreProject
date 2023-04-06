@@ -61,7 +61,7 @@ public class UserController {
   @GetMapping("")
   public ResponseEntity<User[]> GetUsers() {
     try {
-      return new ResponseEntity<User[]>(this.userDao.GetUsers(), HttpStatus.OK);
+      return new ResponseEntity<>(this.userDao.GetUsers(), HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -86,7 +86,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
       // User found
-      return new ResponseEntity<User>(user, HttpStatus.OK);
+      return new ResponseEntity<>(user, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -105,7 +105,7 @@ public class UserController {
       }
       String successMessage = String.format("Login for %s success", username);
       LOG.info(successMessage);
-      return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+      return new ResponseEntity<>(loginUser, HttpStatus.OK);
     }catch(IOException e){
       LOG.info(String.format("Login for %s failed, server error", username));
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -130,7 +130,7 @@ public class UserController {
       if (customer == null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      return new ResponseEntity<CreditCard[]>(this.userDao.getCards(username), HttpStatus.OK);
+      return new ResponseEntity<>(this.userDao.getCards(username), HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -163,10 +163,10 @@ public class UserController {
       }
       boolean result = this.userDao.addCard(username, creditCard);
       if (result) {
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
       }
       else {
-        return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
       }
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -196,10 +196,10 @@ public class UserController {
                 if (card != null){
                   boolean result = customer.removeCard(card);
                   if (result) {
-                    return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                   }
                   else {
-                    return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
                   }
               }
               else{
@@ -258,7 +258,7 @@ public class UserController {
       if (newCustomer == null) {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
       }
-      return new ResponseEntity<Customer>(newCustomer, HttpStatus.OK);
+      return new ResponseEntity<>(newCustomer, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -282,7 +282,7 @@ public class UserController {
       if (newAdmin == null) {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
       }
-      return new ResponseEntity<Admin>(newAdmin, HttpStatus.OK);
+      return new ResponseEntity<>(newAdmin, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -304,7 +304,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
       boolean result = userDao.DeleteUser(username);
-      return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+      return new ResponseEntity<>(result, HttpStatus.OK);
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
