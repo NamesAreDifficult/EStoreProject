@@ -253,8 +253,8 @@ public class ShoppingController {
 
         // Checks if user exists and is a customer
         if (user instanceof Customer) {
-            Customer customer = (Customer) user;
-            return customer;
+            return (Customer) user;
+
         }
         return null;
     }
