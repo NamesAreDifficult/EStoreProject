@@ -11,27 +11,42 @@
    width: 300px;
 }
 
+.data{
+  display: flex;
+  position: relative;
+}
+
+.title{
+  margin: 0 auto;
+}
+
+.total{
+  margin: 0 auto;
+}
 .cardsMenu .cardButton div{
     font-family: "Anton", sans-serif;
 }
 table {
-    
     border-collapse: collapse;
     border-spacing: 2px;
-    
-    
-  }
-  table,
-  
-  th,
-  td {
+    justify-content: center;
+    margin: 0 auto;
+    width: 50%
+}
+
+table,
+th,
+td {
     padding: 10px 15px;
     border-left:none;
     border-right:none;
     border:none;
-  }
+}
 
-  .checkout{
+td {
+  text-align:center;
+}
+.checkout{
     padding: 10px;
     width: 40px;
-  }
+}

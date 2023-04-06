@@ -6,7 +6,7 @@
 <ul>
     <select name="cards" id="cards"><
     <option *ngFor="let card of cards$ | async">Card Number: {{card.number}} </option>
-        <!-- <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}"> -->
+        <-- <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}"> -->
        
             
      <!-- </select>   --> 
@@ -42,15 +42,17 @@
    
     
 <!-- </ul> -->
+<div style="display: flex">
+<h2 class="title" for="userCart">My Order</h2>
+</div>
 <div class="data">
-<label for="userCart">My Order:</label>
-<table id = "order" class="order" style="width:100%"></table>
+<table id = "order" class="orderTable">
 <thead>
     <tr>
-        <th>Product Name </th>
-        <th>Quantity</th>
-        <th>Price/lb</th>
-        <th>Quantity Price </th>
+        <th class="tableHeader">Product Name </th>
+        <th class="tableHeader">Quantity</th>
+        <th class="tableHeader">Price/lb</th>
+        <th class="tableHeader">Quantity Price </th>
        
     </tr>
 </thead>
@@ -63,9 +65,13 @@
                 <td> ${{(beef.weight * beef.price)}}</td>
                 <td></td>
             </tr>
-            {{total}}
-</tbody>
+  </tbody>
+</table>
 </div>
+<div style="display:flex">
+  <label class="total">Total Price: ${{total}}</label>
+</div>
+
         <!-- <div>
             <div>
                 Item: {{beef.grade}} {{beef.cut}} 
