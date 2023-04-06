@@ -4,27 +4,31 @@
 
 </div>
 <div *ngIf="isEmpty === false">
-    <div class="cardTitle">
-        Select a card:
-    </div>
-    <div class="cardsMenu">
-        <div class="cards" *ngFor="let card of cards$ | async">
-            <div class="cardButton">
-                <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
-                    <div>
-                        Card Number: {{card.number}}
-                    </div>
-                    <div>
-                        Expiration Date: {{card.expiration}}
-                    </div>
-                    <div>
-                        CVV: {{card.cvv}}
-                    </div>
-                </button>
+    <div *ngIf="this.cardsEmpty === false">
+        <div class="cardTitle">
+            Select a card:
+        </div>
+        <div class="cardsMenu">
+            <div class="cards" *ngFor="let card of cards$ | async">
+                <div class="cardButton">
+                    <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
+                        <div>
+                            Card Number: {{card.number}}
+                        </div>
+                        <div>
+                            Expiration Date: {{card.expiration}}
+                        </div>
+                        <div>
+                            CVV: {{card.cvv}}
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-
+    <div *ngIf="this.cardsEmpty === true">
+        <a routerLink="account-page">Add a card to checkout</a>
+    </div>
 
     <!-- </ul> -->
     <div style="display: flex">
