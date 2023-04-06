@@ -193,11 +193,9 @@ public class ShoppingController {
             if (customer != null) {
                 for (CartBeef retrievedBeef : customer.getCart().getContents()){
                     Beef inventoryBeef = inventoryDao.getBeef(retrievedBeef.getId());
-                    if (retrievedBeef != null) {
-                        Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
+                    Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
                                         inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
-                        inventoryDao.updateBeef(copyBeef);
-                    }
+                    inventoryDao.updateBeef(copyBeef);
                 }
                 customer.getCart().clearCart();
                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);
