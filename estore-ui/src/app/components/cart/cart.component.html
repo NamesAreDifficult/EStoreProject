@@ -1,31 +1,50 @@
-<div class="material-symbols-outlined">
-    <label> shopping_cart </label>
+<div class="header">
+    My Cart
+
 </div>
-<h1> My Cart:</h1>
 <div>
     {{cartAlert}}
 </div>
-<ul>
-    <li *ngFor="let beef of cart$ | async">
-        <div>
-            <div>
-                Cut: {{beef.cut}}
+<div *ngIf="!isEmpty">
+    <div class="beefMenu">
+        <div class="item" *ngFor="let beef of cart$ | async">
+
+            <div class="row">
+                <div class="imageContainer">
+                    <img src={{beef.imageUrl}} routerLink="/product/{{beef.id}}">
+                </div>
+
+                <div class="col">
+                    <div class="title">
+                        {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
+                    </div>
+
+                    <div class="info">
+                        <div>
+                            Price: ${{beef.price.toFixed(2)}}/lbs
+                        </div>
+                        <div>
+                            Total Amount: {{ beef.weight.toFixed(1)}} lbs
+                        </div>
+                    </div>
+
+                    <div>
+                        Total Cost: ${{(beef.weight * beef.price).toFixed(2)}}
+                    </div>
+                </div>
+                <div class="remove">
+                    <button class="material-symbols-outlined" (click)="removeFromCart(beef.id!)">delete</button>
+                </div>
             </div>
-            <div>
-                Grade: {{beef.grade}}
-            </div>
-            <div>
-                Amount: {{beef.weight}}
-            </div>
-            <div>
-                Price: {{beef.weight * beef.price}}
-            </div>
-            <button (click)="removeFromCart(beef.id!)">
-                Remove
-            </button>
         </div>
-    </li>
-    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="!isEmpty">
-        Proceed to Checkout
-    </button>
-</ul>
+
+    </div>
+    <div class="buttonContainer">
+        <button id="goToCheckout" onclick="window.location.href='checkout'">
+            Proceed to Checkout
+        </button>
+    </div>
+</div>
+<div *ngIf="isEmpty">
+    Your shopping cart is empty. Go buy some stuff!
+</div>

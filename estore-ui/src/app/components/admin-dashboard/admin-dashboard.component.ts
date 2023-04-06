@@ -30,7 +30,7 @@ export class AdminDashboardComponent {
     this.beef$ = this.beefService.getAllBeef()
     this.userService.userNotifier.subscribe(currentUser => {
       this.user = currentUser;
-      if(currentUser == null){
+      if (currentUser == null) {
         location.reload()
       }
     });
@@ -124,15 +124,22 @@ export class AdminDashboardComponent {
   // Adds new beef object to inventory if the fields are valid
   create(cut: string, weight: number, grade: string, price: number, imageUrl: string) {
     if (this.validateCreate(cut, grade)) {
-      var beef: Beef = {
-        cut: cut.trim(),
-        weight: weight,
-        grade: grade.trim(),
-        price: price,
-        imageUrl: imageUrl
+      if (Number(price.toFixed(2)) > 0 && Number(weight.toFixed(2)) > 0) {
+
+
+        var beef: Beef = {
+          cut: cut.trim(),
+          weight: Number(weight.toFixed(2)),
+          grade: grade.trim(),
+          price: Number(price.toFixed(2)),
+          imageUrl: imageUrl
+        }
+        this.beefService.addBeef(beef).subscribe(this.createObserver)
+        this.adminAlert = "Product created."
       }
-      this.beefService.addBeef(beef).subscribe(this.createObserver)
-      this.adminAlert = "Product created."
+      else {
+        this.adminAlert = "Items cannot have negative weight or price."
+      }
     }
   }
 
@@ -145,8 +152,8 @@ export class AdminDashboardComponent {
   // Updates price and weight of beef objects if the fields are valid
   update(beef: Beef, weight: number, price: number, imageUrl: string) {
     if (this.validateUpdate(beef, weight, price)) {
-      beef.weight = weight
-      beef.price = price
+      beef.weight = Number(weight.toFixed(2))
+      beef.price = Number(price.toFixed(2))
       beef.imageUrl = imageUrl
       this.beefService.updateBeef(beef).subscribe(this.updateObserver);
       this.adminAlert = "Product updated."

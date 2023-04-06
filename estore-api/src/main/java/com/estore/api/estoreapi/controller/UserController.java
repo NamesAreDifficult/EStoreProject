@@ -59,9 +59,9 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @GetMapping("")
-  public ResponseEntity<User[]> GetUsers() {
+  public ResponseEntity<User[]> getUsers() {
     try {
-      return new ResponseEntity<User[]>(this.userDao.GetUsers(), HttpStatus.OK);
+      return new ResponseEntity<>(this.userDao.getUsers(), HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -80,13 +80,13 @@ public class UserController {
   @GetMapping("/{username}")
   public ResponseEntity<User> getUser(@PathVariable String username) {
     try {
-      User user = this.userDao.GetUser(username);
+      User user = this.userDao.getUser(username);
       // User not found
       if (user == null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
       // User found
-      return new ResponseEntity<User>(user, HttpStatus.OK);
+      return new ResponseEntity<>(user, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -94,15 +94,18 @@ public class UserController {
 
   @GetMapping("/login/{username}")
   public ResponseEntity<User> loginUser(@PathVariable String username, @RequestHeader("Authorization") String password){
-    LOG.info(String.format("Login attempt for %s", username));
+    String message = String.format("Login attempt for %s", username);
+    LOG.info(message);
     try{
       User loginUser = this.userDao.loginUser(username, password);
       if(loginUser == null){
-        LOG.info(String.format("Login for %s failed, invalid credentials", username));
+        String failedMessage = String.format("Login for %s failed, invalid credentials", username);
+        LOG.info(failedMessage);
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
       }
-      LOG.info(String.format("Login for %s success", username));
-      return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+      String successMessage = String.format("Login for %s success", username);
+      LOG.info(successMessage);
+      return new ResponseEntity<>(loginUser, HttpStatus.OK);
     }catch(IOException e){
       LOG.info(String.format("Login for %s failed, server error", username));
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -127,7 +130,7 @@ public class UserController {
       if (customer == null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      return new ResponseEntity<CreditCard[]>(this.userDao.getCards(username), HttpStatus.OK);
+      return new ResponseEntity<>(this.userDao.getCards(username), HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -160,10 +163,10 @@ public class UserController {
       }
       boolean result = this.userDao.addCard(username, creditCard);
       if (result) {
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
       }
       else {
-        return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
       }
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -193,10 +196,10 @@ public class UserController {
                 if (card != null){
                   boolean result = customer.removeCard(card);
                   if (result) {
-                    return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                   }
                   else {
-                    return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
                   }
               }
               else{
@@ -219,7 +222,8 @@ public class UserController {
    */
   @PutMapping("/{username}")
   public ResponseEntity<Boolean> updatePassword(@PathVariable String username, @RequestHeader("NewAuth") String newPassword, @RequestHeader("Authorization") String oldPassword){
-    LOG.info(String.format("attempted to update user: %s oldPass: %s, newPass: %s", username, oldPassword, newPassword));
+    String message = String.format("attempted to update user: %s oldPass: %s, newPass: %s", username, oldPassword, newPassword);
+    LOG.info(message);
     try{
       int status = this.userDao.updatePassword(username, oldPassword, newPassword);
       if(status == 0){
@@ -254,7 +258,7 @@ public class UserController {
       if (newCustomer == null) {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
       }
-      return new ResponseEntity<Customer>(newCustomer, HttpStatus.OK);
+      return new ResponseEntity<>(newCustomer, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -278,7 +282,7 @@ public class UserController {
       if (newAdmin == null) {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
       }
-      return new ResponseEntity<Admin>(newAdmin, HttpStatus.OK);
+      return new ResponseEntity<>(newAdmin, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -293,14 +297,14 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @DeleteMapping("/{username}")
-  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
+  public ResponseEntity<Boolean> deleteUser(@PathVariable String username) {
     try {
-      User user = this.userDao.GetUser(username);
+      User user = this.userDao.getUser(username);
       if(user == null){
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      boolean result = userDao.DeleteUser(username);
-      return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+      boolean result = userDao.deleteUser(username);
+      return new ResponseEntity<>(result, HttpStatus.OK);
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
@@ -314,12 +318,12 @@ public class UserController {
      * @return Customer instance
      */
     private Customer getCustomer(String username) throws IOException {
-      User user = this.userDao.GetUser(username);
+      User user = this.userDao.getUser(username);
 
       // Checks if user exists and is a customer
-      if (user != null && (user instanceof Customer)) {
-          Customer customer = (Customer) user;
-          return customer;
+      if (user instanceof Customer) {
+          return (Customer) user;
+          
       }
       return null;
   }
@@ -328,13 +332,8 @@ public class UserController {
     if (creditCard == null){
       return false;
     }
-    if ((creditCard.getNumber().matches("\\d+") && creditCard.getNumber().strip().length() == 16) &&
-        (creditCard.getExpiration().matches("(?:0[1-9]|1[0-2])/[0-9]{2}")) &&
-        (creditCard.getCVV().matches("^[0-9]{3,4}$"))){
-          return true;
-    }
-    else{
-      return false;
-    }
+    return ((creditCard.getNumber().matches("\\d+") && creditCard.getNumber().strip().length() == 16) &&
+        (creditCard.getExpiration().matches("(?:0[1-9]|1[0-2])/\\d{2}")) &&
+        (creditCard.getCVV().matches("^\\d{3,4}$")));
   }
 }

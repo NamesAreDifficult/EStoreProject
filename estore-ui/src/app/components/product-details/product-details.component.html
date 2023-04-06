@@ -12,10 +12,11 @@
                 <div>
                     <div class="title">{{beef.grade | uppercase}}-{{beef.cut | titlecase}}</div>
                     <div>
-                        ${{beef.price.toFixed(2)}}/lb
+                        ${{beef.price.toFixed(2) | number:'1.0':'en-US'}}/lb
                     </div>
                     <div>
-                        Total Amount: {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
+                        Total Amount: {{ (beef.weight > 0) ? (beef.weight.toFixed(2) | number:'1.0':'en-US') + " lbs" :
+                        "Out of Stock" }}
                     </div>
                 </div>
                 <div *ngIf="user !== null && !user.admin">
@@ -39,13 +40,14 @@
 </div>
 
 
-    <div class="alert">
-        {{productAlert}}
-    </div>
-    <div class="checkoutButton">
+<div class="alert">
+    {{productAlert}}
+</div>
+<div class="checkoutButton">
 
-        <button *ngIf="user&&!user?.admin"class="material-symbols-outlined" routerLink="/cart" [disabled]="beef?.weight === 0">
+    <button *ngIf="user&&!user?.admin" class="material-symbols-outlined" routerLink="/cart"
+        [disabled]="beef?.weight === 0">
 
-            shopping_cart_checkout
-        </button>
-    </div>
+        shopping_cart_checkout
+    </button>
+</div>

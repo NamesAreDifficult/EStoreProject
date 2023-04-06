@@ -116,7 +116,7 @@ public class ShoppingCart {
      * 
      * @return boolean depending on whether checkout was successful 
      */
-    public boolean Checkout(){
+    public boolean checkout(){
         if (this.cart.length == 0) {
             return false;
         }

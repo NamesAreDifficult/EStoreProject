@@ -28,21 +28,21 @@ import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.ShoppingCart;
 
 @Tag("Controller-tier")
-public class UserControllerTests {
+class UserControllerTests {
   private UserController userController;
   private UserDAO mockUserDAO;
   private Customer mockCustomer;
   private CreditCard mockCreditCard;
 
   @BeforeEach
-  public void setupUserController() throws IOException{
+  void setupUserController() throws IOException{
     mockCustomer = mock(Customer.class);
     mockUserDAO = mock(UserDAO.class);
     mockCreditCard = mock(CreditCard.class);
 
     userController = new UserController(mockUserDAO);
 
-    when(mockUserDAO.GetUser(anyString())).thenReturn(mockCustomer);
+    when(mockUserDAO.getUser(anyString())).thenReturn(mockCustomer);
     when(mockCreditCard.getNumber()).thenReturn("1234567890987654");
     when(mockCreditCard.getExpiration()).thenReturn("01/27");
     when(mockCreditCard.getCVV()).thenReturn("999");
@@ -50,7 +50,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testAddCard() throws IOException{
+  void testAddCard() throws IOException{
     when(mockUserDAO.addCard(anyString(), any(CreditCard.class))).thenReturn(true);
     ResponseEntity<Boolean> response = userController.addCard("Shrek", mockCreditCard);
     
@@ -59,8 +59,8 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testAddCardInvalidCustomer() throws IOException{
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+  void testAddCardInvalidCustomer() throws IOException{
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
     ResponseEntity<Boolean> response = userController.addCard("Mona Lisa", mockCreditCard);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -68,7 +68,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testAddCardInvalidCard() throws IOException{
+  void testAddCardInvalidCard() throws IOException{
     when(mockCreditCard.getCVV()).thenReturn("2");
     ResponseEntity<Boolean> response = userController.addCard("Dragonborn", mockCreditCard);
 
@@ -77,7 +77,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testAddCardConflict() throws IOException{
+  void testAddCardConflict() throws IOException{
     when(mockUserDAO.addCard(anyString(), any(CreditCard.class))).thenReturn(false);
     ResponseEntity<Boolean> response = userController.addCard("Your Mother", mockCreditCard);
 
@@ -86,10 +86,10 @@ public class UserControllerTests {
   }
 
   @Test 
-  public void testAddCardError() throws IOException{
+  void testAddCardError() throws IOException{
     doThrow(new IOException("Failed to access file"))
       .when(mockUserDAO)
-      .GetUser(anyString());
+      .getUser(anyString());
     ResponseEntity<Boolean> response = userController.addCard("Luca", mockCreditCard);
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -97,7 +97,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testRemoveCard() throws IOException{
+  void testRemoveCard() throws IOException{
     when(mockCustomer.removeCard(any(CreditCard.class))).thenReturn(true);
     ResponseEntity<Boolean> response = userController.removeCard("I am so hungry", "5");
     
@@ -106,7 +106,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testRemoveCardConflict() throws IOException{
+  void testRemoveCardConflict() throws IOException{
     when(mockCustomer.removeCard(any(CreditCard.class))).thenReturn(false);
     ResponseEntity<Boolean> response = userController.removeCard("Samuel Jackson", "5");
     
@@ -115,8 +115,8 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testRemoveCardNotFound() throws IOException{
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+  void testRemoveCardNotFound() throws IOException{
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
     ResponseEntity<Boolean> response = userController.removeCard("Brolaf", "5");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -124,10 +124,10 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testRemoveCardError() throws IOException{
+  void testRemoveCardError() throws IOException{
     doThrow(new IOException("Cannot read from file"))
       .when(mockUserDAO)
-      .GetUser(anyString());
+      .getUser(anyString());
     ResponseEntity<Boolean> response = userController.removeCard("Hercules", "5");
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -135,13 +135,13 @@ public class UserControllerTests {
   }
   
   @Test
-  public void testIsValidNull(){
+  void testIsValidNull(){
     ResponseEntity<Boolean> response = userController.addCard("jack", null);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
   @Test
-  public void testGetCards() throws IOException{
+  void testGetCards() throws IOException{
     CreditCard[] expected = new CreditCard[] {mockCreditCard};
     when(mockUserDAO.getCards(anyString())).thenReturn(expected);
     ResponseEntity<CreditCard[]> response = userController.getCards("Mister Green Jeans");
@@ -151,8 +151,8 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testGetCardsNotFound() throws IOException{
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+  void testGetCardsNotFound() throws IOException{
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
     ResponseEntity<CreditCard[]> response = userController.getCards("Headless Horsemen");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -160,17 +160,17 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testGetCardsError() throws IOException{
+  void testGetCardsError() throws IOException{
     doThrow(new IOException())
       .when(mockUserDAO)
-      .GetUser(anyString());
+      .getUser(anyString());
     ResponseEntity<CreditCard[]> response = userController.getCards("John Cena");
     
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
 
   @Test
-  public void testLoginUser() throws IOException{
+  void testLoginUser() throws IOException{
     when(mockUserDAO.loginUser(anyString(), anyString())).thenReturn(mockCustomer);
     ResponseEntity<User> response = userController.loginUser("Mr. Security", "SafestPassword");
 
@@ -179,7 +179,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testLoginUserUnauthorized() throws IOException{
+  void testLoginUserUnauthorized() throws IOException{
     when(mockUserDAO.loginUser(anyString(), anyString())).thenReturn(null);
     ResponseEntity<User> response = userController.loginUser("Mr. Security", "WeakestPassword");
 
@@ -188,7 +188,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testLoginUserError() throws IOException{
+  void testLoginUserError() throws IOException{
     doThrow(new IOException())
       .when(mockUserDAO)
       .loginUser(anyString(), anyString());
@@ -199,7 +199,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testGetUser() throws IOException{
+  void testGetUser() throws IOException{
     ResponseEntity<User> response = userController.getUser("Charles");
     
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -207,8 +207,8 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testGetUserNotFound() throws IOException{
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+  void testGetUserNotFound() throws IOException{
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
     ResponseEntity<User> response = userController.getUser("Bugs Bunny");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -216,17 +216,17 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testGetUserError() throws IOException{
+  void testGetUserError() throws IOException{
     doThrow(new IOException())
       .when(mockUserDAO)
-      .GetUser(anyString());
+      .getUser(anyString());
     ResponseEntity<User> response = userController.getUser("I have to go soon");
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     assertNull(response.getBody());
   }
   @Test
-  public void testCreateCustomer() throws IOException {
+  void testCreateCustomer() throws IOException {
     Customer customer = new Customer("Jack","password", new ShoppingCart());
     when(mockUserDAO.createCustomer(customer)).thenReturn(customer);
     ResponseEntity<Customer> response = userController.createCustomer(customer);
@@ -235,7 +235,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testCreateCustomerFailed() throws IOException {
+  void testCreateCustomerFailed() throws IOException {
     Customer customer = new Customer("Jack","password", new ShoppingCart());
     when(mockUserDAO.createCustomer(customer)).thenReturn(null);
     ResponseEntity<Customer> response = userController.createCustomer(customer);
@@ -243,7 +243,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testCreateCustomerHandleException() throws IOException {
+  void testCreateCustomerHandleException() throws IOException {
     Customer customer = new Customer("Jack", "password", new ShoppingCart());
     doThrow(new IOException()).when(mockUserDAO).createCustomer(customer);
     ResponseEntity<Customer> response = userController.createCustomer(customer);
@@ -251,7 +251,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testCreateAdmin() throws IOException {
+  void testCreateAdmin() throws IOException {
     Admin admin = new Admin("John", "password");
     when(mockUserDAO.createAdmin(admin)).thenReturn(admin);
     ResponseEntity<Admin> response = userController.createAdmin(admin);
@@ -260,7 +260,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testCreateAdminFailed() throws IOException {
+  void testCreateAdminFailed() throws IOException {
     Admin admin = new Admin("John", "password");
     when(mockUserDAO.createAdmin(admin)).thenReturn(null);
     ResponseEntity<Admin> response = userController.createAdmin(admin);
@@ -268,7 +268,7 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testCreateAdminHandleException() throws IOException {
+  void testCreateAdminHandleException() throws IOException {
     Admin admin = new Admin("John", "password");
     doThrow(new IOException()).when(mockUserDAO).createAdmin(admin);
     ResponseEntity<Admin> response = userController.createAdmin(admin);
@@ -276,49 +276,49 @@ public class UserControllerTests {
   }
 
   @Test
-  public void testGetUsers() throws IOException {
+  void testGetUsers() throws IOException {
     User[] users = new User[2];
     users[0] = new Customer("Jack", "password", new ShoppingCart());
     users[1] = new Admin("John", "password");
-    when(mockUserDAO.GetUsers()).thenReturn(users);
-    ResponseEntity<User[]> response = userController.GetUsers();
+    when(mockUserDAO.getUsers()).thenReturn(users);
+    ResponseEntity<User[]> response = userController.getUsers();
     // Analyze
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(users, response.getBody());
   }
 
   @Test
-  public void testGetUsersHandleException() throws IOException {
-    doThrow(new IOException()).when(mockUserDAO).GetUsers();
-    ResponseEntity<User[]> response = userController.GetUsers();
+  void testGetUsersHandleException() throws IOException {
+    doThrow(new IOException()).when(mockUserDAO).getUsers();
+    ResponseEntity<User[]> response = userController.getUsers();
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
 
   // TODO: Implement these tests once DeleteUser has been implemented
   @Test
-  public void testDeleteUser() throws IOException {
-    when(mockUserDAO.DeleteUser(anyString())).thenReturn(true);
-    ResponseEntity<Boolean> response  = userController.DeleteUser("Slim Jim");
+  void testDeleteUser() throws IOException {
+    when(mockUserDAO.deleteUser(anyString())).thenReturn(true);
+    ResponseEntity<Boolean> response  = userController.deleteUser("Slim Jim");
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertTrue(response.getBody());
   }
 
   @Test
-  public void testDeleteUserNotFound() throws IOException {
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
-    ResponseEntity<Boolean> response  = userController.DeleteUser("Santa Clause");
+  void testDeleteUserNotFound() throws IOException {
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response  = userController.deleteUser("Santa Clause");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     assertNull(response.getBody());
   }
 
   @Test
-  public void testDeleteUserHandleException() throws IOException {
+  void testDeleteUserHandleException() throws IOException {
     doThrow(new IOException())
       .when(mockUserDAO)
-      .GetUser(anyString());
-    ResponseEntity<Boolean> response  = userController.DeleteUser("Jolly Green Giant");
+      .getUser(anyString());
+    ResponseEntity<Boolean> response  = userController.deleteUser("Jolly Green Giant");
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     assertNull(response.getBody());

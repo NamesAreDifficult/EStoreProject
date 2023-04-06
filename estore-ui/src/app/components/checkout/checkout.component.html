@@ -44,7 +44,7 @@
             <tbody>
                 <tr *ngFor="let beef of cart$ | async">
                     <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
-                    <td> {{beef.weight}} lbs </td>
+                    <td> {{beef.weight.toFixed(2)}} lbs </td>
                     <td> ${{beef.price.toFixed(2)}}/lb</td>
                     <td> ${{(beef.weight * beef.price).toFixed(2)}}</td>
                     <td></td>

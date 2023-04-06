@@ -10,7 +10,9 @@ import java.io.IOException;
  */
 public class FileUtility {
 
-    /*
+  private FileUtility() {}
+
+    /**
      * Takes a file path and creates the file and it's parent directories if they do
      * not exist
      * 
@@ -24,7 +26,7 @@ public class FileUtility {
               File dirs = new File(path.substring(0, path.lastIndexOf("/")));
               dirs.mkdirs();
             }
-            file.createNewFile();
+            return file.createNewFile();
         }
         return false;
     }

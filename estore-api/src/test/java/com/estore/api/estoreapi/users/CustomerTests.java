@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class CustomerTests {
+class CustomerTests {
 
   @Test
-  public void testCtor() {
+  void testCtor() {
 
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
 
@@ -19,28 +19,28 @@ public class CustomerTests {
   }
 
   @Test
-  public void testIsAdmin() {
+  void testIsAdmin() {
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
 
     assertFalse(testCustomer.isAdmin(), "The customer should not be an admin");
   }
 
   @Test
-  public void testGetUsername() {
+  void testGetUsername() {
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
 
     assertEquals("Test", testCustomer.getUsername());
   }
 
   @Test
-  public void testAddCard(){
+  void testAddCard(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     boolean result = testCustomer.addCard(new CreditCard("1234567890123456", "4/20", "420"));
     assertTrue(result);
   }
 
   @Test
-  public void testAddCardMax(){
+  void testAddCardMax(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     testCustomer.addCard(new CreditCard("1234567890123456", "4/20", "420"));
     testCustomer.addCard(new CreditCard("1234567890123457", "4/20", "420"));
@@ -50,7 +50,7 @@ public class CustomerTests {
   }
 
   @Test
-  public void testAddCardDuplicate(){
+  void testAddCardDuplicate(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     testCustomer.addCard(new CreditCard("1234567890123456", "4/20", "420"));
     boolean result = testCustomer.addCard(new CreditCard("1234567890123456", "4/20", "420"));
@@ -58,7 +58,7 @@ public class CustomerTests {
   }
 
   @Test
-  public void testGetCard(){
+  void testGetCard(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420");
     testCustomer.addCard(testCard);
@@ -66,7 +66,7 @@ public class CustomerTests {
   }
 
   @Test
-  public void testRemoveCard(){
+  void testRemoveCard(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420");
     CreditCard testCard2 = new CreditCard("0987654321234567","01/23", "232");
@@ -77,7 +77,7 @@ public class CustomerTests {
   }
 
   @Test
-  public void testRemoveCardAbsent(){
+  void testRemoveCardAbsent(){
     Customer testCustomer = new Customer("Test", "password", new ShoppingCart());
     CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420");
     boolean result = testCustomer.removeCard(testCard);

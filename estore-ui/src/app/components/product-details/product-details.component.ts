@@ -58,11 +58,12 @@ export class ProductDetailsComponent {
     this.getBeef();
     this.userService.userNotifier.subscribe(currentUser => {
       this.user = currentUser;
-      if(currentUser == null){
+      if (currentUser == null) {
         this.productAlert = ""
       }
     });
   }
+
 
   user = this.userService.getLoggedIn()
 
@@ -79,18 +80,25 @@ export class ProductDetailsComponent {
   public addToCart(id: number, amount: string) {
     var amount_number = Number(amount)
 
+
     if (isNaN(amount_number)) {
       this.productAlert = "Please enter numbers only"
       return null;
     }
 
-    this.shoppingService.addToCart(
-      {
-        id: id,
-        weight: Number(amount)
-      }
-    ).subscribe(this.AddCartObserver)
-    this.productAlert = "Item added to your shopping cart"
+    amount_number = Number(amount_number.toFixed(2))
+    if (amount_number > 0) {
+      this.shoppingService.addToCart(
+        {
+          id: id,
+          weight: amount_number
+        }
+      ).subscribe(this.AddCartObserver)
+
+      this.productAlert = "Item added to your shopping cart"
+    } else {
+      this.productAlert = "Please enter positive values only"
+    }
     return null;
   }
 }

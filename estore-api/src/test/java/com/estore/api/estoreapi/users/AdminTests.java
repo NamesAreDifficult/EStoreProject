@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class AdminTests {
+class AdminTests {
 
   @Test
-  public void testCtor() {
+  void testCtor() {
 
     Admin testAdmin = new Admin("Test", "password");
 
@@ -19,21 +19,21 @@ public class AdminTests {
   }
 
   @Test
-  public void testIsAdmin() {
+  void testIsAdmin() {
     Admin testAdmin = new Admin("Test", "password");
 
     assertTrue(testAdmin.isAdmin(), "The admin should be an admin");
   }
 
   @Test
-  public void testGetUsername() {
+  void testGetUsername() {
     Admin testAdmin = new Admin("Test", "password");
 
     assertEquals("Test", testAdmin.getUsername());
   }
 
   @Test
-  public void testHashCode(){
+  void testHashCode(){
     Admin testAdmin = new Admin("Test", "password");
 
     assertEquals(2031001933, testAdmin.hashCode());
