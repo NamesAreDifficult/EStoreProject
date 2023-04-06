@@ -94,7 +94,8 @@ public class UserController {
 
   @GetMapping("/login/{username}")
   public ResponseEntity<User> loginUser(@PathVariable String username, @RequestHeader("Authorization") String password){
-    LOG.info(String.format("Login attempt for %s", username));
+    String message = String.format("Login attempt for %s", username);
+    LOG.info(message);
     try{
       User loginUser = this.userDao.loginUser(username, password);
       if(loginUser == null){
