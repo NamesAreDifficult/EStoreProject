@@ -165,7 +165,7 @@ class InventoryControllerTests {
   }
 
   @Test
-  public void testUpdateBeef() throws IOException{
+  void testUpdateBeef() throws IOException{
     Beef updateBeef = new Beef(1, "Ribeye", 1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     Beef expectedBeef = new Beef(1, "Ribeye", 12.2, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
@@ -178,7 +178,7 @@ class InventoryControllerTests {
   }
 
   @Test 
-  public void testNotFoundUpdateBeef() throws IOException{
+  void testNotFoundUpdateBeef() throws IOException{
     Beef updateBeef = new Beef(4, "Ribeye", 1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
     when(mockInventoryDAO.updateBeef(updateBeef)).thenReturn(null);
