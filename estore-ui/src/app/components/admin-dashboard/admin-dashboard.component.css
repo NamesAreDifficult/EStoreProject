@@ -53,9 +53,7 @@ th {
 }
 
 .iconContainer {
-    position: absolute;
-    top: 35%;
-    left: 5%;
+    margin: auto;
 }
 
 .moneyContainer input:focus {
