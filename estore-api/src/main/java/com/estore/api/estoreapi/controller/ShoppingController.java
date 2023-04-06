@@ -160,7 +160,7 @@ public class ShoppingController {
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
                             retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
-                    userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
+                    userDAO.addToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
                     return new ResponseEntity<>(cartBeef, HttpStatus.OK);
 
