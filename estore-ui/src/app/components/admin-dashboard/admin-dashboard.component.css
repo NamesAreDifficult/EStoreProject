@@ -4,6 +4,9 @@ td input {
 
 td {
     justify-content: center;
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: medium;
 }
 
 .pageTitle {
