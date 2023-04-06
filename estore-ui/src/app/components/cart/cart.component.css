@@ -166,6 +166,7 @@ h1 {
 
 .imageContainer {
    width: 50%;
+   cursor: pointer;
 }
 
 .col {
@@ -194,15 +195,16 @@ img {
 
    display: flex;
    justify-content: right;
-   width: 100%;
+   width: 40%;
 }
 
 .remove button {
    background-color: crimson;
    border-radius: 10%;
-   width: 20%;
-   height: 20%;
+   width: 30%;
+   height: 30%;
    font-size: xx-large;
+   margin: 1%;
 }
 
 .remove button:hover {

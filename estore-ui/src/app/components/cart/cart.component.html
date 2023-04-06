@@ -7,11 +7,11 @@
 </div>
 <div *ngIf="!isEmpty">
     <div class="beefMenu">
-        <div class="item" *ngFor="let beef of cart$ | async" routerLink="/product/{{beef.id}}">
+        <div class="item" *ngFor="let beef of cart$ | async">
 
             <div class="row">
                 <div class="imageContainer">
-                    <img src={{beef.imageUrl}}>
+                    <img src={{beef.imageUrl}} routerLink="/product/{{beef.id}}">
                 </div>
 
                 <div class="col">
