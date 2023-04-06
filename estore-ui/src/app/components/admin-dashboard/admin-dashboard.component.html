@@ -31,7 +31,7 @@
       {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
     </td>
     <td>
-      {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
+      {{ (beef.weight > 0) ? beef.weight.toFixed(2) + " lbs" : "Out of Stock" }}
     </td>
     <td class="remove">
       <button class="material-symbols-outlined"
@@ -46,9 +46,9 @@
     </td>
     <td>
       <div class="moneyContainer">
-          <div class="material-symbols-outlined">
-            attach_money
-          </div>
+        <div class="material-symbols-outlined">
+          attach_money
+        </div>
         <input type="number" class="priceValue" value={{beef.price.toFixed(2)}} #price>
       </div>
     </td>
