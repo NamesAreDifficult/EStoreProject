@@ -27,14 +27,15 @@ export class CartComponent {
         this.isEmpty = cartItems.length === 0;
       })
     );
+    this.cart$.subscribe(cart => this.isEmpty = (cart.length === 0))
   }
 
   removeFromCart(id: number) {
-    this.shoppingService.removeFromCart(id).subscribe(
-      {
-        next: (any: any) => this.cart$ = this.shoppingService.getCart()
+    this.shoppingService.removeFromCart(id).subscribe({
+      next: (any: any) => {
+        this.cart$ = this.shoppingService.getCart();
+        this.cart$.subscribe(cart => this.isEmpty = (cart.length === 0));
       }
-    )
+    });
   }
-
 }
