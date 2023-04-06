@@ -18,7 +18,7 @@ export class CheckoutComponent {
   cards$!: Observable<CreditCard[]>
   currentCard: CreditCard | undefined;
   user!: User | null;
-  
+  total: number = 0
   constructor(private shoppingService: CartServiceService, private userService: UserService,
               private cardService: CardService) {
   }
@@ -30,6 +30,12 @@ export class CheckoutComponent {
         this.isEmpty = cartItems.length === 0;
       })
     );
+    this.cart$.subscribe(cart => {
+      this.total = 0
+      for (var item of cart){
+        this.total += (item.price * item.weight)
+      }
+    })
     this.userService.userNotifier.subscribe(currentUser => {
       this.user = currentUser;
       if(currentUser == null){

@@ -11,37 +11,50 @@ export class CardComponent {
   cards$!: Observable<CreditCard[]>
   cardAlert: String = ""
   isMax!: Boolean
+  isEmpty!: boolean;
 
-  constructor(private cardService: CardService){}
+  constructor(private cardService: CardService) {
 
-  ngOnInit(){
+  }
+
+  ngOnInit() {
     // Checks if user is at max amount of cards
     this.cards$ = this.cardService.getCards().pipe(
-      tap((cardItems: CreditCard[]) =>{
+      tap((cardItems: CreditCard[]) => {
         this.isMax = cardItems.length === 3;
+        this.isEmpty = cardItems.length === 0;
       })
+
     );
   }
+
+  public cardSpacing() {
+    var creditCardNumber = document.getElementById('credit-card-number') as HTMLInputElement;
+    const input = creditCardNumber.value.replace(/\D/g, '').substring(0, 16);
+    const spacedInput = input.replace(/(.{4})/g, '$1 ');
+    creditCardNumber.value = spacedInput.trim();
+  }
+
 
   // Catches error code for add method and displays text
   private addStatus(code: number) {
     // Conflict error
     if (code == 400) {
       this.cardAlert = "Invalid card attributes."
-    // Creating item with invalid fields
+      // Creating item with invalid fields
     } else if (code == 404) {
       this.cardAlert = "User not found."
       // Handles existant card or max cards
     } else if (code == 409) {
       // Person has max cards
-      if (this.isMax){
+      if (this.isMax) {
         this.cardAlert = "You can have up to 3 cards. Please delete one to add a new card."
       }
       // Card already exists
-      else{
+      else {
         this.cardAlert = "Card already exists on this account."
       }
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.cardAlert = "Internal server error."
     }
@@ -52,7 +65,7 @@ export class CardComponent {
     // Conflict error
     if (code == 409) {
       this.cardAlert = "Card does not exist on user."
-    // Creating item with invalid fields
+      // Creating item with invalid fields
     } else if (code == 404) {
       this.cardAlert = "User/card not found."
       // Handles existant card or max cards
@@ -71,8 +84,10 @@ export class CardComponent {
     },
     error: (err: Error) => (this.addStatus(Number(err.message))),
     complete: () => this.cards$ = this.cardService.getCards().pipe(
-      tap((cardItems: CreditCard[]) =>{
+      tap((cardItems: CreditCard[]) => {
+
         this.isMax = cardItems.length === 3;
+        this.isEmpty = cardItems.length === 0;
       })
     )
   }
@@ -84,8 +99,9 @@ export class CardComponent {
     },
     error: (err: Error) => (this.removeStatus(Number(err.message))),
     complete: () => this.cards$ = this.cardService.getCards().pipe(
-      tap((cardItems: CreditCard[]) =>{
+      tap((cardItems: CreditCard[]) => {
         this.isMax = cardItems.length === 3;
+        this.isEmpty = cardItems.length === 0;
       })
     )
   }
@@ -93,14 +109,21 @@ export class CardComponent {
   // Adds card if attributes are valid and user has space
   addCard(number: string, expiration: string, cvv: string) {
     var card: CreditCard = {
-      number: number.trim(),
+      number: number.replace(/\s+/g, ''),
       expiration: expiration,
       cvv: cvv
     }
-      
+
     this.cardService.addCard(card).subscribe(this.addObserver)
+    var ccn = document.getElementById('credit-card-number') as HTMLInputElement;
+    var exp = document.getElementById('expiration') as HTMLInputElement;
+    var cv = document.getElementById('cvv') as HTMLInputElement;
+
+    ccn.value = ''
+    exp.value = ''
+    cv.value = ''
     this.cardAlert = "Card created."
-    
+
   }
 
   // Removes card if it exists on user
