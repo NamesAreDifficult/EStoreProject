@@ -10,6 +10,8 @@ import java.io.IOException;
  */
 public class FileUtility {
 
+  private FileUtility() {}
+
     /*
      * Takes a file path and creates the file and it's parent directories if they do
      * not exist
