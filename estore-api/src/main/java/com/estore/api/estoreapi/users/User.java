@@ -26,7 +26,7 @@ public abstract class User implements Comparable<User> {
    *                 default Java
    *                 value, i.e. 0 for int
    */
-  public User(@JsonProperty("username") String username,
+  protected User(@JsonProperty("username") String username,
               @JsonProperty("password") String password) {
     this.username = username;
     this.password = password;
