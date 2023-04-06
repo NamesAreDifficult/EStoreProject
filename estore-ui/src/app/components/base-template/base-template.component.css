@@ -5,6 +5,15 @@
     height: 100%;
 }
 
+.bg {
+    background-color: wheat;
+    position: fixed;
+    z-index: 2;
+    width: 77%;
+    height: 100%;
+    margin: 0 12%;
+}
+
 .foreground {
     position: absolute;
     top: 0;
@@ -38,4 +47,5 @@ p {
     text-align: center;
     font-size: medium;
     margin-top: 0;
+    padding: 0 3%;
 }
