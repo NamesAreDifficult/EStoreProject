@@ -169,7 +169,7 @@ public class UserFileDAO implements UserDAO {
    */
   private Customer GetCustomer(String username) throws IOException {
     synchronized (users) {
-      User user = GetUser(username);
+      User user = getUser(username);
       if(user == null)
         return null;
       // Check if the user is an admin
@@ -187,7 +187,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public User GetUser(String username) throws IOException {
+  public User getUser(String username) throws IOException {
     synchronized (users) {
       return users.get(username);
     }
@@ -197,7 +197,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public User[] GetUsers() throws IOException {
+  public User[] getUsers() throws IOException {
     synchronized (users) {
       return getUserArray();
     }
@@ -207,7 +207,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean DeleteUser(String username) throws IOException {
+  public boolean deleteUser(String username) throws IOException {
 
     synchronized (users) {
       if (users.containsKey(username)) {
@@ -223,9 +223,9 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean IsAdmin(String username) throws IOException {
+  public boolean isAdmin(String username) throws IOException {
     synchronized (users) {
-      User user = GetUser(username);
+      User user = getUser(username);
 
       if (user != null) {
         return user.isAdmin();
@@ -240,7 +240,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean Checkout(String username, String cardNumber) throws IOException {
+  public boolean checkout(String username, String cardNumber) throws IOException {
     synchronized (users) {
       Customer customer = GetCustomer(username);
       if (customer == null){
@@ -260,7 +260,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean AddToCart(String username, int beefId, float weight) throws IOException {
+  public Boolean addToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
@@ -294,7 +294,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean ClearCart(String username) throws IOException {
+  public Boolean clearCart(String username) throws IOException {
     synchronized (users) {
 
       Customer customer = GetCustomer(username);
@@ -397,7 +397,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}}
    */
   public User loginUser(String username, String password) throws IOException{
-    User user = GetUser(username);
+    User user = getUser(username);
     if(user == null){
       return null;
     }
@@ -411,7 +411,7 @@ public class UserFileDAO implements UserDAO {
    * {@inheritDoc}}
    */
   public int updatePassword(String username, String oldPassword, String newPassword) throws IOException{
-    User targetUser = GetUser(username);
+    User targetUser = getUser(username);
     if(targetUser == null){
       return 1;
     }

@@ -111,7 +111,7 @@ public class ShoppingController {
                 if (newCard == null){
                     return new ResponseEntity<>(HttpStatus.CONFLICT);
                 }
-                boolean ret = userDAO.Checkout(customer.getUsername(), cardNumber);
+                boolean ret = userDAO.checkout(customer.getUsername(), cardNumber);
                 if (ret) {
                     return new ResponseEntity<>(ret, HttpStatus.OK);
                 }
@@ -159,7 +159,7 @@ public class ShoppingController {
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
                                     retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
-                    userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
+                    userDAO.addToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
                     return new ResponseEntity<>(cartBeef, HttpStatus.OK);
 
@@ -248,7 +248,7 @@ public class ShoppingController {
      * @return Customer instance
      */
     private Customer getCustomer(String username) throws IOException {
-        User user = this.userDAO.GetUser(username);
+        User user = this.userDAO.getUser(username);
 
         // Checks if user exists and is a customer
         if (user instanceof Customer) {

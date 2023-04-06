@@ -90,7 +90,7 @@ class UserFileDAOTests {
   
   @Test
   void testGetUsers() {
-    User[] users = assertDoesNotThrow(() -> userFileDAO.GetUsers(),
+    User[] users = assertDoesNotThrow(() -> userFileDAO.getUsers(),
         "Unexpected exception thrown");
     Arrays.sort(testUsers);
     assertArrayEquals(users, testUsers);
@@ -167,11 +167,11 @@ class UserFileDAOTests {
 
   @Test
   void testGetUser() {
-    User first = assertDoesNotThrow(() -> userFileDAO.GetUser("Joe"),
+    User first = assertDoesNotThrow(() -> userFileDAO.getUser("Joe"),
         "Unexpected exception thrown");
-    User second = assertDoesNotThrow(() -> userFileDAO.GetUser("Candice"),
+    User second = assertDoesNotThrow(() -> userFileDAO.getUser("Candice"),
         "Unexpected exception thrown");
-    User third = assertDoesNotThrow(() -> userFileDAO.GetUser("Wendy"),
+    User third = assertDoesNotThrow(() -> userFileDAO.getUser("Wendy"),
         "Unexpected exception thrown");
     assertEquals(first, testUsers[0]);
     assertEquals(second, testUsers[1]);
@@ -180,7 +180,7 @@ class UserFileDAOTests {
 
   @Test
   void testDeleteUser() {
-    boolean result = assertDoesNotThrow(() -> userFileDAO.DeleteUser("Joe"),
+    boolean result = assertDoesNotThrow(() -> userFileDAO.deleteUser("Joe"),
         "Unexpected exception thrown");
     assertTrue(result);
     assertEquals(userFileDAO.users.size(), testUsers.length - 1);
@@ -188,9 +188,9 @@ class UserFileDAOTests {
 
   @Test
   void testIsAdmin() {
-    boolean adminResult = assertDoesNotThrow(() -> userFileDAO.IsAdmin("Wendy"),
+    boolean adminResult = assertDoesNotThrow(() -> userFileDAO.isAdmin("Wendy"),
         "Unexpected exception thrown");
-    boolean customerResult = assertDoesNotThrow(() -> userFileDAO.IsAdmin("Joe"),
+    boolean customerResult = assertDoesNotThrow(() -> userFileDAO.isAdmin("Joe"),
         "Unexpected exception thrown");
     assertTrue(adminResult);
     assertFalse(customerResult);
@@ -202,7 +202,7 @@ class UserFileDAOTests {
     Customer result = assertDoesNotThrow(() -> userFileDAO.createCustomer(newCustomer),
         "Unexpected exception thrown");
     assertNotNull(result);
-    Customer actual = (Customer) assertDoesNotThrow(() -> userFileDAO.GetUser("John"),
+    Customer actual = (Customer) assertDoesNotThrow(() -> userFileDAO.getUser("John"),
         "Unexpected exception thrown");
     assertEquals(newCustomer.getCart(), actual.getCart());
     assertEquals(newCustomer.getUsername(), actual.getUsername());
@@ -214,7 +214,7 @@ class UserFileDAOTests {
     Admin result = assertDoesNotThrow(() -> userFileDAO.createAdmin(newAdmin),
         "Unexpected exception thrown");
     assertNotNull(result);
-    Admin actual = (Admin) assertDoesNotThrow(() -> userFileDAO.GetUser("Giant Rat"),
+    Admin actual = (Admin) assertDoesNotThrow(() -> userFileDAO.getUser("Giant Rat"),
         "Unexpected exception thrown");
     assertEquals(newAdmin.getUsername(), actual.getUsername());
   }
@@ -222,7 +222,7 @@ class UserFileDAOTests {
   @Test
   void testCheckout() {
     assertDoesNotThrow(() -> userFileDAO.addCard("Heisenberg", new CreditCard("1234567812345678", "04/20", "123")), "Unexpected exception thrown");
-    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Heisenberg", "1234567812345678"),
+    boolean result = assertDoesNotThrow(() -> userFileDAO.checkout("Heisenberg", "1234567812345678"),
         "Unexpected exception thrown");
     assertTrue(result);
   }
@@ -230,7 +230,7 @@ class UserFileDAOTests {
   @Test
   void testCheckoutEmpty() {
     assertDoesNotThrow(() -> userFileDAO.addCard("Candice", new CreditCard("1234567812345678", "04/20", "123")), "Unexpected exception thrown");
-    boolean result = assertDoesNotThrow(() -> userFileDAO.Checkout("Candice", "1234567812345678"),
+    boolean result = assertDoesNotThrow(() -> userFileDAO.checkout("Candice", "1234567812345678"),
         "Unexpected exception thrown");
     assertFalse(result);
   }
@@ -239,7 +239,7 @@ class UserFileDAOTests {
   void testAddToCart() {
   when(mockShoppingCart.addToCart(any(CartBeef.class))).thenReturn(true);
   assertDoesNotThrow(() -> {
-  assertTrue(userFileDAO.AddToCart("Joe", 1, (float)3.4));
+  assertTrue(userFileDAO.addToCart("Joe", 1, (float)3.4));
   });
   }
 
@@ -261,14 +261,14 @@ class UserFileDAOTests {
   @Test
   void clearCart() {
   assertDoesNotThrow(() -> {
-  userFileDAO.ClearCart("Joe");
+  userFileDAO.clearCart("Joe");
   });
   }
 
   // TODO: Implement defensive testing, might not use all of these
   @Test
   void testDeleteUserAbsent() {
-    boolean result = assertDoesNotThrow(() -> userFileDAO.DeleteUser("Josh Allen"),
+    boolean result = assertDoesNotThrow(() -> userFileDAO.deleteUser("Josh Allen"),
         "Unexpected exception thrown");
     assertEquals(userFileDAO.users.size(), testUsers.length);
     assertFalse(result);
@@ -292,7 +292,7 @@ class UserFileDAOTests {
 
   @Test
   void testGetUserAbsent() {
-    User result = assertDoesNotThrow(() -> userFileDAO.GetUser("Zuckerberg"),
+    User result = assertDoesNotThrow(() -> userFileDAO.getUser("Zuckerberg"),
         "Unexpected exception thrown");
     assertNull(result);
   }

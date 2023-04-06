@@ -61,7 +61,7 @@ public class UserController {
   @GetMapping("")
   public ResponseEntity<User[]> getUsers() {
     try {
-      return new ResponseEntity<>(this.userDao.GetUsers(), HttpStatus.OK);
+      return new ResponseEntity<>(this.userDao.getUsers(), HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -80,7 +80,7 @@ public class UserController {
   @GetMapping("/{username}")
   public ResponseEntity<User> getUser(@PathVariable String username) {
     try {
-      User user = this.userDao.GetUser(username);
+      User user = this.userDao.getUser(username);
       // User not found
       if (user == null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -299,11 +299,11 @@ public class UserController {
   @DeleteMapping("/{username}")
   public ResponseEntity<Boolean> deleteUser(@PathVariable String username) {
     try {
-      User user = this.userDao.GetUser(username);
+      User user = this.userDao.getUser(username);
       if(user == null){
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      boolean result = userDao.DeleteUser(username);
+      boolean result = userDao.deleteUser(username);
       return new ResponseEntity<>(result, HttpStatus.OK);
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -318,7 +318,7 @@ public class UserController {
      * @return Customer instance
      */
     private Customer getCustomer(String username) throws IOException {
-      User user = this.userDao.GetUser(username);
+      User user = this.userDao.getUser(username);
 
       // Checks if user exists and is a customer
       if (user instanceof Customer) {

@@ -54,7 +54,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User GetUser(String username) throws IOException;
+    User getUser(String username) throws IOException;
 
     /**
      * Checks if a {@linkplain User user} is an admin
@@ -67,7 +67,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    boolean IsAdmin(String username) throws IOException;
+    boolean isAdmin(String username) throws IOException;
 
     /**
      * Checks out a customer's shopping cart {@linkplain Customer customer}
@@ -83,7 +83,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    boolean Checkout(String username, String cardNumber) throws IOException;
+    boolean checkout(String username, String cardNumber) throws IOException;
 
     /**
      * Adds to a customer's shopping cart {@linkplain Customer customer}
@@ -97,7 +97,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Boolean AddToCart(String username, int beefId, float weight) throws IOException;
+    Boolean addToCart(String username, int beefId, float weight) throws IOException;
 
     /**
      * Clears a customer's shopping cart {@linkplain Customer customer}
@@ -112,7 +112,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Boolean ClearCart(String username) throws IOException;
+    Boolean clearCart(String username) throws IOException;
 
     /**
      * Retrieves all {@linkplain User user}
@@ -121,7 +121,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User[] GetUsers() throws IOException;
+    User[] getUsers() throws IOException;
 
     /**
      * Deletes a {@linkplain User user} with the given username
@@ -134,7 +134,7 @@ public interface UserDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    boolean DeleteUser(String username) throws IOException;
+    boolean deleteUser(String username) throws IOException;
 
     /**
      * Removes a {@linkplain Beef beef} from a shopping cart of a
