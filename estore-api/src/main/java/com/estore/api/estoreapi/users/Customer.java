@@ -1,6 +1,5 @@
 package com.estore.api.estoreapi.users;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

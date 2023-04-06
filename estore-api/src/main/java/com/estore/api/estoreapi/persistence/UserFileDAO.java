@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.estore.api.estoreapi.controller.InventoryController;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
