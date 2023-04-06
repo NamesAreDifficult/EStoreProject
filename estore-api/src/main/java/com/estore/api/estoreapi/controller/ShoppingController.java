@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.products.Beef;
@@ -241,7 +240,7 @@ public class ShoppingController {
         }
     }
 
-    /*
+    /**
      * Returns a customer given a username
      * 
      * @param username username of the customer
