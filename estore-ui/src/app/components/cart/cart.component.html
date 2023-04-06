@@ -16,7 +16,7 @@
 
 <div class="cardContainer">
     <div *ngFor="let beef of cart$ | async" class="card">
-        <div class="name">
+        <div class="name" routerLink="/product/{{beef.id}}">
             {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
         </div>
         <div class="imageSplit">
@@ -33,7 +33,7 @@
                         Price/lb: $ {{beef.price | number:'1.0':'en-US'}}
                     </div>
                     <div>
-                        Quantity Price: $ {{beef.weight * beef.price |number:'1.0':'en-US'}}
+                        Price: $ {{beef.weight * beef.price |number:'1.0':'en-US'}}
                     </div>
                 </div>
             </div>

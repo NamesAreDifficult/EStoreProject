@@ -145,7 +145,7 @@ h1 {
 }
 
 .card {
-   width: 30%;
+   width: 35%;
    background-color: white;
    border: 3px solid black;
    border-radius: 10%;
@@ -163,7 +163,7 @@ h1 {
 }
 
 .imageContainer {
-   width: 70%;
+   width: 45%;
 }
 
 .imageSplit {
