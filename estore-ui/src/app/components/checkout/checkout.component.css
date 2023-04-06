@@ -1,0 +1,25 @@
+.data{
+    
+}
+
+table {
+    
+    border-collapse: collapse;
+    border-spacing: 2px;
+    
+    
+  }
+  table,
+  
+  th,
+  td {
+    padding: 10px 15px;
+    border-left:none;
+    border-right:none;
+    border:none;
+  }
+
+  .checkout{
+    padding: 10px;
+    width: 40px;
+  }

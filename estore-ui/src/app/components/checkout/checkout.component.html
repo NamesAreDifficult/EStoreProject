@@ -21,10 +21,30 @@
     </label>
     </form>
 </ul>
-<label for="userCart">Your Shopping Cart:</label>
-<ul>
-    <li *ngFor="let beef of cart$ | async">
-        <div>
+<div class="data">
+<label for="userCart">My Order:</label>
+<table id = "order" class="order" style="width:100%"></table>
+<thead>
+    <tr>
+        <th>Product Name </th>
+        <th>Quantity</th>
+        <th>Price/lb</th>
+        <th>Quantity Price </th>
+       
+    </tr>
+</thead>
+    <!-- <li *ngFor="let beef of cart$ | async"> -->
+        <tbody>
+            <tr *ngFor="let beef of cart$ | async">
+                <td> {{beef.grade}} {{beef.cut}} </td>
+                <td> {{beef.weight}} lbs </td>
+                <td> ${{beef.price}}</td>
+                <td> ${{(beef.weight * beef.price)}}</td>
+                <td></td>
+            </tr>
+</tbody>
+</div>
+        <!-- <div>
             <div>
                 Item: {{beef.grade}} {{beef.cut}} 
             </div>
@@ -34,9 +54,10 @@
             <div>
                 Price: ${{(beef.weight * beef.price).toFixed(2)}}
             </div>
-        </div>
-    </li>
+        </div> -->
+    <!-- </li> -->
+    <div class="checkout">
     <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
         Checkout
     </button>
-</ul>
+    </div>
