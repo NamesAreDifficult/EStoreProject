@@ -19,13 +19,13 @@ This is a summary of the project.
 
 ### Purpose
 
+
 Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades,
 as well as the ability to sponsor and reserve different cuts from cows.
 
 
 
 ### Glossary and Acronyms
-
 
 | Term | Definition |
 |------|------------|
@@ -44,6 +44,9 @@ as well as the ability to sponsor and reserve different cuts from cows.
 
 This section describes the features of the application.
 
+> _In this section you do not need to be exhaustive and list every
+> story.  Focus on top-level features from the Vision document and
+> maybe Epics and critical Stories._
 
 - Users login via LP
 - Users logout via LB
@@ -60,10 +63,10 @@ This section describes the features of the application.
 The MVP includes minimal user authentication for admins and users, with a reserved
  admin account and other usernames being user accounts, the ability for customers to search
  for products and add them to shopping carts, and the ability for admins to add, remove, and
- edit product data. The MCP also includes the ability to checkout the items that were added to the shopping cart.
-
+ edit product data.
 ### MVP Features
 
+>  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 - Create User File
 - New Account Page
 - Catalog Page
@@ -72,9 +75,6 @@ The MVP includes minimal user authentication for admins and users, with a reserv
 - Product Page
 - Shopping Cart
 - Admin/Customer Authentication
-- Checkout 
-- Credit Card Storage 
-- Password Authentication
 
 ### Enhancements
 > _**[Sprint 4]** Describe what enhancements you have implemented for the project._
@@ -84,16 +84,18 @@ The MVP includes minimal user authentication for admins and users, with a reserv
 
 This section describes the application domain.
 
-![Domain Model](domain-model.png)
+![Domain Model](DomainModel.png)
+
+
 
 At the center of the domain model is the product entity, which represents beef. Beef is
 contained in the inventory, and the admin adds different beef items as they become available.
 These beef items are displayed on the catalog page for users to view and purchase, and users
 are able to search by name or partial name in order to find the type of beef they want. Both
 admins and customers are users that log in via the login page, which connects them to
-the rest of the e-store. Customers can then add products to their shopping cart. Customers
-can then purchase their shopping cart as an order, which is then displayed as a receipt for the
-customer to reference their purchase.
+the rest of the e-store.Customers have access to an Account page, where they can reset their password,
+as well as add and remove credit cards for billing.Customers can then add products to their shopping cart.
+ Customers can then purchase their shopping cart at the checkout using one of the cards on file. 
 
 
 ## Architecture and Design
@@ -131,9 +133,22 @@ product to go to its PP. After going here, the user can add a quantity to their 
 a button. Admins have access to these features, but they may not add items to their SC or view SC
 page, as they are redirected upon going to the page. Admins can navigate to ND,
 where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
+> _Provide a summary of the application's user interface.  Describe, from
+> the user's perspective, the flow of the pages in the web application._
 
 
 ### View Tier
+> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
+> Describe the types of components in the tier and describe their
+> responsibilities.  This should be a narrative description, i.e. it has
+> a flow or "story line" that the reader can follow._
+
+> _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects 
+> of the design that you are describing.  For example, in e-store you might create a 
+> sequence diagram of a customer searching for an item and adding to their cart. 
+> As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side 
+> to help illustrate the end-to-end flow._
+
 
  When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. 
 This is controlled by the home-page and nav-bar components. 
@@ -146,19 +161,17 @@ The view of the shopping cart is controlled by the cart compononent.
 Once a customer is done shopping and the admin is finished, they can log out view the log out compononent.
 
 ### ViewModel Tier
-The services that are critical for the data use are beef-service, which contains the information that the front end needs to display the product details for the admin and the customer. It allows the admins to create and edit products and for the front end to access that information.
-![BeefServiceDiagram](BeefServiceDiagram.png)
- The userAuthService and the userService, are critical to the front end for making sure that users are seeing the appropriate pages depending on whether they are customer or admin. These services hold this data which determines the direction that the front-end will go.
-![UserAuthServiceDiagram](userAuthServiceDiagram.png)
-![UserServiceDiagram](userServiceDiagram.png)
+> _**[Sprint 4]** Provide a summary of this tier of your architecture. This
+> section will follow the same instructions that are given for the View
+> Tier above._
 
-
- The cartService uses the current logged in user to allow the back-end data to interact with the front end of the shopping carts. 
-![CartServiceDiagram](CartServiceDiagram.png)
-
+> _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
+> static models (UML class diagrams) with some details such as critical attributes and methods._
+> 
+![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
 
 ### Model Tier
-
+._
 
 The model tier consists of beef, shopping carts, and users, which may be
 customers or administrators.
@@ -297,30 +310,44 @@ easier.
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 
-
 ![SonarQube](SonarQube.png)
+
+The majority of our issues in sonarQube came from improper return values and incorrect coding practices. There were 2 different instances where we should have been returning one value type, but were returning null.The other instance is us not overriding a equals method, which for our implementation was not really necessary.
+![Code Smells](CodeSmells.png)
+
 
 
 
 ## Testing
 
-Acceptance testing was successful. Improving
+Acceptance testing was successful, excluding the checkout component. Improving
 code coverage required changing various parts of our implementation due to inadequate
-return types, but was ultimately successful at 92 percent.
+return types, but was ultimately successful at 93 percent.
 
 ### Acceptance Testing
+> _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
+> acceptance criteria tests, the number that have some acceptance
+> criteria tests failing, and the number of user stories that
+> have not had any testing yet. Highlight the issues found during
+> acceptance testing and if there are any concerns._
 
 The number of user stories that passed all criteria is 20.
 
-We did not have any stories that did not pass all the given acceptance criteria, as we made sure to go back and create bug fixes for those stories that had issues. Some issues that we may still be having is cohesiveness of css design, but the majority is polished.
+We did not have any stories that did not pass all the acceptance criteria. This is due to the team doing consistent bug checks throughout the process.
 
 ### Unit Testing and Code Coverage
+> _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
+> achieved from unit testing of the code base. Discuss the team's
+> coverage targets, why you selected those values, and how well your
+> code coverage met your targets._
+
+
 
 ![Code Coverage](CodeCoverage.png)
 
 Using mock objects, our team tested the mode, controller, and persistence
 tiers. We achieved an overall code coverage of 92 percent. Given an average
 of 90 percent was the goal for the overall average, we set a target for
-90 percent minimum for each of these tiers, with the main estore-api folder 
-and the estore-api products folder being the exceptions at 88%.
- Overall, our unit testing for this phase was cohesive.
+90 percent minimum for each of these tiers, with the main estore-api folder and the estore-api products folder
+being the exception at 88 percent. Overall, our unit testing for this
+phase was cohesive.
