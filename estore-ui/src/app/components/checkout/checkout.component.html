@@ -2,25 +2,6 @@
 <div>
     {{checkoutAlert}}
 </div>
-<!-- <label for="creditCard">Credit Cards:</label>
-<ul>
-    <select name="cards" id="cards"><
-    <option *ngFor="let card of cards$ | async">Card Number: {{card.number}} </option>
-        <-- <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}"> -->
-
-
-<!-- </select>   -->
-<!-- <div>
-            <div>
-                Card Number: {{card.number}} 
-            </div>
-            <div>
-                Expiration Date: {{card.expiration}}
-            </div>
-            <div>
-                CVV: {{card.cvv}}
-            </div>
-        </div> -->
 
 <div class="cardsMenu">
     <div class="cards" *ngFor="let card of cards$ | async">
@@ -56,7 +37,6 @@
 
             </tr>
         </thead>
-        <!-- <li *ngFor="let beef of cart$ | async"> -->
         <tbody>
             <tr *ngFor="let beef of cart$ | async">
                 <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
@@ -81,18 +61,6 @@
     </table>
 </div>
 
-<!-- <div>
-            <div>
-                Item: {{beef.grade}} {{beef.cut}} 
-            </div>
-            <div>
-                Amount: {{beef.weight}}
-            </div>
-            <div>
-                Price: ${{(beef.weight * beef.price).toFixed(2)}}
-            </div>
-        </div> -->
-<!-- </li> -->
 <div class="checkout">
     <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
         Checkout
