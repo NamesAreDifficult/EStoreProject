@@ -104,7 +104,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("/checkout/{username}/{cardNumber}")
-    public ResponseEntity<Boolean> CheckoutShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
+    public ResponseEntity<Boolean> checkoutShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
         try {
             Customer customer = this.getCustomer(username);
             if (customer != null) {
