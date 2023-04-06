@@ -103,7 +103,8 @@ public class UserController {
         LOG.info(failedMessage);
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
       }
-      LOG.info(String.format("Login for %s success", username));
+      String successMessage = String.format("Login for %s success", username);
+      LOG.info(successMessage);
       return new ResponseEntity<User>(loginUser, HttpStatus.OK);
     }catch(IOException e){
       LOG.info(String.format("Login for %s failed, server error", username));
