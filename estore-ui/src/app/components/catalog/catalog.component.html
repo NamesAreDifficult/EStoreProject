@@ -22,7 +22,7 @@
         Price: ${{beef.price.toFixed(2)}}/lbs
       </div>
       <div>
-        Total Amount: {{beef.weight}}
+        Total Amount: {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
       </div>
     </div>
   </div>
