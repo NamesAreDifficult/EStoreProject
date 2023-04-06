@@ -9,48 +9,48 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class CreditCardTests {
+class CreditCardTests {
     
     @Test
-    public void testCtor(){
+    void testCtor(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         assertNotNull(creditCard);
     }
 
     @Test
-    public void testGetNumber(){
+    void testGetNumber(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         assertEquals("1234567890123456", creditCard.getNumber());
     }
 
     @Test
-    public void testGetExpiration(){
+    void testGetExpiration(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         assertEquals("4/20", creditCard.getExpiration());
     }
 
     @Test
-    public void testGetCVV(){
+    void testGetCVV(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         assertEquals("420", creditCard.getCVV());
     }
 
     @Test
-    public void testEqualsTrue(){
+    void testEqualsTrue(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         CreditCard sameCard = new CreditCard("1234567890123456", "4/20", "420");
         assertTrue(creditCard.equals(sameCard));
     }
 
     @Test
-    public void testEqualsFalse(){
+    void testEqualsFalse(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         CreditCard difCard = new CreditCard("1234567890123457", "4/20", "420");
         assertFalse(creditCard.equals(difCard));
     }
 
     @Test
-    public void testHashCode(){
+    void testHashCode(){
       CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420"); 
       assertEquals(965964379, testCard.hashCode());
     }

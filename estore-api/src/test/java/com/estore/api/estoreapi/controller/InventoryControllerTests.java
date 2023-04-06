@@ -26,7 +26,7 @@ import net.bytebuddy.agent.VirtualMachine.ForHotSpot.Connection.Response;
 
 @Tag("Controller-Tier")
 @SpringBootTest
-public class InventoryControllerTests {
+class InventoryControllerTests {
   private InventoryController inventoryController;
   private InventoryDAO mockInventoryDAO;
   Beef testBeef;
@@ -37,7 +37,7 @@ public class InventoryControllerTests {
    * Create a testBeef class
    */
   @BeforeEach
-  public void setupInventoryController(){
+  void setupInventoryController(){
     mockInventoryDAO = mock(InventoryDAO.class);
     inventoryController = new InventoryController(mockInventoryDAO); 
     testBeef = new Beef(1, "Ribeye", (float)11.2, "A5", 19.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
@@ -45,7 +45,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testGetBeef() throws IOException{
+  void testGetBeef() throws IOException{
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(testBeef);
     
     ResponseEntity<Beef> response = inventoryController.getBeef(1);
@@ -55,7 +55,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testFailedGetBeef() throws IOException{
+  void testFailedGetBeef() throws IOException{
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(null);
     ResponseEntity<Beef> response = inventoryController.getBeef(1);
 
@@ -64,7 +64,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testErrorGetBeef() throws IOException{
+  void testErrorGetBeef() throws IOException{
     doThrow(new IOException("Failed to read from file"))
       .when(mockInventoryDAO)
       .getBeef(anyInt());
@@ -74,7 +74,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testGetAllBeef() throws IOException{
+  void testGetAllBeef() throws IOException{
     Beef[] expectedBeef = new Beef[1];
     expectedBeef[0] = testBeef;
 
@@ -86,7 +86,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testNotFoundGetAllBeef() throws IOException{
+  void testNotFoundGetAllBeef() throws IOException{
     when(mockInventoryDAO.getBeef()).thenReturn(null);
     ResponseEntity<Beef[]> response = inventoryController.getBeef();
 
@@ -94,7 +94,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testErrorGetAllBeef() throws IOException{
+  void testErrorGetAllBeef() throws IOException{
     doThrow(new IOException("Failed to read from file"))
       .when(mockInventoryDAO)
       .getBeef();
@@ -104,7 +104,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testSearchBeef() throws IOException {
+  void testSearchBeef() throws IOException {
     Beef[] expectedBeef = new Beef[1];
     expectedBeef[0] = testBeef;
 
@@ -116,7 +116,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testNotFoundSearchBeef() throws IOException{
+  void testNotFoundSearchBeef() throws IOException{
     when(mockInventoryDAO.findBeef(anyString())).thenReturn(new Beef[0]);
     ResponseEntity<Beef[]> response = inventoryController.searchBeef("Strip");
     
@@ -124,7 +124,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testErrorSearchBeef() throws IOException{
+  void testErrorSearchBeef() throws IOException{
     doThrow(new IOException("Failed to read from file"))
       .when(mockInventoryDAO)
       .findBeef(anyString());
@@ -134,7 +134,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testCreateBeef()  throws IOException{
+  void testCreateBeef()  throws IOException{
     when(mockInventoryDAO.createBeef(testBeef)).thenReturn(testBeef);
     ResponseEntity<Beef> response = inventoryController.createBeef(testBeef);
 
@@ -143,7 +143,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testConflictCreateBeef() throws IOException{
+  void testConflictCreateBeef() throws IOException{
     when(mockInventoryDAO.getBeef(1)).thenReturn(testBeef);
     ResponseEntity<Beef> response =inventoryController.createBeef(testBeef);
 
@@ -151,14 +151,14 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testBadRequestCreateBeef() throws IOException{
+  void testBadRequestCreateBeef() throws IOException{
     ResponseEntity<Beef> response = inventoryController.createBeef(new Beef(2, "Ribeye", 2, "A5", -4.23, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
 
   @Test
-  public void testErrorCreateBeef() throws IOException{
+  void testErrorCreateBeef() throws IOException{
     doThrow(new IOException("Failed to read from file"))
       .when(mockInventoryDAO)
       .createBeef(any(Beef.class));
@@ -168,7 +168,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testUpdateBeef() throws IOException{
+  void testUpdateBeef() throws IOException{
     Beef updateBeef = new Beef(1, "Ribeye", (float)1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     Beef expectedBeef = new Beef(1, "Ribeye", (float)12.2, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
@@ -181,7 +181,7 @@ public class InventoryControllerTests {
   }
 
   @Test 
-  public void testNotFoundUpdateBeef() throws IOException{
+  void testNotFoundUpdateBeef() throws IOException{
     Beef updateBeef = new Beef(4, "Ribeye", (float)1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
     when(mockInventoryDAO.updateBeef(updateBeef)).thenReturn(null);
@@ -201,7 +201,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testErrorUpdateBeef() throws IOException{
+  void testErrorUpdateBeef() throws IOException{
     doThrow(new IOException("Failed to read from file"))
       .when(mockInventoryDAO)
       .getBeef(anyInt());
@@ -211,7 +211,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testDeleteBeef() throws IOException {
+  void testDeleteBeef() throws IOException {
     when(mockInventoryDAO.deleteBeef(1)).thenReturn(true);
     when(mockInventoryDAO.getBeef(1)).thenReturn(testBeef);
     ResponseEntity<Beef> response = inventoryController.deleteBeef(1);
@@ -222,7 +222,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testNotFoundDeleteBeef() throws IOException{
+  void testNotFoundDeleteBeef() throws IOException{
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(null);
     ResponseEntity<Beef> response = inventoryController.deleteBeef(1);
 
@@ -230,7 +230,7 @@ public class InventoryControllerTests {
   }
 
   @Test
-  public void testErroDeleteBeef() throws IOException{
+  void testErroDeleteBeef() throws IOException{
     doThrow(new IOException("Failed to read from file"))
       .when(mockInventoryDAO)
       .getBeef(anyInt());

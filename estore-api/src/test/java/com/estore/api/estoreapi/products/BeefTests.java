@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Tag("Model-tier")
 @SpringBootTest
-public class BeefTests {
+class BeefTests {
   @Test
-  public void testCtor() {
+  void testCtor() {
     int expectedId = 3;
     float expectedWeight = (float) 12.3;
     double expectedPrice = 12.99;
@@ -30,7 +30,7 @@ public class BeefTests {
   }
 
   @Test
-  public void testPrice() {
+  void testPrice() {
     double expectedPrice = 15.32;
 
     Beef testBeef = new Beef(1, "Strip", (float) 42.3, "C3", 999.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
@@ -41,7 +41,7 @@ public class BeefTests {
   }
 
   @Test
-  public void testName() {
+  void testName() {
     String cut = "Ribeye";
     String grade = "A5";
     String expectedName = String.format("%s %s", grade, cut);
@@ -52,7 +52,7 @@ public class BeefTests {
   }
 
   @Test
-  public void testWeight() {
+  void testWeight() {
     float startWeight = (float) 15.00;
     float increase = (float) 12.50;
     float decrease = (float) -4.30;
@@ -75,7 +75,7 @@ public class BeefTests {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     int id = 3;
     float weight = (float) 12.3;
     double price = 12.99;
