@@ -87,14 +87,18 @@ export class ProductDetailsComponent {
     }
 
     amount_number = Number(amount_number.toFixed(2))
+    if (amount_number > 0) {
+      this.shoppingService.addToCart(
+        {
+          id: id,
+          weight: amount_number
+        }
+      ).subscribe(this.AddCartObserver)
 
-    this.shoppingService.addToCart(
-      {
-        id: id,
-        weight: amount_number
-      }
-    ).subscribe(this.AddCartObserver)
-    this.productAlert = "Item added to your shopping cart"
+      this.productAlert = "Item added to your shopping cart"
+    } else {
+      this.productAlert = "Please enter positive values only"
+    }
     return null;
   }
 }
