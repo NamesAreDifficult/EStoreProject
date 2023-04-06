@@ -3,7 +3,6 @@ package com.estore.api.estoreapi.products;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
-import org.apache.el.lang.ELArithmetic.BigDecimalDelegate;
 /**
  * Represents a Beef entity
  * 
