@@ -33,7 +33,6 @@ import com.estore.api.estoreapi.users.CreditCard;
 @RestController
 @RequestMapping("shopping")
 public class ShoppingController {
-    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private InventoryDAO inventoryDao;
     private UserDAO userDAO;
 
