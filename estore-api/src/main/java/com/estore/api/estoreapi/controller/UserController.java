@@ -321,9 +321,9 @@ public class UserController {
       User user = this.userDao.GetUser(username);
 
       // Checks if user exists and is a customer
-      if (user != null && (user instanceof Customer)) {
-          Customer customer = (Customer) user;
-          return customer;
+      if (user instanceof Customer) {
+          return (Customer) user;
+          
       }
       return null;
   }
@@ -332,13 +332,8 @@ public class UserController {
     if (creditCard == null){
       return false;
     }
-    if ((creditCard.getNumber().matches("\\d+") && creditCard.getNumber().strip().length() == 16) &&
-        (creditCard.getExpiration().matches("(?:0[1-9]|1[0-2])/[0-9]{2}")) &&
-        (creditCard.getCVV().matches("^[0-9]{3,4}$"))){
-          return true;
-    }
-    else{
-      return false;
-    }
+    return ((creditCard.getNumber().matches("\\d+") && creditCard.getNumber().strip().length() == 16) &&
+        (creditCard.getExpiration().matches("(?:0[1-9]|1[0-2])/\\d{2}")) &&
+        (creditCard.getCVV().matches("^\\d{3,4}$")));
   }
 }
