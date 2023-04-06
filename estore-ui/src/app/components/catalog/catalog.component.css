@@ -22,7 +22,7 @@ img {
 .item {
     background-color: white;
     border: 3px solid black;
-    border-radius: 10%;
+    border-radius: 15px;
     width: 25%;
     cursor: pointer;
     font-family: "Anton", sans-serif;
