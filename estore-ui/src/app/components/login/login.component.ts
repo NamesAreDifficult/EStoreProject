@@ -33,10 +33,8 @@ export class LoginComponent implements OnInit {
   private checkLogin() {
     var loggedIn: User | null = this.userService.getLoggedIn()
     if (loggedIn != null) {
-      this.warning = `You are logged in as ${loggedIn.username} admin: ${loggedIn.admin}`
+      this.warning = `Logging in as: ${loggedIn.username}`
       location.reload();
-    } else {
-      this.warning = "You are not logged in"
     }
   }
 
@@ -51,8 +49,6 @@ export class LoginComponent implements OnInit {
     var loggedIn: User | null = this.userService.getLoggedIn();
     if (loggedIn != null) {
       this.warning = `You are already logged in ${loggedIn.username}`
-    } else {
-      this.warning = "You are not logged in"
     }
   }
 
