@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.users;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -39,14 +40,14 @@ class CreditCardTests {
     void testEqualsTrue(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         CreditCard sameCard = new CreditCard("1234567890123456", "4/20", "420");
-        assertTrue(creditCard.equals(sameCard));
+        assertEquals(creditCard,sameCard);
     }
 
     @Test
     void testEqualsFalse(){
         CreditCard creditCard = new CreditCard("1234567890123456", "4/20", "420");
         CreditCard difCard = new CreditCard("1234567890123457", "4/20", "420");
-        assertFalse(creditCard.equals(difCard));
+        assertNotEquals(creditCard, difCard);
     }
 
     @Test
