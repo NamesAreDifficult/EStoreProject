@@ -26,7 +26,7 @@ table {
 th {
     text-align: center;
     font-family: "Anton", sans-serif;
-    font-size: large;
+    font-size: larger;
 }
 
 .weightValue {
@@ -34,7 +34,7 @@ th {
     width: 4vw;
     text-align: center;
     font-family: "Anton", sans-serif;
-    font-size: large;
+    font-size: larger;
 
 }
 
@@ -57,11 +57,9 @@ th {
 
 .moneyContainer input {
     border: 0;
-    text-align: center;
-    font-family: "Anton", sans-serif;
-    font-size: large;
+
     min-width: 5vw;
-    height: 3vw;
+
 }
 
 .imageUrlContainer input {
@@ -78,4 +76,32 @@ button {
 button:hover {
     background-color: white;
     color: black;
+}
+
+input {
+    height: 3vw;
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: larger;
+    border: 1px solid black;
+}
+
+.addNew button {
+    width: 100%;
+    height: 100%;
+}
+
+.alert {
+    background-color: wheat;
+    margin-top: 2%;
+    text-align: center;
+    width: 100%;
+    height: 20%;
+    font-size: x-large;
+}
+
+.name {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: larger;
 }

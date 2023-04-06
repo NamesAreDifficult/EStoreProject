@@ -1,9 +1,6 @@
 <div class="pageTitle">
   Admin Dashboard
 </div>
-<div>
-  {{adminAlert}}
-</div>
 
 
 <table>
@@ -30,11 +27,11 @@
     </th>
   </tr>
   <tr *ngFor="let beef of beef$ | async">
-    <td>
-      {{beef.grade}}-{{beef.cut}}
+    <td class="name">
+      {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
     </td>
     <td>
-      {{beef.weight}}
+      {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
     </td>
     <td class="remove">
       <button class="material-symbols-outlined"
@@ -52,7 +49,7 @@
         <div class="material-symbols-outlined">
           attach_money
         </div>
-        <input type="number" class="priceValue" value={{beef.price}} #price>
+        <input type="number" class="priceValue" value={{beef.price.toFixed(2)}} #price>
       </div>
     </td>
     <td>
@@ -86,25 +83,33 @@
       <input #grade>
     </td>
     <td>
-      <input #weight>
+      <input type="number" #weight>
     </td>
     <td>
-      <input #price>
+      <input type="number" #price>
     </td>
     <td>
-      <input #imageUrl>
+      <div class="imageUrlContainer">
+        <input #imageUrl>
+      </div>
     </td>
     <td>
-      <button class="material-symbols-outlined" id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value);
+      <div class="">
+        <button class="material-symbols-outlined" id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value);
      cut.value = '';
       weight.value='';
        grade.value='';
        price.value='';
        imageUrl.value='';
        ">
-        add_circle
-      </button>
+          add_circle
+        </button>
+      </div>
     </td>
 
   </tr>
 </table>
+
+<div class="alert">
+  {{adminAlert}}
+</div>
