@@ -1,10 +1,10 @@
 <div class="material-symbols-outlined">
     <label> shopping_cart </label>
 </div>
-  <h1> My Cart:</h1>
+<h1> My Cart:</h1>
 <div>
-{{cartAlert}}
-  </div>
+    {{cartAlert}}
+</div>
 <ul>
     <li *ngFor="let beef of cart$ | async">
         <div>
@@ -29,4 +29,3 @@
         Proceed to Checkout
     </button>
 </ul>
-

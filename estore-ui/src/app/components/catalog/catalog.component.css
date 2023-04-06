@@ -69,13 +69,11 @@ img {
     line-height: -50%;
     display: flex;
     justify-content: center;
-
 }
 
 .searchBox {
     border: 0;
     width: max-content;
-    ;
 }
 
 .searchBox:focus {

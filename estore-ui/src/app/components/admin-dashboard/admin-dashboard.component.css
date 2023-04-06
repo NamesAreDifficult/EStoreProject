@@ -1,0 +1,113 @@
+td input {
+    margin: auto;
+}
+
+input:focus {
+    outline: 0;
+}
+
+td {
+    justify-content: center;
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: medium;
+}
+
+.pageTitle {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: xx-large;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: larger;
+}
+
+.weightValue {
+    height: 3vw;
+    width: 4vw;
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: larger;
+
+}
+
+
+.moneyContainer {
+    background-color: white;
+    border: 1px solid black;
+    padding: 0%;
+    text-align: center;
+    line-height: -50%;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: auto;
+    position:relative;
+}
+
+.iconContainer{
+  position:absolute;
+  top: 35%;
+  left: 5%;
+}
+.moneyContainer input:focus {
+    outline: 0;
+}
+
+.moneyContainer input {
+    border: 0;
+
+    min-width: 5vw;
+
+}
+
+.imageUrlContainer input {
+    width: 15vw;
+    height: 3vw;
+}
+
+button {
+    background-color: black;
+    color: white;
+    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+input {
+    height: 3vw;
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: larger;
+    border: 1px solid black;
+}
+
+.addNew button {
+    width: 100%;
+    height: 100%;
+}
+
+.alert {
+    background-color: wheat;
+    margin-top: 2%;
+    text-align: center;
+    width: 100%;
+    height: 20%;
+    font-size: x-large;
+}
+
+.name {
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    font-size: larger;
+}
