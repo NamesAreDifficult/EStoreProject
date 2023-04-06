@@ -1,7 +1,8 @@
-<p>Checkout</p>
-<div>
+<h1>Checkout</h1>
+<div class="warning">
     {{checkoutAlert}}
   </div>
+
 <!-- <label for="creditCard">Credit Cards:</label>
 <ul>
     <select name="cards" id="cards"><
@@ -21,7 +22,9 @@
                 CVV: {{card.cvv}}
             </div>
         </div> -->
-
+<div class="cardTitle">
+<h1>My Cards</h1>
+</div>
 <div class="cardsMenu">
     <div class="cards" *ngFor="let card of cards$ | async">
         <div class="cardButton">
