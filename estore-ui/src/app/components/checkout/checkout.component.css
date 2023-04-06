@@ -76,12 +76,18 @@ table {
 
   .checkout button{
     height: 100px;
-    width: 200px;
+    width: 400px;
     font-size: 30px;
     font-family: "Anton", sans-serif;
+    border-radius: 10px;
   }
 
   .checkout{
     display: flex;
-    align-items: center;
+    margin: 0 auto;
   }
+  
+.checkout button:active{
+    background-color:#42533F; ;
+    color:white;
+ }
