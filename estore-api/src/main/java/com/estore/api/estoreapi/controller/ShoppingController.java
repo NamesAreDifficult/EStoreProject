@@ -252,7 +252,7 @@ public class ShoppingController {
         User user = this.userDAO.GetUser(username);
 
         // Checks if user exists and is a customer
-        if (user != null && (user instanceof Customer)) {
+        if (user instanceof Customer) {
             Customer customer = (Customer) user;
             return customer;
         }
