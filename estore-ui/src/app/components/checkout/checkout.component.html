@@ -3,70 +3,73 @@
     {{checkoutAlert}}
 
 </div>
-
-<div class="cardTitle">
-<h1>My Cards</h1>
-</div>
-<div class="cardsMenu">
-    <div class="cards" *ngFor="let card of cards$ | async">
-        <div class="cardButton">
-            <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
-                <div>
-                    Card Number: {{card.number}}
-                </div>
-                <div>
-                    Expiration Date: {{card.expiration}}
-                </div>
-                <div>
-                    CVV: {{card.cvv}}
-                </div>
-            </button>
+<div *ngIf="isEmpty === false">
+    <div class="cardTitle">
+        Select a card:
+    </div>
+    <div class="cardsMenu">
+        <div class="cards" *ngFor="let card of cards$ | async">
+            <div class="cardButton">
+                <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
+                    <div>
+                        Card Number: {{card.number}}
+                    </div>
+                    <div>
+                        Expiration Date: {{card.expiration}}
+                    </div>
+                    <div>
+                        CVV: {{card.cvv}}
+                    </div>
+                </button>
+            </div>
         </div>
+    </div>
+
+
+    <!-- </ul> -->
+    <div style="display: flex">
+        <h2 class="title" for="userCart">My Order</h2>
+    </div>
+    <div class="data">
+        <table id="order" class="orderTable">
+            <thead>
+                <tr>
+                    <th class="tableHeader">Product Name </th>
+                    <th class="tableHeader">Quantity</th>
+                    <th class="tableHeader">Price/lb</th>
+                    <th class="tableHeader">Quantity Price </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let beef of cart$ | async">
+                    <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
+                    <td> {{beef.weight}} lbs </td>
+                    <td> ${{beef.price.toFixed(2)}}/lb</td>
+                    <td> ${{(beef.weight * beef.price).toFixed(2)}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        Total Price: ${{total.toFixed(2)}}
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="checkout">
+        <button id="checkoutButton" (click)="checkout()">
+            Checkout
+        </button>
     </div>
 </div>
 
-
-<!-- </ul> -->
-<div style="display: flex">
-    <h2 class="title" for="userCart">My Order</h2>
-</div>
-<div class="data">
-    <table id="order" class="orderTable">
-        <thead>
-            <tr>
-                <th class="tableHeader">Product Name </th>
-                <th class="tableHeader">Quantity</th>
-                <th class="tableHeader">Price/lb</th>
-                <th class="tableHeader">Quantity Price </th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let beef of cart$ | async">
-                <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
-                <td> {{beef.weight}} lbs </td>
-                <td> ${{beef.price.toFixed(2)}}/lb</td>
-                <td> ${{(beef.weight * beef.price).toFixed(2)}}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                    Total Price: ${{total.toFixed(2)}}
-                </td>
-            </tr>
-        </tbody>
-
-    </table>
-</div>
-
-<div class="checkout">
-    <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
-        Checkout
-    </button>
-</div>
+<h1 *ngIf="isEmpty === true">Your cart is empty. Go buy stuff</h1>
