@@ -13,14 +13,14 @@ import org.junit.jupiter.api.Test;
 import com.estore.api.estoreapi.products.CartBeef;
 
 @Tag("Model-tier")
-public class ShoppingCartTests {
+class ShoppingCartTests {
 
   ShoppingCart testCart;
   CartBeef[] cartBeefs;
   CartBeef[] clearList;
 
   @BeforeEach
-  public void prep() {
+  void prep() {
     cartBeefs = new CartBeef[2];
     cartBeefs[0] = new CartBeef(1, 1);
     cartBeefs[1] = new CartBeef(2, 1);
@@ -32,24 +32,24 @@ public class ShoppingCartTests {
   }
 
   @Test
-  public void testGetContents() {
+  void testGetContents() {
 
     assertArrayEquals(cartBeefs, testCart.getContents());
 
   }
 
   @Test
-  public void testGetCartBeef(){
+  void testGetCartBeef(){
     assertEquals(cartBeefs[0], testCart.getCartBeef(cartBeefs[0].getId()));
   }
 
   @Test
-  public void testGetCartBeefNull(){
+  void testGetCartBeefNull(){
     assertNull(testCart.getCartBeef(99));
   }
   
   @Test
-  public void testAddToCart() {
+  void testAddToCart() {
 
     ShoppingCart newTestCart = new ShoppingCart();
 
@@ -61,7 +61,7 @@ public class ShoppingCartTests {
   }
 
   @Test
-  public void testFailAddToCart() {
+  void testFailAddToCart() {
 
     // Checks that you cannot add a duplicate beef
     assertFalse(testCart.addToCart(new CartBeef(1, 2)), "Add to cart should be true");
@@ -71,7 +71,7 @@ public class ShoppingCartTests {
   }
 
   @Test
-  public void testClearCart() {
+  void testClearCart() {
 
     testCart.clearCart();
 
@@ -80,7 +80,7 @@ public class ShoppingCartTests {
   }
 
   @Test
-  public void testRemoveFromCart() {
+  void testRemoveFromCart() {
 
     // Asserts
     assertTrue(testCart.removeFromCart(1));
@@ -96,14 +96,14 @@ public class ShoppingCartTests {
   }
 
   @Test
-  public void testCheckout() {
+  void testCheckout() {
     // Tests checkout on a normal shopping cart
-    assertTrue(testCart.Checkout());
+    assertTrue(testCart.checkout());
     // Validates that the length is set to zero
     assertEquals(0, testCart.getContents().length);
 
     // Testing on empty shopping cart
     ShoppingCart newTestCart = new ShoppingCart();
-    assertFalse(newTestCart.Checkout());
+    assertFalse(newTestCart.checkout());
   }
 }

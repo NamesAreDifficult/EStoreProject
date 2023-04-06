@@ -90,7 +90,7 @@ public class Beef {
    * @return The name and grade of the beef "{Grade} {Cut}"
    */
   public String getName() {
-    return String.format("%s %s", grade, cut);
+    return String.format(NAME_FORMAT, grade, cut);
   }
 
   /**

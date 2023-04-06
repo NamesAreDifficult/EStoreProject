@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Tag("Persistence-tier")
 @SpringBootTest
-public class InventoryFileDAOTests {
+class InventoryFileDAOTests {
   InventoryFileDAO inventoryFileDAO;
   Beef[] testBeefArray;
   ObjectMapper mockObjectMapper;
@@ -37,7 +37,7 @@ public class InventoryFileDAOTests {
    * @throws IOException
    */
   @BeforeEach
-  public void setupInventoryFileDAO() throws IOException {
+  void setupInventoryFileDAO() throws IOException {
       mockObjectMapper = mock(ObjectMapper.class);
       testBeefArray = new Beef[3];
       testBeefArray[0] = new Beef(1, "Ribeye", (float)12.66, "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
@@ -53,7 +53,7 @@ public class InventoryFileDAOTests {
   }
 
   @AfterEach
-  public void cleanupInventoryFileDAO() {
+  void cleanupInventoryFileDAO() {
     File file = new File("doesnt_matter.txt");
     if (file.exists()){
       file.delete();
@@ -61,7 +61,7 @@ public class InventoryFileDAOTests {
   }
 
   @Test
-  public void testUpdateBeef() throws IOException{
+  void testUpdateBeef() throws IOException{
     Beef updatedBeef = new Beef(1, "Ribeye", (float)1.34, "A5", 49.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     Beef expectedBeef = new Beef(1, "Ribeye", 14, "A5", 49.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
@@ -79,7 +79,7 @@ public class InventoryFileDAOTests {
   }
 
   @Test
-  public void testGetAllBeef(){
+  void testGetAllBeef(){
     Beef[] beef = inventoryFileDAO.getBeef();
 
     assertEquals(3, beef.length);
@@ -87,7 +87,7 @@ public class InventoryFileDAOTests {
   }
 
   @Test
-  public void testFindBeef(){
+  void testFindBeef(){
     Beef[] beefArray = inventoryFileDAO.findBeef("i");
 
     assertEquals(2, beefArray.length);
@@ -96,7 +96,7 @@ public class InventoryFileDAOTests {
   }
 
   @Test
-  public void testGetOneBeef(){
+  void testGetOneBeef(){
     Beef beef = inventoryFileDAO.getBeef(1);
     assertEquals(testBeefArray[0], beef);
     Beef nullBeef = inventoryFileDAO.getBeef(12);
@@ -104,7 +104,7 @@ public class InventoryFileDAOTests {
   }
 
   @Test
-  public void testCreateBeef(){
+  void testCreateBeef(){
     Beef beef = new Beef(4, "Skirt", (float)4.02, "C3", 8.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     assertDoesNotThrow(() -> {
       inventoryFileDAO.createBeef(beef);
@@ -119,7 +119,7 @@ public class InventoryFileDAOTests {
   }
 
   @Test
-  public void deleteBeef(){
+  void deleteBeef(){
     assertDoesNotThrow(() -> {
       assertTrue(inventoryFileDAO.deleteBeef(1));
     });

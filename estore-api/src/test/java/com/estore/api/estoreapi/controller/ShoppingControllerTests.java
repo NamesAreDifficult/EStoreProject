@@ -30,7 +30,7 @@ import com.estore.api.estoreapi.users.ShoppingCart;
 import com.estore.api.estoreapi.users.CreditCard;
 
 @Tag("Controller-tier")
-public class ShoppingControllerTests {
+class ShoppingControllerTests {
   private ShoppingController shoppingController;
   private UserDAO mockUserDAO;
   private InventoryDAO mockInventoryDAO;
@@ -49,7 +49,7 @@ public class ShoppingControllerTests {
    */
 
   @BeforeEach
-  public void setupShoppingController() throws IOException {
+  void setupShoppingController() throws IOException {
     // Create Mock Objects
     mockUserDAO = mock(UserDAO.class);
     mockInventoryDAO = mock(InventoryDAO.class);
@@ -60,7 +60,7 @@ public class ShoppingControllerTests {
     mockCreditCard = mock(CreditCard.class);
 
     // Set behaviors
-    when(mockUserDAO.GetUser(anyString())).thenReturn(mockCustomer);
+    when(mockUserDAO.getUser(anyString())).thenReturn(mockCustomer);
     when(mockCustomer.getCart()).thenReturn(mockShoppingCart);
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(mockBeef);
     when(mockShoppingCart.getContents()).thenReturn(new CartBeef[] { mockCartBeef });
@@ -75,7 +75,7 @@ public class ShoppingControllerTests {
 
   // Test normal function of get shopping cart
   @Test
-  public void testGetShoppingCart() {
+  void testGetShoppingCart() {
     Beef[] expected = new Beef[] { mockBeef };
 
     ResponseEntity<Beef[]> response = shoppingController.getShoppingCart("TestCustomer");
@@ -90,8 +90,8 @@ public class ShoppingControllerTests {
 
   // Test function of getShoppingCart when the user is not found
   @Test
-  public void testGetShoppingCartNotFound() throws IOException {
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+  void testGetShoppingCartNotFound() throws IOException {
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
 
     ResponseEntity<Beef[]> response = shoppingController.getShoppingCart("TestCustomer");
 
@@ -100,10 +100,10 @@ public class ShoppingControllerTests {
 
   // Test the function of getShoppingCart when the server has a read error
   @Test
-  public void testGetShoppingCartError() throws IOException {
+  void testGetShoppingCartError() throws IOException {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
-        .GetUser(anyString());
+        .getUser(anyString());
     ResponseEntity<Beef[]> response = shoppingController.getShoppingCart("TestCustomer");
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -111,47 +111,47 @@ public class ShoppingControllerTests {
 
   // Test the normal functionality of checkoutShoppingCart (Unimplemented)
   @Test
-  public void testCheckoutShoppingCart() throws IOException {
-    when(mockUserDAO.Checkout(any(), any())).thenReturn(true);
+  void testCheckoutShoppingCart() throws IOException {
+    when(mockUserDAO.checkout(any(), any())).thenReturn(true);
     when(mockCustomer.getCard(anyString())).thenReturn(mockCreditCard);
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
+    ResponseEntity<Boolean> response = shoppingController.checkoutShoppingCart("TestCustomer", "1234567812345678");
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertTrue(response.getBody());
   }
 
   @Test
-  public void testBadCheckoutShoppingCart() throws IOException {
-    when(mockUserDAO.Checkout(any(), any())).thenReturn(false);
+  void testBadCheckoutShoppingCart() throws IOException {
+    when(mockUserDAO.checkout(any(), any())).thenReturn(false);
     when(mockCustomer.getCard(anyString())).thenReturn(mockCreditCard);
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
+    ResponseEntity<Boolean> response = shoppingController.checkoutShoppingCart("TestCustomer", "1234567812345678");
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
   
   @Test
-  public void testUserNotFound() throws IOException{
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
+  void testUserNotFound() throws IOException{
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response = shoppingController.checkoutShoppingCart("TestCustomer", "1234567812345678");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
 
   @Test
-  public void testCheckoutError() throws IOException{
+  void testCheckoutError() throws IOException{
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
-        .GetUser(anyString());
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
+        .getUser(anyString());
+    ResponseEntity<Boolean> response = shoppingController.checkoutShoppingCart("TestCustomer", "1234567812345678");
     
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
   // Test the normal functionality of adding items to the shopping cart
   @Test 
-  public void testAddToShoppingCart() throws IOException{
+  void testAddToShoppingCart() throws IOException{
     when(mockCartBeef.getWeight()).thenReturn((float)3);
     when(mockBeef.getWeight()).thenReturn((float)5);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
     
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(mockCartBeef, response.getBody());
@@ -159,19 +159,19 @@ public class ShoppingControllerTests {
 
   // Test the functionality of AddToShoppingCart when provided bad input
   @Test
-  public void testAddToShoppingCartBadRequest() throws IOException{
+  void testAddToShoppingCartBadRequest() throws IOException{
     when(mockCartBeef.getWeight()).thenReturn((float)-2);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
     
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
 
   // Test the functionality of addToShoppingCart when the beef is not found
   @Test
-  public void testAddToShoppingCartNotFound() throws IOException{
+  void testAddToShoppingCartNotFound() throws IOException{
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(null);
     when(mockCartBeef.getWeight()).thenReturn((float)3);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
@@ -179,20 +179,20 @@ public class ShoppingControllerTests {
   // Test the functionality of addToShoppingCart when the server encounters an
   // error
   @Test
-  public void testAddToShoppingCartError() throws IOException {
+  void testAddToShoppingCartError() throws IOException {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
-        .GetUser(anyString());
+        .getUser(anyString());
     when(mockCartBeef.getWeight()).thenReturn((float) 3);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
 
   // Test normal functionality of clearShoppingCart
   @Test
-  public void testClearShoppingCart() {
-    ResponseEntity<Boolean> response = shoppingController.ClearShoppingCart("TestCustomer");
+  void testClearShoppingCart() {
+    ResponseEntity<Boolean> response = shoppingController.clearShoppingCart("TestCustomer");
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(true, response.getBody());
@@ -200,9 +200,9 @@ public class ShoppingControllerTests {
 
   // Test the functionality of shopping cart when the specified user is not found
   @Test
-  public void testClearShoppingCartNotFound() throws IOException{
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
-    ResponseEntity<Boolean> response = shoppingController.ClearShoppingCart("TestCustomer");
+  void testClearShoppingCartNotFound() throws IOException{
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response = shoppingController.clearShoppingCart("TestCustomer");
   
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
@@ -210,19 +210,19 @@ public class ShoppingControllerTests {
   // Test the functionality of ClearShoppingCart when the server encounters an
   // error
   @Test
-  public void testClearShoppingCartError() throws IOException {
+  void testClearShoppingCartError() throws IOException {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
-        .GetUser(anyString());
-    ResponseEntity<Boolean> response = shoppingController.ClearShoppingCart("TestCustomer");
+        .getUser(anyString());
+    ResponseEntity<Boolean> response = shoppingController.clearShoppingCart("TestCustomer");
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
 
   // Test the normal functionality of RemoveFromShoppingCart
   @Test
-  public void testRemoveFromShoppingCart() {
-    ResponseEntity<Boolean> response = shoppingController.RemoveFromShoppingCart("TestCustomer", 1);
+  void testRemoveFromShoppingCart() {
+    ResponseEntity<Boolean> response = shoppingController.removeFromShoppingCart("TestCustomer", 1);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
   }
@@ -230,9 +230,9 @@ public class ShoppingControllerTests {
   // Test the functionality of remove from shopping cart when the user is not
   // found
   @Test
-  public void testRemoveFromShoppingCartNotFound() throws IOException {
-    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
-    ResponseEntity<Boolean> response = shoppingController.RemoveFromShoppingCart("TestCustomer", 1);
+  void testRemoveFromShoppingCartNotFound() throws IOException {
+    when(mockUserDAO.getUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response = shoppingController.removeFromShoppingCart("TestCustomer", 1);
     
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
@@ -240,11 +240,11 @@ public class ShoppingControllerTests {
   // Test the functionality of remove from shopping cart when the server
   // encounters an error
   @Test
-  public void testRemoveFromShoppingCartError() throws IOException {
+  void testRemoveFromShoppingCartError() throws IOException {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
-        .GetUser(anyString());
-    ResponseEntity<Boolean> response = shoppingController.RemoveFromShoppingCart("TestCustoemr", 1);
+        .getUser(anyString());
+    ResponseEntity<Boolean> response = shoppingController.removeFromShoppingCart("TestCustoemr", 1);
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
