@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { Beef } from 'src/app/services/beefService/beef.service';
 import { LoggingService } from 'src/app/services/loggingService/logging.service';
 import { CardService, CreditCard } from 'src/app/services/cardService/card.service';
+import { User, UserService } from 'src/app/services/userService/user.service';
 
 @Component({
   selector: 'app-checkout',
@@ -16,8 +17,9 @@ export class CheckoutComponent {
   isEmpty!: boolean;
   cards$!: Observable<CreditCard[]>
   currentCard: CreditCard | undefined;
-
-  constructor(private shoppingService: CartServiceService, private logger: LoggingService,
+  user!: User | null;
+  
+  constructor(private shoppingService: CartServiceService, private userService: UserService,
               private cardService: CardService) {
   }
 
@@ -28,6 +30,12 @@ export class CheckoutComponent {
         this.isEmpty = cartItems.length === 0;
       })
     );
+    this.userService.userNotifier.subscribe(currentUser => {
+      this.user = currentUser;
+      if(currentUser == null){
+        location.reload()
+      }
+    });
   }
 
   selectCard(card: CreditCard){

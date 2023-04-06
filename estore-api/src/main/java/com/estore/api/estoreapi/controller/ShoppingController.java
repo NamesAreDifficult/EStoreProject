@@ -75,11 +75,14 @@ public class ShoppingController {
                 int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
-                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
-                            retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
-                    beefs[index++] = copyBeef;
+                    try{
+                        Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
+                                retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
+                        beefs[index++] = copyBeef;
+                    }catch(NullPointerException e){
+                        customer.getCart().removeFromCart(cartBeef.getId());
+                    }
                 }
-
                 return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
             }
 

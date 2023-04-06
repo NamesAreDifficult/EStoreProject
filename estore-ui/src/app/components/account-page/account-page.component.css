@@ -1,4 +1,14 @@
-.username{
-  display: block;
+div {
+  background-color: #97AE93;
+  border: 2px solid black;
+  border-radius: 15px;
+  width: 60%;
+  margin: 3% auto;
+  padding: 3%;
+}
+
+.username {
   text-align: center;
+  font-family: "Anton", sans-serif;
+  font-size: xx-large;
 }

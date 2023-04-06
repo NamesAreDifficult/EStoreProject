@@ -15,4 +15,13 @@ export class AccountPageComponent {
     this.userService = userService;
     this.user = userService.getLoggedIn();
   };
+
+  ngOnInit(){
+    this.userService.userNotifier.subscribe(currentUser => {
+      this.user = currentUser;
+      if(currentUser == null){
+        location.reload()
+      }
+    });
+  }
 }

@@ -5,45 +5,31 @@
     <h1> My Cart</h1>
 
 </div>
-<div class="proceed">
-    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
-        Proceed to Checkout
-    </button>
-</div>
+<h1> My Cart:</h1>
 <div>
     {{cartAlert}}
 </div>
-
-<div class="cardContainer">
-    <div *ngFor="let beef of cart$ | async" class="card">
-        <div class="name" routerLink="/product/{{beef.id}}">
-            {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
-        </div>
-        <div class="imageSplit">
-            <div class="imageContainer">
-                <img src="{{beef.imageUrl}}">
+<ul>
+    <li *ngFor="let beef of cart$ | async">
+        <div>
+            <div>
+                Cut: {{beef.cut}}
             </div>
-            <div class="container">
-
-                <div class="details">
-                    <div>
-                        Weight: {{beef.weight | number:'1.0':'en-US'}} lbs
-                    </div>
-                    <div>
-                        Price/lb: $ {{beef.price | number:'1.0':'en-US'}}
-                    </div>
-                    <div>
-                        Price: $ {{beef.weight * beef.price |number:'1.0':'en-US'}}
-                    </div>
-                </div>
+            <div>
+                Grade: {{beef.grade}}
             </div>
-        </div>
-        <div class="remove">
-            <button (click)="removeFromCart(beef.id!)" class="material-symbols-outlined">
-                delete
+            <div>
+                Amount: {{beef.weight}}
+            </div>
+            <div>
+                Price: {{beef.weight * beef.price}}
+            </div>
+            <button (click)="removeFromCart(beef.id!)">
+                Remove
             </button>
         </div>
-    </div>
-
-
-</div>
+    </li>
+    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="!isEmpty">
+        Proceed to Checkout
+    </button>
+</ul>

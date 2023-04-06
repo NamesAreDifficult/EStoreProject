@@ -10,7 +10,7 @@
             </div>
             <div class="productInfo">
                 <div>
-                    <div class="title">{{beef.grade}}-{{beef.cut}}</div>
+                    <div class="title">{{beef.grade | uppercase}}-{{beef.cut | titlecase}}</div>
                     <div>
                         ${{beef.price.toFixed(2) | number:'1.0':'en-US'}}/lb
                     </div>
@@ -36,18 +36,19 @@
                 <div *ngIf="user === null">
                     <button routerLink="/login">Login</button>
                 </div>
-
             </div>
         </div>
     </div>
+</div>
+
 
     <div class="alert">
         {{productAlert}}
     </div>
     <div class="checkoutButton">
-        <button class="material-symbols-outlined" routerLink="/checkout" [disabled]="beef.weight === 0">
+
+        <button *ngIf="user&&!user?.admin"class="material-symbols-outlined" routerLink="/cart" [disabled]="beef?.weight === 0">
+
             shopping_cart_checkout
         </button>
     </div>
-
-</div>
