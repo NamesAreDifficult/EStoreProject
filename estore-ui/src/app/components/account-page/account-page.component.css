@@ -6,3 +6,9 @@ div {
   margin: 3% auto;
   padding: 3%;
 }
+
+.title {
+  text-align: center;
+  font-family: "Anton", sans-serif;
+  font-size: xx-large;
+}
