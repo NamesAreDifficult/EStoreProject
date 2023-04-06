@@ -1,7 +1,19 @@
-.data{
+.cardsMenu{
+    display: flex;
+    padding: 10px; 
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    justify-content: left;
     
 }
+.cardsMenu .cardButton{
+   padding:10px;
+   width: 300px;
+}
 
+.cardsMenu .cardButton div{
+    font-family: "Anton", sans-serif;
+}
 table {
     
     border-collapse: collapse;

@@ -2,12 +2,15 @@
 <div>
     {{checkoutAlert}}
   </div>
-<label for="creditCard">Credit Cards:</label>
+<!-- <label for="creditCard">Credit Cards:</label>
 <ul>
-    <form>
-    <label *ngFor="let card of cards$ | async">
-        <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}">
-        <div>
+    <select name="cards" id="cards"><
+    <option *ngFor="let card of cards$ | async">Card Number: {{card.number}} </option>
+        <!-- <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}"> -->
+       
+            
+     <!-- </select>   --> 
+        <!-- <div>
             <div>
                 Card Number: {{card.number}} 
             </div>
@@ -17,10 +20,28 @@
             <div>
                 CVV: {{card.cvv}}
             </div>
+        </div> -->
+
+<div class="cardsMenu">
+    <div class="cards" *ngFor="let card of cards$ | async">
+        <div class="cardButton">
+            <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
+            <div>
+                Card Number: {{card.number}}
+            </div>
+            <div>
+                Expiration Date: {{card.expiration}}
+            </div>
+            <div>
+                CVV: {{card.cvv}} 
+            </div>
+        </button>
         </div>
-    </label>
-    </form>
-</ul>
+    </div>
+</div>
+   
+    
+<!-- </ul> -->
 <div class="data">
 <label for="userCart">My Order:</label>
 <table id = "order" class="order" style="width:100%"></table>
