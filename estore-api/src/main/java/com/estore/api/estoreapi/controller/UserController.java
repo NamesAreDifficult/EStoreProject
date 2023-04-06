@@ -59,7 +59,7 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @GetMapping("")
-  public ResponseEntity<User[]> GetUsers() {
+  public ResponseEntity<User[]> getUsers() {
     try {
       return new ResponseEntity<>(this.userDao.GetUsers(), HttpStatus.OK);
     } catch (IOException e) {
@@ -297,7 +297,7 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @DeleteMapping("/{username}")
-  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
+  public ResponseEntity<Boolean> deleteUser(@PathVariable String username) {
     try {
       User user = this.userDao.GetUser(username);
       if(user == null){
