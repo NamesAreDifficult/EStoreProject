@@ -152,6 +152,7 @@ h1 {
    margin: 5%;
    display: flex;
    flex-direction: column;
+   justify-content: space-between;
 }
 
 .name {
@@ -161,7 +162,7 @@ h1 {
 }
 
 .imageContainer {
-   width: 50%;
+   width: 70%;
 }
 
 .imageSplit {
@@ -175,9 +176,16 @@ img {
    object-fit: contain;
 }
 
+.remove {
+   display: flex;
+   justify-content: center;
+   width: 100%;
+}
+
 .remove button {
    background-color: crimson;
    border-radius: 10%;
+   width: 30%;
 }
 
 .remove button:hover {
@@ -205,6 +213,11 @@ img {
 .proceed button:hover {
    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
    transform: scale(1.1);
+}
 
-
+.details {
+   padding-left: 10%;
+   text-align: left;
+   font-family: "Anton", sans-serif;
+   font-size: medium;
 }

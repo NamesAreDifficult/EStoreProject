@@ -26,8 +26,6 @@
             <div class="container">
 
                 <div class="details">
-
-
                     <div>
                         Weight: {{beef.weight}} lbs
                     </div>
@@ -35,17 +33,15 @@
                         Price/lb: $ {{beef.price}}
                     </div>
                     <div>
-
                         Quantity Price: $ {{beef.weight * beef.price}}
-
                     </div>
                 </div>
-                <div class="remove">
-                    <button (click)="removeFromCart(beef.id!)" class="material-symbols-outlined">
-                        delete
-                    </button>
-                </div>
             </div>
+        </div>
+        <div class="remove">
+            <button (click)="removeFromCart(beef.id!)" class="material-symbols-outlined">
+                delete
+            </button>
         </div>
     </div>
 
