@@ -239,7 +239,7 @@ class UserFileDAOTests {
   void testAddToCart() {
   when(mockShoppingCart.addToCart(any(CartBeef.class))).thenReturn(true);
   assertDoesNotThrow(() -> {
-  assertTrue(userFileDAO.AddToCart("Joe", 1, 3.4));
+  assertTrue(userFileDAO.addToCart("Joe", 1, 3.4));
 
   });
   }
