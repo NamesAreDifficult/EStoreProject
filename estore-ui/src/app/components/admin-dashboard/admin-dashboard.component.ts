@@ -124,7 +124,7 @@ export class AdminDashboardComponent {
   // Adds new beef object to inventory if the fields are valid
   create(cut: string, weight: number, grade: string, price: number, imageUrl: string) {
     if (this.validateCreate(cut, grade)) {
-      if (Number(price.toFixed(2)) > 0) {
+      if (Number(price.toFixed(2)) > 0 && Number(weight.toFixed(2)) > 0) {
 
 
         var beef: Beef = {
