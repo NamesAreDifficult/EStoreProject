@@ -6,7 +6,6 @@ import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
-import com.estore.api.estoreapi.users.ShoppingCart;
 
 public interface UserDAO {
 
