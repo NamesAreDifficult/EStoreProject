@@ -56,6 +56,9 @@ export class ProductDetailsComponent {
 
   ngOnInit(): void {
     this.getBeef();
+    this.userService.userNotifier.subscribe(currentUser => {
+      this.user = currentUser;
+    });
   }
 
   user = this.userService.getLoggedIn()
@@ -77,8 +80,6 @@ export class ProductDetailsComponent {
       this.productAlert = "Please enter numbers only"
       return null;
     }
-
-
 
     this.shoppingService.addToCart(
       {
