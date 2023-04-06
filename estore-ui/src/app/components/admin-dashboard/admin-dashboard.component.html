@@ -17,7 +17,7 @@
 </div>
 
 <ul id="inventory" class="Inventory">Inventory
-  <table id="table" *ngFor="let beef of beef$ | async">
+  <div id="div" *ngFor="let beef of beef$ | async">
     <div class="Product">
       <label for="/product/{{beef.id}}">Name:
         {{beef.grade}} {{beef.cut}}
@@ -38,5 +38,5 @@
         (click)="update(beef, +updateWeight.value, +updatePrice.value, updateImageUrl.value); updateWeight.value = '0'; updatePrice.value = beef.price.toFixed(2); updateImageUrl.value = beef.imageUrl;">Update</button>
       <button id="delete" (click)="delete(beef.id!)">Delete</button>
     </div>
-  </table>
+  </div>
 </ul>
