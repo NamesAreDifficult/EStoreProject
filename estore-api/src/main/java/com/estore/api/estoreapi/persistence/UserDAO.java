@@ -75,6 +75,8 @@ public interface UserDAO {
      * 
      * @param username The username of the {@link Customer customer} to checkout
      * 
+     * @param cardNumber - String containing the credit card number being used at checkout
+     * 
      * @return a {@link Customer customer} object with the matching username
      *         <br>
      *         null if no {@link Customer customer} with a matching username is
@@ -82,7 +84,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    boolean Checkout(String username) throws IOException;
+    boolean Checkout(String username, String cardNumber) throws IOException;
 
     /**
      * Adds to a customer's shopping cart {@linkplain Customer customer}
