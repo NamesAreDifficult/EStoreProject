@@ -2,10 +2,9 @@
   Catalog
 </div>
 
-<div class="search">
-  <div class="material-symbols-outlined">
-    <label for="search-box"></label>
-    <input type="search" #searchBox id="search-box" (input)="search(searchBox.value)">
+<div class="material-symbols-outlined" id="searchingContainer">
+  <div class="search">
+    search<input #searchBox id="search-box" (input)="search(searchBox.value)">
   </div>
 </div>
 <div class="beefMenu">
