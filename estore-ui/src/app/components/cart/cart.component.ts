@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Beef } from '../../services/beefService/beef.service';
 import { isEmpty } from 'rxjs/operators';  
+import { User, UserService } from 'src/app/services/userService/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,13 +12,13 @@ import { isEmpty } from 'rxjs/operators';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
-
+  user!: User | null;
   cart$!: Observable<Beef[]>
   isEmpty!: boolean;
 
   cartAlert = ""
 
-  constructor(private shoppingService: CartServiceService, private logger: LoggingService) {
+  constructor(private shoppingService: CartServiceService, private userService: UserService) {
 
   }
   
@@ -28,6 +29,12 @@ export class CartComponent {
       })
     );
     this.cart$.subscribe(cart => this.isEmpty = (cart.length === 0))
+    this.userService.userNotifier.subscribe(currentUser => {
+      this.user = currentUser;
+      if(currentUser == null){
+        location.reload()
+      }
+    });
   }
 
   removeFromCart(id: number) {
