@@ -4,7 +4,7 @@
 
 </div>
 
-<div *ngIf="isEmpty === false">
+<div id="cardsHead" *ngIf="isEmpty === false">
     <div class="cardTitle">
         <div>
             Select a card:
@@ -14,7 +14,7 @@
         </div>
 
     </div>
-    <div class="cardsMenu">
+    <div id="cardsMenu" class="cardsMenu">
         <div class="cards" *ngFor="let card of cards$ | async">
             <div class="cardButton">
                 <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
@@ -32,10 +32,10 @@
         </div>
     </div>
 </div>
-<div style="display: flex">
+<div id="orderTitle" *ngIf="isEmpty === false" style="display: flex">
     <h2 class="title" for="userCart">My Order</h2>
 </div>
-<div class="data">
+<div *ngIf="isEmpty === false" class="data">
     <table id="order" class="orderTable">
         <thead>
             <tr>
@@ -70,7 +70,7 @@
     </table>
 </div>
 
-<div class="checkout">
+<div *ngIf="isEmpty === false" class="checkout">
     <button id="checkoutButton" (click)="checkout()">
         Checkout
     </button>
