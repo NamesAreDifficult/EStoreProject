@@ -49,7 +49,14 @@ th {
     justify-content: center;
     width: 50%;
     margin: auto;
+    position: relative;
 }
+
+.iconContainer {
+    margin: auto;
+
+}
+
 
 .moneyContainer input:focus {
     outline: 0;

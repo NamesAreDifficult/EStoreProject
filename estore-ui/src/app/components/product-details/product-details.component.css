@@ -42,7 +42,7 @@ img {
 button {
   font-size: larger;
   color: white;
-  border-radius: 20%;
+  border-radius: 20px;
   background-color: black;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   cursor: pointer;

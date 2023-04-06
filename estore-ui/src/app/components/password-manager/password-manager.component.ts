@@ -10,25 +10,33 @@ export class PasswordManagerComponent {
   userService: UserService;
   warning: string = "";
 
-  constructor(userService: UserService){
+  constructor(userService: UserService) {
     this.userService = userService;
   }
 
-  resetPassword(oldPassword: string, newPassword: string, confirmPassword: string){
+  resetPassword(oldPassword: string, newPassword: string, confirmPassword: string) {
     this.warning = ""
     console.log(newPassword, confirmPassword)
-    if(!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{8,26}$').test(newPassword)){
+    if (!new RegExp('^[a-zA-Z0-9!@#$%^&*()-_+=?]{8,26}$').test(newPassword)) {
       this.warning = "Passwords must be between 8-26 alphanumeric and special characters. Allowed special Characters: !@#$%^&*()-_+=?";
       return;
     }
-    if(newPassword != confirmPassword){
+    if (newPassword != confirmPassword) {
       this.warning = "New password and confirmation do not match"
       return
     }
     var result = this.userService.updatePassword(oldPassword, newPassword)
     console.log(result)
-    result.subscribe(num =>{
-      switch(num){
+    result.subscribe(num => {
+      var old = document.getElementById('oldPassword') as HTMLInputElement;
+      var newP = document.getElementById('newPassword') as HTMLInputElement;
+      var confirm = document.getElementById('newPasswordConfirmation') as HTMLInputElement;
+
+      old.value = ''
+      newP.value = ''
+      confirm.value = ''
+
+      switch (num) {
         case -2:
           this.warning = "Internal server Error"
           break
