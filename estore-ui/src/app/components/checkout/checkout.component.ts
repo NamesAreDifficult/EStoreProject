@@ -58,7 +58,11 @@ export class CheckoutComponent {
           next: (any: any) => this.cart$ = this.shoppingService.checkout(this.currentCard!.number)
         }
       )
-      document.getElementById("checkoutButton")!.style.visibility = "hidden";
+      document.getElementById("checkoutButton")!.style.display = "none";
+      document.getElementById("cardsHead")!.style.display = "none";
+      document.getElementById("cardsMenu")!.style.display = "none";
+      document.getElementById("orderTitle")!.style.display = "none";
+      document.getElementById("order")!.style.display = "none";
       this.checkoutAlert = "Thanks for shopping at Cow-Related Pun!"
     }
   }
