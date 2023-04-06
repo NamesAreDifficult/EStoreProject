@@ -31,6 +31,7 @@ export class UserService {
   createCustomer(customer: LoginUser): Observable<any> {
     return this.http.post<User>(this.userUrl + "/customer", customer, this.httpOptions).pipe(
       tap(_ => this.logger.add(`Created customer: ${customer.username} ${customer.password}`)),
+
       catchError(err => {
         this.logger.handleError<any>('createCustomer')
         return throwError((() => new Error(err.status)));
@@ -79,7 +80,6 @@ export class UserService {
     this.logger.add(`signUserIn: ${user.username}`)
     localStorage.setItem("user", user.username);
     localStorage.setItem("admin", String(user.admin));
-    this.userNotifier.emit(user);
   }
 
   public logout() {

@@ -17,7 +17,6 @@ export class NewUserComponent implements OnInit {
     next: (user: User) => {
       this.userAlert = `Welcome ${user.username}!`;
       this.userService.signUserIn(user);
-      location.reload();
     },
     error: (err: Error) => (this.catchStatusCode(Number(err.message)))
   }
@@ -65,6 +64,10 @@ export class NewUserComponent implements OnInit {
       password: password
     }
     this.userService.createCustomer(newUser)
-      .subscribe(this.Observer);
+      .subscribe(
+        this.Observer
+      );
+    location.reload();
+
   }
 }

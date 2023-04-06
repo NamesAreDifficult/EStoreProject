@@ -45,7 +45,7 @@ export class PasswordManagerComponent {
           this.warning = "Internal server error"
           break
         default:
-          this.warning = "Unknown error occured"
+          this.warning = "Unkown error occured"
       }
     })
   }

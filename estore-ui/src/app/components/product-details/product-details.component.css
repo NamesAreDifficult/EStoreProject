@@ -19,6 +19,8 @@ img {
   justify-content: space-evenly;
 }
 
+
+
 .addButton {
   font-family: "Anton", sans-serif;
   text-align: center;
@@ -33,10 +35,6 @@ img {
   height: 100%;
   margin: auto;
   width: 40%;
-}
-
-.disabledAddButton {
-  opacity: 0.5;
 }
 
 button {

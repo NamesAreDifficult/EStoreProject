@@ -48,10 +48,4 @@ public class CreditCardTests {
         CreditCard difCard = new CreditCard("1234567890123457", "4/20", "420");
         assertFalse(creditCard.equals(difCard));
     }
-
-    @Test
-    public void testHashCode(){
-      CreditCard testCard = new CreditCard("1234567890123456", "4/20", "420"); 
-      assertEquals(965964379, testCard.hashCode());
-    }
 }

@@ -2,26 +2,6 @@
 <div>
     {{checkoutAlert}}
   </div>
-<label for="creditCard">Credit Cards:</label>
-<ul>
-    <form>
-    <label *ngFor="let card of cards$ | async">
-        <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}">
-        <div>
-            <div>
-                Card Number: {{card.number}} 
-            </div>
-            <div>
-                Expiration Date: {{card.expiration}}
-            </div>
-            <div>
-                CVV: {{card.cvv}}
-            </div>
-        </div>
-    </label>
-    </form>
-</ul>
-<label for="userCart">Your Shopping Cart:</label>
 <ul>
     <li *ngFor="let beef of cart$ | async">
         <div>
@@ -36,6 +16,7 @@
             </div>
         </div>
     </li>
+    
     <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
         Checkout
     </button>

@@ -3,7 +3,9 @@ div {
     background-color: transparent;
     align-items: center;
     justify-content: center;
+    width: 5%;
     padding: 1%;
+    color: #FFFEFE;
     caret-color: transparent;
     height: 4vw;
     width: 4vw;

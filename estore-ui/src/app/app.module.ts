@@ -23,7 +23,6 @@ import { AccountPageComponent } from './components/account-page/account-page.com
 import { PasswordManagerComponent } from './components/password-manager/password-manager.component';
 import { BaseTemplateComponent } from './components/base-template/base-template.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { CardComponent } from './components/card/card.component';
 
 
 @NgModule({
@@ -41,8 +40,7 @@ import { CardComponent } from './components/card/card.component';
     AccountPageComponent,
     PasswordManagerComponent,
     BaseTemplateComponent,
-    CheckoutComponent,
-    CardComponent
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
