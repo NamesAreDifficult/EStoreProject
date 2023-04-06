@@ -148,7 +148,7 @@ public interface UserDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    Boolean RemoveFromCart(String username, int beefId) throws IOException;
+    Boolean removeFromCart(String username, int beefId) throws IOException;
 
     /**
      * Updates a {@linkplain User user} password

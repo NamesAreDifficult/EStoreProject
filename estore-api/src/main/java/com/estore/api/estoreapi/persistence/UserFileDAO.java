@@ -167,7 +167,7 @@ public class UserFileDAO implements UserDAO {
   /**
    * Returns a customer if the username refers to a customer
    */
-  private Customer GetCustomer(String username) throws IOException {
+  private Customer getCustomer(String username) throws IOException {
     synchronized (users) {
       User user = getUser(username);
       if(user == null)
@@ -242,7 +242,7 @@ public class UserFileDAO implements UserDAO {
   @Override
   public boolean checkout(String username, String cardNumber) throws IOException {
     synchronized (users) {
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return false;
       }
@@ -263,7 +263,7 @@ public class UserFileDAO implements UserDAO {
   public Boolean addToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if(customer == null){
         return false;
       }
@@ -277,10 +277,10 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean RemoveFromCart(String username, int beefId) throws IOException {
+  public Boolean removeFromCart(String username, int beefId) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if(customer == null){
         return false;
       }
@@ -297,7 +297,7 @@ public class UserFileDAO implements UserDAO {
   public Boolean clearCart(String username) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if(customer == null){
         return false;
       }
@@ -350,7 +350,7 @@ public class UserFileDAO implements UserDAO {
   public Boolean addCard(String username, CreditCard creditCard) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return false;
       }
@@ -367,7 +367,7 @@ public class UserFileDAO implements UserDAO {
   public Boolean removeCard(String username, CreditCard creditCard) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return false;
       }
@@ -383,7 +383,7 @@ public class UserFileDAO implements UserDAO {
   @Override
   public CreditCard[] getCards(String username) throws IOException {
     synchronized (users) {
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return null;
       }

@@ -248,13 +248,13 @@ class UserFileDAOTests {
   //Test for when an item is not removed from the cart
   when(mockShoppingCart.removeFromCart(anyInt())).thenReturn(true);
   assertDoesNotThrow(() -> {
-  assertTrue(userFileDAO.RemoveFromCart("Joe", 1));
+  assertTrue(userFileDAO.removeFromCart("Joe", 1));
   });
 
   //Test for when an item is not removed from cart
   when(mockShoppingCart.removeFromCart(anyInt())).thenReturn(false);
   assertDoesNotThrow(() -> {
-  assertFalse(userFileDAO.RemoveFromCart("Joe", 0));
+  assertFalse(userFileDAO.removeFromCart("Joe", 0));
   });
   }
 

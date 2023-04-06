@@ -231,7 +231,7 @@ public class ShoppingController {
                                     inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                 }
-                boolean result = userDAO.RemoveFromCart(username, beefId);
+                boolean result = userDAO.removeFromCart(username, beefId);
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
