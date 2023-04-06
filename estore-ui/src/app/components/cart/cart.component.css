@@ -133,6 +133,8 @@ h1 {
    padding-top: 30px;
    display: flex;
    padding-bottom: 30px;
+   font-size: xx-large;
+   font-family: "Anton", sans-serif;
 }
 
 
@@ -163,7 +165,18 @@ h1 {
 }
 
 .imageContainer {
-   width: 45%;
+   width: 50%;
+}
+
+.col {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+.row {
+   display: flex;
+   flex-direction: row;
 }
 
 .imageSplit {
@@ -178,20 +191,22 @@ img {
 }
 
 .remove {
+
    display: flex;
-   justify-content: center;
+   justify-content: right;
    width: 100%;
 }
 
 .remove button {
    background-color: crimson;
    border-radius: 10%;
-   width: 30%;
+   width: 20%;
+   height: 20%;
+   font-size: xx-large;
 }
 
 .remove button:hover {
    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-
 }
 
 
@@ -221,4 +236,49 @@ img {
    text-align: left;
    font-family: "Anton", sans-serif;
    font-size: medium;
+}
+
+.beefMenu {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+.item {
+   background-color: white;
+   border: 2px solid black;
+   border-radius: 15px;
+   width: 70%;
+   margin: 1%;
+   font-family: "Anton", sans-serif;
+   font-size: medium;
+   text-align: right;
+}
+
+#goToCheckout {
+   width: 30%;
+   height: 4vw;
+   font-family: "Anton", sans-serif;
+   font-size: x-large;
+}
+
+button {
+   background-color: black;
+   color: white;
+}
+
+button:hover {
+   background-color: white;
+   color: black;
+}
+
+.buttonContainer {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.title {
+   font-size: xx-large;
+   text-decoration: underline;
 }
