@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
@@ -75,11 +76,14 @@ public class ShoppingController {
                 int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
-                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
-                            retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
-                    beefs[index++] = copyBeef;
+                    try{
+                        Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
+                                retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
+                        beefs[index++] = copyBeef;
+                    }catch(NullPointerException e){
+                        customer.getCart().removeFromCart(cartBeef.getId());
+                    }
                 }
-
                 return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
             }
 
