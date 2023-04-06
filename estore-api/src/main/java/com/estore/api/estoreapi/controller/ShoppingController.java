@@ -81,7 +81,7 @@ public class ShoppingController {
                         customer.getCart().removeFromCart(cartBeef.getId());
                     }
                 }
-                return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
+                return new ResponseEntity<>(beefs, HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -113,10 +113,10 @@ public class ShoppingController {
                 }
                 boolean ret = userDAO.Checkout(customer.getUsername(), cardNumber);
                 if (ret) {
-                    return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
+                    return new ResponseEntity<>(ret, HttpStatus.OK);
                 }
                 else {
-                    return new ResponseEntity<Boolean>(ret, HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
                 }
             }
 
@@ -161,7 +161,7 @@ public class ShoppingController {
                     inventoryDao.updateBeef(copyBeef);
                     userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
-                    return new ResponseEntity<CartBeef>(cartBeef, HttpStatus.OK);
+                    return new ResponseEntity<>(cartBeef, HttpStatus.OK);
 
                 }
 
@@ -197,7 +197,7 @@ public class ShoppingController {
                     inventoryDao.updateBeef(copyBeef);
                 }
                 customer.getCart().clearCart();
-                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                return new ResponseEntity<>(true, HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -232,7 +232,7 @@ public class ShoppingController {
                     inventoryDao.updateBeef(copyBeef);
                 }
                 boolean result = userDAO.RemoveFromCart(username, beefId);
-                return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
