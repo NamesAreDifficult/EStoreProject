@@ -14,37 +14,40 @@
     {{cartAlert}}
 </div>
 
-
-<li *ngFor="let beef of cart$ | async" class='cartList'>
-    <div class="card">
-        <div class="image">
-            <img src="{{beef.imageUrl}}">
-
+<div class="cardContainer">
+    <div *ngFor="let beef of cart$ | async" class="card">
+        <div class="name">
+            {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
         </div>
-        <div class="container">
-            <div class="name">
-                {{beef.grade}} {{beef.cut}}
+        <div class="imageSplit">
+            <div class="imageContainer">
+                <img src="{{beef.imageUrl}}">
             </div>
-            <div class="details">
+            <div class="container">
+
+                <div class="details">
 
 
-                <div>
-                    Weight: {{beef.weight}} lbs
+                    <div>
+                        Weight: {{beef.weight}} lbs
+                    </div>
+                    <div>
+                        Price/lb: $ {{beef.price}}
+                    </div>
+                    <div>
+
+                        Quantity Price: $ {{beef.weight * beef.price}}
+
+                    </div>
                 </div>
-                <div>
-                    Price/lb: $ {{beef.price}}
+                <div class="remove">
+                    <button (click)="removeFromCart(beef.id!)" class="material-symbols-outlined">
+                        delete
+                    </button>
                 </div>
-                <div>
-
-                    Quantity Price: $ {{beef.weight * beef.price}}
-
-                </div>
-            </div>
-            <div class="remove">
-                <button (click)="removeFromCart(beef.id!)">
-                    Remove
-                </button>
             </div>
         </div>
     </div>
-</li>
+
+
+</div>
