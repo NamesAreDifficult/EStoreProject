@@ -32,10 +32,10 @@
         </div>
     </div>
 </div>
-<div style="display: flex">
+<div *ngIf="isEmpty === false" style="display: flex">
     <h2 class="title" for="userCart">My Order</h2>
 </div>
-<div class="data">
+<div *ngIf="isEmpty === false" class="data">
     <table id="order" class="orderTable">
         <thead>
             <tr>
@@ -70,7 +70,7 @@
     </table>
 </div>
 
-<div class="checkout">
+<div *ngIf="isEmpty === false" class="checkout">
     <button id="checkoutButton" (click)="checkout()">
         Checkout
     </button>
