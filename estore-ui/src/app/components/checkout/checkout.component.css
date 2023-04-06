@@ -1,0 +1,134 @@
+h1 {
+  text-align: center;
+  font-family: "Anton", sans-serif;
+  padding-top: 20px;
+  font-size: 50px;
+  ;
+}
+
+.cardsMenu {
+  display: flex;
+  padding: 10px;
+  font-family: "Anton", sans-serif;
+  justify-content: space-evenly;
+}
+
+.cardButton {
+  padding: 10px;
+  display: flex;
+  margin: 0 auto;
+
+}
+
+.cardButton button {
+  width: 15vw;
+  height: 7vw;
+  font-size: medium;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cardButton button:focus {
+  background-color: #42533F;
+  ;
+  color: white;
+}
+
+.data {
+  display: flex;
+  position: relative;
+}
+
+.title {
+  margin: 0 auto;
+}
+
+.total {
+  margin: 0 auto;
+}
+
+.cardsMenu .cardButton div {
+  font-family: "Anton", sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 2px;
+  justify-content: center;
+  margin: 0 auto;
+  width: 50%;
+  border: solid 1px black;
+  border-radius: 20px;
+}
+
+
+tr,
+td {
+  padding: 10px 15px;
+  border-left: none;
+  border-right: none;
+  border-top: solid 1px black;
+  border-top: solid 1px black;
+}
+
+td {
+  text-align: center;
+}
+
+.checkout {
+  padding: 10px;
+  width: 40px;
+}
+
+
+
+.warning {
+  padding-top: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.cardTitle {
+  margin: 0 auto;
+  padding-left: 60px;
+  font-family: "Anton", sans-serif;
+  font-size: larger;
+
+}
+
+.cardTitle h1 {
+  text-align: left;
+  font-size: 40px;
+
+}
+
+.checkout button {
+  height: 6vw;
+  width: 20vw;
+  font-size: x-large;
+  font-family: "Anton", sans-serif;
+  border-radius: 10px;
+
+}
+
+button {
+  transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+.checkout {
+  margin-top: 5%;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.checkout button:active {
+  background-color: #42533F;
+  ;
+  color: white;
+}
