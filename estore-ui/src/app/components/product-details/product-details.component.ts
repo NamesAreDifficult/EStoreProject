@@ -58,6 +58,9 @@ export class ProductDetailsComponent {
     this.getBeef();
     this.userService.userNotifier.subscribe(currentUser => {
       this.user = currentUser;
+      if(currentUser == null){
+        this.productAlert = ""
+      }
     });
   }
 
