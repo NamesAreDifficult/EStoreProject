@@ -37,7 +37,7 @@ class InventoryControllerTests {
   void setupInventoryController(){
     mockInventoryDAO = mock(InventoryDAO.class);
     inventoryController = new InventoryController(mockInventoryDAO); 
-    testBeef = new Beef(1, "Ribeye", (float)11.2, "A5", 19.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    testBeef = new Beef(1, "Ribeye", 11.2, "A5", 19.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
   }
 
@@ -165,10 +165,10 @@ class InventoryControllerTests {
   }
 
   @Test
-  void testUpdateBeef() throws IOException{
-    Beef updateBeef = new Beef(1, "Ribeye", (float)1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    Beef expectedBeef = new Beef(1, "Ribeye", (float)12.2, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    
+  public void testUpdateBeef() throws IOException{
+    Beef updateBeef = new Beef(1, "Ribeye", 1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef expectedBeef = new Beef(1, "Ribeye", 12.2, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+
     when(mockInventoryDAO.updateBeef(updateBeef)).thenReturn(expectedBeef);
     when(mockInventoryDAO.getBeef(1)).thenReturn(testBeef);
     ResponseEntity<Beef> response = inventoryController.updateBeef(updateBeef);
@@ -178,8 +178,8 @@ class InventoryControllerTests {
   }
 
   @Test 
-  void testNotFoundUpdateBeef() throws IOException{
-    Beef updateBeef = new Beef(4, "Ribeye", (float)1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+  public void testNotFoundUpdateBeef() throws IOException{
+    Beef updateBeef = new Beef(4, "Ribeye", 1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
     when(mockInventoryDAO.updateBeef(updateBeef)).thenReturn(null);
     ResponseEntity<Beef> response = inventoryController.updateBeef(updateBeef);
@@ -189,7 +189,7 @@ class InventoryControllerTests {
 
   @Test 
   void testBadRequestUpdateBeef() throws IOException{
-    Beef updateBeef = new Beef(1, "Ribeye", (float)1, "A5", -14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef updateBeef = new Beef(1, "Ribeye", 1, "A5", -14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     when(mockInventoryDAO.getBeef(1)).thenReturn(updateBeef);
     ResponseEntity<Beef> response = inventoryController.updateBeef(updateBeef);

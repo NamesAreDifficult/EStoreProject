@@ -258,7 +258,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean addToCart(String username, int beefId, float weight) throws IOException {
+  public Boolean AddToCart(String username, int beefId, double weight) throws IOException {
     synchronized (users) {
 
       Customer customer = getCustomer(username);
