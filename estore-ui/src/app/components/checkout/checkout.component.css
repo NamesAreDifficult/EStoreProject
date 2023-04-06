@@ -1,14 +1,34 @@
+
+h1{
+    text-align: center;
+    font-family: "Anton", sans-serif;
+    padding-top: 20px;
+    font-size: 50px;;
+}
 .cardsMenu{
     display: flex;
     padding: 10px; 
     text-align: center;
     font-family: "Anton", sans-serif;
     justify-content: left;
+    margin:0 auto;
     
 }
-.cardsMenu .cardButton{
+.cardButton{
    padding:10px;
-   width: 300px;
+   display: flex;
+   margin:0 auto;
+   
+}
+.cardButton button{
+    width: 600px;
+    height: 200px;
+    font-size: 30px;
+    border-radius: 10px;
+}
+ .cardButton button:focus{
+   background-color:#42533F; ;
+   color:white;
 }
 
 .data{
@@ -50,3 +70,42 @@ td {
     padding: 10px;
     width: 40px;
 }
+
+  
+
+  .warning{
+    padding-top: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .cardTitle{
+    display: flex;
+    margin: 0 auto;
+    padding-left: 60px;
+    
+  }
+  .cardTitle h1{
+    text-align: left;
+    font-size: 40px;
+
+  }
+
+  .checkout button{
+    height: 100px;
+    width: 400px;
+    font-size: 30px;
+    font-family: "Anton", sans-serif;
+    border-radius: 10px;
+  }
+
+  .checkout{
+    display: flex;
+    margin: 0 auto;
+  }
+  
+.checkout button:active{
+    background-color:#42533F; ;
+    color:white;
+ }
+
