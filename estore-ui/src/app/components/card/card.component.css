@@ -47,7 +47,10 @@ button {
     letter-spacing: 1px;
     font-size: 20px;
     transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
+.deleteButton{
+  margin: auto;
 }
 
 button:hover {
