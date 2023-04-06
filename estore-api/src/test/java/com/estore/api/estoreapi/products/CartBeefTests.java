@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
 //@SpringBootTest
-public class CartBeefTests {
+class CartBeefTests {
     
   @Test
-  public void testCtor(){
+  void testCtor(){
     //setup
     int expectedId = 2;
     float expectedWeight = (float)10.1;
@@ -28,7 +28,7 @@ public class CartBeefTests {
   }
 
   @Test
-  public void testGetID(){
+  void testGetID(){
     int expectedId = 2;
     float expectedWeight = (float)10.1;
 
@@ -37,7 +37,7 @@ public class CartBeefTests {
   }
 
   @Test 
-  public void testOverloadCtor() {
+  void testOverloadCtor() {
     //setup
     int expectedId = 2;
     float expectedWeight = (float) 10.1;
@@ -54,7 +54,7 @@ public class CartBeefTests {
     
 
   @Test
-  public void testEqual(){
+  void testEqual(){
      //Setup
     CartBeef testCartBeef1 = new CartBeef( 2, (float)10.1);
     CartBeef testCartBeef2 = new CartBeef(2, (float)12.1);

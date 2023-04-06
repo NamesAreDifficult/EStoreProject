@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.products.Beef;
@@ -33,7 +32,6 @@ import com.estore.api.estoreapi.users.CreditCard;
 @RestController
 @RequestMapping("shopping")
 public class ShoppingController {
-    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private InventoryDAO inventoryDao;
     private UserDAO userDAO;
 
@@ -83,7 +81,7 @@ public class ShoppingController {
                         customer.getCart().removeFromCart(cartBeef.getId());
                     }
                 }
-                return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
+                return new ResponseEntity<>(beefs, HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -105,7 +103,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("/checkout/{username}/{cardNumber}")
-    public ResponseEntity<Boolean> CheckoutShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
+    public ResponseEntity<Boolean> checkoutShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
         try {
             Customer customer = this.getCustomer(username);
             if (customer != null) {
@@ -113,12 +111,12 @@ public class ShoppingController {
                 if (newCard == null){
                     return new ResponseEntity<>(HttpStatus.CONFLICT);
                 }
-                boolean ret = userDAO.Checkout(customer.getUsername(), cardNumber);
+                boolean ret = userDAO.checkout(customer.getUsername(), cardNumber);
                 if (ret) {
-                    return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
+                    return new ResponseEntity<>(ret, HttpStatus.OK);
                 }
                 else {
-                    return new ResponseEntity<Boolean>(ret, HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
                 }
             }
 
@@ -140,7 +138,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("/{username}")
-    public ResponseEntity<CartBeef> AddToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
+    public ResponseEntity<CartBeef> addToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
 
         try {
             if (cartBeef.getWeight() <= 0) {
@@ -161,9 +159,9 @@ public class ShoppingController {
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
                                     retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
-                    userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
+                    userDAO.addToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
-                    return new ResponseEntity<CartBeef>(cartBeef, HttpStatus.OK);
+                    return new ResponseEntity<>(cartBeef, HttpStatus.OK);
 
                 }
 
@@ -186,7 +184,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/clear/{username}")
-    public ResponseEntity<Boolean> ClearShoppingCart(@PathVariable String username) {
+    public ResponseEntity<Boolean> clearShoppingCart(@PathVariable String username) {
         try {
 
             Customer customer = this.getCustomer(username);
@@ -194,14 +192,12 @@ public class ShoppingController {
             if (customer != null) {
                 for (CartBeef retrievedBeef : customer.getCart().getContents()){
                     Beef inventoryBeef = inventoryDao.getBeef(retrievedBeef.getId());
-                    if (retrievedBeef != null) {
-                        Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
+                    Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
                                         inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
-                        inventoryDao.updateBeef(copyBeef);
-                    }
+                    inventoryDao.updateBeef(copyBeef);
                 }
                 customer.getCart().clearCart();
-                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                return new ResponseEntity<>(true, HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -223,7 +219,7 @@ public class ShoppingController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/{username}/{beefId}")
-    public ResponseEntity<Boolean> RemoveFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
+    public ResponseEntity<Boolean> removeFromShoppingCart(@PathVariable String username, @PathVariable int beefId) {
         try {
             Customer customer = this.getCustomer(username);
 
@@ -235,8 +231,8 @@ public class ShoppingController {
                                     inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                 }
-                boolean result = userDAO.RemoveFromCart(username, beefId);
-                return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+                boolean result = userDAO.removeFromCart(username, beefId);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -244,7 +240,7 @@ public class ShoppingController {
         }
     }
 
-    /*
+    /**
      * Returns a customer given a username
      * 
      * @param username username of the customer
@@ -252,12 +248,12 @@ public class ShoppingController {
      * @return Customer instance
      */
     private Customer getCustomer(String username) throws IOException {
-        User user = this.userDAO.GetUser(username);
+        User user = this.userDAO.getUser(username);
 
         // Checks if user exists and is a customer
-        if (user != null && (user instanceof Customer)) {
-            Customer customer = (Customer) user;
-            return customer;
+        if (user instanceof Customer) {
+            return (Customer) user;
+
         }
         return null;
     }

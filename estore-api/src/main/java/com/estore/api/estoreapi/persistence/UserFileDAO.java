@@ -71,7 +71,7 @@ public class UserFileDAO implements UserDAO {
     return true;
   }
 
-  /*
+  /**
    * Returns all the customers
    * 
    * @return an array of all the customers
@@ -93,7 +93,7 @@ public class UserFileDAO implements UserDAO {
     return result;
   }
 
-  /*
+  /**
    * Returns all the admins
    * 
    * @return an array of all the admins
@@ -164,12 +164,12 @@ public class UserFileDAO implements UserDAO {
     return userArray;
   }
 
-  /*
+  /**
    * Returns a customer if the username refers to a customer
    */
-  private Customer GetCustomer(String username) throws IOException {
+  private Customer getCustomer(String username) throws IOException {
     synchronized (users) {
-      User user = GetUser(username);
+      User user = getUser(username);
       if(user == null)
         return null;
       // Check if the user is an admin
@@ -177,9 +177,7 @@ public class UserFileDAO implements UserDAO {
         return null;
 
       // Cast the user to a customer
-      Customer customer = (Customer) user;
-
-      return customer;
+      return (Customer) user;
     }
   }
 
@@ -187,7 +185,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public User GetUser(String username) throws IOException {
+  public User getUser(String username) throws IOException {
     synchronized (users) {
       return users.get(username);
     }
@@ -197,7 +195,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public User[] GetUsers() throws IOException {
+  public User[] getUsers() throws IOException {
     synchronized (users) {
       return getUserArray();
     }
@@ -207,7 +205,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean DeleteUser(String username) throws IOException {
+  public boolean deleteUser(String username) throws IOException {
 
     synchronized (users) {
       if (users.containsKey(username)) {
@@ -223,9 +221,9 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean IsAdmin(String username) throws IOException {
+  public boolean isAdmin(String username) throws IOException {
     synchronized (users) {
-      User user = GetUser(username);
+      User user = getUser(username);
 
       if (user != null) {
         return user.isAdmin();
@@ -240,9 +238,9 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean Checkout(String username, String cardNumber) throws IOException {
+  public boolean checkout(String username, String cardNumber) throws IOException {
     synchronized (users) {
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return false;
       }
@@ -250,7 +248,7 @@ public class UserFileDAO implements UserDAO {
       if (card == null){
         return false;
       }
-      boolean ret = customer.getCart().Checkout();
+      boolean ret = customer.getCart().checkout();
       save();
       return ret;
     }
@@ -260,10 +258,10 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean AddToCart(String username, int beefId, float weight) throws IOException {
+  public Boolean addToCart(String username, int beefId, float weight) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if(customer == null){
         return false;
       }
@@ -277,10 +275,10 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean RemoveFromCart(String username, int beefId) throws IOException {
+  public Boolean removeFromCart(String username, int beefId) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if(customer == null){
         return false;
       }
@@ -294,10 +292,10 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean ClearCart(String username) throws IOException {
+  public Boolean clearCart(String username) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if(customer == null){
         return false;
       }
@@ -350,7 +348,7 @@ public class UserFileDAO implements UserDAO {
   public Boolean addCard(String username, CreditCard creditCard) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return false;
       }
@@ -367,7 +365,7 @@ public class UserFileDAO implements UserDAO {
   public Boolean removeCard(String username, CreditCard creditCard) throws IOException {
     synchronized (users) {
 
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return false;
       }
@@ -383,7 +381,7 @@ public class UserFileDAO implements UserDAO {
   @Override
   public CreditCard[] getCards(String username) throws IOException {
     synchronized (users) {
-      Customer customer = GetCustomer(username);
+      Customer customer = getCustomer(username);
       if (customer == null){
         return null;
       }
@@ -397,7 +395,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}}
    */
   public User loginUser(String username, String password) throws IOException{
-    User user = GetUser(username);
+    User user = getUser(username);
     if(user == null){
       return null;
     }
@@ -411,7 +409,7 @@ public class UserFileDAO implements UserDAO {
    * {@inheritDoc}}
    */
   public int updatePassword(String username, String oldPassword, String newPassword) throws IOException{
-    User targetUser = GetUser(username);
+    User targetUser = getUser(username);
     if(targetUser == null){
       return 1;
     }

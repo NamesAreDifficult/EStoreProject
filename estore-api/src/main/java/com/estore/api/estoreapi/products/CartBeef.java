@@ -34,7 +34,7 @@ public class CartBeef {
     this.weight = weight;
   }
 
-  /*
+  /**
   * Constsructor that uses a {@linkplain Beef beef} object and the weight the
   * user wants
   * 
@@ -48,7 +48,7 @@ public class CartBeef {
     this.weight = weight;
   }
 
-  /*
+  /**
   * Gets the id of the {@linkplain CartBeef cartBeef}
   * 
   * @return - id of the {@linkplain CartBeef cartBeef}
@@ -57,7 +57,7 @@ public class CartBeef {
     return this.id;
   }
 
-  /*
+  /**
   * Gets the weight of the {@linkplain CartBeef cartBeef}
   * 
   * @return - weight of the {@linkplain CartBeef cartBeef}
@@ -66,7 +66,7 @@ public class CartBeef {
     return this.weight;
   }
 
-  /*
+  /**
   * Adds new weight to an existing CartBeef object
   * 
   * @param newWeight: Weight to be added to the CartBeef object
@@ -75,7 +75,7 @@ public class CartBeef {
     this.weight += newWeight;
   }
 
-  /*
+  /**
   * Checks if another object is an equal{@linkplain CartBeef cartBeef}
   * 
   * @return - if the other object is an equal {@linkplain CartBeef cartBeef}
@@ -91,7 +91,7 @@ public class CartBeef {
     return false;
   }
 
-  /*
+  /**
    * {@inheritDoc}
    */
   @Override
