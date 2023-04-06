@@ -25,7 +25,7 @@
             </button>
         </div>
     </li>
-    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
+    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="!isEmpty">
         Proceed to Checkout
     </button>
 </ul>
