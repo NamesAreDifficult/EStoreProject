@@ -1,21 +1,21 @@
 <p>Credit Cards</p>
 <div>
     {{cardAlert}}
-  </div>
-  <div class="Add Card">
+</div>
+<div class="Add Card">
     <label for="number">Card Number:</label>
-    <input id="number" #number />
+    <input id="number" #number placeholder="xxxxxxxxxxxxxxxx" />
     <label for="expiration">Expiration Date:</label>
-    <input id="expiration" #expiration />
+    <input id="expiration" #expiration placeholder="mm/yy" />
     <label for="cvv">CVV:</label>
-    <input id="cvv" #cvv />
+    <input id="cvv" #cvv placeholder="xxx" />
     <button id="create" (click)="addCard(number.value, expiration.value, cvv.value)">Create</button>
-  </div>
+</div>
 <ul>
     <label *ngFor="let card of cards$ | async">
         <div>
             <div>
-                Card Number: {{card.number}} 
+                Card Number: {{card.number}}
             </div>
             <div>
                 Expiration Date: {{card.expiration}}
