@@ -1,42 +1,115 @@
-<h1>Admin Dashboard</h1>
-<div>
-  {{adminAlert}}
-</div>
-<div class="Create Beef">
-  <label for="cut">Cut:</label>
-  <input id="cut" #cut />
-  <label for="weight">Weight:</label>
-  <input type="number" id="weight" #weight />
-  <label for="grade">Grade:</label>
-  <input id="grade" #grade />
-  <label for="price">Price:</label>
-  <input type="number" id="price" #price />
-  <label for="imageUrl">ImageURL:</label>
-  <input id="imageUrl" #imageUrl />
-  <button id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value)">Create</button>
+<div class="pageTitle">
+  Admin Dashboard
 </div>
 
-<ul id="inventory" class="Inventory">Inventory
-  <div id="div" *ngFor="let beef of beef$ | async">
-    <div class="Product">
-      <label for="/product/{{beef.id}}">Name:
-        {{beef.grade}} {{beef.cut}}
-      </label>
-      <label for="/product/{{beef.id}}">Weight:
-        {{beef.weight}}
-      </label>
-      <label for="/product/{{beef.id}}">Price:
-        ${{beef.price.toFixed(2)}}
-      </label>
-      <label for="updateWeight">Add/Remove Weight:</label>
-      <input type="number" id="updateWeight" value="0" #updateWeight />
-      <label for="updatePrice">Set Price: </label>
-      <input type="number" id="updatePrice" value={{beef.price.toFixed(2)}} #updatePrice />
-      <label for="updateImageUrl">Update Image:</label>
-      <input for="updateImageUrl" value={{beef.imageUrl}} #updateImageUrl/>
-      <button id="editPrice"
-        (click)="update(beef, +updateWeight.value, +updatePrice.value, updateImageUrl.value); updateWeight.value = '0'; updatePrice.value = beef.price.toFixed(2); updateImageUrl.value = beef.imageUrl;">Update</button>
-      <button id="delete" (click)="delete(beef.id!)">Delete</button>
-    </div>
-  </div>
-</ul>
+
+<table>
+  <tr>
+    <th>
+      Name
+    </th>
+    <th>
+      Weight
+    </th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th>
+      Price
+    </th>
+    <th>
+      Image URL
+    </th>
+    <th>
+    </th>
+    <th>
+
+    </th>
+  </tr>
+  <tr *ngFor="let beef of beef$ | async">
+    <td class="name">
+      {{beef.grade | uppercase}}-{{beef.cut | titlecase}}
+    </td>
+    <td>
+      {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
+    </td>
+    <td class="remove">
+      <button class="material-symbols-outlined"
+        (click)="updateWeight.value = (+updateWeight.value - 1).toString()">remove</button>
+    </td>
+    <td>
+      <input #updateWeight type="number" class="weightValue" value=0>
+    </td>
+    <td class="add">
+      <button class="material-symbols-outlined"
+        (click)="updateWeight.value = (+updateWeight.value + 1).toString()">add</button>
+    </td>
+    <td>
+      <div class="moneyContainer">
+          <div class="material-symbols-outlined">
+            attach_money
+          </div>
+        <input type="number" class="priceValue" value={{beef.price.toFixed(2)}} #price>
+      </div>
+    </td>
+    <td>
+      <div class="imageUrlContainer">
+        <input value={{beef.imageUrl}} #imageurl>
+      </div>
+    </td>
+    <td>
+      <div class="update">
+        <button class="material-symbols-outlined"
+          (click)="update(beef, +updateWeight.value, +price.value, imageurl.value)">
+          update</button>
+      </div>
+    </td>
+    <td class="remove">
+      <button class="material-symbols-outlined" (click)='delete(beef.id!)'>delete</button>
+    </td>
+  </tr>
+</table>
+<table>
+  <th>Cut</th>
+  <th>Grade</th>
+  <th>Weight</th>
+  <th>Price</th>
+  <th>Image URL</th>
+  <tr>
+    <td>
+      <input #cut>
+    </td>
+    <td>
+      <input #grade>
+    </td>
+    <td>
+      <input type="number" #weight>
+    </td>
+    <td>
+      <input type="number" #price>
+    </td>
+    <td>
+      <div class="imageUrlContainer">
+        <input #imageUrl>
+      </div>
+    </td>
+    <td>
+      <div class="">
+        <button class="material-symbols-outlined" id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value);
+     cut.value = '';
+      weight.value='';
+       grade.value='';
+       price.value='';
+       imageUrl.value='';
+       ">
+          add_circle
+        </button>
+      </div>
+    </td>
+
+  </tr>
+</table>
+
+<div class="alert">
+  {{adminAlert}}
+</div>
