@@ -46,7 +46,7 @@ public class InventoryFileDAOTests {
       testBeefArray[2] = new Beef(3, "Flank", (float)87, "C2", 9.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
       // When the object mapper is supposed to read from the file
-      // the mock object mapper will return the hero array above
+      // the mock object mapper will return the beef array above
       when(mockObjectMapper
         .readValue(new File("doesnt_matter.txt"),Beef[].class))
           .thenReturn(testBeefArray);  
