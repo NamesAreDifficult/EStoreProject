@@ -115,7 +115,8 @@ public class InventoryController {
   */
   @GetMapping("/products/")
   public ResponseEntity<Beef[]> searchBeef(@RequestParam String name) {
-    LOG.info(String.format("GET /products/?name=" + name));
+    String message = String.format("GET /products/?name=%s", name);
+    LOG.info(message);
     
     try{
       Beef[] retrievedBeef = inventoryDao.findBeef(name);
@@ -141,11 +142,13 @@ public class InventoryController {
   */
   @PostMapping("/products")
   public ResponseEntity<Beef> createBeef(@RequestBody Beef beef) {
-    LOG.info("POST /inventory/products" + beef);
+    String message = String.format("POST /inventory/products %s", beef.toString());
+    LOG.info(message);
 
     try{
       if(beef.getCut() == null || beef.getGrade() == null || beef.getWeight() < 0 || beef.getPrice() < 0){
-        LOG.warning(String.format("Failed to create %s, invalid attributes", beef.toString()));
+        String warning = String.format("Failed to create %s, invalid attributes", beef.toString());
+        LOG.warning(warning);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
 
@@ -154,11 +157,12 @@ public class InventoryController {
       // newBeef will be null if a beef with the same cut and grade already exist
       // In this instance it should be updated with the weight of the newbeef
       if(newBeef == null) { 
-        LOG.warning(String.format("Failed to create %s, already exists.", beef.toString()));
+        String warning = String.format("Failed to create %s, already exists.", beef.toString());
+        LOG.warning(warning);
         return new ResponseEntity<>(HttpStatus.CONFLICT); 
       }
-
-      LOG.info(String.format("Created %s", newBeef.toString()));
+      String createMessage = String.format("Created %s", newBeef.toString());
+      LOG.info(createMessage);
       return new ResponseEntity<Beef>(newBeef, HttpStatus.OK);
     }catch(IOException e){
       LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -177,20 +181,24 @@ public class InventoryController {
   */
   @PutMapping("/products")
   public ResponseEntity<Beef> updateBeef(@RequestBody Beef beef) {
-    LOG.info("PUT /inventory/products" + beef);
+    String message = String.format("PUT /inventory/products %s", beef.toString());
+    LOG.info(message);
     try{
       Beef currentBeef = inventoryDao.getBeef(beef.getId());
       if (currentBeef == null){
-        LOG.warning(String.format("Failed to update %s, beef does not exist", beef.toString()));
+        String doesNotExistWarning = String.format("Failed to update %s, beef does not exist", beef.toString());
+        LOG.warning(doesNotExistWarning);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
       if(currentBeef.getWeight() + beef.getWeight() < 0 || beef.getPrice() < 0){
-        LOG.warning(String.format("Failed to update %s, invalid attributes", beef.toString()));
+        String invalidAttributeWarning = String.format("Failed to update %s, invalid attributes", beef.toString());
+        LOG.warning(invalidAttributeWarning);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       else{
         Beef updatedBeef = inventoryDao.updateBeef(beef);
-        LOG.info(String.format("Updated weight of %s", updatedBeef.toString()));
+        String updateMessage = String.format("Updated weight of %s", updatedBeef.toString());
+        LOG.info(updateMessage);
         return new ResponseEntity<Beef>(updatedBeef, HttpStatus.OK);
       }
     } catch(IOException e) {
@@ -211,17 +219,20 @@ public class InventoryController {
   @DeleteMapping("/products/{id}")
   public ResponseEntity<Beef> deleteBeef(@PathVariable int id) {
     try {
-      LOG.info("DELETE /inventory/products/" + id);
+      String message = String.format("DELETE /inventory/products/%d", id);
+      LOG.info(message);
 
       Beef beef = inventoryDao.getBeef(id);
 
       if(beef == null){
-        LOG.warning(String.format("Failed to delete ID: %d, id does not exist.", id));
+        String doesNotExistWarning = String.format("Failed to delete ID: %d, id does not exist.", id);
+        LOG.warning(doesNotExistWarning);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
 
       inventoryDao.deleteBeef(id);
-      LOG.info("Deleted " + beef.toString());
+      String deleteMessage = String.format("Deleted %s", beef.toString());
+      LOG.info(deleteMessage);
 
       return new ResponseEntity<Beef>(beef, HttpStatus.OK);
       }catch(IOException e) {
