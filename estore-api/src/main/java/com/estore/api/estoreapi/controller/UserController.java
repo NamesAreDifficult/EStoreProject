@@ -99,7 +99,7 @@ public class UserController {
     try{
       User loginUser = this.userDao.loginUser(username, password);
       if(loginUser == null){
-        String failedMessage = String.format("Login for %s failed, invalid credentials", username)
+        String failedMessage = String.format("Login for %s failed, invalid credentials", username);
         LOG.info(failedMessage);
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
       }
@@ -222,7 +222,8 @@ public class UserController {
    */
   @PutMapping("/{username}")
   public ResponseEntity<Boolean> updatePassword(@PathVariable String username, @RequestHeader("NewAuth") String newPassword, @RequestHeader("Authorization") String oldPassword){
-    LOG.info(String.format("attempted to update user: %s oldPass: %s, newPass: %s", username, oldPassword, newPassword));
+    String message = String.format("attempted to update user: %s oldPass: %s, newPass: %s", username, oldPassword, newPassword);
+    LOG.info(message);
     try{
       int status = this.userDao.updatePassword(username, oldPassword, newPassword);
       if(status == 0){
