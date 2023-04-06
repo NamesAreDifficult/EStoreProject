@@ -18,18 +18,18 @@
 
         </div>
     </div>
-    <table *ngIf="isEmpty === false">
-
-        <th>
-            Credit Card
-        </th>
-        <th>
-            Expiration Date
-        </th>
-        <th>
-            CVV
-        </th>
-
+    <table>
+        <tr *ngIf="isEmpty === false">
+            <th>
+                Credit Card
+            </th>
+            <th>
+                Expiration Date
+            </th>
+            <th>
+                CVV
+            </th>
+        </tr>
         <tr *ngFor="let card of cards$ | async">
 
             <td>
