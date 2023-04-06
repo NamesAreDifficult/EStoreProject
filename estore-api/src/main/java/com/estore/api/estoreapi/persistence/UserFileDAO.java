@@ -71,7 +71,7 @@ public class UserFileDAO implements UserDAO {
     return true;
   }
 
-  /*
+  /**
    * Returns all the customers
    * 
    * @return an array of all the customers
@@ -93,7 +93,7 @@ public class UserFileDAO implements UserDAO {
     return result;
   }
 
-  /*
+  /**
    * Returns all the admins
    * 
    * @return an array of all the admins
@@ -164,7 +164,7 @@ public class UserFileDAO implements UserDAO {
     return userArray;
   }
 
-  /*
+  /**
    * Returns a customer if the username refers to a customer
    */
   private Customer GetCustomer(String username) throws IOException {
