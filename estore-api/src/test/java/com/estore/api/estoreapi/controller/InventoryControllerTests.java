@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -37,7 +38,7 @@ class InventoryControllerTests {
   void setupInventoryController(){
     mockInventoryDAO = mock(InventoryDAO.class);
     inventoryController = new InventoryController(mockInventoryDAO); 
-    testBeef = new Beef(1, "Ribeye", 11.2, "A5", 19.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    testBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(11.2), "A5", 19.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
   }
 
@@ -149,7 +150,7 @@ class InventoryControllerTests {
 
   @Test
   void testBadRequestCreateBeef() throws IOException{
-    ResponseEntity<Beef> response = inventoryController.createBeef(new Beef(2, "Ribeye", 2, "A5", -4.23, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+    ResponseEntity<Beef> response = inventoryController.createBeef(new Beef(2, "Ribeye", BigDecimal.valueOf(2), "A5", -4.23, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
@@ -166,8 +167,8 @@ class InventoryControllerTests {
 
   @Test
   void testUpdateBeef() throws IOException{
-    Beef updateBeef = new Beef(1, "Ribeye", 1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    Beef expectedBeef = new Beef(1, "Ribeye", 12.2, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef updateBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(1), "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef expectedBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(12.2), "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     when(mockInventoryDAO.updateBeef(updateBeef)).thenReturn(expectedBeef);
     when(mockInventoryDAO.getBeef(1)).thenReturn(testBeef);
@@ -179,7 +180,7 @@ class InventoryControllerTests {
 
   @Test 
   void testNotFoundUpdateBeef() throws IOException{
-    Beef updateBeef = new Beef(4, "Ribeye", 1, "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef updateBeef = new Beef(4, "Ribeye", BigDecimal.valueOf(1), "A5", 14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     
     when(mockInventoryDAO.updateBeef(updateBeef)).thenReturn(null);
     ResponseEntity<Beef> response = inventoryController.updateBeef(updateBeef);
@@ -189,7 +190,7 @@ class InventoryControllerTests {
 
   @Test 
   void testBadRequestUpdateBeef() throws IOException{
-    Beef updateBeef = new Beef(1, "Ribeye", 1, "A5", -14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef updateBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(1), "A5", -14.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     when(mockInventoryDAO.getBeef(1)).thenReturn(updateBeef);
     ResponseEntity<Beef> response = inventoryController.updateBeef(updateBeef);

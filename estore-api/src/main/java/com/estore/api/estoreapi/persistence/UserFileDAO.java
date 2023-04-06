@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -258,7 +259,7 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public Boolean addToCart(String username, int beefId, double weight) throws IOException {
+  public Boolean addToCart(String username, int beefId, BigDecimal weight) throws IOException {
     synchronized (users) {
 
       Customer customer = getCustomer(username);

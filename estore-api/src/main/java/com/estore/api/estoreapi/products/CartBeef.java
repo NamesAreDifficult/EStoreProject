@@ -1,5 +1,7 @@
 package com.estore.api.estoreapi.products;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*
@@ -13,7 +15,7 @@ public class CartBeef {
   @JsonProperty("id")
   private final int id;
   @JsonProperty("weight")
-  private double weight;
+  private BigDecimal weight;
 
   /**
   * Creates a represntation of beef to add to a shopping cart
@@ -29,7 +31,7 @@ public class CartBeef {
   *               default Java
   *               value, i.e. 0 for int
   */
-  public CartBeef(@JsonProperty("id") int id, @JsonProperty("weight") double weight) {
+  public CartBeef(@JsonProperty("id") int id, @JsonProperty("weight") BigDecimal weight) {
     this.id = id;
     this.weight = weight;
   }
@@ -43,7 +45,7 @@ public class CartBeef {
   * @param weight - weight of the {@linkplain Beef beef} to be bought
   * 
   */
-  public CartBeef(Beef beef, double weight) {
+  public CartBeef(Beef beef, BigDecimal weight) {
     this.id = beef.getId();
     this.weight = weight;
   }
@@ -62,7 +64,7 @@ public class CartBeef {
   * 
   * @return - weight of the {@linkplain CartBeef cartBeef}
   */
-  public double getWeight() {
+  public BigDecimal getWeight() {
     return this.weight;
   }
 
@@ -71,8 +73,8 @@ public class CartBeef {
   * 
   * @param newWeight: Weight to be added to the CartBeef object
   */
-  public void addWeight(double newWeight){
-    this.weight += newWeight;
+  public void addWeight(BigDecimal newWeight){
+    this.weight = this.weight.add(newWeight);
   }
 
   /**

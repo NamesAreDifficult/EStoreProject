@@ -12,6 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -67,7 +68,7 @@ class ShoppingControllerTests {
     when(mockShoppingCart.removeFromCart(anyInt())).thenReturn(true);
     when(mockCartBeef.getId()).thenReturn(0);
 
-    doNothing().when(mockBeef).setWeight(anyDouble());
+    doNothing().when(mockBeef).setWeight(any(BigDecimal.class));
 
     // Create controller
     shoppingController = new ShoppingController(mockInventoryDAO, mockUserDAO);
@@ -150,8 +151,8 @@ class ShoppingControllerTests {
   // Test the normal functionality of adding items to the shopping cart
   @Test 
   void testAddToShoppingCart() throws IOException{
-    when(mockCartBeef.getWeight()).thenReturn((double)3);
-    when(mockBeef.getWeight()).thenReturn((double)5);
+    when(mockCartBeef.getWeight()).thenReturn(BigDecimal.valueOf(3));
+    when(mockBeef.getWeight()).thenReturn(BigDecimal.valueOf(5));
     ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     
@@ -162,7 +163,7 @@ class ShoppingControllerTests {
   // Test the functionality of AddToShoppingCart when provided bad input
   @Test
   void testAddToShoppingCartBadRequest() throws IOException{
-    when(mockCartBeef.getWeight()).thenReturn((double)-2);
+    when(mockCartBeef.getWeight()).thenReturn(BigDecimal.valueOf(-2));
     ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
     
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -172,7 +173,7 @@ class ShoppingControllerTests {
   @Test
   void testAddToShoppingCartNotFound() throws IOException{
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(null);
-    when(mockCartBeef.getWeight()).thenReturn((double)3);
+    when(mockCartBeef.getWeight()).thenReturn(BigDecimal.valueOf(3));
     ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -185,7 +186,7 @@ class ShoppingControllerTests {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
         .getUser(anyString());
-    when(mockCartBeef.getWeight()).thenReturn((double) 3);
+    when(mockCartBeef.getWeight()).thenReturn(BigDecimal.valueOf(3));
     ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());

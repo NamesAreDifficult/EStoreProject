@@ -13,6 +13,7 @@ import static org.mockito.Mockito.doThrow;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
@@ -40,9 +41,9 @@ class InventoryFileDAOTests {
   void setupInventoryFileDAO() throws IOException {
       mockObjectMapper = mock(ObjectMapper.class);
       testBeefArray = new Beef[3];
-      testBeefArray[0] = new Beef(1, "Ribeye", 12.66, "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-      testBeefArray[1] = new Beef(2,"Strip", 42.2, "C4", 13.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-      testBeefArray[2] = new Beef(3, "Flank", 87, "C2", 9.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      testBeefArray[0] = new Beef(1, "Ribeye", BigDecimal.valueOf(12.66), "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      testBeefArray[1] = new Beef(2,"Strip", BigDecimal.valueOf(42.2), "C4", 13.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      testBeefArray[2] = new Beef(3, "Flank", BigDecimal.valueOf(87), "C2", 9.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
       // When the object mapper is supposed to read from the file
       // the mock object mapper will return the beef array above
@@ -63,8 +64,8 @@ class InventoryFileDAOTests {
   @Test
 
   void testUpdateBeef() throws IOException{
-    Beef updatedBeef = new Beef(1, "Ribeye", 1.34, "A5", 49.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    Beef expectedBeef = new Beef(1, "Ribeye", 14, "A5", 49.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef updatedBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(1.34), "A5", 49.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef expectedBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(14), "A5", 49.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     assertDoesNotThrow(() -> {
       assertEquals(expectedBeef, inventoryFileDAO.updateBeef(updatedBeef));
@@ -92,7 +93,7 @@ class InventoryFileDAOTests {
     Beef[] beefArray = inventoryFileDAO.findBeef("i");
 
     assertEquals(2, beefArray.length);
-    assertTrue(Arrays.equals(beefArray, new Beef[] {new Beef(1, "Ribeye", 12.66, "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), new Beef(2,"Strip", 42.2, "C4", 13.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")}));
+    assertTrue(Arrays.equals(beefArray, new Beef[] {new Beef(1, "Ribeye", BigDecimal.valueOf(12.66), "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), new Beef(2,"Strip", BigDecimal.valueOf(42.2), "C4", 13.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")}));
     assertTrue(Arrays.equals(inventoryFileDAO.findBeef("Chuck"), new Beef[] {}));
   }
 
@@ -106,13 +107,13 @@ class InventoryFileDAOTests {
 
   @Test
   void testCreateBeef(){
-    Beef beef = new Beef(4, "Skirt", 4.02, "C3", 8.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef beef = new Beef(4, "Skirt", BigDecimal.valueOf(4.02), "C3", 8.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     assertDoesNotThrow(() -> {
       inventoryFileDAO.createBeef(beef);
     });
 
     assertEquals(beef, inventoryFileDAO.getBeef(4));
-    Beef duplicateBeef = new Beef(1, "Ribeye", 12.66, "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    Beef duplicateBeef = new Beef(1, "Ribeye", BigDecimal.valueOf(12.66), "A5", 299.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
     assertDoesNotThrow(() -> {
       assertNull(inventoryFileDAO.createBeef(duplicateBeef));

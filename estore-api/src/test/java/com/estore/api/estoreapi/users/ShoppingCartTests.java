@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +25,8 @@ class ShoppingCartTests {
   @BeforeEach
   void prep() {
     cartBeefs = new CartBeef[2];
-    cartBeefs[0] = new CartBeef(1, 1);
-    cartBeefs[1] = new CartBeef(2, 1);
+    cartBeefs[0] = new CartBeef(1, BigDecimal.valueOf(1));
+    cartBeefs[1] = new CartBeef(2, BigDecimal.valueOf(1));
 
     clearList = new CartBeef[0];
 
@@ -54,8 +57,8 @@ class ShoppingCartTests {
     ShoppingCart newTestCart = new ShoppingCart();
 
     // Asserts
-    assertTrue(newTestCart.addToCart(new CartBeef(1, 1)), "Add to cart should be true");
-    assertTrue(newTestCart.addToCart(new CartBeef(2, 1)), "Add to cart should be true");
+    assertTrue(newTestCart.addToCart(new CartBeef(1, BigDecimal.valueOf(1))), "Add to cart should be true");
+    assertTrue(newTestCart.addToCart(new CartBeef(2, BigDecimal.valueOf(1))), "Add to cart should be true");
     assertArrayEquals(cartBeefs, testCart.getContents());
 
   }
@@ -64,7 +67,7 @@ class ShoppingCartTests {
   void testFailAddToCart() {
 
     // Checks that you cannot add a duplicate beef
-    assertFalse(testCart.addToCart(new CartBeef(1, 2)), "Add to cart should be true");
+    assertFalse(testCart.addToCart(new CartBeef(1, BigDecimal.valueOf(2))), "Add to cart should be true");
 
     assertArrayEquals(cartBeefs, testCart.getContents());
 

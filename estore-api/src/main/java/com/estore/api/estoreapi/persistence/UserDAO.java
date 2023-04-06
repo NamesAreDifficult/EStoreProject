@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Admin;
@@ -97,7 +98,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Boolean addToCart(String username, int beefId, double weight) throws IOException;
+    Boolean addToCart(String username, int beefId, BigDecimal weight) throws IOException;
 
 
     /**

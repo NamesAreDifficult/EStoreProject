@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -146,7 +147,7 @@ public class InventoryController {
     LOG.info(message);
 
     try{
-      if(beef.getCut() == null || beef.getGrade() == null || beef.getWeight() < 0 || beef.getPrice() < 0){
+      if(beef.getCut() == null || beef.getGrade() == null || beef.getWeight().compareTo(BigDecimal.valueOf(0)) < 0 || beef.getPrice() < 0){
         String warning = String.format("Failed to create %s, invalid attributes", beef.toString());
         LOG.warning(warning);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -190,7 +191,7 @@ public class InventoryController {
         LOG.warning(doesNotExistWarning);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      if(currentBeef.getWeight() + beef.getWeight() < 0 || beef.getPrice() < 0){
+      if(currentBeef.getWeight().add(beef.getWeight()).compareTo(BigDecimal.valueOf(0)) < 0 || beef.getPrice() < 0){
         String invalidAttributeWarning = String.format("Failed to update %s, invalid attributes", beef.toString());
         LOG.warning(invalidAttributeWarning);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
