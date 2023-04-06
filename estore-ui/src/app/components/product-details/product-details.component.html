@@ -15,32 +15,35 @@
                         ${{beef.price.toFixed(2)}}/lb
                     </div>
                     <div>
-                      Total Amount: {{ (beef.weight > 0) ? beef.weight.toFixed(1) + " lbs" : "Out of Stock" }}
+                        Total Amount: {{ (beef.weight > 0) ? beef.weight + " lbs" : "Out of Stock" }}
                     </div>
                 </div>
                 <div *ngIf="user !== null && !user.admin">
 
-                    <input id="amount" placeholder="Amount (lbs)" class="amountBox" #amount [disabled]="beef.weight === 0"
-                        (keyup.enter)="addToCart(beef.id!, amount.value)">
-                    <div class="addButton"  [ngClass]="{'disabledAddButton': beef.weight === 0}">
+                    <input id="amount" placeholder="Amount (lbs)" class="amountBox" #amount
+                        [disabled]="beef.weight === 0" (keyup.enter)="addToCart(beef.id!, amount.value)">
+                    <div class="addButton" [ngClass]="{'disabledAddButton': beef.weight === 0}">
                         <button class="material-symbols-outlined" [disabled]="beef.weight === 0"
                             (click)="addToCart(beef.id!, amount.value)">add_shopping_cart
                         </button>
-                        <button class="material-symbols-outlined" routerLink="/checkout" [disabled]="beef.weight === 0">
-                            shopping_cart_checkout
-                        </button>
+
                     </div>
                 </div>
 
                 <div *ngIf="user === null">
                     <button routerLink="/login">Login</button>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
-<div class="alert">
-  {{productAlert}}
-</div>
+
+    <div class="alert">
+        {{productAlert}}
+    </div>
+    <div class="checkoutButton">
+        <button *ngIf="!user?.admin"class="material-symbols-outlined" routerLink="/cart" [disabled]="beef.weight === 0">
+            shopping_cart_checkout
+        </button>
+    </div>
