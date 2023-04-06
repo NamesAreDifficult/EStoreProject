@@ -31,4 +31,11 @@ public class AdminTests {
 
     assertEquals("Test", testAdmin.getUsername());
   }
+
+  @Test
+  public void testHashCode(){
+    Admin testAdmin = new Admin("Test", "password");
+
+    assertEquals(2031001933, testAdmin.hashCode());
+  }
 }

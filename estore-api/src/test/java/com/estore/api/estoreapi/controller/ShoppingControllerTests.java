@@ -1,7 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
@@ -13,7 +12,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -29,6 +27,7 @@ import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.ShoppingCart;
+import com.estore.api.estoreapi.users.CreditCard;
 
 @Tag("Controller-tier")
 public class ShoppingControllerTests {
@@ -39,6 +38,7 @@ public class ShoppingControllerTests {
   private ShoppingCart mockShoppingCart;
   private CartBeef mockCartBeef;
   private Beef mockBeef;
+  private CreditCard mockCreditCard;
 
   /**
    * Before each test, create a new ShoppingController object and inject
@@ -57,6 +57,7 @@ public class ShoppingControllerTests {
     mockShoppingCart = mock(ShoppingCart.class);
     mockCartBeef = mock(CartBeef.class);
     mockBeef = mock(Beef.class);
+    mockCreditCard = mock(CreditCard.class);
 
     // Set behaviors
     when(mockUserDAO.GetUser(anyString())).thenReturn(mockCustomer);
@@ -111,8 +112,9 @@ public class ShoppingControllerTests {
   // Test the normal functionality of checkoutShoppingCart (Unimplemented)
   @Test
   public void testCheckoutShoppingCart() throws IOException {
-    when(mockUserDAO.Checkout(any())).thenReturn(true);
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+    when(mockUserDAO.Checkout(any(), any())).thenReturn(true);
+    when(mockCustomer.getCard(anyString())).thenReturn(mockCreditCard);
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertTrue(response.getBody());
@@ -120,8 +122,9 @@ public class ShoppingControllerTests {
 
   @Test
   public void testBadCheckoutShoppingCart() throws IOException {
-    when(mockUserDAO.Checkout(any())).thenReturn(false);
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+    when(mockUserDAO.Checkout(any(), any())).thenReturn(false);
+    when(mockCustomer.getCard(anyString())).thenReturn(mockCreditCard);
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
@@ -129,7 +132,7 @@ public class ShoppingControllerTests {
   @Test
   public void testUserNotFound() throws IOException{
     when(mockUserDAO.GetUser(anyString())).thenReturn(null);
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
@@ -139,7 +142,7 @@ public class ShoppingControllerTests {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
         .GetUser(anyString());
-    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer");
+    ResponseEntity<Boolean> response = shoppingController.CheckoutShoppingCart("TestCustomer", "1234567812345678");
     
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }

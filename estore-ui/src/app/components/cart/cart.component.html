@@ -1,10 +1,10 @@
 <div class="material-symbols-outlined">
     <label> shopping_cart </label>
 </div>
-  <h1> My Cart:</h1>
+<h1> My Cart:</h1>
 <div>
-{{cartAlert}}
-  </div>
+    {{cartAlert}}
+</div>
 <ul>
     <li *ngFor="let beef of cart$ | async">
         <div>
@@ -25,8 +25,7 @@
             </button>
         </div>
     </li>
-    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="isEmpty===false">
+    <button id="goToCheckout" onclick="window.location.href='checkout'" *ngIf="!isEmpty">
         Proceed to Checkout
     </button>
 </ul>
-

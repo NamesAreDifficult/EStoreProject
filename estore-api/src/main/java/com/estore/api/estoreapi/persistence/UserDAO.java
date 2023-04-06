@@ -6,7 +6,6 @@ import com.estore.api.estoreapi.users.User;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
-import com.estore.api.estoreapi.users.ShoppingCart;
 
 public interface UserDAO {
 
@@ -75,6 +74,8 @@ public interface UserDAO {
      * 
      * @param username The username of the {@link Customer customer} to checkout
      * 
+     * @param cardNumber - String containing the credit card number being used at checkout
+     * 
      * @return a {@link Customer customer} object with the matching username
      *         <br>
      *         null if no {@link Customer customer} with a matching username is
@@ -82,7 +83,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    boolean Checkout(String username) throws IOException;
+    boolean Checkout(String username, String cardNumber) throws IOException;
 
     /**
      * Adds to a customer's shopping cart {@linkplain Customer customer}
@@ -150,6 +151,20 @@ public interface UserDAO {
     Boolean RemoveFromCart(String username, int beefId) throws IOException;
 
     /**
+     * Updates a {@linkplain User user} password
+     * 
+     * @param username The username of the {@link User user} to update the password
+     * @param oldPassword the old password of the {@link User user} to update
+     * @param newPassword the new password to set the {@link User user} password to
+     * 
+     * @return a {@link int code} status code for the result of the operation
+     * 0 for success
+     * 1 for user not found
+     * 2 for invalid password
+     */
+    int updatePassword(String username, String oldPassword, String newPassword) throws IOException;
+
+    /*
      * Removes a {@linkplain CreditCard creditCard} from a {@linkplain} User user}
      * 
      * @param username The username of the {@link User user}
@@ -186,3 +201,4 @@ public interface UserDAO {
      */
     CreditCard[] getCards(String username) throws IOException;
 }
+

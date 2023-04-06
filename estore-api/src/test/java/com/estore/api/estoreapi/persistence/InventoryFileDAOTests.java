@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -46,7 +45,7 @@ public class InventoryFileDAOTests {
       testBeefArray[2] = new Beef(3, "Flank", 87, "C2", 9.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
       // When the object mapper is supposed to read from the file
-      // the mock object mapper will return the hero array above
+      // the mock object mapper will return the beef array above
       when(mockObjectMapper
         .readValue(new File("doesnt_matter.txt"),Beef[].class))
           .thenReturn(testBeefArray);  

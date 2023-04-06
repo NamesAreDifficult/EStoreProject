@@ -19,6 +19,7 @@ import com.estore.api.estoreapi.products.Beef;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.User;
+import com.estore.api.estoreapi.users.CreditCard;
 
 /**
  * Handles the REST API requests for interactions between users and inventory
@@ -74,11 +75,14 @@ public class ShoppingController {
                 int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
-                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
-                            retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
-                    beefs[index++] = copyBeef;
+                    try{
+                        Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
+                                retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
+                        beefs[index++] = copyBeef;
+                    }catch(NullPointerException e){
+                        customer.getCart().removeFromCart(cartBeef.getId());
+                    }
                 }
-
                 return new ResponseEntity<Beef[]>(beefs, HttpStatus.OK);
             }
 
@@ -94,17 +98,22 @@ public class ShoppingController {
      * 
      * @param username - The username of the {@link Customer customer} checkout
      * 
+     * @param cardNumber - String containing the credit card number being used at checkout
+     * 
      * @return ResponseEntity with boolean depending on success HTTP status
      *         of CREATED<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PutMapping("/checkout/{username}")
-    public ResponseEntity<Boolean> CheckoutShoppingCart(@PathVariable String username) {
+    @PutMapping("/checkout/{username}/{cardNumber}")
+    public ResponseEntity<Boolean> CheckoutShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
         try {
             Customer customer = this.getCustomer(username);
-
             if (customer != null) {
-                boolean ret = userDAO.Checkout(customer.getUsername());
+                CreditCard newCard = customer.getCard(cardNumber);
+                if (newCard == null){
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+                }
+                boolean ret = userDAO.Checkout(customer.getUsername(), cardNumber);
                 if (ret) {
                     return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
                 }

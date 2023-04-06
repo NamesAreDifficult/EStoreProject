@@ -1,0 +1,54 @@
+<div class="verticalContainer">
+    <div class="horizontalContainer">
+        <div class="titleContainer">
+            <div class="title">
+                Credit Cards
+            </div>
+        </div>
+        <div class="verticalContainer">
+
+            <label for="number">Card Number:</label>
+            <input id="credit-card-number" #number placeholder="xxxxxxxxxxxxxxxx" class="placeholder"
+                (keydown)="cardSpacing()" maxlength="19" />
+            <label for="expiration">Expiration Date:</label>
+            <input id="expiration" #expiration placeholder="MM/YY" class="placeholder" maxlength="5" />
+            <label for="cvv">CVV:</label>
+            <input id="cvv" #cvv placeholder="xxxx" class="placeholder" maxlength="4" />
+            <button id="create" (click)="addCard(number.value, expiration.value, cvv.value)">Create</button>
+
+        </div>
+    </div>
+    <table>
+        <tr *ngIf="isEmpty === false">
+            <th>
+                Credit Card
+            </th>
+            <th>
+                Expiration Date
+            </th>
+            <th>
+                CVV
+            </th>
+        </tr>
+        <tr *ngFor="let card of cards$ | async">
+
+            <td>
+                {{card.number}}
+            </td>
+            <td>
+                {{card.expiration}}
+            </td>
+            <td>
+                {{card.cvv}}
+            </td>
+            <td>
+                <button class="deleteButton" id="delete" (click)="removeCard(card.number)">Delete</button>
+            </td>
+
+        </tr>
+
+    </table>
+    <div class="warningContainer">
+        <div class="warning"> {{cardAlert}}</div>
+    </div>
+</div>

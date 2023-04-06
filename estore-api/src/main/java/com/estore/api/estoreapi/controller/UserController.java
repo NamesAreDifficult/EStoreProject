@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
@@ -95,17 +94,21 @@ public class UserController {
 
   @GetMapping("/login/{username}")
   public ResponseEntity<User> loginUser(@PathVariable String username, @RequestHeader("Authorization") String password){
+    LOG.info(String.format("Login attempt for %s", username));
     try{
       User loginUser = this.userDao.loginUser(username, password);
       if(loginUser == null){
+        LOG.info(String.format("Login for %s failed, invalid credentials", username));
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+      }
+      LOG.info(String.format("Login for %s success", username));
+      return new ResponseEntity<User>(loginUser, HttpStatus.OK);
     }catch(IOException e){
+      LOG.info(String.format("Login for %s failed, server error", username));
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  
   /**
    * Retrieves {@linkplain CreditCard[] creditCards} given a username
    * 
@@ -177,7 +180,8 @@ public class UserController {
    *         status of OK<br>
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if file
    *         error
-   *         ResponseEntity with HTTP status of BAD_REQUEST if card is not found on user
+   *         ResponseEntity with HTTP status of CONFLICT if card is not found on user
+   *         ResponseEntity with HTTP status of BAD_REQUEST if card list is empty
    *         ResponseEntity with HTTP status NOT_FOUND if user/card is not found
    */
   @DeleteMapping("/{username}/{cardNumber}")
@@ -195,12 +199,41 @@ public class UserController {
                     return new ResponseEntity<Boolean>(result, HttpStatus.BAD_REQUEST);
                   }
               }
+              else{
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+              }
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+  /**
+   * Responds to PUT request for a {@linkplain User user} to update passwords
+   * 
+   * @param username - username of the user to update
+   * @param newPassword - password to update the user's password to
+   * @param oldPassword - current password of the user
+   * @return
+   */
+  @PutMapping("/{username}")
+  public ResponseEntity<Boolean> updatePassword(@PathVariable String username, @RequestHeader("NewAuth") String newPassword, @RequestHeader("Authorization") String oldPassword){
+    LOG.info(String.format("attempted to update user: %s oldPass: %s, newPass: %s", username, oldPassword, newPassword));
+    try{
+      int status = this.userDao.updatePassword(username, oldPassword, newPassword);
+      if(status == 0){
+        return new ResponseEntity<>(HttpStatus.OK);
+      }else if(status == 1){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }else {
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+      }
+    }catch(IOException e){
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
 
   /**
    * Creates a {@linkplain Customer customer} with the provided customer object
@@ -260,14 +293,14 @@ public class UserController {
    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
    */
   @DeleteMapping("/{username}")
-  public ResponseEntity<User> DeleteUser(@PathVariable String username) {
+  public ResponseEntity<Boolean> DeleteUser(@PathVariable String username) {
     try {
       User user = this.userDao.GetUser(username);
       if(user == null){
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-      userDao.DeleteUser(username);
-      return new ResponseEntity<User>(HttpStatus.OK);
+      boolean result = userDao.DeleteUser(username);
+      return new ResponseEntity<Boolean>(result, HttpStatus.OK);
       }catch(IOException e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.estore.api.estoreapi.controller.InventoryController;
 import com.estore.api.estoreapi.products.CartBeef;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.Customer;
@@ -171,7 +170,8 @@ public class UserFileDAO implements UserDAO {
   private Customer GetCustomer(String username) throws IOException {
     synchronized (users) {
       User user = GetUser(username);
-
+      if(user == null)
+        return null;
       // Check if the user is an admin
       if (user.isAdmin())
         return null;
@@ -240,10 +240,14 @@ public class UserFileDAO implements UserDAO {
    ** {@inheritDoc}
    */
   @Override
-  public boolean Checkout(String username) throws IOException {
+  public boolean Checkout(String username, String cardNumber) throws IOException {
     synchronized (users) {
       Customer customer = GetCustomer(username);
       if (customer == null){
+        return false;
+      }
+      CreditCard card = customer.getCard(cardNumber);
+      if (card == null){
         return false;
       }
       boolean ret = customer.getCart().Checkout();
@@ -388,6 +392,7 @@ public class UserFileDAO implements UserDAO {
       return ret;
     }
   }
+  
   /**
    ** {@inheritDoc}}
    */
@@ -400,5 +405,21 @@ public class UserFileDAO implements UserDAO {
       return user;
     }
     return null;
+  }
+
+  /**
+   * {@inheritDoc}}
+   */
+  public int updatePassword(String username, String oldPassword, String newPassword) throws IOException{
+    User targetUser = GetUser(username);
+    if(targetUser == null){
+      return 1;
+    }
+    if(!targetUser.getPassword().equals(oldPassword)){
+      return 2;
+    }
+    targetUser.setPassword(newPassword);
+    save();
+    return 0;
   }
 }

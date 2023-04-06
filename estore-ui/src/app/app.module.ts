@@ -19,9 +19,11 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
+import { AccountPageComponent } from './components/account-page/account-page.component';
+import { PasswordManagerComponent } from './components/password-manager/password-manager.component';
 import { BaseTemplateComponent } from './components/base-template/base-template.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-
+import { CardComponent } from './components/card/card.component';
 
 
 @NgModule({
@@ -36,8 +38,11 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     LogoutComponent,
     CartComponent,
     ProductDetailsComponent,
+    AccountPageComponent,
+    PasswordManagerComponent,
     BaseTemplateComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

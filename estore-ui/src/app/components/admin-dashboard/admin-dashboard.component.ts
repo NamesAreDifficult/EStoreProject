@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Beef, BeefService } from 'src/app/services/beefService/beef.service';
+import { User, UserService } from 'src/app/services/userService/user.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -15,17 +16,26 @@ export class AdminDashboardComponent {
   beef$!: Observable<Beef[]>
   // Alert for displaying success/error messages
   adminAlert: String = ""
+  userService: UserService
+  user?: User | null
 
   // Constructor for Admin Dashboard that takes an instance of BeefService and AdminAuthenticationService
-  constructor(beefService: BeefService) {
+  constructor(beefService: BeefService, userService: UserService) {
     this.beefService = beefService
+    this.userService = userService;
   }
 
   // Initializes the inventory
-  ngOnInit(){
+  ngOnInit() {
     this.beef$ = this.beefService.getAllBeef()
+    this.userService.userNotifier.subscribe(currentUser => {
+      this.user = currentUser;
+      if(currentUser == null){
+        location.reload()
+      }
+    });
   }
-  
+
   // Observer for handling creation of new beef 
   createObserver = {
     next: (beef: Beef) => {
@@ -50,6 +60,7 @@ export class AdminDashboardComponent {
       this.beefService.updateBeef(beef)
     },
     error: (err: Error) => (this.updateStatus(Number(err.message))),
+    complete: () => this.beef$ = this.beefService.getAllBeef()
   }
 
   // Catches error code for create method and displays text
@@ -57,10 +68,10 @@ export class AdminDashboardComponent {
     // Conflict error
     if (code == 409) {
       this.adminAlert = "Item already exists. Please edit quantity to change amount."
-    // Creating item with invalid fields
+      // Creating item with invalid fields
     } else if (code == 400) {
       this.adminAlert = "Items cannot have negative weight or price."
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     }
@@ -71,7 +82,7 @@ export class AdminDashboardComponent {
     // Item not found error
     if (code == 404) {
       this.adminAlert = "Item not found."
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     }
@@ -82,7 +93,7 @@ export class AdminDashboardComponent {
     // Item not found error
     if (code == 404) {
       this.adminAlert = "Item not found."
-    // Internal server error
+      // Internal server error
     } else if (code == 500) {
       this.adminAlert = "Internal server error"
     } else if (code == 400) {
@@ -94,7 +105,7 @@ export class AdminDashboardComponent {
   validateCreate(cut: string, grade: string): boolean {
     var cutRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$')
     var gradeRegexp = new RegExp('^[a-zA-Z0-9 ]{1,32}$')
-    if ((cutRegexp.test(cut) && cut.trim()) && (gradeRegexp.test(grade) && grade.trim())){
+    if ((cutRegexp.test(cut) && cut.trim()) && (gradeRegexp.test(grade) && grade.trim())) {
       return true
     }
     this.adminAlert = "Cut and grade must be alphanumeric with least one non-whitespace character, and have a length of 1-32 characters."
@@ -103,7 +114,7 @@ export class AdminDashboardComponent {
 
   // Validates beef if price and weight are non-negative numbers
   validateUpdate(beef: Beef, weight: number, price: number): boolean {
-    if (beef.weight + weight >= 0 && price >= 0){
+    if (beef.weight + weight >= 0 && price >= 0) {
       return true
     }
     this.adminAlert = "Items cannot have negative weight or price."
@@ -111,8 +122,8 @@ export class AdminDashboardComponent {
   }
 
   // Adds new beef object to inventory if the fields are valid
-  create(cut: string, weight: number, grade: string, price: number, imageUrl:string) {
-    if (this.validateCreate(cut, grade)){
+  create(cut: string, weight: number, grade: string, price: number, imageUrl: string) {
+    if (this.validateCreate(cut, grade)) {
       var beef: Beef = {
         cut: cut.trim(),
         weight: weight,
@@ -120,8 +131,8 @@ export class AdminDashboardComponent {
         price: price,
         imageUrl: imageUrl
       }
-    this.beefService.addBeef(beef).subscribe(this.createObserver)
-    this.adminAlert = "Product created."
+      this.beefService.addBeef(beef).subscribe(this.createObserver)
+      this.adminAlert = "Product created."
     }
   }
 
@@ -132,9 +143,9 @@ export class AdminDashboardComponent {
   }
 
   // Updates price and weight of beef objects if the fields are valid
-  update(beef: Beef, weight: number, price: number, imageUrl:string) {
-      if (this.validateUpdate(beef, weight, price)){
-      beef.weight += weight
+  update(beef: Beef, weight: number, price: number, imageUrl: string) {
+    if (this.validateUpdate(beef, weight, price)) {
+      beef.weight = weight
       beef.price = price
       beef.imageUrl = imageUrl
       this.beefService.updateBeef(beef).subscribe(this.updateObserver);

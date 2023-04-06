@@ -20,12 +20,12 @@ import static org.mockito.Mockito.doThrow;
 import java.io.IOException;
 
 import com.estore.api.estoreapi.users.User;
+
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.users.Admin;
 import com.estore.api.estoreapi.users.CreditCard;
 import com.estore.api.estoreapi.users.Customer;
 import com.estore.api.estoreapi.users.ShoppingCart;
-import com.estore.api.estoreapi.products.CartBeef;
 
 @Tag("Controller-tier")
 public class UserControllerTests {
@@ -116,7 +116,7 @@ public class UserControllerTests {
 
   @Test
   public void testRemoveCardNotFound() throws IOException{
-    when(mockCustomer.getCard(anyString())).thenReturn(null);
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
     ResponseEntity<Boolean> response = userController.removeCard("Brolaf", "5");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -134,19 +134,97 @@ public class UserControllerTests {
     assertNull(response.getBody());
   }
   
-  // TODO: Implement these tests after GetUser is implemented
   @Test
-  public void testGetUser() throws IOException {
+  public void testIsValidNull(){
+    ResponseEntity<Boolean> response = userController.addCard("jack", null);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+  }
+  @Test
+  public void testGetCards() throws IOException{
+    CreditCard[] expected = new CreditCard[] {mockCreditCard};
+    when(mockUserDAO.getCards(anyString())).thenReturn(expected);
+    ResponseEntity<CreditCard[]> response = userController.getCards("Mister Green Jeans");
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(expected, response.getBody());
   }
 
   @Test
-  public void testGetUserNotFound() throws Exception {
+  public void testGetCardsNotFound() throws IOException{
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+    ResponseEntity<CreditCard[]> response = userController.getCards("Headless Horsemen");
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNull(response.getBody());
   }
 
   @Test
-  public void testGetUserHandleException() throws Exception {
+  public void testGetCardsError() throws IOException{
+    doThrow(new IOException())
+      .when(mockUserDAO)
+      .GetUser(anyString());
+    ResponseEntity<CreditCard[]> response = userController.getCards("John Cena");
+    
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
 
+  @Test
+  public void testLoginUser() throws IOException{
+    when(mockUserDAO.loginUser(anyString(), anyString())).thenReturn(mockCustomer);
+    ResponseEntity<User> response = userController.loginUser("Mr. Security", "SafestPassword");
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(mockCustomer, response.getBody());
+  }
+
+  @Test
+  public void testLoginUserUnauthorized() throws IOException{
+    when(mockUserDAO.loginUser(anyString(), anyString())).thenReturn(null);
+    ResponseEntity<User> response = userController.loginUser("Mr. Security", "WeakestPassword");
+
+    assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testLoginUserError() throws IOException{
+    doThrow(new IOException())
+      .when(mockUserDAO)
+      .loginUser(anyString(), anyString());
+    ResponseEntity<User> response = userController.loginUser("aaaaaaa", "BBBBBB");
+
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testGetUser() throws IOException{
+    ResponseEntity<User> response = userController.getUser("Charles");
+    
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(mockCustomer, response.getBody());
+  }
+
+  @Test
+  public void testGetUserNotFound() throws IOException{
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+    ResponseEntity<User> response = userController.getUser("Bugs Bunny");
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testGetUserError() throws IOException{
+    doThrow(new IOException())
+      .when(mockUserDAO)
+      .GetUser(anyString());
+    ResponseEntity<User> response = userController.getUser("I have to go soon");
+
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    assertNull(response.getBody());
+  }
   @Test
   public void testCreateCustomer() throws IOException {
     Customer customer = new Customer("Jack","password", new ShoppingCart());
@@ -219,13 +297,30 @@ public class UserControllerTests {
   // TODO: Implement these tests once DeleteUser has been implemented
   @Test
   public void testDeleteUser() throws IOException {
+    when(mockUserDAO.DeleteUser(anyString())).thenReturn(true);
+    ResponseEntity<Boolean> response  = userController.DeleteUser("Slim Jim");
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertTrue(response.getBody());
   }
 
   @Test
   public void testDeleteUserNotFound() throws IOException {
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
+    ResponseEntity<Boolean> response  = userController.DeleteUser("Santa Clause");
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNull(response.getBody());
   }
 
   @Test
   public void testDeleteUserHandleException() throws IOException {
+    doThrow(new IOException())
+      .when(mockUserDAO)
+      .GetUser(anyString());
+    ResponseEntity<Boolean> response  = userController.DeleteUser("Jolly Green Giant");
+
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    assertNull(response.getBody());
   }
 }
