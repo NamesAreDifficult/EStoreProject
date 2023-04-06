@@ -61,7 +61,7 @@ public class InventoryController {
       Beef retrievedBeef = inventoryDao.getBeef(id);
 
       if (retrievedBeef != null) {
-        return new ResponseEntity<Beef>(retrievedBeef, HttpStatus.OK);
+        return new ResponseEntity<>(retrievedBeef, HttpStatus.OK);
       }
       else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -88,7 +88,7 @@ public class InventoryController {
       Beef[] retrievedBeef = inventoryDao.getBeef();
 
       if (retrievedBeef != null) {
-        return new ResponseEntity<Beef[]>(retrievedBeef, HttpStatus.OK);
+        return new ResponseEntity<>(retrievedBeef, HttpStatus.OK);
       }
       else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -122,7 +122,7 @@ public class InventoryController {
       Beef[] retrievedBeef = inventoryDao.findBeef(name);
 
       if (retrievedBeef.length != 0) {
-        return new ResponseEntity<Beef[]>(retrievedBeef, HttpStatus.OK);
+        return new ResponseEntity<>(retrievedBeef, HttpStatus.OK);
       }      else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
@@ -163,7 +163,7 @@ public class InventoryController {
       }
       String createMessage = String.format("Created %s", newBeef.toString());
       LOG.info(createMessage);
-      return new ResponseEntity<Beef>(newBeef, HttpStatus.OK);
+      return new ResponseEntity<>(newBeef, HttpStatus.OK);
     }catch(IOException e){
       LOG.log(Level.SEVERE, e.getLocalizedMessage());
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -199,7 +199,7 @@ public class InventoryController {
         Beef updatedBeef = inventoryDao.updateBeef(beef);
         String updateMessage = String.format("Updated weight of %s", updatedBeef.toString());
         LOG.info(updateMessage);
-        return new ResponseEntity<Beef>(updatedBeef, HttpStatus.OK);
+        return new ResponseEntity<>(updatedBeef, HttpStatus.OK);
       }
     } catch(IOException e) {
       LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -234,7 +234,7 @@ public class InventoryController {
       String deleteMessage = String.format("Deleted %s", beef.toString());
       LOG.info(deleteMessage);
 
-      return new ResponseEntity<Beef>(beef, HttpStatus.OK);
+      return new ResponseEntity<>(beef, HttpStatus.OK);
       }catch(IOException e) {
         LOG.log(Level.SEVERE, e.getLocalizedMessage());
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
