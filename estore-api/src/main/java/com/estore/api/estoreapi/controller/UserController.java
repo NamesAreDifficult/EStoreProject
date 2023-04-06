@@ -99,7 +99,8 @@ public class UserController {
     try{
       User loginUser = this.userDao.loginUser(username, password);
       if(loginUser == null){
-        LOG.info(String.format("Login for %s failed, invalid credentials", username));
+        String failedMessage = String.format("Login for %s failed, invalid credentials", username)
+        LOG.info(failedMessage);
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
       }
       LOG.info(String.format("Login for %s success", username));
