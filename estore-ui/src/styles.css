@@ -8,4 +8,6 @@ h1 {
     margin: 0;
 }
 
-p {}
+img {
+    aspect-ratio: 16/9;
+}
