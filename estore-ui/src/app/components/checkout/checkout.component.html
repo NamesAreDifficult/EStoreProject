@@ -1,16 +1,16 @@
 <p>Checkout</p>
 <div>
     {{checkoutAlert}}
-  </div>
+</div>
 <!-- <label for="creditCard">Credit Cards:</label>
 <ul>
     <select name="cards" id="cards"><
     <option *ngFor="let card of cards$ | async">Card Number: {{card.number}} </option>
         <-- <input (click)="selectCard(card)" type="radio" name="card" value="{{card.number}}"> -->
-       
-            
-     <!-- </select>   --> 
-        <!-- <div>
+
+
+<!-- </select>   -->
+<!-- <div>
             <div>
                 Card Number: {{card.number}} 
             </div>
@@ -26,53 +26,62 @@
     <div class="cards" *ngFor="let card of cards$ | async">
         <div class="cardButton">
             <button (click)="selectCard(card)" type="button" name="card" value="{{card.number}}">
-            <div>
-                Card Number: {{card.number}}
-            </div>
-            <div>
-                Expiration Date: {{card.expiration}}
-            </div>
-            <div>
-                CVV: {{card.cvv}} 
-            </div>
-        </button>
+                <div>
+                    Card Number: {{card.number}}
+                </div>
+                <div>
+                    Expiration Date: {{card.expiration}}
+                </div>
+                <div>
+                    CVV: {{card.cvv}}
+                </div>
+            </button>
         </div>
     </div>
 </div>
-   
-    
+
+
 <!-- </ul> -->
 <div style="display: flex">
-<h2 class="title" for="userCart">My Order</h2>
+    <h2 class="title" for="userCart">My Order</h2>
 </div>
 <div class="data">
-<table id = "order" class="orderTable">
-<thead>
-    <tr>
-        <th class="tableHeader">Product Name </th>
-        <th class="tableHeader">Quantity</th>
-        <th class="tableHeader">Price/lb</th>
-        <th class="tableHeader">Quantity Price </th>
-       
-    </tr>
-</thead>
-    <!-- <li *ngFor="let beef of cart$ | async"> -->
+    <table id="order" class="orderTable">
+        <thead>
+            <tr>
+                <th class="tableHeader">Product Name </th>
+                <th class="tableHeader">Quantity</th>
+                <th class="tableHeader">Price/lb</th>
+                <th class="tableHeader">Quantity Price </th>
+
+            </tr>
+        </thead>
+        <!-- <li *ngFor="let beef of cart$ | async"> -->
         <tbody>
             <tr *ngFor="let beef of cart$ | async">
-                <td> {{beef.grade}} {{beef.cut}} </td>
+                <td> {{beef.grade | uppercase}}-{{beef.cut | titlecase}} </td>
                 <td> {{beef.weight}} lbs </td>
-                <td> ${{beef.price}}</td>
-                <td> ${{(beef.weight * beef.price)}}</td>
+                <td> ${{beef.price.toFixed(2)}}/lb</td>
+                <td> ${{(beef.weight * beef.price).toFixed(2)}}</td>
                 <td></td>
             </tr>
-  </tbody>
-</table>
-</div>
-<div style="display:flex">
-  <label class="total">Total Price: ${{total}}</label>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    Total Price: ${{total.toFixed(2)}}
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
 </div>
 
-        <!-- <div>
+<!-- <div>
             <div>
                 Item: {{beef.grade}} {{beef.cut}} 
             </div>
@@ -83,9 +92,9 @@
                 Price: ${{(beef.weight * beef.price).toFixed(2)}}
             </div>
         </div> -->
-    <!-- </li> -->
-    <div class="checkout">
+<!-- </li> -->
+<div class="checkout">
     <button id="checkoutButton" (click)="checkout()" *ngIf="isEmpty === false">
         Checkout
     </button>
-    </div>
+</div>
