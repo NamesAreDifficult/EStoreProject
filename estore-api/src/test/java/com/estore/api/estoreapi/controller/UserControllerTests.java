@@ -119,7 +119,7 @@ public class UserControllerTests {
 
   @Test
   public void testRemoveCardNotFound() throws IOException{
-    when(mockCustomer.getCard(anyString())).thenReturn(null);
+    when(mockUserDAO.GetUser(anyString())).thenReturn(null);
     ResponseEntity<Boolean> response = userController.removeCard("Brolaf", "5");
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
