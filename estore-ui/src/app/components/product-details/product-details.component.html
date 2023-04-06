@@ -41,7 +41,7 @@
         {{productAlert}}
     </div>
     <div class="checkoutButton">
-        <button class="material-symbols-outlined" routerLink="/cart" [disabled]="beef.weight === 0">
+        <button *ngIf="!user?.admin"class="material-symbols-outlined" routerLink="/cart" [disabled]="beef.weight === 0">
             shopping_cart_checkout
         </button>
     </div>
