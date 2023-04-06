@@ -31,7 +31,7 @@
   </tr>
   <tr *ngFor="let beef of beef$ | async">
     <td>
-      {{beef.cut}}-{{beef.grade}}
+      {{beef.grade}}-{{beef.cut}}
     </td>
     <td>
       {{beef.weight}}
@@ -48,48 +48,63 @@
         (click)="updateWeight.value = (+updateWeight.value + 1).toString()">add</button>
     </td>
     <td>
-      <input type="number" value={{beef.price}} #price>
+      <div class="moneyContainer">
+        <div class="material-symbols-outlined">
+          attach_money
+        </div>
+        <input type="number" class="priceValue" value={{beef.price}} #price>
+      </div>
     </td>
     <td>
-      <input value={{beef.imageUrl}} #imageurl>
+      <div class="imageUrlContainer">
+        <input value={{beef.imageUrl}} #imageurl>
+      </div>
     </td>
-    <td class="update">
-      <button class="material-symbols-outlined"
-        (click)="update(beef, +updateWeight.value, +price.value, imageurl.value)">
-        update</button>
+    <td>
+      <div class="update">
+        <button class="material-symbols-outlined"
+          (click)="update(beef, +updateWeight.value, +price.value, imageurl.value)">
+          update</button>
+      </div>
     </td>
     <td class="remove">
       <button class="material-symbols-outlined" (click)='delete(beef.id!)'>delete</button>
     </td>
   </tr>
 </table>
-
-<tr>
-  <td>
-    <input #cut>
-  </td>
-  <td>
-    <input #weight>
-  </td>
-  <td>
-    <input #grade>
-  </td>
-  <td>
-    <input #price>
-  </td>
-  <td>
-    <input #imageUrl>
-  </td>
-  <td>
-    <button class="material-symbols-outlined" id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value);
+<table>
+  <th>Cut</th>
+  <th>Grade</th>
+  <th>Weight</th>
+  <th>Price</th>
+  <th>Image URL</th>
+  <tr>
+    <td>
+      <input #cut>
+    </td>
+    <td>
+      <input #grade>
+    </td>
+    <td>
+      <input #weight>
+    </td>
+    <td>
+      <input #price>
+    </td>
+    <td>
+      <input #imageUrl>
+    </td>
+    <td>
+      <button class="material-symbols-outlined" id="create" (click)="create(cut.value, +weight.value, grade.value, +price.value, imageUrl.value);
      cut.value = '';
       weight.value='';
        grade.value='';
        price.value='';
        imageUrl.value='';
        ">
-      add
-    </button>
-  </td>
+        add_circle
+      </button>
+    </td>
 
-</tr>
+  </tr>
+</table>
