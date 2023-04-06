@@ -2,7 +2,7 @@
     margin: 0 10%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -29,7 +29,7 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 2%;
+    margin: 2% 0;
     transition-duration: 1s;
     transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
@@ -64,10 +64,25 @@ img {
 .search {
     background-color: white;
     border: 2px solid black;
-    border-radius: 10%;
+    padding: 0%;
+    text-align: center;
+    line-height: -50%;
+    display: flex;
+    justify-content: center;
+
 }
 
-.search div {
-    padding: 0 6%;
+.searchBox {
+    border: 0;
+    width: max-content;
+    ;
+}
 
+.searchBox:focus {
+    outline: 0;
+}
+
+.searchRow {
+    width: 100%;
+    margin-left: 10%;
 }

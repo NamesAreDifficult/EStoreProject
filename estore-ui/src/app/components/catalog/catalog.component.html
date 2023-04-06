@@ -1,11 +1,11 @@
 <div class="pageTitle">
   Catalog
 </div>
-
-<div class="search">
+<div class="searchRow">
   <div class="material-symbols-outlined">
-    <label for="search-box"></label>
-    <input type="search" #searchBox id="search-box" (input)="search(searchBox.value)">
+    <div class="search">
+      search<input class="searchBox" #searchBox id="search-box" (input)="search(searchBox.value)">
+    </div>
   </div>
 </div>
 <div class="beefMenu">
