@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.products.Beef;
@@ -142,7 +144,7 @@ public class ShoppingController {
     public ResponseEntity<CartBeef> addToShoppingCart(@PathVariable String username, @RequestBody CartBeef cartBeef) {
 
         try {
-            if (cartBeef.getWeight() <= 0) {
+            if (cartBeef.getWeight().compareTo(BigDecimal.valueOf(0)) < 0) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
@@ -151,13 +153,13 @@ public class ShoppingController {
             if (retrievedBeef != null) {
                 Customer customer = this.getCustomer(username);
 
-                if (retrievedBeef.getWeight() < cartBeef.getWeight()) {
+                if (retrievedBeef.getWeight().compareTo(cartBeef.getWeight()) < 0) {
                     return new ResponseEntity<>(HttpStatus.CONFLICT);
                 }
 
                 // Checks if user exists and is a customer
                 if (customer != null) {
-                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
+                    Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight().multiply(BigDecimal.valueOf(-1)),
                             retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                     userDAO.addToCart(username, cartBeef.getId(), cartBeef.getWeight());

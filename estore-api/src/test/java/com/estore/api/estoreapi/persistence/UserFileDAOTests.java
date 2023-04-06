@@ -23,6 +23,7 @@ import static org.mockito.Mockito.any;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,8 +54,8 @@ class UserFileDAOTests {
     Customer[] testCustomers = new Customer[3];
     Admin[] testAdmins = new Admin[1];
 
-    CartBeef first = new CartBeef(new Beef(0, "cut1", 2, "grade1", 129.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), 2);
-    CartBeef second = new CartBeef(new Beef(1, "cut2", 3, "grade2", 139.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), 3);
+    CartBeef first = new CartBeef(new Beef(0, "cut1", BigDecimal.valueOf(2), "grade1", 129.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), BigDecimal.valueOf(2));
+    CartBeef second = new CartBeef(new Beef(1, "cut2", BigDecimal.valueOf(3), "grade2", 139.99, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"), BigDecimal.valueOf(3));
     CartBeef[] firstCart = new CartBeef[2];
     CartBeef[] secondCart = new CartBeef[0];
 
@@ -239,7 +240,7 @@ class UserFileDAOTests {
   void testAddToCart() {
   when(mockShoppingCart.addToCart(any(CartBeef.class))).thenReturn(true);
   assertDoesNotThrow(() -> {
-  assertTrue(userFileDAO.addToCart("Joe", 1, 3.4));
+  assertTrue(userFileDAO.addToCart("Joe", 1, BigDecimal.valueOf(3.4)));
 
   });
   }
@@ -323,13 +324,13 @@ class UserFileDAOTests {
   @Test
   void testAddToCartPresent() {
     Customer customer = new Customer("Jeremy", "password", new ShoppingCart());
-    double weight = .15;
+    BigDecimal weight = BigDecimal.valueOf(.15);
     CartBeef beef = new CartBeef(3, weight);
     CartBeef[] newCart = new CartBeef[1];
     newCart[0] = beef;
     customer.getCart().addToCart(beef);
     assertArrayEquals(customer.getCart().getContents(), newCart);
-    double weight2 = .3;
+    BigDecimal weight2 = BigDecimal.valueOf(.3);
     newCart[0] = new CartBeef(3, weight2);
     customer.getCart().addToCart(beef);
     assertArrayEquals(newCart, customer.getCart().getContents());

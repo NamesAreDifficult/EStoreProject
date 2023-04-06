@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.products;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 
 /**
  * Represents a Beef entity
@@ -16,7 +17,7 @@ public class Beef {
   @JsonProperty("grade")
   private final String grade;
   @JsonProperty("weight")
-  private double weight;
+  private BigDecimal weight;
   @JsonProperty("price")
   private double price;
   @JsonProperty("imageUrl")
@@ -46,7 +47,7 @@ public class Beef {
    */
   public Beef(@JsonProperty("id") int id,
       @JsonProperty("cut") String cut,
-      @JsonProperty("weight") double weight,
+      @JsonProperty("weight") BigDecimal weight,
       @JsonProperty("grade") String grade,
       @JsonProperty("price") double price,
       @JsonProperty("imageUrl") String imageUrl) {
@@ -98,14 +99,14 @@ public class Beef {
    * 
    * @return double representing the weight in pounds of the beef
    */
-  public double getWeight() {
+  public BigDecimal getWeight() {
     return this.weight;
   }
 
   /**
    * Sets the weight of the piece of beef
    */
-  public void setWeight(double newWeight) {
+  public void setWeight(BigDecimal newWeight) {
     this.weight = newWeight;
   }
 
@@ -116,8 +117,8 @@ public class Beef {
    * 
    * @return the new total weight of the object
    */
-  public double addWeight(double extraWeight) {
-    this.weight += extraWeight;
+  public BigDecimal addWeight(BigDecimal extraWeight) {
+    this.weight = this.weight.add(extraWeight);
     return this.weight;
   }
 
@@ -171,7 +172,7 @@ public class Beef {
     if (object instanceof Beef) {
       Beef beef = (Beef) object;
       return this.getId() == beef.getId() && this.getCut().equals(beef.getCut())
-          && this.getGrade().equals(beef.getGrade()) && this.getWeight() == beef.getWeight()
+          && this.getGrade().equals(beef.getGrade()) && this.getWeight().compareTo(beef.getWeight()) == 0
           && this.getPrice() == beef.getPrice();
     }
     return false;
