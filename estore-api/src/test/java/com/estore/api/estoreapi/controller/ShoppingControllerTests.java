@@ -128,7 +128,7 @@ class ShoppingControllerTests {
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
-  
+
   @Test
   void testUserNotFound() throws IOException{
     when(mockUserDAO.getUser(anyString())).thenReturn(null);
@@ -138,21 +138,21 @@ class ShoppingControllerTests {
   }
 
   @Test
-  void testCheckoutError() throws IOException{
+  void testCheckoutError() throws IOException {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
         .getUser(anyString());
     ResponseEntity<Boolean> response = shoppingController.checkoutShoppingCart("TestCustomer", "1234567812345678");
-    
+
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }
-  
+
   // Test the normal functionality of adding items to the shopping cart
   @Test 
   void testAddToShoppingCart() throws IOException{
     when(mockCartBeef.getWeight()).thenReturn((double)3);
     when(mockBeef.getWeight()).thenReturn((double)5);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -163,7 +163,7 @@ class ShoppingControllerTests {
   @Test
   void testAddToShoppingCartBadRequest() throws IOException{
     when(mockCartBeef.getWeight()).thenReturn((double)-2);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
     
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
@@ -173,7 +173,7 @@ class ShoppingControllerTests {
   void testAddToShoppingCartNotFound() throws IOException{
     when(mockInventoryDAO.getBeef(anyInt())).thenReturn(null);
     when(mockCartBeef.getWeight()).thenReturn((double)3);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
@@ -184,10 +184,9 @@ class ShoppingControllerTests {
   void testAddToShoppingCartError() throws IOException {
     doThrow(new IOException("Failed to read from file"))
         .when(mockUserDAO)
-        .GetUser(anyString());
-    when(mockCartBeef.getWeight()).thenReturn((double)3);
-    ResponseEntity<CartBeef> response = shoppingController.AddToShoppingCart("TestCustomer", mockCartBeef);
-
+        .getUser(anyString());
+    when(mockCartBeef.getWeight()).thenReturn((double) 3);
+    ResponseEntity<CartBeef> response = shoppingController.addToShoppingCart("TestCustomer", mockCartBeef);
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
   }

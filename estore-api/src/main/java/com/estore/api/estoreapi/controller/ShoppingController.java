@@ -73,11 +73,11 @@ public class ShoppingController {
                 int index = 0;
                 for (CartBeef cartBeef : customer.getCart().getContents()) {
                     Beef retrievedBeef = this.inventoryDao.getBeef(cartBeef.getId());
-                    try{
+                    try {
                         Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), cartBeef.getWeight(),
                                 retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                         beefs[index++] = copyBeef;
-                    }catch(NullPointerException e){
+                    } catch (NullPointerException e) {
                         customer.getCart().removeFromCart(cartBeef.getId());
                     }
                 }
@@ -94,28 +94,29 @@ public class ShoppingController {
     /**
      * Checks out a {@linkplain Customer customer} shopping cart
      * 
-     * @param username - The username of the {@link Customer customer} checkout
+     * @param username   - The username of the {@link Customer customer} checkout
      * 
-     * @param cardNumber - String containing the credit card number being used at checkout
+     * @param cardNumber - String containing the credit card number being used at
+     *                   checkout
      * 
      * @return ResponseEntity with boolean depending on success HTTP status
      *         of CREATED<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("/checkout/{username}/{cardNumber}")
-    public ResponseEntity<Boolean> checkoutShoppingCart(@PathVariable String username, @PathVariable String cardNumber) {
+    public ResponseEntity<Boolean> checkoutShoppingCart(@PathVariable String username,
+            @PathVariable String cardNumber) {
         try {
             Customer customer = this.getCustomer(username);
             if (customer != null) {
                 CreditCard newCard = customer.getCard(cardNumber);
-                if (newCard == null){
+                if (newCard == null) {
                     return new ResponseEntity<>(HttpStatus.CONFLICT);
                 }
                 boolean ret = userDAO.checkout(customer.getUsername(), cardNumber);
                 if (ret) {
                     return new ResponseEntity<>(ret, HttpStatus.OK);
-                }
-                else {
+                } else {
                     return new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
                 }
             }
@@ -157,9 +158,9 @@ public class ShoppingController {
                 // Checks if user exists and is a customer
                 if (customer != null) {
                     Beef copyBeef = new Beef(cartBeef.getId(), retrievedBeef.getCut(), -1 * cartBeef.getWeight(),
-                                    retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
+                            retrievedBeef.getGrade(), retrievedBeef.getPrice(), retrievedBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
-                    userDAO.addToCart(username, cartBeef.getId(), cartBeef.getWeight());
+                    userDAO.AddToCart(username, cartBeef.getId(), cartBeef.getWeight());
 
                     return new ResponseEntity<>(cartBeef, HttpStatus.OK);
 
@@ -190,10 +191,10 @@ public class ShoppingController {
             Customer customer = this.getCustomer(username);
 
             if (customer != null) {
-                for (CartBeef retrievedBeef : customer.getCart().getContents()){
+                for (CartBeef retrievedBeef : customer.getCart().getContents()) {
                     Beef inventoryBeef = inventoryDao.getBeef(retrievedBeef.getId());
                     Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
-                                        inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
+                            inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                 }
                 customer.getCart().clearCart();
@@ -228,7 +229,7 @@ public class ShoppingController {
                 Beef inventoryBeef = inventoryDao.getBeef(beefId);
                 if (retrievedBeef != null) {
                     Beef copyBeef = new Beef(retrievedBeef.getId(), inventoryBeef.getCut(), retrievedBeef.getWeight(),
-                                    inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
+                            inventoryBeef.getGrade(), inventoryBeef.getPrice(), inventoryBeef.getImageUrl());
                     inventoryDao.updateBeef(copyBeef);
                 }
                 boolean result = userDAO.removeFromCart(username, beefId);
