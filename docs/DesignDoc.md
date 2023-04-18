@@ -28,6 +28,13 @@ The purpose of the application is for the butcher to sell partial or full cuts o
 | Term | Definition |
 |------|------------|
 |  SPA | Single Page |
+| JSON | JavaScript Object Notation |
+|  API | Application Programming Interface |
+| HTML | Hyper-Text Markup Language |
+|  CSS | Cascading Style Sheet | 
+| MVVM | Model View ViewModel |
+|  MVP | Minimum Viable Product
+
 
 
 ## Requirements
