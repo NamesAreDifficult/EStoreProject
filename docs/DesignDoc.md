@@ -43,16 +43,19 @@ The purpose of the application is for the butcher to sell partial or full cuts o
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
-- Users login via login page
+- Users login via login page with their username and password
 - Users logout via logout button
 - Users are directed to featured products page upon sign in
+- Users may create a new account from the new account page with a valid password
 - Customers are able to browse and search catalog for beef
 - Customers may click on beef to go to product page
 - Customers may add beef to and view shopping cart
+- Customers may add up to three valid credit cards
+- Customers may remove credit cards via the account page
+- Customers may reset their password via the account page
+- Customers can checkout if they have an item in their cart and a credit card
+- Customers may not checkout if they have an empty cart or lack a credit card
+- Admins may add product images when creating beef
 - Admins may not add beef to or view shopping cart
 - Admins may add, remove, or update beef to inventory via admin dashboard
 - Admins may not add or update beef fields to be negative on admin dashboard
@@ -60,12 +63,16 @@ This section describes the features of the application.
 ### Definition of MVP
 
 The MVP includes minimal user authentication for admins and users, with a reserved
- admin account and other usernames being user accounts, the ability for customers to search
- for products and add them to shopping carts, and the ability for admins to add, remove, and
- edit product data.
+admin account and other usernames being user accounts, the ability for customers to search
+for products, add them to shopping carts, and proceed to checkout.It also includes the ability for admins to add, remove, and edit product data, such as beef fields and images.
+
+
 ### MVP Features
 
->  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
+- Login Page
+- New User Page
+- Checkout Page
+- Navigation Bar
 - Create User File
 - New Account Page
 - Catalog Page
