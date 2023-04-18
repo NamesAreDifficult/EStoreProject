@@ -33,7 +33,7 @@ The purpose of the application is for the butcher to sell partial or full cuts o
 | HTML | Hyper-Text Markup Language |
 |  CSS | Cascading Style Sheet | 
 | MVVM | Model View ViewModel |
-|  MVP | Minimum Viable Product
+|  MVP | Minimum Viable Product |
 
 
 
