@@ -27,15 +27,7 @@ The purpose of the application is for the butcher to sell partial or full cuts o
 
 | Term | Definition |
 |------|------------|
-|  CT  | Catalog    |
-|  LB  | Logout button |
-|  LP  | Login Page |
-|  FPP | Featured Products Page |
-|  SC  | Shopping Cart |
 |  SPA | Single Page |
-|  INV | Inventory |
-|  AD  | Admin Dashboard |
-|  PP  | Product Page |
 
 
 ## Requirements
@@ -46,15 +38,15 @@ This section describes the features of the application.
 > story.  Focus on top-level features from the Vision document and
 > maybe Epics and critical Stories._
 
-- Users login via LP
-- Users logout via LB
-- Users are directed to FPP upon sign in
-- Customers are able to browse and search CT for beef
-- Customers may click on beef to go to PP
-- Customers may add beef to and view SC
-- Admins may not add beef to or view SC
-- Admins may add, remove, or update beef to INV via AD
-- Admins may not add or update beef fields to be negative on AD
+- Users login via login page
+- Users logout via logout button
+- Users are directed to featured products page upon sign in
+- Customers are able to browse and search catalog for beef
+- Customers may click on beef to go to product page
+- Customers may add beef to and view shopping cart
+- Admins may not add beef to or view shopping cart
+- Admins may add, remove, or update beef to inventory via admin dashboard
+- Admins may not add or update beef fields to be negative on admin dashboard
 
 ### Definition of MVP
 
@@ -120,15 +112,15 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-When not logged in, the user is first directed to FPP. At the top of the screen, at this point in time,
-there is no navigation bar, so the user must enter links to links to FPP, CT, SC, LP, and AD.
-The user is not able to access SC if not signed in.
-If the user is logged in, the LP is replaced with LB, and they gain access to SC. On the FPP,
+When not logged in, the user is first directed to featured products page. At the top of the screen, at this point in time,
+there is no navigation bar, so the user must enter links to links to featured products page, catalog, shopping cart, login page, and admin dashboard.
+The user is not able to access shopping cart if not signed in.
+If the user is logged in, the login page is replaced with logout button, and they gain access to shopping cart. On the featured products page,
 the user sees the 4 featured products, the price, and the weight available. The user can click on
-a product to go to the PP. Alternatively, if the user goes to the catalog,
+a product to go to the product page. Alternatively, if the user goes to the catalog,
 they may then type in part of a product name to search for the product, and then click on the desired
-product to go to its PP. After going here, the user can add a quantity to their SC via
-a button. Admins have access to these features, but they may not add items to their SC or view SC
+product to go to its product page. After going here, the user can add a quantity to their shopping cart via
+a button. Admins have access to these features, but they may not add items to their shopping cart or view shopping cart
 page, as they are redirected upon going to the page. Admins can navigate to ND,
 where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
 > _Provide a summary of the application's user interface.  Describe, from
