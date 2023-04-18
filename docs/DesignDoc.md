@@ -99,9 +99,9 @@ contained in the inventory, and the admin adds different beef items as they beco
 These beef items are displayed on the catalog page for users to view and purchase, and users
 are able to search by name or partial name in order to find the type of beef they want. Both
 admins and customers are users that log in via the login page, which connects them to
-the rest of the e-store.Customers have access to an Account page, where they can reset their password,
-as well as add and remove credit cards for billing.Customers can then add products to their shopping cart.
- Customers can then purchase their shopping cart at the checkout using one of the cards on file. 
+the rest of the e-store. Customers have access to an Account page, where they can reset their password,
+as well as add and remove credit cards for billing. Customers can then add products to their shopping cart.
+Customers can then purchase their shopping cart at the checkout using one of the cards on file. 
 
 
 ## Architecture and Design
