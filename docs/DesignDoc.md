@@ -144,10 +144,8 @@ where they see the product fields to add products. Any error messages from illeg
 
 
 ### View Tier
-> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+
+Upon arriving at the home page, the user is presented with the three featured product cards. Each product card has the name of the product, an image (if present), and the available quantity of the product. Clicking on any of these products brings the user to the product page, where they can see a larger picture of the product and the same information as before. However, they are not able to add things to their shopping cart until they sign in or create a new account. To do so, they may click the button to go to either the login page or the new user page, and log into or create their account using a valid username and password. They may then return to the product page to add products to their shopping cart. Alternatively, the customer can search the catalog for a product with a specific name, and navigate to the right page from there. After the customer has all the products they need, they may proceed to their shopping cart via the navigation bar or the shopping cart button on their product page, where they can remove products that they do not need. However, they also need to add a credit card before they can checkout on the account page, which is accessible via the navigation bar. After selecting a cart and checking out, the customer's cart is emptied. The customer may also change their password on the account page. Neither the account page nor the shopping cart functionality is available to administrators. Instead, they can create and remove items via buttons on the admin dashboard, or update product images, prices, and weights accordingly.
 
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects 
 > of the design that you are describing.  For example, in e-store you might create a 
@@ -155,16 +153,6 @@ where they see the product fields to add products. Any error messages from illeg
 > As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side 
 > to help illustrate the end-to-end flow._
 
-
- When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. 
-This is controlled by the home-page and nav-bar components. 
-From there the users are able to see the log-in page and log-in with their respective username, which is controlled by the login component. Both users, customers and admins, will be redirected to the landing page after log in. 
-Both admin and customers can view the catalog and product details that are controlled via the product-details and catalog components. 
-From there the admin can view the inventory in the admin dashboard, via the admin-dashboard component. 
-Because the admin has no access to a shopping cart, if the admin were to try and access a shopping cart, they will also be redirected to the admin dashboard. 
-Customers cannot access the admin dashboard, but they do have access to the shopping cart and checkout. 
-The view of the shopping cart is controlled by the cart compononent. 
-Once a customer is done shopping and the admin is finished, they can log out view the log out compononent.
 
 ### ViewModel Tier
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
@@ -219,7 +207,7 @@ Low coupling already exists within the back-end systems of our e-store API code.
 our four main classes so far, we have InventoryContoller, InventoryDAO, InventoryFileDAO
 and Beef. Beef relies on none of the other components within the code, InventoryFileDAO and
 InventoryDAO only rely on beef, and InventoryController relies on Beef and InventoryDAO.
-Within the code base we have so far, since there is not much currently there, the only thing I
+Within the code base we have so far, since there is not much currently there, the only thing we
 could think of that would improve the low coupling of our current four classes is by changing the
 implementation of inventoryController to use a generic type and instantiating it by passing the
 Beef type to it to reduce the dependance and increase the modularity of the class. The only issue
