@@ -15,14 +15,12 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
+Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades, where the user can order these cuts by weight. The project front-end and back-end are developed using Angular, and Java, respectively.
+
 
 ### Purpose
 
-
-Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades,
-as well as the ability to sponsor and reserve different cuts from cows.
-
+The purpose of the application is for the butcher to sell partial or full cuts of beef to customers. The owner can create products of different prices and update weights as they receive more, and the customer can purchase these cuts with a credit card they have registered to their account.
 
 
 ### Glossary and Acronyms
