@@ -34,6 +34,8 @@ The purpose of the application is for the butcher to sell partial or full cuts o
 |  CSS | Cascading Style Sheet | 
 | MVVM | Model View ViewModel |
 |  MVP | Minimum Viable Product |
+|  DAO | Data Access Object |
+|  UML | Unified Modeling Language | 
 
 
 
