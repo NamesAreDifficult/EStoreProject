@@ -303,19 +303,29 @@ easier.
 
 
 ## Static Code Analysis/Future Design Improvements
-> _**[Sprint 4]** With the results from the Static Code Analysis exercise, 
-> **Identify 3-4** areas within your code that have been flagged by the Static Code 
-> Analysis Tool (SonarQube) and provide your analysis and recommendations.  
-> Include any relevant screenshot(s) with each area._
-
-> _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 
 ![SonarQube](SonarQube.png)
 
-The majority of our issues in sonarQube came from improper return values and incorrect coding practices. There were 2 different instances where we should have been returning one value type, but were returning null.The other instance is us not overriding a equals method, which for our implementation was not really necessary.
+No bugs were discovered on the backend of the our estore application once we had completed sprint three.
+The remaining issues noted by sonarQube came from improper return values and incorrect coding practices. There were 2 different instances where we should have been returning one value type, but were returning null.The other instance is us not overriding a equals method, which for our implementation was not really necessary.
+
 ![Code Smells](CodeSmells.png)
 
+The bugs from the frontend were only for adding description to tables that we had displayed on the site for accessability purposes.  This was not a primary concern for our team as we were not approaching this project with high accessibility in mind for these circumstances.  Fixing this issue would be ideal if released to a diverse group of people who require these annotations for tables.
 
+![Web Bugs](webBugs.png)
+
+There were a few types of code smells that were marked by sonarQube that were found in many different instances throughout our project, one example being the use of types in the angle brackets when creating ResponseEntity<> objects.  These were easily fixed by removing the static typing within the creation of the ResponseEntity objects.  Another repeated issue that was seen revolved around some of our function names beginning with capital letters instead of following proper camelCase form, another easy fix using VSCode to update all references for a fast refactor.
+
+We had also introduced a bug in most of our classes neglecting to consider the creation of hashCode implementations when we overrode the equals method for our defined classes. This violates of the the Java Language Specification and noted in sonar rules RSPEC-1206.  This bug of course has been fixed in our sprint 3 release.
+
+In terms of imporvement in regards to the issues listed by SonarQube, there is not much left to be completed.  When the code smell was virst visited we had 220 code smells and were able to quickly drop those down to three as seen in the graph below.
+
+![Issue Graph](issueGraph.png)
+
+In terms of future design improvements, one area to look at is heightened security.  Currently our session management is done through cookies and requesting the client who they are logged in as.  A better method towards this would be giving them a temporary security token to identify themselves with that expires after a set amount of time or inactivity.  The backend does not require authentication in order to perform many of the tasks that are requested of it and would do well to have some security controls implemented like adding authorization headers.  Passwords are stored in plaintext and do not follow strong design principles.  A consideration to make here would be adding a slow hashing algorithm like Argon2 or Bcrypt and including a salt with the password when hashing to improve the security from database breaches and protect from rainbow table attacks.
+
+With our data, the most important improvement that can be made is to switch to a proper database instead of using files for storage.  SQL-based or even document-based systems would be a large improvement in pretty much every way.  If this route is to be considered, the easiest upgrade would most likely be to a document-based service such as MongoDB, however for the best computational results a relational database such as MySQL or Oracle should be kept in mind.
 
 
 ## Testing
@@ -336,13 +346,6 @@ The number of user stories that passed all criteria is 20.
 We did not have any stories that did not pass all the acceptance criteria. This is due to the team doing consistent bug checks throughout the process.
 
 ### Unit Testing and Code Coverage
-> _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets._
-
-
-
 ![Code Coverage](CodeCoverage.png)
 
 Using mock objects, our team tested the mode, controller, and persistence
@@ -351,3 +354,10 @@ of 90 percent was the goal for the overall average, we set a target for
 90 percent minimum for each of these tiers, with the main estore-api folder and the estore-api products folder
 being the exception at 88 percent. Overall, our unit testing for this
 phase was cohesive.
+
+The largest hit to our code coverage came from a single feature which was updating the user's password.  In UserFileDAO, UserController, and Uer the methods for this were entirely untested which brought their code coverage down a significant amount. The only other type of methods that has been untested are the hashcode functions for beef and cartbeef. For future releases, these methods should be fully covered and given a comprehensive set of unit tests going forward.
+
+![User Controller Coverage](UserControllerCoverage.png)
+![UserFileDAO Coverage](userFileDAOcoverage.png)
+
+All the other reasons that code coverage was missed comes from missed branches that are seperate from the primary logic flow and mostly menial amount of the code.  Ideally, moving forward, most of the unit tests should be rewritten as classes had tests that were properly mocked out and isolated from dependencies.  This was handled well in ShoppingController and others should follow it as an example.
