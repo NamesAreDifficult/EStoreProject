@@ -15,58 +15,64 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
+Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades, where the user can order these cuts by weight. The project front-end and back-end are developed using Angular, and Java, respectively.
+
 
 ### Purpose
 
-
-Our application is an e-store for a butcher that provides a variety of cuts of beef of different grades,
-as well as the ability to sponsor and reserve different cuts from cows.
-
+The purpose of the application is for the butcher to sell partial or full cuts of beef to customers. The owner can create products of different prices and update weights as they receive more, and the customer can purchase these cuts with a credit card they have registered to their account.
 
 
 ### Glossary and Acronyms
 
 | Term | Definition |
 |------|------------|
-|  CT  | Catalog    |
-|  LB  | Logout button |
-|  LP  | Login Page |
-|  FPP | Featured Products Page |
-|  SC  | Shopping Cart |
 |  SPA | Single Page |
-|  INV | Inventory |
-|  AD  | Admin Dashboard |
-|  PP  | Product Page |
+| JSON | JavaScript Object Notation |
+|  API | Application Programming Interface |
+| HTML | Hyper-Text Markup Language |
+|  CSS | Cascading Style Sheet | 
+| MVVM | Model View ViewModel |
+|  MVP | Minimum Viable Product |
+|  DAO | Data Access Object |
+|  UML | Unified Modeling Language | 
+
 
 
 ## Requirements
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
-- Users login via LP
-- Users logout via LB
-- Users are directed to FPP upon sign in
-- Customers are able to browse and search CT for beef
-- Customers may click on beef to go to PP
-- Customers may add beef to and view SC
-- Admins may not add beef to or view SC
-- Admins may add, remove, or update beef to INV via AD
-- Admins may not add or update beef fields to be negative on AD
+- Users login via login page with their username and password
+- Users logout via logout button
+- Users are directed to featured products page upon sign in
+- Users may create a new account from the new account page with a valid password
+- Customers are able to browse and search catalog for beef
+- Customers may click on beef to go to product page
+- Customers may add beef to and view shopping cart
+- Customers may add up to three valid credit cards
+- Customers may remove credit cards via the account page
+- Customers may reset their password via the account page
+- Customers can checkout if they have an item in their cart and a credit card
+- Customers may not checkout if they have an empty cart or lack a credit card
+- Admins may add product images when creating beef
+- Admins may not add beef to or view shopping cart
+- Admins may add, remove, or update beef to inventory via admin dashboard
+- Admins may not add or update beef fields to be negative on admin dashboard
 
 ### Definition of MVP
 
 The MVP includes minimal user authentication for admins and users, with a reserved
- admin account and other usernames being user accounts, the ability for customers to search
- for products and add them to shopping carts, and the ability for admins to add, remove, and
- edit product data.
+admin account and other usernames being user accounts, the ability for customers to search
+for products, add them to shopping carts, and proceed to checkout.It also includes the ability for admins to add, remove, and edit product data, such as beef fields and images.
+
+
 ### MVP Features
 
->  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
+- Login Page
+- New User Page
+- Checkout Page
+- Navigation Bar
 - Create User File
 - New Account Page
 - Catalog Page
@@ -93,9 +99,9 @@ contained in the inventory, and the admin adds different beef items as they beco
 These beef items are displayed on the catalog page for users to view and purchase, and users
 are able to search by name or partial name in order to find the type of beef they want. Both
 admins and customers are users that log in via the login page, which connects them to
-the rest of the e-store.Customers have access to an Account page, where they can reset their password,
-as well as add and remove credit cards for billing.Customers can then add products to their shopping cart.
- Customers can then purchase their shopping cart at the checkout using one of the cards on file. 
+the rest of the e-store. Customers have access to an Account page, where they can reset their password,
+as well as add and remove credit cards for billing. Customers can then add products to their shopping cart.
+Customers can then purchase their shopping cart at the checkout using one of the cards on file. 
 
 
 ## Architecture and Design
@@ -122,15 +128,15 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-When not logged in, the user is first directed to FPP. At the top of the screen, at this point in time,
-there is no navigation bar, so the user must enter links to links to FPP, CT, SC, LP, and AD.
-The user is not able to access SC if not signed in.
-If the user is logged in, the LP is replaced with LB, and they gain access to SC. On the FPP,
+When not logged in, the user is first directed to featured products page. At the top of the screen, at this point in time,
+there is no navigation bar, so the user must enter links to links to featured products page, catalog, shopping cart, login page, and admin dashboard.
+The user is not able to access shopping cart if not signed in.
+If the user is logged in, the login page is replaced with logout button, and they gain access to shopping cart. On the featured products page,
 the user sees the 4 featured products, the price, and the weight available. The user can click on
-a product to go to the PP. Alternatively, if the user goes to the catalog,
+a product to go to the product page. Alternatively, if the user goes to the catalog,
 they may then type in part of a product name to search for the product, and then click on the desired
-product to go to its PP. After going here, the user can add a quantity to their SC via
-a button. Admins have access to these features, but they may not add items to their SC or view SC
+product to go to its product page. After going here, the user can add a quantity to their shopping cart via
+a button. Admins have access to these features, but they may not add items to their shopping cart or view shopping cart
 page, as they are redirected upon going to the page. Admins can navigate to ND,
 where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
 > _Provide a summary of the application's user interface.  Describe, from
@@ -138,10 +144,8 @@ where they see the product fields to add products. Any error messages from illeg
 
 
 ### View Tier
-> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+
+Upon arriving at the home page, the user is presented with the three featured product cards. Each product card has the name of the product, an image (if present), and the available quantity of the product. Clicking on any of these products brings the user to the product page, where they can see a larger picture of the product and the same information as before. However, they are not able to add things to their shopping cart until they sign in or create a new account. To do so, they may click the button to go to either the login page or the new user page, and log into or create their account using a valid username and password. They may then return to the product page to add products to their shopping cart. Alternatively, the customer can search the catalog for a product with a specific name, and navigate to the right page from there. After the customer has all the products they need, they may proceed to their shopping cart via the navigation bar or the shopping cart button on their product page, where they can remove products that they do not need. However, they also need to add a credit card before they can checkout on the account page, which is accessible via the navigation bar. After selecting a cart and checking out, the customer's cart is emptied. The customer may also change their password on the account page. Neither the account page nor the shopping cart functionality is available to administrators. Instead, they can create and remove items via buttons on the admin dashboard, or update product images, prices, and weights accordingly.
 
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects 
 > of the design that you are describing.  For example, in e-store you might create a 
@@ -149,16 +153,6 @@ where they see the product fields to add products. Any error messages from illeg
 > As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side 
 > to help illustrate the end-to-end flow._
 
-
- When the estore goes online, the user and the admins view the landing page that holds the feature products and the navbar, which will be on every page. 
-This is controlled by the home-page and nav-bar components. 
-From there the users are able to see the log-in page and log-in with their respective username, which is controlled by the login component. Both users, customers and admins, will be redirected to the landing page after log in. 
-Both admin and customers can view the catalog and product details that are controlled via the product-details and catalog components. 
-From there the admin can view the inventory in the admin dashboard, via the admin-dashboard component. 
-Because the admin has no access to a shopping cart, if the admin were to try and access a shopping cart, they will also be redirected to the admin dashboard. 
-Customers cannot access the admin dashboard, but they do have access to the shopping cart and checkout. 
-The view of the shopping cart is controlled by the cart compononent. 
-Once a customer is done shopping and the admin is finished, they can log out view the log out compononent.
 
 ### ViewModel Tier
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
@@ -213,7 +207,7 @@ Low coupling already exists within the back-end systems of our e-store API code.
 our four main classes so far, we have InventoryContoller, InventoryDAO, InventoryFileDAO
 and Beef. Beef relies on none of the other components within the code, InventoryFileDAO and
 InventoryDAO only rely on beef, and InventoryController relies on Beef and InventoryDAO.
-Within the code base we have so far, since there is not much currently there, the only thing I
+Within the code base we have so far, since there is not much currently there, the only thing we
 could think of that would improve the low coupling of our current four classes is by changing the
 implementation of inventoryController to use a generic type and instantiating it by passing the
 Beef type to it to reduce the dependance and increase the modularity of the class. The only issue
