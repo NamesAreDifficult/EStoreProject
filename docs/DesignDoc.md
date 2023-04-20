@@ -332,15 +332,7 @@ code coverage required changing various parts of our implementation due to inade
 return types, but was ultimately successful at 93 percent.
 
 ### Acceptance Testing
-> _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
-
-The number of user stories that passed all criteria is 20.
-
-We did not have any stories that did not pass all the acceptance criteria. This is due to the team doing consistent bug checks throughout the process.
+At this current sprint, we have 68 stories in total. Out of these stories, 66 pass the acceptance test, and 2 fail. During acceptance testing we found that there is no error page that pops up when a customer tries to access a product that does not exist. This issue does not concern us much, as unless customers attempt to type in a product that does not exist into the URL, all products that are in and out of stock are shown. Another test that failed was that when the shopping cart is empty, the checkout button is greyed out. The reason this test failed was because we decided to go with another plan of action and make the button not show up at all. This is not really an issue, as it was a team decision that had the same concept that caused the failure. 
 
 ### Unit Testing and Code Coverage
 ![Code Coverage](CodeCoverage.png)
