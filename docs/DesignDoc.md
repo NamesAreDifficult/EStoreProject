@@ -158,14 +158,10 @@ Below is a sequence diagram for an admin creating a new item using the admin das
 
 
 ### ViewModel Tier
-> _**[Sprint 4]** Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
 
-> _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
-> static models (UML class diagrams) with some details such as critical attributes and methods._
-> 
-![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
+The viewmodel tier consists of controller classes for managing API calls as well as DAOs for keeping the model persistent. Our controllers consist of the inventory, shopping, and user controller. They are seperated in this way to keep the DAOs seperate whenever they can be to reduce coupling. The shopping controller is the controller with both user and inventory access, while the other two controllers are exclusive to their corresponding DAOs. These DAOs also inherit from an Interface, so they can be swapped out easily for a different variation such as a traditional database. The DAOs allow for the model to be interfaced with and stored as json files on our backend. The controller methods and DAO methods tend to mirror each other, with the controller methods dealing with getting information from API calls, and the DAOs taking those requests and acting upon them. For this reason, there is significant overlap between the DAO and controller methods.
+
+![View Model Tier](ViewModelDiagram.png)
 
 ### Model Tier
 ._
