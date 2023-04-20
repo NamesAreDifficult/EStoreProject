@@ -83,7 +83,10 @@ for products, add them to shopping carts, and proceed to checkout.It also includ
 - Admin/Customer Authentication
 
 ### Enhancements
-> _**[Sprint 4]** Describe what enhancements you have implemented for the project._
+
+For our project we implemented the enhancements of password management and credit card storage. Password managment is a way that our users are able to create a password for their account and add an extra level of security. Within this, passwords must follow certain conventions. They must be 8-26 characters and can include letters, numbers, and some special characters. Users are also able to change their password through the user account page. The new password must also follow the same conventions and can be used immediatly after changing it. 
+
+Credit card storage is the next enhancement in our project. We wanted the user to be able to store their card information, so they would not have to enter it every time. Customers can store up to 3 credit cards to their account. The cards must follow the 16 digit standard card number, a MM/YY expiration date, and a 3-4 number CVV. Customers can delete and add new cards however they like. A part of this enhancement is that during checkout, customers must choose a card to use as payment before checking out. Customers can keep track of their cards through their account page. Both of these enhancements are meant to improve the user experienc. 
 
 
 ## Application Domain
