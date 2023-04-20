@@ -152,7 +152,7 @@ The viewmodel tier consists of controller classes for managing API calls as well
 ![View Model Tier](ViewModelDiagram.png)
 
 ### Model Tier
-._
+
 
 The model tier consists of beef, shopping carts, and users, which may be
 customers or administrators.
