@@ -131,19 +131,7 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-When not logged in, the user is first directed to featured products page. At the top of the screen, at this point in time,
-there is no navigation bar, so the user must enter links to links to featured products page, catalog, shopping cart, login page, and admin dashboard.
-The user is not able to access shopping cart if not signed in.
-If the user is logged in, the login page is replaced with logout button, and they gain access to shopping cart. On the featured products page,
-the user sees the 4 featured products, the price, and the weight available. The user can click on
-a product to go to the product page. Alternatively, if the user goes to the catalog,
-they may then type in part of a product name to search for the product, and then click on the desired
-product to go to its product page. After going here, the user can add a quantity to their shopping cart via
-a button. Admins have access to these features, but they may not add items to their shopping cart or view shopping cart
-page, as they are redirected upon going to the page. Admins can navigate to ND,
-where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+When not logged in, the user is first directed to featured products page. At the top of the screen, at this point in time, there is no navigation bar, so the user must enter links to links to featured products page, catalog, shopping cart, login page, and admin dashboard.The user is not able to access shopping cart if not signed in. If the user is logged in, the login page is replaced with logout button, and they gain access to shopping cart. On the featured products page, the user sees the 4 featured products, the price, and the weight available. The user can click on a product to go to the product page. Alternatively, if the user goes to the catalog, they may then type in part of a product name to search for the product, and then click on the desired product to go to its product page. After going here, the user can add a quantity to their shopping cart via a button. Admins have access to these features, but they may not add items to their shopping cart or view shopping cart page, as they are redirected upon going to the page. Admins can navigate to ND, where they see the product fields to add products. Any error messages from illegal operations are shown at the top of the screen. Below, each product and its fields are listed, with a textbox for editing the price and adding weight, and a button to delete the product.
 
 
 ### View Tier
