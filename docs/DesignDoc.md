@@ -150,8 +150,11 @@ where they see the product fields to add products. Any error messages from illeg
 
 Upon arriving at the home page, the user is presented with the three featured product cards. Each product card has the name of the product, an image (if present), and the available quantity of the product. Clicking on any of these products brings the user to the product page, where they can see a larger picture of the product and the same information as before. However, they are not able to add things to their shopping cart until they sign in or create a new account. To do so, they may click the button to go to either the login page or the new user page, and log into or create their account using a valid username and password. They may then return to the product page to add products to their shopping cart. Alternatively, the customer can search the catalog for a product with a specific name, and navigate to the right page from there. After the customer has all the products they need, they may proceed to their shopping cart via the navigation bar or the shopping cart button on their product page, where they can remove products that they do not need. However, they also need to add a credit card before they can checkout on the account page, which is accessible via the navigation bar. After selecting a cart and checking out, the customer's cart is emptied. The customer may also change their password on the account page. Neither the account page nor the shopping cart functionality is available to administrators. Instead, they can create and remove items via buttons on the admin dashboard, or update product images, prices, and weights accordingly.
 
-Here is a sequence diagram for the customer adding an item to their shopping cart:
+Below is a sequence diagram for an customer adding an item to their shopping cart:
 ![Shopping Cart Sequence Diagram](ShoppingCart_Sequence.png)
+
+Below is a sequence diagram for an admin creating a new item using the admin dashboard:
+![Admin Dashboard Sequence Diagram](AdminDash_Sequence.png)
 
 
 ### ViewModel Tier
